@@ -6,7 +6,8 @@ Hablarle a Camilo en español rioplatense, simple y sin tecnicismos.
 
 ## Estructura
 - `index.html` — toda la página (HTML + CSS + JS en un solo archivo, sin build).
-- `images/` — capturas de M Perfumerie, foto de Camilo, íconos.
+- `images/` — capturas de M Perfumerie, foto de Camilo.
+  - `logo.svg` + `logo-180.png` = logo (C violeta con nodo luminoso), usado como ícono de la pestaña y en la barra superior. `icono.jpg` (foto de Camilo) ya no se usa: Camilo no quiere su cara en la pestaña.
   - `og-productos.jpg` = vista previa de WhatsApp/redes activa (todo producto).
   - `og-mixto.jpg` = alternativa (flyer + productos). `og-image.jpg` = versión vieja, sin uso.
 - `portfolio/perfumes/` — publicidades de perfumes hechas con IA + Canva (14 imágenes .webp + 1 video Kling).
