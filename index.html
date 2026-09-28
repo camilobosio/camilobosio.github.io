@@ -145,11 +145,42 @@
     .case-bottom{ padding:26px 22px 30px; margin-top:26px; }
   }
 
+  /* galería de contenido con IA */
+  .ai{ margin-top:72px; }
+  .ai-head{ display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:end; margin-bottom:22px; }
+  .ai-head h3{ font-family:var(--display); font-weight:800; font-size:clamp(34px, 4.8vw, 56px); line-height:.98; letter-spacing:-.035em; margin-top:10px; text-wrap:balance; }
+  .ai-head p{ color:var(--ink-2); max-width:48ch; justify-self:end; }
+  .cats{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:22px; }
+  .cats button{ font:inherit; font-size:13.5px; padding:8px 15px; border-radius:999px; border:1px solid var(--ink); background:none; color:var(--ink); cursor:pointer; transition:background .25s, color .25s; }
+  .cats button[aria-pressed="true"]{ background:var(--ink); color:var(--paper); }
+  .gallery{ columns:4 240px; column-gap:14px; }
+  .tile{ position:relative; display:block; width:100%; margin:0 0 14px; padding:0; border:0; border-radius:16px; overflow:hidden; background:var(--paper-2); cursor:zoom-in; break-inside:avoid; font:inherit; text-align:left; }
+  .tile img, .tile video{ width:100%; height:auto; display:block; transition:transform .6s var(--ease); }
+  .tile:hover img, .tile:hover video{ transform:scale(1.035); }
+  .tile .cap{ position:absolute; left:0; right:0; bottom:0; padding:28px 14px 12px; background:linear-gradient(transparent, rgba(0,0,0,.72)); color:#fff; font-size:12.5px; display:flex; flex-direction:column; opacity:0; transform:translateY(6px); transition:opacity .3s, transform .3s; }
+  .tile .cap b{ font-family:var(--display); font-size:15px; letter-spacing:-.01em; }
+  .tile:hover .cap, .tile:focus-visible .cap{ opacity:1; transform:none; }
+  .tile .play{ position:absolute; top:12px; right:12px; width:30px; height:30px; border-radius:50%; background:rgba(0,0,0,.55) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 7l8 5-8 5z' fill='%23fff'/%3E%3C/svg%3E") center/18px no-repeat; }
+  .tile[hidden]{ display:none; }
+  @media (hover:none){ .tile .cap{ opacity:1; transform:none; } }
+  @media (max-width:760px){ .ai-head{ grid-template-columns:1fr; } .ai-head p{ justify-self:start; } .gallery{ columns:2; column-gap:10px; } .tile{ margin-bottom:10px; border-radius:12px; } .tile .cap{ padding:22px 10px 9px; font-size:11.5px; } .tile .cap b{ font-size:13px; } }
+  .lb{ border:0; padding:0; background:transparent; max-width:100vw; max-height:100vh; width:100vw; height:100vh; }
+  .lb::backdrop{ background:rgba(10,10,12,.92); }
+  .lb .stage{ position:absolute; inset:56px 64px 70px; display:grid; place-items:center; }
+  .lb .stage img, .lb .stage video{ max-width:100%; max-height:100%; width:auto; height:auto; border-radius:10px; }
+  .lb .txt{ position:absolute; left:0; right:0; bottom:22px; text-align:center; color:#f4f4f1; font-size:14px; }
+  .lb .txt b{ font-family:var(--display); margin-right:8px; }
+  .lb button{ position:absolute; width:46px; height:46px; border-radius:50%; border:1px solid rgba(255,255,255,.35); background:rgba(0,0,0,.35); color:#fff; font-size:22px; line-height:1; cursor:pointer; }
+  .lb .x{ top:14px; right:14px; }
+  .lb .prev{ left:12px; top:50%; margin-top:-23px; }
+  .lb .next{ right:12px; top:50%; margin-top:-23px; }
+  @media (max-width:600px){ .lb .stage{ inset:64px 10px 70px; } .lb .prev, .lb .next{ top:auto; bottom:12px; margin:0; } .lb .txt{ bottom:26px; padding-inline:64px; font-size:12.5px; } }
+
   /* planes */
   .plans{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
   .plan{ border:1.5px solid var(--ink); border-radius:24px; padding:30px 28px; display:flex; flex-direction:column; gap:18px; background:var(--paper); position:relative; }
   .plan.pro{ background:var(--ink); color:var(--on-dark); }
-  .plan .name{ display:flex; justify-content:space-between; align-items:baseline; gap:12px; }
+  .plan .name{ display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:8px 12px; }
   .plan h3{ font-family:var(--display); font-weight:800; font-size:40px; letter-spacing:-.035em; line-height:1; }
   .plan .for{ font-size:14.5px; color:var(--ink-2); max-width:44ch; }
   .plan.pro .for{ color:var(--on-dark-muted); }
@@ -360,6 +391,36 @@
           </a>
         </div>
       </div>
+      <div class="ai" id="contenido">
+        <div class="ai-head">
+          <div>
+            <span class="label">Portfolio · Contenido con IA</span>
+            <h3>Publicidades hechas con IA</h3>
+          </div>
+          <p>Fotos de producto, banners, historias y flyers con precio creados con inteligencia artificial y terminados en Canva, listos para redes, anuncios y la portada de una tienda.</p>
+        </div>
+        <div class="cats" role="group" aria-label="Filtrar por rubro">
+          <button type="button" aria-pressed="true" data-f="all">Todo</button>
+          <button type="button" aria-pressed="false" data-f="perfumes">Perfumes</button>
+        </div>
+        <div class="gallery" id="gallery">
+          <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/1million-horizontal.webp" width="2000" height="751" loading="lazy" alt="Banner de campaña: 1 Million · Rabanne"><span class="cap"><b>1 Million · Rabanne</b>Banner de campaña</span></button>
+          <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/polo-sport-precio.webp" width="941" height="1672" loading="lazy" alt="Flyer con precio: Polo Sport · Ralph Lauren"><span class="cap"><b>Polo Sport · Ralph Lauren</b>Flyer con precio</span></button>
+          <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/asad-zanzibar-telas.webp" width="896" height="1120" loading="lazy" alt="Foto de producto: Asad Zanzibar · Lattafa"><span class="cap"><b>Asad Zanzibar · Lattafa</b>Foto de producto</span></button>
+          <button type="button" class="tile" data-cat="perfumes"><video src="portfolio/perfumes/video-kling-1.mp4" width="1288" height="1608" muted loop playsinline preload="metadata" aria-label="Video de producto"></video><span class="play" aria-hidden="true"></span><span class="cap"><b>Video de producto</b>Video con IA</span></button>
+          <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/tommy-now-precio.webp" width="941" height="1672" loading="lazy" alt="Flyer con precio: Tommy Now · Tommy Hilfiger"><span class="cap"><b>Tommy Now · Tommy Hilfiger</b>Flyer con precio</span></button>
+          <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/perfumes-cintas-horizontal.webp" width="1686" height="933" loading="lazy" alt="Banner de campaña: Colección de perfumes"><span class="cap"><b>Colección de perfumes</b>Banner de campaña</span></button>
+          <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/valentino-born-in-roma.webp" width="896" height="1120" loading="lazy" alt="Foto de producto: Born in Roma · Valentino"><span class="cap"><b>Born in Roma · Valentino</b>Foto de producto</span></button>
+          <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/khamrah-waha-precio.webp" width="941" height="1672" loading="lazy" alt="Flyer con precio: Khamrah Waha · Lattafa"><span class="cap"><b>Khamrah Waha · Lattafa</b>Flyer con precio</span></button>
+          <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/lattafa-khamrah.webp" width="768" height="1365" loading="lazy" alt="Foto de producto: Khamrah · Lattafa"><span class="cap"><b>Khamrah · Lattafa</b>Foto de producto</span></button>
+          <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/fame-winter-crush.webp" width="2000" height="667" loading="lazy" alt="Banner de campaña: Fame Winter Crush · Rabanne"><span class="cap"><b>Fame Winter Crush · Rabanne</b>Banner de campaña</span></button>
+          <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/polo-big-pony-1-precio.webp" width="941" height="1672" loading="lazy" alt="Flyer con precio: Big Pony 1 · Ralph Lauren"><span class="cap"><b>Big Pony 1 · Ralph Lauren</b>Flyer con precio</span></button>
+          <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/asad-zanzibar-aros.webp" width="896" height="1120" loading="lazy" alt="Foto de producto: Asad Zanzibar · Lattafa"><span class="cap"><b>Asad Zanzibar · Lattafa</b>Foto de producto</span></button>
+          <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/1million-vertical.webp" width="941" height="1672" loading="lazy" alt="Historia vertical: 1 Million · Rabanne"><span class="cap"><b>1 Million · Rabanne</b>Historia vertical</span></button>
+          <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/polo-big-pony-2-precio.webp" width="941" height="1672" loading="lazy" alt="Flyer con precio: Big Pony 2 · Ralph Lauren"><span class="cap"><b>Big Pony 2 · Ralph Lauren</b>Flyer con precio</span></button>
+          <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/perfumes-cintas-vertical.webp" width="941" height="1672" loading="lazy" alt="Historia vertical: Colección de perfumes"><span class="cap"><b>Colección de perfumes</b>Historia vertical</span></button>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -493,6 +554,14 @@
   </section>
 </main>
 
+<dialog class="lb" id="lb" aria-label="Ver publicidad">
+  <div class="stage" id="lbStage"></div>
+  <div class="txt" id="lbTxt"></div>
+  <button type="button" class="x" id="lbX" aria-label="Cerrar">×</button>
+  <button type="button" class="prev" id="lbPrev" aria-label="Anterior">‹</button>
+  <button type="button" class="next" id="lbNext" aria-label="Siguiente">›</button>
+</dialog>
+
 <script>
 (function(){
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -506,6 +575,23 @@
   // selector de captura del caso
   const btns = document.querySelectorAll('.switch button'); const desk = [...document.querySelectorAll('#deskView img')];
   btns.forEach(b => b.addEventListener('click', () => { btns.forEach(x => x.setAttribute('aria-pressed', x === b)); desk.forEach((im, k) => im.classList.toggle('on', k === +b.dataset.v)); }));
+  // galería de contenido con IA: filtros, videos que se reproducen al verse y visor
+  const tiles = [...document.querySelectorAll('.tile')];
+  const cats = document.querySelectorAll('.cats button');
+  cats.forEach(c => c.addEventListener('click', () => { cats.forEach(x => x.setAttribute('aria-pressed', x === c)); tiles.forEach(t => t.hidden = c.dataset.f !== 'all' && t.dataset.cat !== c.dataset.f); }));
+  const vids = document.querySelectorAll('.tile video');
+  if('IntersectionObserver' in window && !reduce){ const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting ? e.target.play().catch(() => {}) : e.target.pause()), { threshold:.4 }); vids.forEach(v => io.observe(v)); }
+  const lb = document.getElementById('lb'), stage = document.getElementById('lbStage'), txt = document.getElementById('lbTxt'); let cur = 0;
+  const shown = () => tiles.filter(t => !t.hidden);
+  function show(t){ const m = t.querySelector('img, video'); const n = m.cloneNode(); if(n.tagName === 'VIDEO'){ n.controls = true; n.autoplay = true; n.muted = true; n.loop = true; n.playsInline = true; } else { n.loading = 'eager'; } stage.replaceChildren(n); const c = t.querySelector('.cap'); txt.innerHTML = '<b>' + c.querySelector('b').textContent + '</b> ' + c.lastChild.textContent; cur = shown().indexOf(t); }
+  function step(d){ const l = shown(); show(l[(cur + d + l.length) % l.length]); }
+  tiles.forEach(t => t.addEventListener('click', () => { show(t); if(lb.showModal) lb.showModal(); }));
+  document.getElementById('lbX').onclick = () => lb.close();
+  document.getElementById('lbPrev').onclick = () => step(-1);
+  document.getElementById('lbNext').onclick = () => step(1);
+  lb.addEventListener('click', e => { if(e.target === lb || e.target === stage) lb.close(); });
+  lb.addEventListener('close', () => stage.replaceChildren());
+  addEventListener('keydown', e => { if(!lb.open) return; if(e.key === 'ArrowLeft') step(-1); if(e.key === 'ArrowRight') step(1); });
   // barra superior con borde al bajar
   const top = document.getElementById('top'); addEventListener('scroll', () => top.classList.toggle('scrolled', scrollY > 10), { passive:true });
   // copiar email
