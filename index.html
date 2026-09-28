@@ -397,23 +397,27 @@
             <span class="label">Portfolio · Contenido con IA</span>
             <h3>Publicidades hechas con IA</h3>
           </div>
-          <p>Fotos de producto, banners, historias y flyers con precio creados con inteligencia artificial y terminados en Canva, listos para redes, anuncios y la portada de una tienda.</p>
+          <p>Fotos de producto, banners, flyers con precio y videos creados con inteligencia artificial. Incluso escenas filmadas con una persona real a partir de un par de fotos, desde distintos ángulos.</p>
         </div>
         <div class="cats" role="group" aria-label="Filtrar por rubro">
           <button type="button" aria-pressed="true" data-f="all">Todo</button>
           <button type="button" aria-pressed="false" data-f="perfumes">Perfumes</button>
+          <button type="button" aria-pressed="false" data-f="personas">Videos con personas</button>
         </div>
         <div class="gallery" id="gallery">
           <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/1million-horizontal.webp" width="2000" height="751" loading="lazy" alt="Banner de campaña: 1 Million · Rabanne"><span class="cap"><b>1 Million · Rabanne</b>Banner de campaña</span></button>
+          <button type="button" class="tile" data-cat="personas"><video src="portfolio/videos-ia/escena-angulo-1.mp4" width="1296" height="708" muted loop playsinline preload="metadata" aria-label="Escena con IA, ángulo 1"></video><span class="play" aria-hidden="true"></span><span class="cap"><b>Escena con IA · ángulo 1</b>Mi cara, a partir de un par de fotos</span></button>
           <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/polo-sport-precio.webp" width="941" height="1672" loading="lazy" alt="Flyer con precio: Polo Sport · Ralph Lauren"><span class="cap"><b>Polo Sport · Ralph Lauren</b>Flyer con precio</span></button>
           <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/asad-zanzibar-telas.webp" width="896" height="1120" loading="lazy" alt="Foto de producto: Asad Zanzibar · Lattafa"><span class="cap"><b>Asad Zanzibar · Lattafa</b>Foto de producto</span></button>
           <button type="button" class="tile" data-cat="perfumes"><video src="portfolio/perfumes/video-kling-1.mp4" width="1288" height="1608" muted loop playsinline preload="metadata" aria-label="Video de producto"></video><span class="play" aria-hidden="true"></span><span class="cap"><b>Video de producto</b>Video con IA</span></button>
           <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/tommy-now-precio.webp" width="941" height="1672" loading="lazy" alt="Flyer con precio: Tommy Now · Tommy Hilfiger"><span class="cap"><b>Tommy Now · Tommy Hilfiger</b>Flyer con precio</span></button>
           <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/perfumes-cintas-horizontal.webp" width="1686" height="933" loading="lazy" alt="Banner de campaña: Colección de perfumes"><span class="cap"><b>Colección de perfumes</b>Banner de campaña</span></button>
+          <button type="button" class="tile" data-cat="personas"><video src="portfolio/videos-ia/escena-angulo-2.mp4" width="1296" height="708" muted loop playsinline preload="metadata" aria-label="Escena con IA, ángulo 2"></video><span class="play" aria-hidden="true"></span><span class="cap"><b>Escena con IA · ángulo 2</b>Mi cara, a partir de un par de fotos</span></button>
           <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/valentino-born-in-roma.webp" width="896" height="1120" loading="lazy" alt="Foto de producto: Born in Roma · Valentino"><span class="cap"><b>Born in Roma · Valentino</b>Foto de producto</span></button>
           <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/khamrah-waha-precio.webp" width="941" height="1672" loading="lazy" alt="Flyer con precio: Khamrah Waha · Lattafa"><span class="cap"><b>Khamrah Waha · Lattafa</b>Flyer con precio</span></button>
           <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/lattafa-khamrah.webp" width="768" height="1365" loading="lazy" alt="Foto de producto: Khamrah · Lattafa"><span class="cap"><b>Khamrah · Lattafa</b>Foto de producto</span></button>
           <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/fame-winter-crush.webp" width="2000" height="667" loading="lazy" alt="Banner de campaña: Fame Winter Crush · Rabanne"><span class="cap"><b>Fame Winter Crush · Rabanne</b>Banner de campaña</span></button>
+          <button type="button" class="tile" data-cat="personas"><video src="portfolio/videos-ia/escena-angulo-3.mp4" width="1296" height="708" muted loop playsinline preload="metadata" aria-label="Escena con IA, ángulo 3"></video><span class="play" aria-hidden="true"></span><span class="cap"><b>Escena con IA · ángulo 3</b>Mi cara, a partir de un par de fotos</span></button>
           <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/polo-big-pony-1-precio.webp" width="941" height="1672" loading="lazy" alt="Flyer con precio: Big Pony 1 · Ralph Lauren"><span class="cap"><b>Big Pony 1 · Ralph Lauren</b>Flyer con precio</span></button>
           <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/asad-zanzibar-aros.webp" width="896" height="1120" loading="lazy" alt="Foto de producto: Asad Zanzibar · Lattafa"><span class="cap"><b>Asad Zanzibar · Lattafa</b>Foto de producto</span></button>
           <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/1million-vertical.webp" width="941" height="1672" loading="lazy" alt="Historia vertical: 1 Million · Rabanne"><span class="cap"><b>1 Million · Rabanne</b>Historia vertical</span></button>
@@ -583,7 +587,7 @@
   if('IntersectionObserver' in window && !reduce){ const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting ? e.target.play().catch(() => {}) : e.target.pause()), { threshold:.4 }); vids.forEach(v => io.observe(v)); }
   const lb = document.getElementById('lb'), stage = document.getElementById('lbStage'), txt = document.getElementById('lbTxt'); let cur = 0;
   const shown = () => tiles.filter(t => !t.hidden);
-  function show(t){ const m = t.querySelector('img, video'); const n = m.cloneNode(); if(n.tagName === 'VIDEO'){ n.controls = true; n.autoplay = true; n.muted = true; n.loop = true; n.playsInline = true; } else { n.loading = 'eager'; } stage.replaceChildren(n); const c = t.querySelector('.cap'); txt.innerHTML = '<b>' + c.querySelector('b').textContent + '</b> ' + c.lastChild.textContent; cur = shown().indexOf(t); }
+  function show(t){ const m = t.querySelector('img, video'); const n = m.cloneNode(); if(n.tagName === 'VIDEO'){ n.controls = true; n.loop = true; n.playsInline = true; n.muted = false; n.play().catch(() => { n.muted = true; n.play().catch(() => {}); }); } else { n.loading = 'eager'; } stage.replaceChildren(n); const c = t.querySelector('.cap'); txt.innerHTML = '<b>' + c.querySelector('b').textContent + '</b> ' + c.lastChild.textContent; cur = shown().indexOf(t); }
   function step(d){ const l = shown(); show(l[(cur + d + l.length) % l.length]); }
   tiles.forEach(t => t.addEventListener('click', () => { show(t); if(lb.showModal) lb.showModal(); }));
   document.getElementById('lbX').onclick = () => lb.close();
