@@ -1,0 +1,12 @@
+PÁGINA DE PLANES — CAMILO BOSIO
+===============================
+Contenido: index.html (la página), images/ (fotos) y Camilo-Bosio-Paginas-web.pdf (el PDF de planes, se descarga desde la página).
+
+CÓMO PUBLICARLA EN GITHUB (repositorio nuevo, no toca la página de M Perfumerie)
+1. En github.com → botón "New" (nuevo repositorio). Nombre: planes (o el que quieras). Público. Create repository.
+2. "uploading an existing file" → arrastrá TODO lo de esta carpeta (index.html, la carpeta images y el PDF). Commit changes.
+3. Settings → Pages → Source: "Deploy from a branch" → Branch: main / (root) → Save.
+4. En 1 o 2 minutos queda en: https://TU-USUARIO.github.io/planes
+   (si en algún momento comprás un dominio, se agrega en Settings → Pages → Custom domain)
+
+PARA CAMBIAR ALGO: pedile a Claude el cambio, reemplazá el index.html en el repositorio (mismo nombre exacto) y listo.

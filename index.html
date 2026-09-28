@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Páginas web Camilo Bosio</title>
+<meta name="description" content="Páginas web para negocios: catálogo, carrito que envía el pedido por WhatsApp y panel para cargar tus productos. Planes Esencial y Premium. Camilo Bosio, Rosario.">
+<link rel="icon" type="image/jpeg" href="images/icono.jpg">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Camilo Bosio · Páginas web para tu negocio">
+<meta property="og:description" content="Tu tienda online lista para vender: catálogo, carrito a WhatsApp y panel propio. Planes Esencial y Premium.">
+<meta property="og:image" content="images/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --paper:#f4f4f1; --paper-2:#eaeae5; --ink:#111113; --ink-2:#2a2a2e; --muted:#67666d; --line:#d8d7d1;
+    --violet:#5b3cf5; --violet-soft:#e7e2fe; --on-dark:#f4f4f1; --on-dark-muted:#a3a2aa;
+    --display:'Bricolage Grotesque', 'Arial Narrow', system-ui, sans-serif;
+    --body:'Instrument Sans', system-ui, -apple-system, sans-serif;
+    --mono:'JetBrains Mono', ui-monospace, Menlo, monospace;
+    --ease:cubic-bezier(.2,.8,.2,1);
+    color-scheme:light;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{ background:var(--paper); color:var(--ink); font-family:var(--body); font-size:16px; line-height:1.55; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+  a{ color:inherit; }
+  img{ max-width:100%; display:block; }
+  .wrap{ max-width:1180px; margin:0 auto; padding-inline:20px; }
+  .label{ font-family:var(--mono); font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); }
+  :focus-visible{ outline:2px solid var(--violet); outline-offset:3px; border-radius:6px; }
+
+  /* barra superior */
+  .top{ position:sticky; top:env(safe-area-inset-top,0px); z-index:40; background:color-mix(in srgb, var(--paper) 86%, transparent); -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px); border-bottom:1px solid transparent; transition:border-color .3s; }
+  .top.scrolled{ border-bottom-color:var(--line); }
+  .top .wrap{ display:flex; align-items:center; justify-content:space-between; gap:16px; height:62px; }
+  .mark{ font-family:var(--display); font-weight:800; font-size:18px; letter-spacing:-.02em; text-decoration:none; display:flex; align-items:center; gap:8px; }
+  .mark i{ width:9px; height:9px; border-radius:50%; background:var(--violet); display:inline-block; }
+  .top nav{ display:flex; gap:26px; font-size:14px; }
+  .top nav a{ text-decoration:none; color:var(--ink-2); }
+  .top nav a:hover{ color:var(--violet); }
+  .btn{ display:inline-flex; align-items:center; gap:10px; padding:13px 20px; border-radius:999px; font-weight:600; font-size:14.5px; text-decoration:none; border:1.5px solid var(--ink); transition:background .25s, color .25s, transform .2s; cursor:pointer; background:none; font-family:inherit; }
+  .btn:active{ transform:scale(.97); }
+  .btn-dark{ background:var(--ink); color:var(--paper); }
+  .btn-dark:hover{ background:var(--violet); border-color:var(--violet); }
+  .btn-line:hover{ background:var(--ink); color:var(--paper); }
+  .btn svg{ width:17px; height:17px; }
+  .top .btn{ padding:9px 16px; font-size:13.5px; }
+  @media (max-width:760px){ .top nav{ display:none; } }
+
+  /* portada */
+  .hero{ padding-block:64px 40px; }
+  .hero .wrap{ display:grid; grid-template-columns:1.25fr .75fr; gap:40px; align-items:center; }
+  .hero h1{ font-family:var(--display); font-weight:800; font-size:clamp(52px, 9.5vw, 132px); line-height:.9; letter-spacing:-.045em; }
+  .hero h1 .ln{ display:block; overflow:hidden; padding-bottom:.04em; }
+  .hero h1 .ln span{ display:inline-block; animation:rise .95s var(--ease) both; }
+  .hero h1 .ln:nth-child(2) span{ animation-delay:.08s; }
+  @keyframes rise{ from{ transform:translateY(105%); } }
+  .rot{ margin-top:22px; font-family:var(--display); font-weight:600; font-size:clamp(22px, 3vw, 34px); letter-spacing:-.02em; line-height:1.2; display:flex; flex-wrap:wrap; gap:0 .35em; }
+  .rot .fixed{ color:var(--muted); }
+  .rot .words{ position:relative; display:inline-grid; color:var(--violet); }
+  .rot .words span{ grid-area:1/1; opacity:0; transform:translateY(40%); transition:opacity .5s ease, transform .6s var(--ease); white-space:nowrap; }
+  .rot .words span.on{ opacity:1; transform:none; }
+  .rot .words span.out{ opacity:0; transform:translateY(-40%); }
+  .hero p.lead{ margin-top:22px; max-width:52ch; font-size:17px; color:var(--ink-2); }
+  .hero .ctas{ margin-top:30px; display:flex; flex-wrap:wrap; gap:12px; }
+  .hero .meta{ margin-top:34px; display:flex; flex-wrap:wrap; gap:8px 22px; }
+  .phone{ position:relative; justify-self:center; width:min(290px, 72vw); border-radius:44px; background:#0c0c0e; padding:11px; box-shadow:0 50px 90px -40px rgba(17,17,19,.55), inset 0 0 0 1.5px #2b2b30; animation:float 7s ease-in-out infinite; }
+  .phone::before{ content:""; position:absolute; top:19px; left:50%; width:84px; height:22px; margin-left:-42px; border-radius:20px; background:#0c0c0e; z-index:2; }
+  .phone .screen{ width:100%; aspect-ratio:390/844; border-radius:34px; overflow:hidden; background:#000; position:relative; }
+  .phone .screen img{ width:100%; height:100%; object-fit:cover; object-position:top; position:absolute; inset:0; opacity:0; transition:opacity 1s ease; }
+  .phone .screen img.on{ opacity:1; }
+  .phone .tag{ position:absolute; left:-18px; bottom:64px; z-index:3; background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:9px 12px; font-size:12.5px; box-shadow:0 16px 30px -18px rgba(0,0,0,.35); }
+  .phone .tag b{ display:block; font-family:var(--display); font-size:14px; }
+  @keyframes float{ 50%{ transform:translateY(-10px); } }
+  @media (max-width:860px){ .hero .wrap{ grid-template-columns:1fr; } .phone{ margin-top:20px; } }
+
+  /* cinta */
+  .ribbon{ border-block:1px solid var(--line); overflow:hidden; padding-block:16px; background:var(--paper); }
+  .ribbon .track{ display:flex; gap:42px; width:max-content; animation:slide 38s linear infinite; font-family:var(--display); font-weight:600; font-size:22px; letter-spacing:-.02em; }
+  .ribbon .track span{ display:flex; align-items:center; gap:42px; white-space:nowrap; }
+  .ribbon .track span::after{ content:""; width:8px; height:8px; border-radius:50%; background:var(--violet); }
+  @keyframes slide{ to{ transform:translateX(-50%); } }
+
+  section.block{ padding-block:96px; }
+  .head{ display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:end; margin-bottom:44px; }
+  .head h2{ font-family:var(--display); font-weight:800; font-size:clamp(36px, 5.4vw, 64px); line-height:.98; letter-spacing:-.035em; text-wrap:balance; }
+  .head p{ color:var(--ink-2); max-width:48ch; justify-self:end; }
+  @media (max-width:760px){ .head{ grid-template-columns:1fr; } .head p{ justify-self:start; } section.block{ padding-block:72px; } }
+
+  /* servicios */
+  .services{ display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid var(--ink); }
+  .svc{ padding:26px 22px 30px 0; border-right:1px solid var(--line); display:flex; flex-direction:column; gap:12px; }
+  .svc + .svc{ padding-left:22px; }
+  .svc:last-child{ border-right:0; }
+  .svc .ic{ width:44px; height:44px; border-radius:12px; background:var(--violet-soft); color:var(--violet); display:grid; place-items:center; transition:transform .4s var(--ease), background .3s, color .3s; }
+  .svc:hover .ic{ transform:rotate(-8deg) scale(1.06); background:var(--violet); color:#fff; }
+  .svc .ic svg{ width:22px; height:22px; }
+  .svc h3{ font-family:var(--display); font-size:22px; line-height:1.1; letter-spacing:-.02em; }
+  .svc p{ font-size:14.5px; color:var(--ink-2); }
+  @media (max-width:960px){ .services{ grid-template-columns:1fr 1fr; } .svc{ border-bottom:1px solid var(--line); } .svc:nth-child(2){ border-right:0; } .svc:nth-child(3){ padding-left:0; } }
+  @media (max-width:560px){ .services{ grid-template-columns:1fr; } .svc, .svc + .svc{ padding-left:0; border-right:0; } }
+
+  /* caso */
+  .case{ background:var(--ink); color:var(--on-dark); border-radius:28px; overflow:hidden; }
+  .case-top{ padding:44px 44px 0; display:grid; grid-template-columns:1fr 1fr; gap:30px; }
+  .case .label{ color:var(--on-dark-muted); }
+  .case h3{ font-family:var(--display); font-weight:800; font-size:clamp(40px, 6vw, 76px); line-height:.92; letter-spacing:-.04em; margin-top:12px; }
+  .case h3 em{ font-style:normal; color:#c9974e; }
+  .case p{ color:var(--on-dark-muted); max-width:52ch; margin-top:16px; }
+  .facts{ display:grid; grid-template-columns:1fr 1fr; gap:1px; background:#2b2b30; border-radius:16px; overflow:hidden; align-self:start; }
+  .fact{ background:var(--ink); padding:18px 18px 16px; }
+  .fact b{ display:block; font-family:var(--display); font-size:34px; line-height:1; letter-spacing:-.03em; font-variant-numeric:tabular-nums; }
+  .fact span{ font-size:13px; color:var(--on-dark-muted); }
+  .case-shots{ position:relative; margin-top:44px; padding:0 44px; min-height:560px; }
+  .desk{ position:relative; margin-right:190px; border-radius:14px 14px 0 0; overflow:hidden; background:#1c1c20; border:1px solid #2b2b30; border-bottom:0; }
+  .desk .bar{ height:30px; display:flex; align-items:center; gap:6px; padding:0 12px; background:#1c1c20; }
+  .desk .bar i{ width:9px; height:9px; border-radius:50%; background:#3a3a40; }
+  .desk .bar span{ margin-left:10px; font-family:var(--mono); font-size:11px; color:var(--on-dark-muted); }
+  .desk .view{ position:relative; aspect-ratio:1440/900; }
+  .desk .view img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:top; opacity:0; transition:opacity .9s ease; }
+  .desk .view img.on{ opacity:1; }
+  .case-shots .phone{ position:absolute; right:44px; top:40px; width:230px; animation:none; box-shadow:0 40px 80px -30px rgba(0,0,0,.8), inset 0 0 0 1.5px #2b2b30; }
+  .case-bottom{ padding:30px 44px 44px; display:flex; flex-wrap:wrap; gap:14px 30px; align-items:center; justify-content:space-between; border-top:1px solid #2b2b30; }
+  .feat{ display:flex; flex-wrap:wrap; gap:8px; }
+  .feat span{ font-size:12.5px; border:1px solid #3a3a40; border-radius:999px; padding:6px 12px; color:#d9d8de; }
+  .case .btn{ border-color:var(--on-dark); color:var(--on-dark); }
+  .case .btn:hover{ background:var(--on-dark); color:var(--ink); }
+  .switch{ display:flex; gap:8px; margin-top:22px; }
+  .switch button{ font:inherit; font-size:13px; padding:8px 14px; border-radius:999px; border:1px solid #3a3a40; background:none; color:var(--on-dark-muted); cursor:pointer; transition:all .25s; }
+  .switch button[aria-pressed="true"]{ background:var(--on-dark); color:var(--ink); border-color:var(--on-dark); }
+  @media (max-width:900px){
+    .case-top{ grid-template-columns:1fr; padding:30px 22px 0; }
+    .case-shots{ min-height:0; padding:0 22px; display:flex; flex-direction:column; gap:24px; align-items:center; }
+    .desk{ margin-right:0; width:100%; border-radius:12px; border-bottom:1px solid #2b2b30; }
+    .case-shots .phone{ position:relative; right:auto; top:auto; width:220px; }
+    .case-bottom{ padding:26px 22px 30px; margin-top:26px; }
+  }
+
+  /* planes */
+  .plans{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  .plan{ border:1.5px solid var(--ink); border-radius:24px; padding:30px 28px; display:flex; flex-direction:column; gap:18px; background:var(--paper); position:relative; }
+  .plan.pro{ background:var(--ink); color:var(--on-dark); }
+  .plan .name{ display:flex; justify-content:space-between; align-items:baseline; gap:12px; }
+  .plan h3{ font-family:var(--display); font-weight:800; font-size:40px; letter-spacing:-.035em; line-height:1; }
+  .plan .for{ font-size:14.5px; color:var(--ink-2); max-width:44ch; }
+  .plan.pro .for{ color:var(--on-dark-muted); }
+  .plan .chip{ font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:.08em; padding:5px 10px; border-radius:999px; background:var(--violet); color:#fff; }
+  .plan ul{ list-style:none; display:flex; flex-direction:column; gap:10px; border-top:1px solid var(--line); padding-top:18px; }
+  .plan.pro ul{ border-color:#2b2b30; }
+  .plan li{ display:grid; grid-template-columns:20px 1fr; gap:10px; font-size:14.5px; }
+  .plan li::before{ content:""; width:16px; height:16px; margin-top:3px; border-radius:50%; background:var(--violet-soft) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.5 8.3l2.2 2.2 4.8-5' fill='none' stroke='%235b3cf5' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% no-repeat; }
+  .plan.pro li::before{ background-color:#2a2350; }
+  .plan li.inc{ font-weight:600; }
+  .plan .actions{ margin-top:auto; display:flex; flex-wrap:wrap; gap:10px; padding-top:8px; }
+  .plan.pro .btn-dark{ background:var(--violet); border-color:var(--violet); }
+  .plan.pro .btn-dark:hover{ background:var(--on-dark); color:var(--ink); border-color:var(--on-dark); }
+  .plan.pro .btn-line{ border-color:var(--on-dark); color:var(--on-dark); }
+  .plan.pro .btn-line:hover{ background:var(--on-dark); color:var(--ink); }
+  .plan .note{ font-size:12.5px; color:var(--muted); }
+  .plan.pro .note{ color:var(--on-dark-muted); }
+  .extra{ margin-top:20px; border:1px dashed var(--ink-2); border-radius:20px; padding:22px 26px; display:flex; flex-wrap:wrap; gap:14px 26px; align-items:center; justify-content:space-between; }
+  .extra b{ font-family:var(--display); font-size:22px; letter-spacing:-.02em; }
+  .extra p{ font-size:14.5px; color:var(--ink-2); max-width:62ch; }
+  @media (max-width:860px){ .plans{ grid-template-columns:1fr; } }
+
+  /* proceso */
+  .steps{ display:grid; grid-template-columns:repeat(4,1fr); gap:20px; counter-reset:s; }
+  .step{ border-top:1.5px solid var(--ink); padding-top:18px; }
+  .step .n{ font-family:var(--mono); font-size:12px; color:var(--violet); }
+  .step h3{ font-family:var(--display); font-size:22px; letter-spacing:-.02em; margin:8px 0 6px; }
+  .step p{ font-size:14.5px; color:var(--ink-2); }
+  @media (max-width:860px){ .steps{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:520px){ .steps{ grid-template-columns:1fr; } }
+
+  /* sobre mí */
+  .about{ display:grid; grid-template-columns:320px 1fr; gap:48px; align-items:start; }
+  .about .photo{ border-radius:24px; overflow:hidden; aspect-ratio:4/5; background:var(--paper-2); }
+  .about .photo img{ width:100%; height:100%; object-fit:cover; filter:saturate(.9); }
+  .about h2{ font-family:var(--display); font-weight:800; font-size:clamp(34px, 4.6vw, 54px); letter-spacing:-.035em; line-height:1; text-wrap:balance; }
+  .about p{ margin-top:16px; color:var(--ink-2); max-width:60ch; }
+  .tools{ display:flex; flex-wrap:wrap; gap:8px; margin-top:24px; }
+  .tools span{ font-size:13px; padding:7px 13px; border-radius:999px; background:var(--paper-2); border:1px solid var(--line); }
+  .exp{ margin-top:28px; display:grid; gap:0; border-top:1px solid var(--line); }
+  .exp div{ display:grid; grid-template-columns:120px 1fr; gap:12px; padding:12px 0; border-bottom:1px solid var(--line); font-size:14.5px; }
+  .exp div span:first-child{ font-family:var(--mono); font-size:12px; color:var(--muted); padding-top:2px; }
+  @media (max-width:820px){ .about{ grid-template-columns:1fr; } .about .photo{ max-width:260px; } }
+
+  /* contacto */
+  .contact{ background:var(--violet); color:#fff; border-radius:28px; padding:56px 44px; display:grid; grid-template-columns:1.2fr 1fr; gap:30px; align-items:end; }
+  .contact h2{ font-family:var(--display); font-weight:800; font-size:clamp(40px, 6.6vw, 88px); line-height:.9; letter-spacing:-.045em; }
+  .contact .lines{ display:flex; flex-direction:column; gap:14px; }
+  .contact .row{ display:flex; flex-wrap:wrap; justify-content:space-between; gap:6px 12px; align-items:center; border-bottom:1px solid rgba(255,255,255,.28); padding-bottom:12px; }
+  .contact .row .label{ color:rgba(255,255,255,.7); }
+  .contact .row a, .contact .row span.v{ font-size:17px; font-weight:600; text-decoration:none; color:#fff; overflow-wrap:anywhere; }
+  .contact .row a:hover{ text-decoration:underline; }
+  .copy{ font:inherit; font-size:12px; border:1px solid rgba(255,255,255,.5); background:none; color:#fff; border-radius:999px; padding:4px 10px; cursor:pointer; }
+  .contact .btn{ background:#fff; color:var(--violet); border-color:#fff; margin-top:10px; align-self:flex-start; }
+  .contact .btn:hover{ background:var(--ink); color:#fff; border-color:var(--ink); }
+  @media (max-width:820px){ .contact{ grid-template-columns:1fr; padding:40px 24px; } }
+  footer{ padding-block:34px 44px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; }
+
+  @media (prefers-reduced-motion: reduce){ *{ animation:none !important; transition:none !important; } .rot .words span.on{ opacity:1; transform:none; } }
+</style>
+</head>
+<body>
+
+<header class="top" id="top">
+  <div class="wrap">
+    <a class="mark" href="#inicio"><i></i>Camilo Bosio</a>
+    <nav aria-label="Secciones">
+      <a href="#servicios">Servicios</a>
+      <a href="#trabajo">Trabajo</a>
+      <a href="#planes">Planes</a>
+      <a href="#como">Cómo trabajo</a>
+    </nav>
+    <a class="btn btn-dark" href="https://wa.me/5493468437518?text=Hola%20Camilo%2C%20vi%20tu%20p%C3%A1gina%20y%20quiero%20consultarte%20por%20una%20p%C3%A1gina" target="_blank" rel="noopener">Escribime</a>
+  </div>
+</header>
+
+<main id="inicio">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <span class="label">Rosario, Santa Fe · Páginas web para negocios</span>
+        <h1 style="margin-top:18px;"><span class="ln"><span>Camilo</span></span><span class="ln"><span>Bosio</span></span></h1>
+        <div class="rot" aria-live="polite"><span class="fixed">Hago</span><span class="words" id="words"><span class="on">tiendas online</span><span>catálogos con carrito</span><span>páginas con panel propio</span><span>webs con animaciones</span></span></div>
+        <p class="lead">Diseño y programo páginas para negocios que venden por WhatsApp o Instagram: catálogo, carrito y un panel para que cargues tus productos, precios y fotos sin depender de nadie.</p>
+        <div class="ctas">
+          <a class="btn btn-dark" href="https://wa.me/5493468437518?text=Hola%20Camilo%2C%20quiero%20una%20p%C3%A1gina%20para%20mi%20negocio" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19l-4 1z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+            Hablemos por WhatsApp
+          </a>
+          <a class="btn btn-line" href="#trabajo">Ver trabajo real</a>
+        </div>
+        <div class="meta">
+          <span class="label">+640 productos cargados en M Perfumerie</span>
+          <span class="label">Hecho para celular primero</span>
+        </div>
+      </div>
+      <div class="phone" aria-label="La página de M Perfumerie en un celular">
+        <div class="screen" id="heroScreen">
+          <img class="on" src="images/m_hero.jpg" alt="Portada de M Perfumerie en el celular">
+          <img src="images/m_grid.jpg" alt="Productos destacados de M Perfumerie">
+          <img src="images/m_modal.jpg" alt="Ficha de un perfume en M Perfumerie">
+        </div>
+        <div class="tag"><b>mperfumerie.com.ar</b>Proyecto real, en uso</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ribbon" aria-hidden="true">
+    <div class="track">
+      <span>Tiendas online</span><span>Catálogos con carrito</span><span>Panel de administración</span><span>Pedidos por WhatsApp</span><span>Diseño para celular</span><span>Animaciones</span><span>Rediseño de páginas</span>
+      <span>Tiendas online</span><span>Catálogos con carrito</span><span>Panel de administración</span><span>Pedidos por WhatsApp</span><span>Diseño para celular</span><span>Animaciones</span><span>Rediseño de páginas</span>
+    </div>
+  </div>
+
+  <section class="block" id="servicios">
+    <div class="wrap">
+      <div class="head">
+        <h2>Lo que hago por tu negocio</h2>
+        <p>Programo con inteligencia artificial, así llego más rápido y a menor costo a una página profesional, hecha a medida de tu marca.</p>
+      </div>
+      <div class="services">
+        <article class="svc">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M3 8h18M8 21h8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></div>
+          <h3>Página desde cero</h3>
+          <p>Tienda o catálogo con tu marca, buscador, carrito que arma el pedido por WhatsApp y un panel para cargar productos.</p>
+        </article>
+        <article class="svc">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M4 20h4L19 9l-4-4L4 16v4z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M13 7l4 4" stroke="currentColor" stroke-width="1.7"/></svg></div>
+          <h3>Mejorar tu página</h3>
+          <p>Si ya tenés una, la actualizo: diseño más moderno, más rápida, lista para celular y más fácil de administrar.</p>
+        </article>
+        <article class="svc">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="8" rx="1.5" stroke="currentColor" stroke-width="1.7"/><rect x="14" y="3" width="7" height="5" rx="1.5" stroke="currentColor" stroke-width="1.7"/><rect x="14" y="12" width="7" height="9" rx="1.5" stroke="currentColor" stroke-width="1.7"/><rect x="3" y="15" width="7" height="6" rx="1.5" stroke="currentColor" stroke-width="1.7"/></svg></div>
+          <h3>Panel para administrarla</h3>
+          <p>Cargás productos, precios, fotos, stock, publicidades de la portada y datos de contacto vos mismo, desde el celular o la compu.</p>
+        </article>
+        <article class="svc">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19l-4 1z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9 10h6M9 13.5h4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></div>
+          <h3>Pedidos por WhatsApp</h3>
+          <p>El cliente arma su carrito y el pedido te llega por WhatsApp con el detalle listo. Sin comisiones por venta.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="trabajo" style="padding-top:0;">
+    <div class="wrap">
+      <div class="case">
+        <div class="case-top">
+          <div>
+            <span class="label">Caso real · 2025 – hoy</span>
+            <h3>M <em>Perfumerie</em></h3>
+            <p>Tienda de perfumería importada de Rosario. Diseñé y programé toda la página: catálogo con buscador y filtros, fichas con acordes y notas de cada perfume, carrito que envía el pedido por WhatsApp y un panel propio para cargar productos, publicidades y datos de contacto.</p>
+            <div class="switch" role="group" aria-label="Ver captura">
+              <button type="button" aria-pressed="true" data-v="0">Portada</button>
+              <button type="button" aria-pressed="false" data-v="1">Ficha de producto</button>
+            </div>
+          </div>
+          <div class="facts">
+            <div class="fact"><b>+640</b><span>perfumes en el catálogo</span></div>
+            <div class="fact"><b>3</b><span>secciones editables desde el panel</span></div>
+            <div class="fact"><b>100%</b><span>pensada para celular</span></div>
+            <div class="fact"><b>0</b><span>comisiones por venta</span></div>
+          </div>
+        </div>
+        <div class="case-shots">
+          <a class="desk" href="https://mperfumerie.com.ar" target="_blank" rel="noopener" aria-label="Abrir mperfumerie.com.ar" style="display:block;text-decoration:none;">
+            <div class="bar"><i></i><i></i><i></i><span>mperfumerie.com.ar</span></div>
+            <div class="view" id="deskView">
+              <img class="on" src="images/d_hero.jpg" alt="Portada de M Perfumerie en computadora">
+              <img src="images/d_modal.jpg" alt="Ficha de producto de M Perfumerie en computadora">
+            </div>
+          </a>
+          <div class="phone">
+            <div class="screen" id="casePhone">
+              <img class="on" src="images/m_grid.jpg" alt="Productos de M Perfumerie en el celular">
+              <img src="images/m_modal.jpg" alt="Ficha de producto en el celular">
+            </div>
+          </div>
+        </div>
+        <div class="case-bottom">
+          <div class="feat">
+            <span>Catálogo con buscador</span><span>Filtros por marca y género</span><span>Carrito a WhatsApp</span><span>Panel de administración</span><span>Publicidades administrables</span><span>Animaciones</span>
+          </div>
+          <a class="btn" href="https://mperfumerie.com.ar" target="_blank" rel="noopener">Visitar la página
+            <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M9 7h8v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="planes" style="padding-top:0;">
+    <div class="wrap">
+      <div class="head">
+        <h2>Dos planes para tu tienda</h2>
+        <p>Los dos incluyen tu marca, tus productos y un panel para que actualices todo vos. La diferencia está en la experiencia y en las animaciones.</p>
+      </div>
+      <div class="plans">
+        <article class="plan">
+          <div class="name"><h3>Esencial</h3></div>
+          <p class="for">Para empezar a vender online con una página prolija, rápida y fácil de mantener.</p>
+          <ul>
+            <li>Diseño con tu logo, colores y datos</li>
+            <li>Catálogo con buscador y categorías</li>
+            <li>Ficha de producto con fotos y descripción</li>
+            <li>Carrito que arma el pedido y lo envía por WhatsApp</li>
+            <li>Panel para cargar productos, precios, fotos y stock</li>
+            <li>Datos de contacto editables desde el panel</li>
+            <li>Publicación en tu dominio</li>
+          </ul>
+          <div class="actions">
+            <a class="btn btn-dark" href="https://wa.me/5493468437518?text=Hola%20Camilo%2C%20me%20interesa%20el%20plan%20Esencial" target="_blank" rel="noopener">Consultar</a>
+          </div>
+        </article>
+        <article class="plan pro">
+          <div class="name"><h3>Premium</h3><span class="chip">Como M Perfumerie</span></div>
+          <p class="for">Para marcas que quieren destacarse: una experiencia con movimiento, más herramientas y contenido visual propio.</p>
+          <ul>
+            <li class="inc">Todo lo del plan Esencial</li>
+            <li>Intro animada con tu logo</li>
+            <li>Portada con carrusel de publicidades que cambiás desde el panel</li>
+            <li>Títulos y secciones con animación</li>
+            <li>Ficha con galería deslizable y animación de apertura</li>
+            <li>Filtros avanzados, marcas y orden por precio</li>
+            <li>Variantes (tamaños o talles) con precio y stock propios</li>
+            <li>Productos destacados con sello animado</li>
+            <li>Portada y flyers creados con IA</li>
+          </ul>
+          <div class="actions">
+            <a class="btn btn-dark" href="https://wa.me/5493468437518?text=Hola%20Camilo%2C%20me%20interesa%20el%20plan%20Premium" target="_blank" rel="noopener">Consultar</a>
+            <a class="btn btn-line" href="https://mperfumerie.com.ar" target="_blank" rel="noopener">Ver ejemplo</a>
+          </div>
+        </article>
+      </div>
+      <div class="extra">
+        <div><b>¿Ya tenés página?</b><p>La reviso y te propongo mejoras: diseño, velocidad, versión para celular o un panel para que la actualices vos.</p></div>
+        <a class="btn btn-line" href="https://wa.me/5493468437518?text=Hola%20Camilo%2C%20quiero%20mejorar%20mi%20p%C3%A1gina" target="_blank" rel="noopener">Pedir una revisión</a>
+        <a class="btn btn-line" href="Camilo-Bosio-Paginas-web.pdf" download>Descargar PDF</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="como" style="padding-top:0;">
+    <div class="wrap">
+      <div class="head"><h2>Cómo trabajamos</h2><p>Todo se coordina por WhatsApp y vas viendo avances en tu celular desde el primer día.</p></div>
+      <div class="steps">
+        <div class="step"><span class="n">01</span><h3>Charlamos</h3><p>Me contás qué vendés, a quién y cómo recibís pedidos hoy.</p></div>
+        <div class="step"><span class="n">02</span><h3>Diseño con tu marca</h3><p>Armo la página con tu logo y tus colores, y la ajustamos juntos.</p></div>
+        <div class="step"><span class="n">03</span><h3>Cargamos productos</h3><p>Subimos fotos, precios y descripciones, o te enseño a hacerlo.</p></div>
+        <div class="step"><span class="n">04</span><h3>Publicamos</h3><p>La página sale en tu dominio y te quedás con el panel para manejarla.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="quien" style="padding-top:0;">
+    <div class="wrap about">
+      <div class="photo"><img src="images/camilo.jpg" alt="Camilo Bosio"></div>
+      <div>
+        <span class="label">Quién hace tu página</span>
+        <h2 style="margin-top:12px;">Tecnología, diseño y trato directo</h2>
+        <p>Soy Camilo, de Rosario. Programo páginas web con inteligencia artificial y las diseño pensando en cómo compra tu cliente: rápido, desde el celular y sin vueltas. Hablás siempre conmigo, de principio a fin, y después te enseño a manejar tu página.</p>
+        <div class="tools"><span>Programación con IA</span><span>Diseño para celular</span><span>Panel de administración</span><span>Base de datos en la nube</span><span>Publicación en tu dominio</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="contacto" style="padding-top:0;">
+    <div class="wrap">
+      <div class="contact">
+        <h2>¿Arrancamos tu página?</h2>
+        <div class="lines">
+          <div class="row"><span class="label">WhatsApp</span><a href="https://wa.me/5493468437518" target="_blank" rel="noopener">3468 437518</a></div>
+          <div class="row"><span class="label">Email</span><span class="v" id="mail">camilobosio96@gmail.com</span><button class="copy" type="button" id="copyMail">Copiar</button></div>
+          <div class="row"><span class="label">LinkedIn</span><a href="https://www.linkedin.com/in/camilo-b-20720121a/" target="_blank" rel="noopener">Camilo Bosio</a></div>
+          <a class="btn" href="https://wa.me/5493468437518?text=Hola%20Camilo%2C%20quiero%20una%20p%C3%A1gina%20para%20mi%20negocio" target="_blank" rel="noopener">Escribime por WhatsApp</a>
+        </div>
+      </div>
+      <footer><span class="label">© 2026 Camilo Bosio · Rosario, Argentina</span><a class="label" href="#inicio" style="text-decoration:none;">Volver arriba ↑</a></footer>
+    </div>
+  </section>
+</main>
+
+<script>
+(function(){
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // frases que cambian en la portada
+  const words = [...document.querySelectorAll('#words span')]; let w = 0;
+  if(!reduce) setInterval(() => { const a = words[w]; a.classList.remove('on'); a.classList.add('out'); setTimeout(() => a.classList.remove('out'), 600); w = (w + 1) % words.length; words[w].classList.add('on'); }, 2600);
+  // capturas que se van alternando
+  function cycle(id, ms){ const imgs = [...document.querySelectorAll('#' + id + ' img')]; let i = 0; if(reduce || imgs.length < 2) return; return setInterval(() => { imgs[i].classList.remove('on'); i = (i + 1) % imgs.length; imgs[i].classList.add('on'); }, ms); }
+  cycle('heroScreen', 3200);
+  let caseTimer = cycle('casePhone', 3600);
+  // selector de captura del caso
+  const btns = document.querySelectorAll('.switch button'); const desk = [...document.querySelectorAll('#deskView img')];
+  btns.forEach(b => b.addEventListener('click', () => { btns.forEach(x => x.setAttribute('aria-pressed', x === b)); desk.forEach((im, k) => im.classList.toggle('on', k === +b.dataset.v)); }));
+  // barra superior con borde al bajar
+  const top = document.getElementById('top'); addEventListener('scroll', () => top.classList.toggle('scrolled', scrollY > 10), { passive:true });
+  // copiar email
+  document.getElementById('copyMail').addEventListener('click', e => {
+    const t = document.getElementById('mail').textContent, b = e.currentTarget;
+    const ok = () => { b.textContent = 'Copiado'; setTimeout(() => b.textContent = 'Copiar', 1600); };
+    try{ navigator.clipboard.writeText(t).then(ok).catch(sel); }catch(err){ sel(); }
+    function sel(){ const r = document.createRange(); r.selectNodeContents(document.getElementById('mail')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+  });
+})();
+</script>
+
+</body>
+</html>
