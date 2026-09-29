@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Producto en 3D · Camilo Bosio</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Instrument+Sans:wght@400;600&display=swap">
+<style>
+  :root{ --bg:#0d0c12; --ink:#f4f4f1; --muted:#a3a2aa; --orange:#ff7a3d; --paint:linear-gradient(90deg,#ff9d4d,#ff5fa2); }
+  *{ box-sizing:border-box; margin:0; }
+  html,body{ height:100%; }
+  body{ background:radial-gradient(120% 90% at 50% 30%, #221d3a 0%, var(--bg) 60%); color:var(--ink); font-family:'Instrument Sans',system-ui,sans-serif; overflow:hidden; }
+  #stage{ position:fixed; inset:0; width:100%; height:100%; cursor:grab; touch-action:none; }
+  body.grabbing #stage{ cursor:grabbing; }
+  body.overzip #stage{ cursor:grab; }
+  header{ position:fixed; top:18px; left:18px; right:18px; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; pointer-events:none; }
+  h1{ font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:clamp(22px,3vw,34px); letter-spacing:-.03em; line-height:1; }
+  h1 span{ background:var(--paint); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .tabs{ pointer-events:auto; display:inline-flex; padding:4px; border-radius:999px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.12); backdrop-filter:blur(8px); }
+  .tabs button{ border:0; background:none; color:var(--muted); font:inherit; font-size:14px; font-weight:600; padding:8px 14px; border-radius:999px; cursor:pointer; }
+  .tabs button[aria-pressed="true"]{ background:var(--ink); color:#111113; }
+  .hint{ position:fixed; bottom:22px; left:50%; transform:translateX(-50%); font-size:13.5px; color:var(--ink); background:rgba(255,255,255,.1); backdrop-filter:blur(8px); padding:9px 16px; border-radius:999px; white-space:nowrap; transition:opacity .6s; pointer-events:none; }
+  .load{ position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); display:flex; align-items:center; gap:10px; font-size:14px; color:var(--muted); transition:opacity .4s; pointer-events:none; }
+  .load i{ width:16px; height:16px; border-radius:50%; border:2px solid rgba(255,255,255,.25); border-top-color:#fff; animation:spin .8s linear infinite; }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  body.ready .load{ opacity:0; visibility:hidden; }
+  .drop{ position:fixed; inset:14px; border:2px dashed rgba(255,157,77,.8); border-radius:22px; display:grid; place-items:center; font-size:18px; font-weight:600; background:rgba(13,12,18,.6); opacity:0; pointer-events:none; transition:opacity .2s; }
+  body.dragging .drop{ opacity:1; }
+  @media (max-width:520px){ .hint{ font-size:12.5px; } }
+</style>
+</head>
+<body>
+<canvas id="stage" aria-label="Producto en 3D: arrastrá para girarlo. En la campera, agarrá el cierre y bajalo para abrirla"></canvas>
+<header>
+  <h1>Producto <span>en 3D</span></h1>
+  <div class="tabs" role="group" aria-label="Ejemplo">
+    <button type="button" aria-pressed="true" data-p="campera">Campera</button>
+    <button type="button" aria-pressed="false" data-p="frasco">Frasco</button>
+  </div>
+</header>
+<div class="load"><i></i><span id="loadTxt">Cargando la campera…</span></div>
+<div class="hint" id="hint">Arrastrá para girar · Agarrá el cierre y bajalo</div>
+<div class="drop">Soltá el archivo .glb acá para verlo</div>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
+
+/* ====== AJUSTES ====== */
+// Modelos 3D de la campera (generados con Higgsfield a partir de las fotos). Primero busca el archivo en esta carpeta.
+const CAMPERA_CERRADA = ['campera-cerrada.glb', 'https://d8j0ntlcm91z4.cloudfront.net/user_3HIfCF8khEVPtKhxveCQOnXQy9S/hf_20260929_023647_97f6ce0b-9d0a-4f73-a821-524496a1b1e7.glb'];
+const CAMPERA_ABIERTA = ['campera-abierta.glb', 'https://d8j0ntlcm91z4.cloudfront.net/user_3HIfCF8khEVPtKhxveCQOnXQy9S/hf_20260929_023648_530da202-aea0-4371-8586-1026c111aa3a.glb'];
+// La textura de la campera cerrada salió con el torso blanco: se oscurece el torso (debajo de los hombros), las mangas quedan igual
+const TORSO_NEGRO = { ancho: 0.52, hombros: 0.5, cuello: 0.8, tiras: 0.85 };
+const ALTO = 1.7;            // alto del producto en la escena
+const GIRA_SOLO = false;     // pedido de Camilo: NUNCA gira sola
+/* ===================== */
+
+const $ = id => document.getElementById(id);
+const canvas = $('stage'), hint = $('hint');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.shadowMap.enabled = true;
+renderer.localClippingEnabled = true;
+
+const scene = new THREE.Scene();
+scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
+const camera = new THREE.PerspectiveCamera(32, 1, 0.01, 100);
+camera.position.set(0, 0.1, 5.2);
+
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true; controls.dampingFactor = 0.09;       // suavizado + inercia corta
+controls.enablePan = false; controls.minDistance = 2.4; controls.maxDistance = 7;
+controls.minPolarAngle = Math.PI * 0.3; controls.maxPolarAngle = Math.PI * 0.62;
+controls.autoRotate = GIRA_SOLO;
+
+const key = new THREE.DirectionalLight(0xffffff, 2); key.position.set(1.2, 6, 3); key.castShadow = true; key.shadow.mapSize.set(1024, 1024); scene.add(key);
+scene.add(new THREE.HemisphereLight(0xe7e2fe, 0x221d3a, 0.7));
+const rim = new THREE.DirectionalLight(0xff7a3d, 1.6); rim.position.set(-3, 2, -3); scene.add(rim);
+const rim2 = new THREE.DirectionalLight(0xff7a3d, 0.8); rim2.position.set(3, 1, -2); scene.add(rim2);
+
+const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
+function loadFirst(urls) {              // prueba cada dirección hasta que una ande
+  return new Promise((ok, bad) => {
+    const next = i => i >= urls.length ? bad(new Error('no model')) : (urls[i].startsWith('__') ? next(i + 1) : loader.load(urls[i], g => ok(g.scene), undefined, () => next(i + 1)));
+    next(0);
+  });
+}
+// centra y escala un modelo para que mida ALTO y quede apoyado en el centro
+function normalize(obj) {
+  const box = new THREE.Box3().setFromObject(obj), size = box.getSize(new THREE.Vector3()), c = box.getCenter(new THREE.Vector3());
+  const k = ALTO / size.y; obj.scale.multiplyScalar(k); obj.position.sub(c.multiplyScalar(k));
+  obj.traverse(o => { if (o.isMesh) { o.castShadow = true; o.material = o.material.clone(); } });
+  return obj;
+}
+const setClip = (obj, planes) => obj.traverse(o => { if (o.isMesh) { o.material.clippingPlanes = planes; o.material.clipShadows = true; o.material.needsUpdate = true; } });
+
+/* ---------- producto actual ---------- */
+let current = null;               // { group, zip? }
+const products = {};
+function show(name) {
+  document.querySelectorAll('.tabs button').forEach(b => b.setAttribute('aria-pressed', b.dataset.p === name));
+  if (current) scene.remove(current.group);
+  document.body.classList.remove('ready'); resetView();
+  hint.textContent = name === 'campera' ? 'Arrastrá para girar · Agarrá el cierre y bajalo' : 'Arrastrá para girar · Rueda o pellizco para acercar';
+  hint.style.opacity = 1;
+  (products[name] ||= build[name]()).then(p => { current = p; scene.add(p.group); document.body.classList.add('ready'); })
+    .catch(() => { $('loadTxt').textContent = 'No se pudo cargar el modelo'; });
+}
+document.querySelectorAll('.tabs button').forEach(b => b.addEventListener('click', () => show(b.dataset.p)));
+function resetView() { camera.position.set(0, 0.1, 5.2); controls.target.set(0, 0, 0); controls.update(); }
+
+const build = {
+  /* Campera: dos modelos (cerrada y abierta). El cierre corta entre los dos: arriba del tirador se ve abierta, abajo cerrada. */
+  async campera() {
+    $('loadTxt').textContent = 'Cargando la campera…';
+    const [closed, opened] = await Promise.all([loadFirst(CAMPERA_CERRADA), loadFirst(CAMPERA_ABIERTA)]);
+    const group = new THREE.Group(); group.add(normalize(closed), normalize(opened));
+    const cut = -ALTO / 2 - 0.01;
+    const pClosed = new THREE.Plane(new THREE.Vector3(0, -1, 0), 0), pOpen = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
+    setClip(closed, [pClosed]); setClip(opened, [pOpen]); darkenTorso(closed);
+    // el tirador: una pieza chica brillante que se agarra
+    const pull = new THREE.Mesh(new THREE.CapsuleGeometry(0.018, 0.05, 6, 12), new THREE.MeshStandardMaterial({ color: 0xffb27a, emissive: 0xff7a3d, emissiveIntensity: 1.2, metalness: .6, roughness: .3 }));
+    group.add(pull);
+    // alto del cierre: desde el cuello hasta el ruedo (en proporción del alto de la campera)
+    const zip = { top: ALTO * 0.36, bottom: -ALTO * 0.44, p: 0, goal: 0, pull, closed, planes: [pClosed, pOpen] };
+    zip.set = p => {
+      zip.p = p; const y = THREE.MathUtils.lerp(zip.top, zip.bottom, p);
+      pClosed.constant = p <= 0.001 ? 99 : y;          // la cerrada se ve por debajo del corte
+      pOpen.constant = p <= 0.001 ? -99 : -y;          // la abierta por encima
+      pull.position.set(0, y, frontZ(closed, y) + 0.015);
+    };
+    zip.set(0);
+    return { group, zip };
+  },
+  /* Frasco de perfume armado con formas (ejemplo) */
+  async frasco() {
+    const g = new THREE.Group();
+    const vidrio = new THREE.MeshPhysicalMaterial({ color: 0xffc2d6, roughness: 0.05, transmission: 0.9, thickness: 0.6, ior: 1.45, clearcoat: 1 });
+    const liquido = new THREE.MeshPhysicalMaterial({ color: 0xff7a9c, roughness: 0.2, transmission: 0.5, thickness: 0.4 });
+    const oro = new THREE.MeshStandardMaterial({ color: 0xd4a857, metalness: 1, roughness: 0.25 });
+    const cuerpo = new THREE.Mesh(new THREE.BoxGeometry(1, 1.1, 0.55, 4, 4, 4), vidrio); g.add(cuerpo);
+    const jugo = new THREE.Mesh(new THREE.BoxGeometry(0.86, 0.8, 0.42), liquido); jugo.position.y = -0.1; g.add(jugo);
+    const cuello = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.14, 0.14, 32), oro); cuello.position.y = 0.62; g.add(cuello);
+    const tapa = new THREE.Mesh(new THREE.CylinderGeometry(0.26, 0.26, 0.42, 48), oro); tapa.position.y = 0.9; g.add(tapa);
+    const etiqueta = new THREE.Mesh(new THREE.PlaneGeometry(0.5, 0.18), new THREE.MeshStandardMaterial({ color: 0x111113, roughness: 0.6 })); etiqueta.position.set(0, 0, 0.279); g.add(etiqueta);
+    const wrap = new THREE.Group(); wrap.add(normalize(g)); return { group: wrap };
+  }
+};
+
+// pinta de negro el torso de un modelo (lo claro del cuerpo), sin tocar las mangas ni el cuello
+function darkenTorso(obj) {
+  obj.traverse(o => {
+    if (!o.isMesh) return;
+    o.material.onBeforeCompile = sh => {
+      sh.uniforms.uTW = { value: TORSO_NEGRO.ancho }; sh.uniforms.uSY = { value: TORSO_NEGRO.hombros }; sh.uniforms.uNY = { value: TORSO_NEGRO.cuello }; sh.uniforms.uSL = { value: TORSO_NEGRO.tiras };
+      sh.vertexShader = 'varying vec3 vW;\n' + sh.vertexShader.replace('#include <worldpos_vertex>', '#include <worldpos_vertex>\nvW = (modelMatrix * vec4(transformed, 1.0)).xyz;');
+      sh.fragmentShader = 'varying vec3 vW;\nuniform float uTW; uniform float uSY; uniform float uNY; uniform float uSL;\n' + sh.fragmentShader.replace('#include <map_fragment>', `#include <map_fragment>
+        float torso = 1.0 - smoothstep(uTW - 0.04, uTW + 0.01, abs(vW.x));
+        float lim = min(uNY, uSY + max(0.0, uTW - 0.06 - abs(vW.x)) * uSL);   // sube en diagonal siguiendo las tiras del hombro
+        float below = 1.0 - smoothstep(lim - 0.05, lim, vW.y);
+        if (vW.z < -0.05) below = 1.0 - smoothstep(uNY - 0.05, uNY, vW.y);            // espalda: negra hasta el cuello
+        float tMask = torso * below;
+        diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.012), tMask);`)
+        .replace('#include <roughnessmap_fragment>', '#include <roughnessmap_fragment>\n        roughnessFactor = mix(roughnessFactor, 0.62, tMask);')
+        .replace('#include <normal_fragment_maps>', '#include <normal_fragment_maps>\n        normal = normalize(mix(normal, nonPerturbedNormal, tMask * 0.85));');
+    };
+    o.material.needsUpdate = true;
+  });
+}
+
+// dónde está el frente de la campera a cierta altura (para apoyar el tirador encima de la tela)
+const ray = new THREE.Raycaster();
+function frontZ(obj, y) {
+  let root = obj; while (root.parent) root = root.parent; root.updateMatrixWorld(true);
+  ray.set(new THREE.Vector3(0, y, 5), new THREE.Vector3(0, 0, -1));
+  const planes = []; obj.traverse(o => { if (o.isMesh) { planes.push(o.material.clippingPlanes); o.material.clippingPlanes = null; } });
+  const hit = ray.intersectObject(obj, true)[0];
+  let i = 0; obj.traverse(o => { if (o.isMesh) o.material.clippingPlanes = planes[i++]; });
+  return hit ? hit.point.z : 0.3;
+}
+
+/* ---------- mouse / dedo ---------- */
+const facingFront = () => Math.abs(controls.getAzimuthalAngle()) < THREE.MathUtils.degToRad(18);
+function pullOnScreen() { const z = current?.zip; if (!z) return null; const v = z.pull.getWorldPosition(new THREE.Vector3()).project(camera); const r = canvas.getBoundingClientRect(); return { x: (v.x + 1) / 2 * r.width, y: (1 - v.y) / 2 * r.height }; }
+function nearPull(e) {
+  const z = current?.zip; if (!z || !facingFront() || z.p > 0.98) return false;
+  const s = pullOnScreen(), r = canvas.getBoundingClientRect(), R = Math.max(26, r.height * 0.04);
+  return Math.abs(e.clientX - r.left - s.x) < R && Math.abs(e.clientY - r.top - s.y) < R * 1.4;
+}
+let zipping = false, zipY0 = 0, zipP0 = 0, moved = false;
+canvas.addEventListener('pointerdown', e => {
+  hint.style.opacity = 0;
+  const z = current?.zip;
+  if (z && nearPull(e)) {
+    zipping = true; moved = false; zipY0 = e.clientY; zipP0 = z.p; controls.enabled = false; snapFront = true;
+    canvas.setPointerCapture(e.pointerId); document.body.classList.add('grabbing'); e.stopImmediatePropagation();
+  } else document.body.classList.add('grabbing');
+}, { capture: true });
+canvas.addEventListener('pointermove', e => {
+  const z = current?.zip;
+  if (zipping) {
+    const top = z.pull.parent.localToWorld(new THREE.Vector3(0, z.top, 0)).project(camera), bot = z.pull.parent.localToWorld(new THREE.Vector3(0, z.bottom, 0)).project(camera);
+    const px = (top.y - bot.y) / 2 * canvas.getBoundingClientRect().height;      // largo del cierre en pantalla
+    if (Math.abs(e.clientY - zipY0) > 4) moved = true;
+    z.goal = THREE.MathUtils.clamp(zipP0 + (e.clientY - zipY0) / px, 0, 1); z.set(z.goal);
+  } else document.body.classList.toggle('overzip', !!z && nearPull(e));
+});
+function release() {
+  const z = current?.zip;
+  if (zipping) { z.goal = moved ? (z.p > 0.35 ? 1 : 0) : (z.p > 0.5 ? 0 : 1); zipping = false; controls.enabled = true; }   // tocar el tirador: abre o cierra entero
+  document.body.classList.remove('grabbing');
+}
+canvas.addEventListener('pointerup', release); canvas.addEventListener('pointercancel', release);
+controls.addEventListener('start', () => { hint.style.opacity = 0; snapFront = false; });
+controls.addEventListener('end', () => { snapFront = true; });
+
+// cargar cualquier .glb soltándolo encima (para probar otros productos)
+addEventListener('dragover', e => { e.preventDefault(); document.body.classList.add('dragging'); });
+addEventListener('dragleave', e => { if (!e.relatedTarget) document.body.classList.remove('dragging'); });
+addEventListener('drop', e => {
+  e.preventDefault(); document.body.classList.remove('dragging'); const f = e.dataTransfer.files[0]; if (!f) return;
+  loader.load(URL.createObjectURL(f), g => { if (current) scene.remove(current.group); const w = new THREE.Group(); w.add(normalize(g.scene)); current = { group: w }; scene.add(w); document.body.classList.add('ready'); });
+});
+
+/* ---------- animación ---------- */
+let snapFront = true;
+const clock = new THREE.Clock();
+function resize() { const w = innerWidth, h = innerHeight; renderer.setSize(w, h, false); camera.aspect = w / h; camera.fov = w < 600 ? 38 : 32; camera.updateProjectionMatrix(); }
+addEventListener('resize', resize); resize();
+renderer.setAnimationLoop(() => {
+  const dt = Math.min(0.05, clock.getDelta());
+  // imán suave: si soltás casi de frente, se acomoda de frente (nunca gira sola más allá de eso)
+  if (snapFront && current?.zip) {
+    const az = controls.getAzimuthalAngle();
+    if (Math.abs(az) > 0.002 && Math.abs(az) < THREE.MathUtils.degToRad(16)) {
+      const off = camera.position.clone().sub(controls.target), s = new THREE.Spherical().setFromVector3(off);
+      s.theta -= az * Math.min(1, dt * 8); camera.position.copy(controls.target).add(new THREE.Vector3().setFromSpherical(s));
+    }
+  }
+  const z = current?.zip;
+  if (z) {
+    if (!zipping && Math.abs(z.goal - z.p) > 0.001) z.set(z.p + (z.goal - z.p) * Math.min(1, dt * 7));
+    const vis = facingFront() && z.p < 0.98 || zipping;
+    z.pull.visible = vis; if (vis) z.pull.material.emissiveIntensity = 0.9 + Math.sin(performance.now() / 220) * 0.5;
+  }
+  controls.update(); renderer.render(scene, camera);
+});
+show('campera');
+</script>
+</body>
+</html>
