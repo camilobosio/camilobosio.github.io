@@ -40,7 +40,7 @@ Hablarle a Camilo en español rioplatense, simple y sin tecnicismos.
 La página es general, no "solo páginas web": **diseño web + contenido con IA** (campañas publicitarias, flyers, fotos de producto, videos, interacciones para webs).
 
 Dos servicios, dos planes cada uno (sin precios, botón "Consultar" por WhatsApp):
-1. **Páginas web**: Esencial y Premium (Premium = como M Perfumerie).
+1. **Páginas web**: Básico y Premium (Premium = como M Perfumerie).
 2. **Contenido con IA**: Básico y Premium. Lo que cambia son los créditos de IA → más videos, más largos, más opciones/variantes.
    Todavía sin cantidades concretas: pedirle a Camilo números (cantidad y duración de videos por plan) si los quiere.
 
@@ -66,7 +66,7 @@ servidor; la foto no se sube): genera una base simple para probar →
   interacciones en `experience/experience.js` e `index.html`): estrellas de "Tendencias", cajas de "Nuevos ingresos",
   burbujas del inicio (hover + pop) y rocío dorado al tocar el flyer. Camilo pidió que sean las reales, no imitaciones.
   Se grabaron con Playwright (screencast CDP, zoom CSS para agrandar) + ffmpeg de `pip install imageio-ffmpeg` (H.264).
-  Muestran el valor del plan Premium web; Esencial = formato de tienda + carga de productos.
+  Muestran el valor del plan Premium web; Básico = formato de tienda + carga de productos.
 - Galería "Publicidades hechas con IA" (`#contenido`): mosaico con filtros por rubro (`.cats`, botones con `data-f`)
   y visor a pantalla completa. Cada pieza es un `<button class="tile" data-cat="...">` con `<img>` o `<video>` y un `.cap`
   (título en `<b>` + tipo de pieza). Para sumar un rubro nuevo: agregar botón en `.cats` + tiles con ese `data-cat`.
