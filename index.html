@@ -172,9 +172,17 @@
   .p3-stage.dragging{ cursor:grabbing; }
   .p3-canvas{ position:absolute; inset:0; width:100%; height:100%; opacity:0; transition:opacity .4s; }
   .p3-stage.ready .p3-canvas{ opacity:1; }
-  .p3-srcs{ position:absolute; width:1px; height:1px; overflow:hidden; opacity:0; pointer-events:none; }
-  .p3-srcs video{ width:2px; height:2px; }
   /* cierre: al acercar el mouse al tirador (el cierre chiquito) se ilumina; se agarra y se baja. Se cierra con un clic */
+  .pv{ margin-top:72px; display:grid; grid-template-columns:minmax(0, .9fr) minmax(0, 1.1fr); align-items:center; gap:32px; padding:28px; border-radius:28px; background:#d2c7bc; color:#17140f; text-decoration:none; transition:transform .3s var(--ease), box-shadow .3s var(--ease); }
+  .pv:hover{ transform:translateY(-4px); box-shadow:0 30px 60px -30px rgba(17,17,19,.45); }
+  .pv h3{ font-family:var(--display); font-weight:800; font-size:clamp(34px, 4.8vw, 56px); line-height:.98; letter-spacing:-.035em; margin-top:10px; }
+  .pv p{ color:#3b342c; margin-top:14px; max-width:46ch; }
+  .pv .label{ color:#6d6259; }
+  .pv-go{ display:inline-flex; gap:8px; align-items:center; margin-top:20px; padding:12px 18px; border-radius:999px; background:#17140f; color:#fff; font-weight:600; font-size:14.5px; }
+  .pv-go b{ transition:transform .3s var(--ease); }
+  .pv:hover .pv-go b{ transform:translateX(4px); }
+  .pv img{ width:100%; height:auto; border-radius:18px; }
+  @media (max-width:820px){ .pv{ grid-template-columns:1fr; padding:20px; } }
   .p3-stage{ --zt:30.8%; --zh:42.7%; }   /* tirador real del cierre (30,8% del alto) hasta el ruedo (73,5%) */
   .p3-zip{ position:absolute; left:50%; width:0; top:var(--zt); height:var(--zh); pointer-events:none; }
   .p3-zip .pull{ position:absolute; left:0; top:calc(var(--zp, 0) * 100%); width:clamp(6px, 2cqw, 9px); height:clamp(12px, 4cqw, 18px); transform:translate(-50%, -50%); border-radius:2px; background:#ffb27a; opacity:0; transition:opacity .2s; box-shadow:0 0 8px 2px rgba(255,140,60,.9); }
@@ -623,18 +631,21 @@
         </div>
         <div class="p3-stage" id="p3" tabindex="0" role="application" aria-label="Campera interactiva: arrastrá para girarla; acercate al cierre, agarralo y bajalo para abrirla. Con el teclado: flechas para girar, Enter para abrir o cerrar" style="background-image:url('https://d8j0ntlcm91z4.cloudfront.net/user_3HIfCF8khEVPtKhxveCQOnXQy9S/hf_20260929_012618_47894ddb-9015-4133-bd29-2203b262819f_min.webp')">
           <canvas class="p3-canvas" id="p3c"></canvas>
-          <div class="p3-srcs" aria-hidden="true">
-            <video class="p3-src" data-kind="spin" src="https://d8j0ntlcm91z4.cloudfront.net/user_3HIfCF8khEVPtKhxveCQOnXQy9S/hf_20260929_013101_d1a5003c-4782-4833-b36b-0b7ce4177c69.mp4" muted playsinline preload="auto"></video>
-            <video class="p3-src" data-kind="spin" src="https://d8j0ntlcm91z4.cloudfront.net/user_3HIfCF8khEVPtKhxveCQOnXQy9S/hf_20260929_014114_04ca87b8-f5e5-4035-8812-102dbaa48043.mp4" muted playsinline preload="auto"></video>
-            <video class="p3-src" data-kind="spin" src="https://d8j0ntlcm91z4.cloudfront.net/user_3HIfCF8khEVPtKhxveCQOnXQy9S/hf_20260929_014113_a0e8a095-7095-4d1c-bc9a-8609a8872f69.mp4" muted playsinline preload="auto"></video>
-            <video class="p3-src" data-kind="spin" src="https://d8j0ntlcm91z4.cloudfront.net/user_3HIfCF8khEVPtKhxveCQOnXQy9S/hf_20260929_013101_43918be3-55aa-4f28-9d2c-18ecbd60d14a.mp4" muted playsinline preload="auto"></video>
-            <video class="p3-src" data-kind="open" src="https://d8j0ntlcm91z4.cloudfront.net/user_3HIfCF8khEVPtKhxveCQOnXQy9S/hf_20260929_013154_29299012-9105-4435-bfec-4d1a8862b8a8.mp4" muted playsinline preload="auto"></video>
-          </div>
+
           <div class="p3-zip" id="p3zip" aria-hidden="true"><span class="pull"></span></div>
           <div class="p3-load" id="p3load"><span></span>Preparando la campera…</div>
           <div class="p3-hint" id="p3hint"><span class="hand" aria-hidden="true">↔</span>Arrastrá para girar · Agarrá el cierre</div>
         </div>
       </div>
+      <a class="pv" id="probador" href="probador/">
+        <div class="pv-txt">
+          <span class="label">Portfolio · Landing interactiva</span>
+          <h3>Probador virtual</h3>
+          <p>Una landing para marcas de ropa: deslizás sobre el modelo y le cambiás la campera o el buzo, le probás gorros y gorras, y lo girás 360° para verlo de espalda. Todo generado con IA sobre el mismo modelo, sin sesión de fotos.</p>
+          <span class="pv-go">Abrir el probador <b aria-hidden="true">→</b></span>
+        </div>
+        <img src="probador/og.jpg" width="1200" height="630" loading="lazy" alt="El mismo modelo con cinco camperas y gorros distintos">
+      </a>
       <div class="ai" id="contenido">
         <div class="ai-head">
           <div>
@@ -837,25 +848,18 @@
   (function(){
     const st = document.getElementById('p3'); if(!st) return;
     const cv = document.getElementById('p3c'), ctx = cv.getContext('2d'), zip = document.getElementById('p3zip');
-    const spinV = [...st.querySelectorAll('.p3-src[data-kind="spin"]')], openV = st.querySelector('.p3-src[data-kind="open"]');
-    const PER_SEG = 20, OPEN_N = 24;                 // 80 cuadros para la vuelta entera (4,5° cada uno) y 24 para el cierre
+    // Los cuadros ya vienen sacados de los videos de Kling, en tiras (6 columnas de 450×800): 4 tramos de giro
+    // de 36 cuadros (144 = 2,5° cada uno) y 37 del cierre. Carga mucho más rápido que sacarlos del video en el navegador.
+    const DIR = 'portfolio/ropa/campera-360/', SPIN = ['giro-1', 'giro-2', 'giro-3', 'giro-4'], OPEN = 'apertura', FW = 450, FH = 800, COLS = 6;
     const spinF = [], openF = [];
     let ready = false, angle = 0, vel = 0, open = 0, openGoal = 0, mode = null, lastX = 0, lastT = 0, raf = 0, drawn = '';
-    const small = matchMedia('(max-width:700px)').matches, FW = small ? 360 : 450, FH = FW * 16 / 9;
-    const once = (el, ev) => new Promise(r => el.addEventListener(ev, r, { once:true }));
-    async function grab(v, n, out){
-      if(v.readyState < 1) await once(v, 'loadedmetadata');
-      try{ await v.play(); v.pause(); }catch(e){}
-      const d = v.duration;
-      for(let i = 0; i < n; i++){
-        v.currentTime = Math.min(d - .03, d * i / n); await once(v, 'seeked');
-        const c = document.createElement('canvas'); c.width = FW; c.height = FH; c.getContext('2d').drawImage(v, 0, 0, FW, FH); out.push(c);
-      }
-    }
+    const pic = name => new Promise((ok, bad) => { const i = new Image(); i.onload = () => ok(i); i.onerror = bad; i.src = DIR + name + '.webp'; });
+    const cut = (img, out) => { const n = (img.width / FW) * (img.height / FH);
+      for(let k = 0; k < n; k++){ const c = document.createElement('canvas'); c.width = FW; c.height = FH; c.getContext('2d').drawImage(img, (k % COLS) * FW, Math.floor(k / COLS) * FH, FW, FH, 0, 0, FW, FH); out.push(c); } };
     async function load(){
-      for(const v of spinV) await grab(v, PER_SEG, spinF);
-      await grab(openV, OPEN_N, openF);
-      openF.push(openF[openF.length - 1]);
+      const imgs = await Promise.all([...SPIN, OPEN].map(pic));
+      imgs.slice(0, 4).forEach(i => cut(i, spinF)); cut(imgs[4], openF);
+      spinF.length = 144; openF.length = 37;                    // las tiras tienen celdas vacías al final
       ready = true; st.classList.add('ready'); draw(true);
     }
     new IntersectionObserver((es, io) => { if(es[0].isIntersecting){ io.disconnect(); load(); } }, { rootMargin:'300px' }).observe(st);
@@ -870,7 +874,7 @@
       if(!force && key === drawn) return; drawn = key;
       ctx.drawImage(img, 0, 0, cv.width, cv.height);
       zip.style.setProperty('--zp', open.toFixed(3));
-      const f = frameIdx(), n = N(); st.classList.toggle('front', open < .98 && (f <= 3 || f >= n - 3) && Math.abs(vel) <= 4);
+      const f = frameIdx(), n = N(); st.classList.toggle('front', open < .98 && (f <= 5 || f >= n - 5) && Math.abs(vel) <= 4);
     }
     function tick(ts){
       const dt = lastT ? Math.min(.05, (ts - lastT) / 1000) : 0; lastT = ts; let busy = false;
@@ -886,7 +890,7 @@
     const kick = () => { if(!raf) raf = requestAnimationFrame(tick); };
     // zona del cierre (en % del cuadro): una franja angosta en el centro, del cuello al ruedo
     function nearZip(e){
-      if(!ready || Math.abs(vel) > 4) return false; const n = N(), f = frameIdx(); if(!(f <= 3 || f >= n - 3)) return false;   // de frente o casi
+      if(!ready || Math.abs(vel) > 4) return false; const n = N(), f = frameIdx(); if(!(f <= 5 || f >= n - 5)) return false;   // de frente o casi
       const r = st.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
       const zt = parseFloat(getComputedStyle(st).getPropertyValue('--zt')) / 100 || .308, zh = parseFloat(getComputedStyle(st).getPropertyValue('--zh')) / 100 || .427;
       if(open > .98) return false;

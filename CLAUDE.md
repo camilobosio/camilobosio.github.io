@@ -66,6 +66,22 @@ servidor; la foto no se sube): genera una base simple para probar →
   Rubros actuales: `perfumes`, `personas` ("Videos con personas").
 - Videos: en el mosaico se reproducen solos y mudos al verse; en el visor se abren con sonido.
 
+## Probador virtual (`probador/`, landing aparte, enlazada desde el portfolio con la tarjeta `.pv` / `#probador`)
+Pedido de Camilo: landing tipo tienda de ropa, modelo con pelo rapado, encuadre de torso (sin zapatillas), deslizar para
+cambiarle camperas/buzos y gorros. Marca ficticia "PROBADOR · DEMO" (no es tienda real).
+- Modelo base: Higgsfield job 964f6c99 (nano_banana_pro 4:5 2k). Cada prenda = edición de esa foto con nano_banana_pro
+  ("keep everything else pixel-identical"): la pose queda igual al píxel, así que se cambian sin que el modelo se mueva.
+- `prendas/<id>.webp` (1080×1341) + `-mini.webp`. Jobs: capucha gris 1adb02de, buzo negro 5f336093, jean f3886ce5,
+  bomber 6aa6adb7, puffer 58491609, rompevientos 080300f6, cuero dbdf1e10, varsity 357b987d.
+- Gorros (jobs 29b44cec gorra, 221ad967 gorro lana, 3af00e03 piluso, 15663201 trucker): recortados como PNG transparente
+  comparando con la foto base (diferencia de píxeles) → `gorros/*.webp`, con su caja en % en `HATS` del JS. Van encima de
+  cualquier prenda.
+- Giro 360°: video Kling 3.0 pro 5 s (start = end = foto de la prenda, ~8,75 créditos) → 60 cuadros en tira
+  `giros/<id>.webp` (10 columnas de 540×670). Botón "Girar 360°": arrastrar gira, inercia corta, imán al frente, nunca sola.
+- Sumar prenda: editar la foto base con nano_banana_pro, generar el giro, agregar en `TOPS` (id, cat, name, desc).
+- Pendiente: Camilo pasó fotos de 4 camperas Adidas (negra con franjas beige, blanca equipo Audi F1, marrón de trabajo
+  con cuello de corderoy, gris con capucha y franjas). Hay que subirlas a Higgsfield (widget) para ponérselas al modelo.
+
 ## Pendiente (semana en curso)
 - (Hecho) Caso M Perfumerie: PC = video real de la portada (`portada-pc.mp4`); celular = video de tocar un perfume y que
   se abra la ficha (`celular-producto.mp4`). El del celular se grabó con el código real de la página pero con 4 productos
@@ -80,10 +96,11 @@ servidor; la foto no se sube): genera una base simple para probar →
   amplia; tocarlo abre entero; en celular, touchstart sobre el cierre hace preventDefault para que no se mueva la página
   (antes era invisible y diminuto y no se podía abrir). Zona: --zt 30,8% (tirador REAL del cierre, donde
   lo marcó Camilo, NO en el cuello) y --zh 42,7% (hasta el ruedo).
+  Desde el 29/9 los cuadros vienen PRE-CORTADOS en tiras `portfolio/ropa/campera-360/giro-1..4.webp` (36 cuadros c/u,
+  144 = 2,5° cada uno) y `apertura.webp` (37), 6 columnas de 450×800; ya no se sacan del video en el navegador.
   Jobs Higgsfield: fotos frente 47894ddb, costado 609bd543, espalda 12750336 (mangas colgando, la vieja 9892caf9 tenía las mangas hacia atrás), otro costado 40a9f202, abierta 2bde9db7;
-  giros d1a5003c, 04ca87b8, a0e8a095, 43918be3; apertura 29299012. Los videos se cargan DIRECTO desde el CDN de Higgsfield
-  (d8j0ntlcm91z4.cloudfront.net) porque la red de este entorno bloquea bajarlos; ideal: bajarlos al repo y recodificar
-  con `-g 1` para que el arrastre sea más fluido. 3 publicidades de la campera (jobs 6b1c0c83, 7974a2e7, f7ac0fb1) sin sumar aún.
+  giros d1a5003c, 04ca87b8, a0e8a095, 43918be3; apertura 29299012. Ahora el CDN de Higgsfield (d8j0ntlcm91z4.cloudfront.net)
+  sí se puede bajar con curl desde este entorno. 3 publicidades de la campera (jobs 6b1c0c83, 7974a2e7, f7ac0fb1) sin sumar aún.
   Subir referencias a Higgsfield: la subida directa está bloqueada; se suben al repo y se importan con media_import_url
   desde raw.githubusercontent.com.
 - Camilo va a seguir creando contenido esta semana y pasarlo en tandas: campaña de **ropa**, videos de otros productos.

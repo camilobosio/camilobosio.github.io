@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Probador virtual · Demo</title>
+<meta name="description" content="Probador virtual de ropa: deslizá para cambiarle la campera, el buzo o el gorro al modelo. Demo hecha con IA por Camilo Bosio.">
+<link rel="icon" type="image/svg+xml" href="../images/logo.svg">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Probador virtual · Demo de Camilo Bosio">
+<meta property="og:description" content="Deslizá para cambiarle la campera, el buzo o el gorro al modelo.">
+<meta property="og:image" content="https://camilobosio.github.io/probador/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --bg:#d2c7bc; --bg-2:#c7bbaf; --ink:#17140f; --ink-2:#3b342c; --muted:#6d6259; --line:rgba(23,20,15,.14);
+    --card:rgba(255,255,255,.42); --orange:#ff7a3d; --paint:linear-gradient(90deg, #ff9d4d, #ff5fa2); --violet:#5b3cf5;
+    --display:'Bricolage Grotesque', 'Arial Narrow', system-ui, sans-serif;
+    --body:'Instrument Sans', system-ui, -apple-system, sans-serif;
+    --mono:'JetBrains Mono', ui-monospace, Menlo, monospace;
+    --ease:cubic-bezier(.2,.8,.2,1);
+    color-scheme:light;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{ background:var(--bg); color:var(--ink); font-family:var(--body); font-size:16px; line-height:1.5; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+  a{ color:inherit; }
+  img{ display:block; max-width:100%; }
+  button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; }
+  :focus-visible{ outline:2px solid var(--ink); outline-offset:3px; border-radius:6px; }
+
+  /* barra */
+  .bar{ position:fixed; inset:0 0 auto; z-index:20; background:rgba(210,199,188,.78); -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px); display:flex; align-items:center; justify-content:space-between; gap:16px; padding:16px clamp(16px, 3vw, 36px); }
+  .brand{ font-family:var(--display); font-weight:800; font-size:20px; letter-spacing:.14em; text-decoration:none; }
+  .brand small{ font-family:var(--mono); font-weight:400; font-size:10.5px; letter-spacing:.08em; margin-left:8px; color:var(--muted); vertical-align:middle; }
+  .bar nav{ display:flex; gap:22px; font-size:14px; }
+  .bar nav a{ text-decoration:none; color:var(--ink-2); }
+  .by{ font-family:var(--mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; text-decoration:none; padding:8px 12px; border-radius:999px; background:var(--ink); color:var(--bg); white-space:nowrap; }
+
+  /* portada / probador */
+  .hero{ position:relative; min-height:100svh; display:grid; grid-template-columns:minmax(0, 1fr) auto minmax(0, 1fr); align-items:center; gap:clamp(16px, 3vw, 48px); padding:84px clamp(16px, 3vw, 36px) 28px; }
+  .hero::before{ content:""; position:absolute; inset:0; background:radial-gradient(60% 55% at 50% 42%, rgba(255,255,255,.28), transparent 70%); pointer-events:none; }
+  .intro{ position:relative; align-self:center; max-width:420px; }
+  .kicker{ font-family:var(--mono); font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
+  .intro h1{ font-family:var(--display); font-weight:800; font-size:clamp(36px, 4.1vw, 62px); line-height:.94; letter-spacing:-.04em; margin-top:14px; }
+  .intro h1 em{ font-style:normal; background:var(--paint); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .intro p{ color:var(--ink-2); margin-top:18px; max-width:36ch; }
+  .how{ list-style:none; margin-top:22px; display:grid; gap:10px; font-size:14px; color:var(--ink-2); }
+  .how li{ display:flex; gap:10px; align-items:center; }
+  .how b{ flex:none; width:26px; height:26px; border-radius:50%; display:grid; place-items:center; background:var(--card); font-family:var(--mono); font-size:11px; font-weight:500; }
+
+  .stage{ position:relative; height:min(84svh, 860px); aspect-ratio:1080/1341; max-width:100%; touch-action:pan-y; user-select:none; -webkit-user-select:none; cursor:grab; }
+  .pic{ position:absolute; inset:0; pointer-events:none; -webkit-mask-image:radial-gradient(closest-side at 50% 46%, #000 72%, transparent 100%); mask-image:radial-gradient(closest-side at 50% 46%, #000 72%, transparent 100%); }
+  .stage.drag{ cursor:grabbing; }
+  .stage .lay{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; pointer-events:none; -webkit-user-drag:none; }
+  .stage .incoming{ clip-path:inset(0 0 0 100%); }
+  .scan{ position:absolute; top:0; bottom:0; width:2px; left:0; opacity:0; pointer-events:none; background:#fff; box-shadow:0 0 18px 4px rgba(255,255,255,.8), 0 0 60px 10px rgba(255,157,77,.55); }
+  .stage.swiping .scan{ opacity:1; }
+  .hat{ position:absolute; pointer-events:none; transition:opacity .35s var(--ease), transform .45s var(--ease); }
+  .hat.off{ opacity:0; transform:translateY(-14%); }
+  .spin{ position:absolute; inset:0; width:100%; height:100%; opacity:0; transition:opacity .35s; pointer-events:none; }
+  .stage.turning .spin{ opacity:1; }
+  .stage.turning .hat, .stage.turning .arrow{ opacity:0; pointer-events:none; }
+  .load{ position:absolute; left:50%; bottom:6%; transform:translateX(-50%); display:none; align-items:center; gap:8px; padding:8px 14px; border-radius:999px; background:rgba(23,20,15,.72); color:#fff; font-size:12.5px; white-space:nowrap; pointer-events:none; }
+  .load span{ width:12px; height:12px; border-radius:50%; border:2px solid rgba(255,255,255,.3); border-top-color:#fff; animation:rot .8s linear infinite; }
+  @keyframes rot{ to{ transform:rotate(360deg); } }
+  .stage.loading .load{ display:flex; }
+  .stage.turning .tip2{ opacity:1; }
+  .tip2{ position:absolute; left:50%; bottom:6%; transform:translateX(-50%); display:flex; align-items:center; gap:8px; padding:8px 14px; border-radius:999px; background:rgba(23,20,15,.72); color:#fff; font-size:12.5px; white-space:nowrap; pointer-events:none; opacity:0; transition:opacity .4s; }
+  .tip2 .hand{ display:inline-block; animation:nudge 1.6s ease-in-out infinite; }
+  .stage.turned .tip2, .stage.loading .tip2{ opacity:0; }
+  .btn.ghost.on{ background:var(--ink); color:#fff; }
+  .headzone{ position:absolute; left:28%; right:28%; top:8%; height:24%; border-radius:50%; }
+  .tip{ position:absolute; left:50%; bottom:6%; transform:translateX(-50%); display:flex; align-items:center; gap:8px; padding:8px 14px; border-radius:999px; background:rgba(23,20,15,.72); color:#fff; font-size:12.5px; white-space:nowrap; pointer-events:none; transition:opacity .5s; }
+  .tip .hand{ display:inline-block; animation:nudge 1.6s ease-in-out infinite; }
+  @keyframes nudge{ 0%,100%{ transform:translateX(-5px); } 50%{ transform:translateX(5px); } }
+  .stage.used .tip, .stage.turning .tip{ opacity:0; }
+  .arrow{ position:absolute; top:52%; width:48px; height:48px; margin-top:-24px; border-radius:50%; display:grid; place-items:center; background:var(--card); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); font-size:20px; transition:transform .2s var(--ease), background .2s; z-index:2; }
+  .arrow:hover{ background:rgba(255,255,255,.7); transform:scale(1.06); }
+  .arrow.prev{ left:4px; } .arrow.next{ right:4px; }
+
+  .panel{ position:relative; align-self:center; justify-self:end; width:100%; max-width:340px; display:grid; gap:18px; }
+  .item{ background:var(--card); -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px); border-radius:22px; padding:20px; }
+  .item .kicker{ display:flex; justify-content:space-between; }
+  .item h2{ font-family:var(--display); font-weight:800; font-size:30px; line-height:1; letter-spacing:-.03em; margin-top:10px; min-height:1em; }
+  .item p{ font-size:14px; color:var(--ink-2); margin-top:8px; min-height:3em; }
+  .item .row{ display:flex; gap:8px; margin-top:16px; flex-wrap:wrap; }
+  .btn{ display:inline-flex; align-items:center; gap:8px; padding:11px 16px; border-radius:999px; font-weight:600; font-size:14px; text-decoration:none; transition:transform .2s var(--ease); }
+  .btn:hover{ transform:translateY(-1px); }
+  .btn.dark{ background:var(--ink); color:#fff; }
+  .btn.ghost{ background:rgba(255,255,255,.55); }
+  .btn[hidden]{ display:none; }
+  .group h3{ font-family:var(--mono); font-weight:500; font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-bottom:10px; }
+  .hats{ display:flex; gap:8px; flex-wrap:wrap; }
+  .hats button{ width:58px; height:58px; border-radius:16px; background:var(--card); display:grid; place-items:center; padding:6px; transition:transform .2s var(--ease), box-shadow .2s; }
+  .hats button img{ max-height:100%; object-fit:contain; }
+  .hats button .none{ font-size:12px; color:var(--muted); }
+  .hats button[aria-pressed="true"]{ box-shadow:inset 0 0 0 2px var(--ink); background:rgba(255,255,255,.7); }
+  .hats button:hover{ transform:translateY(-2px); }
+
+  /* riel de prendas */
+  .rail-wrap{ position:relative; padding:0 clamp(16px, 3vw, 36px) 40px; }
+  .rail-head{ display:flex; align-items:end; justify-content:space-between; gap:16px; margin-bottom:14px; }
+  .rail-head h3{ font-family:var(--display); font-weight:800; font-size:22px; letter-spacing:-.02em; }
+  .cats{ display:flex; gap:6px; flex-wrap:wrap; }
+  .cats button{ padding:7px 13px; border-radius:999px; font-size:13px; background:var(--card); }
+  .cats button[aria-pressed="true"]{ background:var(--ink); color:#fff; }
+  .rail{ display:flex; gap:12px; overflow-x:auto; scroll-snap-type:x mandatory; padding:4px 2px 12px; scrollbar-width:thin; }
+  .rail button{ flex:none; width:150px; scroll-snap-align:start; text-align:left; border-radius:18px; overflow:hidden; background:var(--card); transition:transform .25s var(--ease), box-shadow .25s; }
+  .rail button:hover{ transform:translateY(-3px); }
+  .rail button[aria-pressed="true"]{ box-shadow:inset 0 0 0 2px var(--ink); }
+  .rail button[hidden]{ display:none; }
+  .rail .ph{ aspect-ratio:1/1; overflow:hidden; }
+  .rail .ph img{ width:100%; height:100%; object-fit:cover; object-position:50% 42%; transform:scale(1.9); transform-origin:50% 38%; }
+  .rail .nm{ padding:10px 12px 12px; font-size:13.5px; font-weight:600; line-height:1.2; }
+  .rail .nm span{ display:block; font-weight:400; font-size:12px; color:var(--muted); margin-top:3px; }
+
+  /* para negocios */
+  .biz{ background:var(--ink); color:#f4f1ea; padding:clamp(56px, 8vw, 110px) clamp(16px, 3vw, 36px); }
+  .biz-in{ max-width:1100px; margin:0 auto; }
+  .biz .kicker{ color:#a79f95; }
+  .biz h2{ font-family:var(--display); font-weight:800; font-size:clamp(34px, 5vw, 64px); line-height:.95; letter-spacing:-.035em; margin-top:12px; max-width:16ch; }
+  .biz h2 em{ font-style:normal; background:var(--paint); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .steps{ display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; margin-top:40px; }
+  .steps div{ border:1px solid rgba(255,255,255,.14); border-radius:22px; padding:22px; }
+  .steps b{ font-family:var(--mono); font-weight:500; font-size:12px; background:var(--paint); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .steps h4{ font-family:var(--display); font-size:22px; letter-spacing:-.02em; margin-top:10px; }
+  .steps p{ color:#bdb5ab; font-size:14.5px; margin-top:8px; }
+  .biz .cta{ display:flex; gap:12px; flex-wrap:wrap; margin-top:36px; align-items:center; }
+  .biz .btn.dark{ background:var(--paint); color:#17140f; }
+  .biz .btn.ghost{ background:rgba(255,255,255,.08); color:#f4f1ea; }
+  .foot{ text-align:center; padding:24px 16px; font-size:12.5px; color:var(--muted); }
+
+  @media (max-width:1080px){
+    .hero{ grid-template-columns:1fr; justify-items:center; gap:18px; padding-top:76px; }
+    .intro{ text-align:center; max-width:560px; }
+    .intro p{ margin-inline:auto; }
+    .how{ display:none; }
+    .stage{ height:auto; width:min(100%, 520px); }
+    .panel{ justify-self:center; max-width:520px; grid-template-columns:1fr; }
+    .bar nav{ display:none; }
+  }
+  @media (max-width:560px){
+    .intro h1{ font-size:40px; }
+    .intro p{ font-size:15px; }
+    .arrow{ width:40px; height:40px; margin-top:-20px; font-size:17px; }
+    .steps{ grid-template-columns:1fr; }
+    .rail button{ width:128px; }
+    .brand small{ display:none; }
+  }
+  @media (prefers-reduced-motion:reduce){ *{ transition:none !important; animation:none !important; } }
+</style>
+</head>
+<body>
+  <header class="bar">
+    <a class="brand" href="#">PROBADOR<small>DEMO</small></a>
+    <nav><a href="#probador">Probador</a><a href="#prendas">Prendas</a><a href="#negocios">Para tu marca</a></nav>
+    <a class="by" href="../">Hecho por Camilo Bosio</a>
+  </header>
+
+  <main>
+    <section class="hero" id="probador">
+      <div class="intro">
+        <span class="kicker">Colección otoño · invierno</span>
+        <h1>Probátelo<br>antes de <em>comprarlo.</em></h1>
+        <p>Deslizá sobre el modelo para cambiarle la campera o el buzo, y sobre la cabeza para probar gorros y gorras. Combiná como quieras.</p>
+        <ul class="how">
+          <li><b>↔</b>Deslizá el cuerpo: cambia la prenda</li>
+          <li><b>↔</b>Deslizá la cabeza: cambia el gorro</li>
+          <li><b>↻</b>Tocá "Girar 360°" y dalo vuelta</li>
+        </ul>
+      </div>
+
+      <div class="stage" id="stage" tabindex="0" role="application" aria-label="Probador: deslizá el cuerpo para cambiar la prenda y la cabeza para cambiar el gorro. Con el teclado: flechas izquierda y derecha cambian la prenda, arriba y abajo el gorro.">
+        <div class="pic">
+          <img class="lay cur" id="cur" alt="">
+          <img class="lay incoming" id="nxt" alt="">
+          <img class="hat off" id="hat" alt="">
+          <canvas class="spin" id="spin"></canvas>
+          <div class="scan" id="scan"></div>
+        </div>
+        <div class="headzone" id="headzone" aria-hidden="true"></div>
+        <button class="arrow prev" id="prev" type="button" aria-label="Prenda anterior">←</button>
+        <button class="arrow next" id="next" type="button" aria-label="Prenda siguiente">→</button>
+        <div class="tip"><span class="hand" aria-hidden="true">↔</span>Deslizá para cambiar la ropa</div>
+        <div class="tip2"><span class="hand" aria-hidden="true">↻</span>Arrastrá para girarlo</div>
+        <div class="load"><span></span>Preparando el 360°…</div>
+      </div>
+
+      <aside class="panel">
+        <div class="item" aria-live="polite">
+          <span class="kicker"><span id="icat">Remera</span><span id="inum">1 / 9</span></span>
+          <h2 id="iname">Remera blanca</h2>
+          <p id="idesc"></p>
+          <div class="row">
+            <button class="btn ghost" id="play" type="button" hidden aria-pressed="false">↻ Girar 360°</button>
+            <a class="btn dark" id="ask" href="#" target="_blank" rel="noopener">Consultar</a>
+          </div>
+        </div>
+        <div class="group">
+          <h3>Cabeza</h3>
+          <div class="hats" id="hats"></div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="rail-wrap" id="prendas">
+      <div class="rail-head">
+        <h3>Toda la colección</h3>
+        <div class="cats" id="cats">
+          <button type="button" aria-pressed="true" data-f="all">Todo</button>
+          <button type="button" aria-pressed="false" data-f="Campera">Camperas</button>
+          <button type="button" aria-pressed="false" data-f="Buzo">Buzos</button>
+          <button type="button" aria-pressed="false" data-f="Remera">Remeras</button>
+        </div>
+      </div>
+      <div class="rail" id="rail"></div>
+    </section>
+
+    <section class="biz" id="negocios">
+      <div class="biz-in">
+        <span class="kicker">Para tu marca de ropa</span>
+        <h2>Tus prendas, puestas en un modelo, <em>sin sesión de fotos.</em></h2>
+        <div class="steps">
+          <div><b>01</b><h4>Me pasás fotos</h4><p>Alcanza con fotos de la prenda sola o colgada, de frente y de espalda.</p></div>
+          <div><b>02</b><h4>La IA la viste</h4><p>Pongo cada prenda en el mismo modelo, misma pose y misma luz, y armo videos de cómo queda en movimiento.</p></div>
+          <div><b>03</b><h4>Tus clientes combinan</h4><p>Una página como esta: deslizan, prueban y te consultan por WhatsApp la que les gustó.</p></div>
+        </div>
+        <div class="cta">
+          <a class="btn dark" href="https://wa.me/5493468437518?text=Hola%20Camilo!%20Vi%20el%20probador%20virtual%20y%20quiero%20uno%20para%20mi%20marca" target="_blank" rel="noopener">Quiero uno para mi marca</a>
+          <a class="btn ghost" href="../#trabajo">Ver más trabajos</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <p class="foot">Demo hecha por Camilo Bosio · modelo y prendas generados con IA · no es una tienda real.</p>
+
+<script>
+(() => {
+  // Prendas: todas sobre el mismo modelo, en la misma pose, así se cambian sin que se mueva nada.
+  const TOPS = [
+    { id:'remera-blanca',        cat:'Remera',  name:'Remera blanca',        desc:'Algodón peinado, cuello redondo y calce al cuerpo. La base de todo.' },
+    { id:'buzo-capucha-gris',    cat:'Buzo',    name:'Buzo canguro gris',    desc:'Frisa pesada gris melange, capucha con cordón y bolsillo canguro.' },
+    { id:'buzo-negro',           cat:'Buzo',    name:'Buzo negro',           desc:'Cuello redondo, puños y cintura con rib. Liso, sin estampa.' },
+    { id:'campera-jean',         cat:'Campera', name:'Campera de jean',      desc:'Denim lavado claro, corte trucker, bolsillos con tapa.' },
+    { id:'bomber-verde',         cat:'Campera', name:'Bomber verde',         desc:'Nylon verde militar con cuello, puños y cintura de rib.' },
+    { id:'puffer-negra',         cat:'Campera', name:'Puffer negra',         desc:'Acolchada en rombos, cuello alto y cierre al frente.' },
+    { id:'rompevientos-naranja', cat:'Campera', name:'Rompevientos retro',   desc:'Naranja con paneles violeta y rosa. La más llamativa de la colección.' },
+    { id:'campera-cuero',        cat:'Campera', name:'Campera de cuero',     desc:'Estilo motoquera, cuero negro y cierres plateados.' },
+    { id:'varsity-crema',        cat:'Campera', name:'Varsity crema',        desc:'Paño crema con mangas bordó y rib a rayas. Botones a presión.' }
+  ];
+  // Prendas que ya tienen su vuelta de 360° (giros/<id>.webp)
+  const GIROS = TOPS.map(t => t.id);
+  // Gorros: recortados de la misma foto; posición en % del cuadro (izq, arriba, ancho, alto).
+  const HATS = [
+    { id:null,             name:'Sin gorro' },
+    { id:'gorra-negra',    name:'Gorra negra',    box:[41.325, 15.234, 16.864, 10.851] },
+    { id:'gorro-naranja',  name:'Gorro de lana',  box:[40.463, 13.889, 18.696, 15.104] },
+    { id:'piluso-beige',   name:'Piluso beige',   box:[37.716, 14.931, 24.3, 15.755] },
+    { id:'gorra-trucker',  name:'Gorra trucker',  box:[41.325, 14.67, 16.972, 11.632] }
+  ];
+  const WA = 'https://wa.me/5493468437518?text=';
+  const $ = id => document.getElementById(id);
+  const stage = $('stage'), cur = $('cur'), nxt = $('nxt'), hat = $('hat'), scan = $('scan'), head = $('headzone');
+  const src = t => 'prendas/' + t.id + '.webp';
+  let ti = 0, hi = 0;
+
+  // precarga
+  TOPS.forEach(t => { const i = new Image(); i.src = src(t); });
+  HATS.forEach(h => { if(h.id){ const i = new Image(); i.src = 'gorros/' + h.id + '.webp'; } });
+  cur.src = src(TOPS[0]);
+
+  // riel de prendas
+  const rail = $('rail');
+  TOPS.forEach((t, k) => {
+    const b = document.createElement('button'); b.type = 'button'; b.dataset.cat = t.cat; b.setAttribute('aria-pressed', k === 0);
+    b.innerHTML = '<div class="ph"><img loading="lazy" alt="" src="prendas/' + t.id + '-mini.webp"></div><div class="nm">' + t.name + '<span>' + t.cat + '</span></div>';
+    b.addEventListener('click', () => { go(k, k > ti ? 1 : -1); stage.scrollIntoView({ behavior:'smooth', block:'center' }); });
+    rail.appendChild(b);
+  });
+  const railBtns = [...rail.children];
+  const cats = [...$('cats').children];
+  cats.forEach(c => c.addEventListener('click', () => {
+    cats.forEach(x => x.setAttribute('aria-pressed', x === c));
+    railBtns.forEach((b, k) => b.hidden = c.dataset.f !== 'all' && TOPS[k].cat !== c.dataset.f);
+  }));
+
+  // botones de gorros
+  const hatsBox = $('hats');
+  HATS.forEach((h, k) => {
+    const b = document.createElement('button'); b.type = 'button'; b.title = h.name; b.setAttribute('aria-label', h.name); b.setAttribute('aria-pressed', k === 0);
+    b.innerHTML = h.id ? '<img alt="" src="gorros/' + h.id + '.webp">' : '<span class="none">Nada</span>';
+    b.addEventListener('click', () => setHat(k));
+    hatsBox.appendChild(b);
+  });
+
+  function info(){
+    const t = TOPS[ti], h = HATS[hi];
+    $('icat').textContent = t.cat; $('inum').textContent = (ti + 1) + ' / ' + TOPS.length;
+    $('iname').textContent = t.name; $('idesc').textContent = t.desc;
+    $('play').hidden = !GIROS.includes(t.id);
+    const txt = 'Hola! Vi el probador y me interesa: ' + t.name + (h.id ? ' + ' + h.name : '');
+    $('ask').href = WA + encodeURIComponent(txt);
+    railBtns.forEach((b, k) => b.setAttribute('aria-pressed', k === ti));
+    [...hatsBox.children].forEach((b, k) => b.setAttribute('aria-pressed', k === hi));
+  }
+
+  function setHat(k){
+    hi = (k + HATS.length) % HATS.length; const h = HATS[hi];
+    hat.classList.add('off');
+    clearTimeout(setHat.t);
+    setHat.t = setTimeout(() => {
+      if(!h.id){ hat.removeAttribute('src'); info(); return; }
+      const [l, t, w, hh] = h.box;
+      Object.assign(hat.style, { left:l + '%', top:t + '%', width:w + '%', height:hh + '%' });
+      hat.src = 'gorros/' + h.id + '.webp';
+      requestAnimationFrame(() => requestAnimationFrame(() => hat.classList.remove('off')));
+      info();
+    }, hat.getAttribute('src') ? 220 : 0);
+    info();
+  }
+
+  // cambio de prenda: la nueva aparece "pasando" como un escáner, siguiendo el dedo
+  let anim = 0;
+  function reveal(p, dir){       // p: 0..1 cuánto se ve la nueva; dir 1 = entra desde la derecha
+    const pct = (p * 100).toFixed(2);
+    nxt.style.clipPath = dir > 0 ? 'inset(0 0 0 ' + (100 - pct) + '%)' : 'inset(0 ' + (100 - pct) + '% 0 0)';
+    scan.style.left = (dir > 0 ? 100 - pct : pct) + '%';
+  }
+  function go(k, dir, from){
+    stopVideo();
+    k = (k + TOPS.length) % TOPS.length; if(k === ti && from === undefined) return;
+    cancelAnimationFrame(anim);
+    nxt.src = src(TOPS[k]); stage.classList.add('swiping');
+    const start = performance.now(), p0 = from || 0, dur = 520 * (1 - p0) + 120;
+    const step = now => {
+      const t = Math.min(1, (now - start) / dur), e = 1 - Math.pow(1 - t, 3), p = p0 + (1 - p0) * e;
+      reveal(p, dir);
+      if(t < 1) anim = requestAnimationFrame(step);
+      else { cur.src = nxt.src; ti = k; stage.classList.remove('swiping'); nxt.style.clipPath = ''; info(); }
+    };
+    anim = requestAnimationFrame(step);
+  }
+  function back(p, dir){
+    const start = performance.now(), dur = 260;
+    const step = now => { const t = Math.min(1, (now - start) / dur), q = p * (1 - t) * (1 - t); reveal(q, dir); if(t < 1) anim = requestAnimationFrame(step); else { stage.classList.remove('swiping'); nxt.style.clipPath = ''; } };
+    anim = requestAnimationFrame(step);
+  }
+
+  // arrastre: sobre la cabeza cambia el gorro, sobre el cuerpo cambia la prenda
+  let drag = null;
+  stage.addEventListener('pointerdown', e => {
+    if(e.target.closest('.arrow')) return;
+    if(turning){ spinDown(e); return; }
+    const r = stage.getBoundingClientRect(), hr = head.getBoundingClientRect();
+    const onHead = e.clientX > hr.left && e.clientX < hr.right && e.clientY > hr.top && e.clientY < hr.bottom;
+    drag = { x:e.clientX, y:e.clientY, w:r.width, onHead, dir:0, p:0, moved:false };
+    stage.setPointerCapture(e.pointerId); stage.classList.add('drag', 'used');
+  });
+  stage.addEventListener('pointermove', e => {
+    if(turning){ spinMove(e); return; }
+    if(!drag) return;
+    const dx = e.clientX - drag.x;
+    if(!drag.moved && Math.abs(dx) < 8) return;
+    drag.moved = true;
+    if(drag.onHead) return;
+    const dir = dx < 0 ? 1 : -1;
+    if(dir !== drag.dir){ drag.dir = dir; cancelAnimationFrame(anim); stopVideo(); nxt.src = src(TOPS[(ti + dir + TOPS.length) % TOPS.length]); stage.classList.add('swiping'); }
+    drag.p = Math.min(1, Math.abs(dx) / (drag.w * .8)); reveal(drag.p, dir);
+  });
+  function up(e){
+    if(turning){ spinUp(); return; }
+    if(!drag) return; const d = drag; drag = null; stage.classList.remove('drag');
+    const dx = (e.clientX ?? d.x) - d.x;
+    if(d.onHead){ if(d.moved) setHat(hi + (dx < 0 ? 1 : -1)); else setHat(hi + 1); return; }
+    if(!d.moved) return;
+    if(d.p > .22 || Math.abs(dx) > 70) go(ti + d.dir, d.dir, d.p); else back(d.p, d.dir);
+  }
+  stage.addEventListener('pointerup', up); stage.addEventListener('pointercancel', up);
+
+  $('prev').addEventListener('click', () => { stage.classList.add('used'); go(ti - 1, -1); });
+  $('next').addEventListener('click', () => { stage.classList.add('used'); go(ti + 1, 1); });
+  stage.addEventListener('keydown', e => {
+    if(turning && (e.key === 'ArrowRight' || e.key === 'ArrowLeft')){ e.preventDefault(); angle += (e.key === 'ArrowRight' ? 12 : -12); drawSpin(); return; }
+    if(e.key === 'ArrowRight'){ e.preventDefault(); go(ti + 1, 1); }
+    if(e.key === 'ArrowLeft'){ e.preventDefault(); go(ti - 1, -1); }
+    if(e.key === 'ArrowUp'){ e.preventDefault(); setHat(hi - 1); }
+    if(e.key === 'ArrowDown'){ e.preventDefault(); setHat(hi + 1); }
+  });
+
+  // 360°: cada prenda con giro tiene una tira de 60 cuadros (una vuelta completa, 6° cada uno).
+  // Arrastrás y gira a la par de tu mano; al soltar sigue un poquito y se acomoda de frente. Nunca gira sola.
+  const spin = $('spin'), sctx = spin.getContext('2d'), SN = 60, SC = 10, SW = 540, SH = 670;
+  const sheets = {};
+  let turning = false, angle = 0, vel = 0, sd = null, sraf = 0, lastT = 0;
+  function sheet(id){
+    if(!sheets[id]) sheets[id] = new Promise((ok, bad) => { const i = new Image(); i.onload = () => ok(i); i.onerror = bad; i.src = 'giros/' + id + '.webp'; });
+    return sheets[id];
+  }
+  function drawSpin(){
+    const img = sheets.cur; if(!img) return;
+    const k = ((Math.round(angle / 360 * SN) % SN) + SN) % SN;
+    sctx.drawImage(img, (k % SC) * SW, Math.floor(k / SC) * SH, SW, SH, 0, 0, spin.width, spin.height);
+  }
+  function sizeSpin(){ const r = stage.getBoundingClientRect(), d = Math.min(2, devicePixelRatio || 1); spin.width = Math.round(r.width * d); spin.height = Math.round(r.height * d); drawSpin(); }
+  addEventListener('resize', sizeSpin);
+  async function startTurn(){
+    const t = TOPS[ti]; stage.classList.add('loading'); stage.classList.remove('turned');
+    try{ sheets.cur = await sheet(t.id); }catch(err){ stage.classList.remove('loading'); return; }
+    if(TOPS[ti] !== t) return;
+    stage.classList.remove('loading');
+    angle = 0; vel = 0; sizeSpin(); turning = true; stage.classList.add('turning');
+    $('play').classList.add('on'); $('play').textContent = '✓ Listo'; $('play').setAttribute('aria-pressed', 'true');
+  }
+  function stopTurn(){
+    if(!turning && !stage.classList.contains('loading')) return;
+    turning = false; cancelAnimationFrame(sraf); sraf = 0; stage.classList.remove('turning', 'loading');
+    $('play').classList.remove('on'); $('play').textContent = '↻ Girar 360°'; $('play').setAttribute('aria-pressed', 'false');
+  }
+  function spinDown(e){ sd = { x:e.clientX, t:performance.now() }; vel = 0; stage.setPointerCapture(e.pointerId); stage.classList.add('drag', 'turned'); }
+  function spinMove(e){
+    if(!sd) return;
+    const now = performance.now(), dx = e.clientX - sd.x, k = 360 / (stage.clientWidth * 1.3);
+    angle -= dx * k; vel = vel * .5 + (-dx * k) / Math.max(.008, (now - sd.t) / 1000) * .5; sd.x = e.clientX; sd.t = now; drawSpin();
+  }
+  function spinUp(){ if(!sd) return; if(performance.now() - sd.t > 60) vel = 0; sd = null; stage.classList.remove('drag'); kick(); }
+  function kick(){ if(!sraf){ lastT = 0; sraf = requestAnimationFrame(tick); } }
+  function tick(ts){
+    const dt = lastT ? Math.min(.05, (ts - lastT) / 1000) : 0; lastT = ts; let busy = false;
+    if(Math.abs(vel) > 4){ angle += vel * dt; vel *= Math.pow(.03, dt); busy = true; }          // inercia corta
+    else { vel = 0; const off = ((angle % 360) + 540) % 360 - 180;                              // imán: si quedó casi de frente, se acomoda
+      if(Math.abs(off) > .3 && Math.abs(off) < 16){ angle -= off * Math.min(1, dt * 10); busy = true; } }
+    drawSpin(); sraf = busy ? requestAnimationFrame(tick) : 0;
+  }
+  $('play').addEventListener('click', () => turning ? stopTurn() : startTurn());
+  function stopVideo(){ stopTurn(); }
+
+  info();
+})();
+</script>
+</body>
+</html>
