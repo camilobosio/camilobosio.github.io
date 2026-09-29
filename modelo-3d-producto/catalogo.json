@@ -1,0 +1,21 @@
+{
+  "productos": [
+    {
+      "id": "campera-adidas",
+      "nombre": "Campera Adidas Originals",
+      "descripcion": "Generada a partir de 5 fotos de la tienda (frente, costado, espalda, manga, 3/4). La IA armó las 4 vistas limpias y cada motor hizo su modelo 3D.",
+      "fotos": {
+        "frente": "productos/campera-adidas/vistas/frente.jpg",
+        "izquierda": "productos/campera-adidas/vistas/izquierda.jpg",
+        "espalda": "productos/campera-adidas/vistas/espalda.jpg",
+        "derecha": "productos/campera-adidas/vistas/derecha.jpg"
+      },
+      "modelos": [
+        { "motor": "Tripo H3.1", "archivo": "productos/campera-adidas/tripo.glb", "giro": -90, "nota": "el más fiel" },
+        { "motor": "Hunyuan3D v3", "archivo": "productos/campera-adidas/hunyuan.glb", "giro": 0, "nota": "inventó un texto" },
+        { "motor": "Meshy 7", "archivo": "productos/campera-adidas/meshy.glb", "giro": 0, "nota": "tiras en la espalda" }
+      ],
+      "elegido": 0
+    }
+  ]
+}

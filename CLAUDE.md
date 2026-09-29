@@ -4,6 +4,14 @@ Sitio personal de Camilo Bosio (Rosario, Argentina): portfolio + servicios + pla
 Publicado con GitHub Pages en https://camilobosio.github.io/ (rama `main`, carpeta raíz).
 Hablarle a Camilo en español rioplatense, simple y sin tecnicismos.
 
+## Forma de trabajar (pedido de Camilo)
+- Al empezar, leer `tasks/lessons.md` (lo que Camilo corrigió) y `tasks/todo.md` (plan en curso).
+- Tareas de 3+ pasos: plan primero en `tasks/todo.md` con ítems tildables; avisar el plan; tildar a medida que se avanza;
+  al final, sección de revisión. Si algo se tuerce, frenar y replanificar.
+- Después de cada corrección de Camilo, anotar la lección en `tasks/lessons.md`.
+- Nada está terminado sin probarlo (tests, navegador, logs). Cambios simples y mínimos; causas de fondo, no parches.
+- Se pueden usar subagentes para investigar o probar en paralelo.
+
 ## Estructura
 - `index.html` — INICIO: solo pantallazos ("destellos") de todo. Portada con celular + anillo que gira detrás (`#orbit`,
   imágenes en `images/orbita/` + logos de `images/crear/` + camperas del probador), servicios, "¿Qué vamos a crear?",

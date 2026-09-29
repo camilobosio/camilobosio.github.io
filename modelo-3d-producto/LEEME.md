@@ -1,25 +1,32 @@
-# Producto en 3D — código base
+# Estudio 3D de producto — motor
 
-Dos ejemplos en la misma página (se eligen arriba a la derecha):
+Motor para pasar de **fotos (o un video) de un producto** a un **modelo 3D real** que se gira, se acerca y se compara
+con la foto original. `index.html` es el visor; `catalogo.json` lista los productos y los modelos de cada motor.
 
-- **Campera Adidas**: modelo 3D real, generado con Higgsfield a partir de las fotos (frente, costados y espalda).
-  Se gira arrastrando con el mouse o el dedo, **nunca gira sola**, y si la soltás casi de frente se acomoda de frente.
-  De frente aparece un **tirador naranja en el cuello**: lo agarrás y lo bajás, y la campera se va abriendo
-  (arriba del tirador se ve abierta, con la remera; abajo, cerrada). Tocarlo sin arrastrar la abre o cierra entera.
-  Abierta también se puede girar.
-- **Frasco de perfume**: ejemplo armado con formas, solo para girar.
+## Cómo se agrega un producto (el flujo del motor)
+1. **Fuentes**: fotos del producto (frente, costados, espalda, detalles). Sirven fotos de tienda aunque tengan persona.
+   Con un video: se sacan 8–12 cuadros alrededor del producto y se usan como fotos.
+2. **Vistas limpias** (`productos/<id>/vistas/`): con Higgsfield (nano_banana_pro, 4K) se arma una lámina de 4 vistas
+   del producto solo —frente, costado izquierdo, espalda, costado derecho— sobre fondo blanco, misma escala y luz,
+   copiando cada detalle de las fotos. Se recorta en `frente.jpg`, `izquierda.jpg`, `espalda.jpg`, `derecha.jpg`
+   (cuadradas, 2048 px). Esto es lo que más mejora la fidelidad: los motores 3D trabajan mucho mejor con vistas limpias.
+3. **Generar el 3D** con varios motores a la vez (Higgsfield `generate_3d`):
+   - `hunyuan3d_v3_image_to_3d` con las 4 vistas, `enable_pbr`, `face_count` 300000 (~15 créditos).
+   - `tripo_h3_1_multiview_to_3d` con las 4 vistas en orden frente/izq/espalda/der, calidad `detailed`, PBR (~18).
+   - `meshy_v7_image_to_3d` con el frente, `ultra_mode`, PBR (~44).
+4. **Procesar** cada GLB para la web: `motor/procesar.sh entrada.glb productos/<id>/<motor>.glb`
+   (texturas WebP ≤ 2048, malla comprimida con meshopt; el visor ya trae el decodificador).
+5. **Comparar**: en el visor se cambia de motor y se activa "Comparar con la foto"; se deja como `elegido` el más fiel.
+6. Sumar el producto a `catalogo.json` (nombre, descripción, fotos por vista, modelos, elegido).
 
-## Archivos
-- `index.html` — el visor (todo el código).
-- `campera-cerrada.glb` y `campera-abierta.glb` — los modelos 3D, comprimidos (menos de 2 MB cada uno).
+## Visor
+- Nunca gira solo (pedido de Camilo). Arrastrar gira con inercia suave; rueda/pellizco acerca hacia donde apuntás;
+  doble clic se acerca a ese punto; clic derecho o dos dedos mueven la vista.
+- Vistas rápidas (frente, 3/4, costados, espalda), "Comparar con la foto" (muestra la foto real del ángulo que mirás),
+  ver la malla, ver solo la forma (sin textura), fondo claro u oscuro, y datos del modelo (triángulos, peso).
+- Soltar un `.glb` encima lo muestra.
+- Three.js 0.170 por CDN, luz de estudio (RoomEnvironment), sombra suave en el piso, tono ACES.
 
-## Cómo verlo
-Con doble clic el navegador no deja leer los .glb de la carpeta, así que los busca en internet (en Higgsfield) y tarda un poco más.
-Publicado en la página (GitHub Pages) usa los de la carpeta.
-Para probar otro producto: arrastrá cualquier archivo .glb encima de la página.
-
-## Ajustes (arriba de todo en `index.html`)
-- `ALTO`: tamaño del producto.
-- `GIRA_SOLO`: en `false` a propósito.
-- `TORSO_NEGRO`: la textura que armó Higgsfield para la campera cerrada tenía el torso blanco; el visor lo pinta
-  de negro solo en el torso (las mangas y sus tiras quedan igual).
+## Versión 1
+La primera prueba (campera con cierre que se abría entre dos modelos) usaba un motor más viejo (Meshy multi-image) y
+quedó con textura rara; está en el historial de git (`campera-cerrada.glb`, `campera-abierta.glb`).
