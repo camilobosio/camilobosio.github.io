@@ -43,6 +43,14 @@ Hablarle a Camilo en español rioplatense, simple y sin tecnicismos.
   Photoshop, Illustrator; las demás las sugerí yo y Camilo aprobó todas. Logos de simple-icons (SVG) y favicons.
   En celular: grilla de 4 íconos con nombre, sin descripción.
 
+- "Así nace una marca" (`#marca` en index.html, PUBLICADO): logo limpio en blanco; entra un balde de pintura REAL
+  (`images/balde/balde.webp`, foto Higgsfield 82510ff9 recortada del verde) arriba a un costado, lo vuelca y la pintura
+  cubre la CB y chorrea (SVG + JS al final de js/sitio.js, `window.__balde(t)` dibuja un instante para probar).
+  Se reproduce una vez al verse; tocarlo lo repite.
+- Portfolio, debajo de la Campera 360 (`.p3-mock`, PUBLICADO): video del mockup notebook + celu
+  (`portfolio/ropa/mockup-campera.mp4`). Se genera con `herramientas-video/` (landing web3 sin texto grabada cuadro a
+  cuadro con Playwright y pegada con perspectiva en la foto del mockup, job 944fcfcf).
+
 ## Estilo
 - Colores: violeta (`--violet`) como principal + **naranja del logo** (`--orange`, `--paint` = degradé naranja→rosa) como acento
   (frases que rotan en la portada, puntos de la cinta, números de pasos, todo lo del servicio "Contenido con IA").
