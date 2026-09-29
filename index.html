@@ -147,6 +147,45 @@
     .case-bottom{ padding:26px 22px 30px; margin-top:26px; }
   }
 
+  /* experiencia interactiva (demos de M Perfumerie) */
+  .ix{ margin-top:72px; }
+  .ix-grid{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  .ix-card{ border:1px solid var(--line); border-radius:22px; overflow:hidden; background:var(--paper); display:flex; flex-direction:column; }
+  .ix-stage{ position:relative; height:230px; overflow:hidden; display:grid; place-items:center; user-select:none; -webkit-user-select:none; }
+  .ix-cream{ background:#efe8e0; color:#161412; }
+  .ix-dark{ background:radial-gradient(ellipse at 50% 0%, #2a2520, #0d0c0b 70%); }
+  .ix-flyer{ background:#0d0c0b url("images/d_hero.jpg") 30% 48%/cover no-repeat; cursor:crosshair; }
+  .ix-txt{ display:grid; grid-template-columns:auto 1fr; gap:4px 14px; padding:18px 20px 20px; border-top:1px solid var(--line); }
+  .ix-txt .n{ font-family:var(--mono); font-size:12px; color:var(--violet); padding-top:4px; }
+  .ix-txt h4{ font-family:var(--display); font-size:21px; letter-spacing:-.02em; line-height:1.15; }
+  .ix-txt p{ font-size:14px; color:var(--ink-2); margin-top:4px; }
+  .ix-txt .hint{ grid-column:2; justify-self:start; margin-top:8px; font-family:var(--mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--violet); background:var(--violet-soft); border-radius:999px; padding:4px 10px; }
+  .ix small{ display:block; text-align:center; font-size:11px; letter-spacing:.32em; text-transform:uppercase; color:#6b5d50; font-weight:600; }
+  .ix .t{ display:flex; align-items:center; justify-content:center; gap:14px; margin-top:8px; }
+  .ix em{ font-family:Georgia, 'Times New Roman', serif; font-style:normal; font-size:clamp(30px, 4vw, 42px); letter-spacing:-.01em; }
+  .ix .star{ position:relative; display:inline-block; font-size:24px; background:linear-gradient(135deg, #f7dfa6, #c9974e 55%, #8a6428); -webkit-background-clip:text; background-clip:text; color:transparent; animation:twinkle 2.2s ease-in-out infinite; }
+  .ix .star:last-child{ animation-delay:-1.1s; }
+  @keyframes twinkle{ 50%{ transform:scale(.72) rotate(20deg); opacity:.6; } }
+  .spk{ position:absolute; width:var(--s,8px); height:var(--s,8px); margin:calc(var(--s,8px) / -2) 0 0 calc(var(--s,8px) / -2); pointer-events:none; background:linear-gradient(135deg, #fff3d1, #e6b562 50%, #b07a2c); clip-path:polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%); animation:spk 1.1s cubic-bezier(.15,.7,.3,1) forwards; z-index:3; }
+  .spk.dot{ clip-path:none; border-radius:50%; background:#f3d59b; box-shadow:0 0 8px 2px rgba(243,213,155,.7); }
+  @keyframes spk{ from{ transform:translate(0,0) scale(.4) rotate(0); opacity:1; } 55%{ opacity:1; } to{ transform:translate(var(--dx), var(--dy)) scale(1) rotate(var(--r,180deg)); opacity:0; } }
+  .ix .box{ position:relative; width:34px; height:34px; display:inline-block; margin-left:4px; }
+  .ix .box .base{ position:absolute; left:3px; right:3px; bottom:0; height:21px; border-radius:3px; background:linear-gradient(135deg, #e7c27f, #b07a2c); box-shadow:inset 0 0 0 1px rgba(255,255,255,.25); }
+  .ix .box .base::after, .ix .box .lid::after{ content:""; position:absolute; left:50%; top:0; bottom:0; width:5px; margin-left:-2.5px; background:#6b3fd6; }
+  .ix .box .lid{ position:absolute; left:0; right:0; top:6px; height:9px; border-radius:3px; background:linear-gradient(135deg, #f2d596, #c08a3a); transform-origin:0 100%; transition:transform .55s cubic-bezier(.3,1.6,.5,1); z-index:2; }
+  .ix .box .rays{ position:absolute; left:50%; top:14px; width:60px; height:60px; margin:-30px 0 0 -30px; border-radius:50%; background:radial-gradient(circle, rgba(255,236,190,.95), rgba(230,181,98,.35) 45%, transparent 70%); transform:scale(0); opacity:0; transition:transform .5s, opacity .5s; }
+  .ix .box.open .lid{ transform:translate(-4px,-10px) rotate(-38deg); }
+  .ix .box.open .rays{ transform:scale(1); opacity:1; }
+  .ix-pills{ display:grid; grid-template-columns:1fr 1fr; gap:12px; width:min(360px, 84%); }
+  .ix-pills span{ position:relative; overflow:hidden; text-align:center; padding:12px 8px; border-radius:999px; border:1px solid #6d5634; background:#0a0908; color:#f4efe6; font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; cursor:pointer; transition:border-color .3s, transform .3s, box-shadow .3s; }
+  .ix-pills span::after{ content:""; position:absolute; top:-20%; bottom:-20%; left:-60%; width:40%; background:linear-gradient(100deg, transparent, rgba(255,231,180,.75), transparent); transform:skewX(-20deg); opacity:0; }
+  .ix-pills span:hover, .ix-pills span.shine{ border-color:#e6b562; transform:translateY(-2px); box-shadow:0 8px 22px -10px rgba(230,181,98,.7); }
+  .ix-pills span:hover::after, .ix-pills span.shine::after{ animation:sweep .8s ease forwards; }
+  @keyframes sweep{ from{ left:-60%; opacity:1; } to{ left:130%; opacity:1; } }
+  .ix-flyer .amb{ position:absolute; width:4px; height:4px; border-radius:50%; background:#f3d59b; box-shadow:0 0 8px 2px rgba(243,213,155,.6); animation:amb 5s ease-in-out infinite; pointer-events:none; }
+  @keyframes amb{ 0%,100%{ transform:translateY(0); opacity:.2; } 50%{ transform:translateY(-16px); opacity:1; } }
+  @media (max-width:760px){ .ix-grid{ grid-template-columns:1fr; } .ix-stage{ height:200px; } }
+
   /* galería de contenido con IA */
   .ai{ margin-top:72px; }
   .ai-head{ display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:end; margin-bottom:22px; }
@@ -393,6 +432,41 @@
           </a>
         </div>
       </div>
+      <div class="ix" id="interactivo">
+        <div class="ai-head">
+          <div>
+            <span class="label">Portfolio · Experiencia interactiva · Plan Premium</span>
+            <h3>Una página que reacciona</h3>
+          </div>
+          <p>En el plan Premium la página no solo muestra productos: responde cuando la tocás. Estos son detalles reales de M Perfumerie, recreados acá para que los pruebes.</p>
+        </div>
+        <div class="ix-grid">
+          <article class="ix-card">
+            <div class="ix-stage ix-cream" id="ixTrend">
+              <div class="ix-trend"><small>Lo más elegido</small><div class="t"><span class="star">✦</span><em>Tendencias</em><span class="star">✦</span></div></div>
+            </div>
+            <div class="ix-txt"><span class="n">01</span><div><h4>Títulos con destellos</h4><p>Las estrellitas al lado de "Tendencias" titilan y explotan en chispas doradas.</p></div><span class="hint">Pasá el mouse</span></div>
+          </article>
+          <article class="ix-card">
+            <div class="ix-stage ix-cream" id="ixBox">
+              <div class="ix-new"><small>Recién llegados</small><div class="t"><em>Nuevos ingresos</em>
+                <span class="box" aria-hidden="true"><span class="rays"></span><span class="lid"></span><span class="base"></span></span></div></div>
+            </div>
+            <div class="ix-txt"><span class="n">02</span><div><h4>Una caja que se abre</h4><p>Al lado de "Nuevos ingresos" hay una cajita de regalo que se abre y deja salir luz.</p></div><span class="hint">Pasá el mouse</span></div>
+          </article>
+          <article class="ix-card">
+            <div class="ix-stage ix-dark" id="ixPills">
+              <div class="ix-pills"><span>Nuevos</span><span>Ofertas</span><span>Perfumes</span><span>Marcas</span></div>
+            </div>
+            <div class="ix-txt"><span class="n">03</span><div><h4>Botones con brillo</h4><p>Las burbujas del menú tienen un destello que las cruza cuando pasás por encima.</p></div><span class="hint">Pasá por cada una</span></div>
+          </article>
+          <article class="ix-card">
+            <div class="ix-stage ix-flyer" id="ixFlyer">
+            </div>
+            <div class="ix-txt"><span class="n">04</span><div><h4>Un flyer que responde</h4><p>En la portada, cada toque hace aparecer destellos dorados. Podés hacer varios a la vez.</p></div><span class="hint">Tocá varias veces</span></div>
+          </article>
+        </div>
+      </div>
       <div class="ai" id="contenido">
         <div class="ai-head">
           <div>
@@ -438,12 +512,12 @@
       </div>
       <div class="group">
         <h3><i>01</i>Páginas web</h3>
-        <p>Los dos planes incluyen tu marca, tus productos y un panel para que actualices todo vos. La diferencia está en la experiencia y en las animaciones.</p>
+        <p>Los dos planes incluyen tu marca, tus productos y un panel para que actualices todo vos. Esencial es el formato de tienda y la carga de productos; Premium suma una <a href="#interactivo">experiencia interactiva</a> que hace que tu página se recuerde.</p>
       </div>
       <div class="plans">
         <article class="plan">
           <div class="name"><h3>Esencial</h3></div>
-          <p class="for">Para empezar a vender online con una página prolija, rápida y fácil de mantener.</p>
+          <p class="for">Para empezar a vender online: el formato de tienda y la carga de productos, con una página prolija, rápida y fácil de mantener.</p>
           <ul>
             <li>Diseño con tu logo, colores y datos</li>
             <li>Catálogo con buscador y categorías</li>
@@ -459,11 +533,12 @@
         </article>
         <article class="plan pro">
           <div class="name"><h3>Premium</h3><span class="chip">Como M Perfumerie</span></div>
-          <p class="for">Para marcas que quieren destacarse: una experiencia con movimiento, más herramientas y contenido visual propio.</p>
+          <p class="for">Para marcas que quieren destacarse: una experiencia interactiva que reacciona al mouse y al toque, más herramientas y contenido visual propio.</p>
           <ul>
             <li class="inc">Todo lo del plan Esencial</li>
             <li>Intro animada con tu logo</li>
             <li>Portada con carrusel de publicidades que cambiás desde el panel</li>
+            <li>Experiencia interactiva: títulos con destellos, cajas que se abren, botones con brillo y flyers que reaccionan al toque</li>
             <li>Títulos y secciones con animación</li>
             <li>Ficha con galería deslizable y animación de apertura</li>
             <li>Filtros avanzados, marcas y orden por precio</li>
@@ -473,7 +548,7 @@
           </ul>
           <div class="actions">
             <a class="btn btn-dark" href="https://wa.me/5493468437518?text=Hola%20Camilo%2C%20me%20interesa%20el%20plan%20Premium" target="_blank" rel="noopener">Consultar</a>
-            <a class="btn btn-line" href="https://mperfumerie.com.ar" target="_blank" rel="noopener">Ver ejemplo</a>
+            <a class="btn btn-line" href="#interactivo">Ver interacciones</a>
           </div>
         </article>
       </div>
@@ -581,6 +656,39 @@
   // selector de captura del caso
   const btns = document.querySelectorAll('.switch button'); const desk = [...document.querySelectorAll('#deskView img')];
   btns.forEach(b => b.addEventListener('click', () => { btns.forEach(x => x.setAttribute('aria-pressed', x === b)); desk.forEach((im, k) => im.classList.toggle('on', k === +b.dataset.v)); }));
+  // experiencia interactiva: chispas, caja que se abre, brillo en botones y destellos al tocar
+  function burst(stage, x, y, n, spread){
+    for(let k = 0; k < n; k++){
+      const s = document.createElement('span'); const a = Math.random() * Math.PI * 2, d = spread * (.45 + Math.random() * .75);
+      s.className = 'spk' + (Math.random() < .35 ? ' dot' : '');
+      s.style.cssText = `left:${x}px;top:${y}px;--dx:${Math.cos(a) * d}px;--dy:${Math.sin(a) * d}px;--s:${5 + Math.random() * 9}px;--r:${(Math.random() * 360) | 0}deg`;
+      s.addEventListener('animationend', () => s.remove()); stage.appendChild(s);
+    }
+  }
+  const at = (stage, el) => { const r = stage.getBoundingClientRect(), e = el.getBoundingClientRect(); return [e.left - r.left + e.width / 2, e.top - r.top + e.height / 2]; };
+  const trend = document.getElementById('ixTrend'), stars = trend.querySelectorAll('.star');
+  const pop = () => stars.forEach(st => burst(trend, ...at(trend, st), 12, 60));
+  let tBusy = 0; trend.addEventListener('pointerenter', () => { if(Date.now() - tBusy > 500){ tBusy = Date.now(); pop(); } }); trend.addEventListener('click', pop);
+  const boxStage = document.getElementById('ixBox'), box = boxStage.querySelector('.box'); let boxHover = false;
+  const openBox = () => { box.classList.add('open'); burst(boxStage, ...at(boxStage, box), 10, 46); };
+  boxStage.addEventListener('pointerenter', () => { boxHover = true; openBox(); });
+  boxStage.addEventListener('pointerleave', () => { boxHover = false; box.classList.remove('open'); });
+  const pills = [...document.querySelectorAll('.ix-pills span')];
+  pills.forEach(p => p.addEventListener('click', () => { p.classList.remove('shine'); void p.offsetWidth; p.classList.add('shine'); setTimeout(() => p.classList.remove('shine'), 900); }));
+  const flyer = document.getElementById('ixFlyer');
+  for(let k = 0; k < 14; k++){ const d = document.createElement('span'); d.className = 'amb'; d.style.cssText = `left:${35 + Math.random() * 62}%;top:${8 + Math.random() * 84}%;animation-delay:${-Math.random() * 5}s;animation-duration:${4 + Math.random() * 3}s`; flyer.appendChild(d); }
+  flyer.addEventListener('pointerdown', e => { const r = flyer.getBoundingClientRect(); burst(flyer, e.clientX - r.left, e.clientY - r.top, 16, 70); });
+  // cuando la sección está a la vista, las interacciones se muestran solas de a ratos (para celular)
+  let ixTimer = null, ixStep = 0;
+  function ixDemo(){
+    ixStep++;
+    if(ixStep % 2) pop();
+    if(!boxHover){ if(box.classList.contains('open')) box.classList.remove('open'); else openBox(); }
+    const p = pills[ixStep % pills.length]; p.classList.add('shine'); setTimeout(() => p.classList.remove('shine'), 900);
+    if(ixStep % 3 === 0){ const r = flyer.getBoundingClientRect(); burst(flyer, r.width * (.45 + Math.random() * .45), r.height * (.2 + Math.random() * .6), 14, 60); }
+  }
+  if('IntersectionObserver' in window && !reduce){ new IntersectionObserver(es => es.forEach(e => { clearInterval(ixTimer); if(e.isIntersecting) ixTimer = setInterval(ixDemo, 1800); }), { threshold:.25 }).observe(document.querySelector('.ix-grid')); }
+
   // galería de contenido con IA: filtros, videos que se reproducen al verse y visor
   const tiles = [...document.querySelectorAll('.tile')];
   const cats = document.querySelectorAll('.cats button');
