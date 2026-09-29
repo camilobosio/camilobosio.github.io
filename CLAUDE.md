@@ -97,6 +97,17 @@ arrastrando (tira de 60 cuadros, nunca gira sola, imán al frente).
   campera `portfolio/ropa/campera-360/hd/g-000…071` (cada 5°) y `a-00…12` (cierre), 900×1600;
   probador `probador/hd/<id>/00…29` (cada 12°), 960×1191. La rueda sola NO hace zoom (no roba el scroll).
 
+## Prenda interactiva (`portfolio.html#prenda`, clases `.pr-*`, código al final de `js/sitio.js`)
+Pedido de Camilo: la PRENDA SOLA, sin personas (estilo maniquí invisible), que se maneje con el mouse de varias formas.
+Campera Teamgeist gris con capucha. Estados (fotos 4K alineadas, nano_banana_pro editando la misma base):
+A cerrada (b2be8804) · B cierre abierto (7b75662f) · C costado corrido (d03fd9b6) · D capucha puesta (d718c7fe) ·
+E sin la campera, remera sola (db8c1938). Videos Kling 3.0 modo 4k, 5 s, start/end = esas fotos (30 créditos c/u):
+spin A→A (80505ed3), zip A→B (433580f5), flap B→C (16390476), hood A→D (441705b8), off B→E (4c6bea42).
+- `portfolio/ropa/prenda/<clip>.webp`: tiras de 8 columnas de 480×597 (spin 72 cuadros, el resto 48); `hd/A…E.webp`.
+- Puntos para agarrar en `HANDLES` (% del cuadro, inicio→fin). `curve` = [avance de la mano, tiempo del video]: el
+  tirador del cierre recién baja entre el 33% y el 70% del video (medido), el costado entre el 45% y el 85%.
+- Botones = atajos: buscan el camino entre estados (A-B, B-C, A-D, B-E) y lo reproducen paso a paso.
+
 ## Carteles en la calle (`portfolio/calle/`, también en el anillo de la portada)
 Flyers de perfumes puestos en una parada de colectivo, afiche en pared, subte, cartel en altura y vidriera, más el logo
 en neón y en papelería (nano_banana_pro con el flyer de referencia importado desde raw.githubusercontent.com).

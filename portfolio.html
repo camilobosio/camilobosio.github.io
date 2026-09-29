@@ -128,6 +128,29 @@
   <section class="block pf-sec" id="ropa">
     <div class="wrap">
       <h2 class="pf-h">Contenido interactivo</h2>
+      <div class="p3 pr" id="prenda">
+        <div class="p3-txt">
+          <span class="label">Ropa · Hecho con IA</span>
+          <h3>Prenda interactiva</h3>
+          <p>La campera sola, sin modelo, para mirarla como si la tuvieras en la mano. Girala, bajale el cierre, corré un costado para ver la remera, subile la capucha o sacásela: agarrá los puntos que brillan y arrastrá.</p>
+          <p class="p3-how">Cada movimiento es un video generado con IA (Kling 3.0 en 4K) que empieza y termina en fotos alineadas, así se encadenan y avanzan a la par de tu mano. La interacción la programé yo. Sirve para cualquier prenda o producto.</p>
+          <div class="pr-acts" id="prActs" role="group" aria-label="Movimientos">
+            <button type="button" data-go="spin">Girar 360°</button>
+            <button type="button" data-go="B">Abrir cierre</button>
+            <button type="button" data-go="C">Correr costado</button>
+            <button type="button" data-go="D">Capucha</button>
+            <button type="button" data-go="E">Sacar campera</button>
+            <button type="button" data-go="A">Volver</button>
+          </div>
+        </div>
+        <div class="pr-stage" id="pr" tabindex="0" role="application" aria-label="Campera interactiva: arrastrá para girarla; los puntos permiten abrir el cierre, correr el costado, subir la capucha o sacarla. También con los botones de al lado.">
+          <canvas class="pr-canvas" id="prc"></canvas>
+          <div class="pr-handles" id="prHandles"></div>
+          <div class="p3-load pr-load"><span></span>Preparando la campera…</div>
+          <div class="p3-hint pr-hint"><span class="hand" aria-hidden="true">↔</span>Arrastrá para girar · agarrá los puntos</div>
+          <span class="pr-state" id="prState" aria-live="polite"></span>
+        </div>
+      </div>
       <div class="p3 pv" id="probador">
         <div class="p3-txt">
           <span class="label">Ropa · Hecho con IA</span>

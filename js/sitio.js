@@ -590,3 +590,165 @@ function zoomer(stage, layer, onZoom){
   });
   info();
 })();
+
+/* Prenda interactiva (portfolio): la campera sola, sin modelo. Todo son cuadros de videos de Kling 3.0 (4K) que
+   empiezan y terminan en fotos fijas alineadas, así los movimientos se encadenan:
+     A cerrada ─zip─ B abierta ─flap─ C costado corrido
+     A ─hood─ D capucha puesta          B ─off─ E sin campera (la remera sola)
+   Arrastrás los puntos (cierre, capucha, borde, hombros) y el video avanza a la par de tu mano; al soltar termina
+   el movimiento o vuelve. De frente y cerrada, arrastrar el resto gira 360° (nunca sola). Botones = atajos. */
+(() => {
+  const st = document.getElementById('pr'); if (!st) return;
+  const DIR = 'portfolio/ropa/prenda/', FW = 480, FH = 597, COLS = 8;
+  const CLIPS = {                                   // n = cuadros en la tira; from/to = estados
+    spin: { n:72, from:'A', to:'A' },
+    zip:  { n:48, from:'A', to:'B' },
+    flap: { n:48, from:'B', to:'C' },
+    hood: { n:48, from:'A', to:'D' },
+    off:  { n:48, from:'B', to:'E' }
+  };
+  // puntos para agarrar (en % del cuadro) al principio (t=0) y al final (t=1) de cada movimiento, y hacia dónde se arrastra
+  // el tirador del cierre casi no se mueve en el primer tercio del video y baja entre el 33% y el 70% (medido en los
+  // cuadros): esta curva hace que el punto vaya pegado al tirador real. Pares [avance de la mano, tiempo del video].
+  const ZIPC = [[0, 0], [.04, .33], [.96, .70], [1, 1]], FLAPC = [[0, 0], [.04, .45], [.96, .85], [1, 1]];
+  const pw = (c, x, i, o) => { for (let k = 1; k < c.length; k++) if (x <= c[k][i]) { const a = c[k - 1], b = c[k], f = (x - a[i]) / ((b[i] - a[i]) || 1); return a[o] + (b[o] - a[o]) * f; } return c[c.length - 1][o]; };
+  const tOf = (h, p) => h.curve ? pw(h.curve, p, 0, 1) : p;      // avance de la mano → tiempo del video
+  const pOf = (h, t) => h.curve ? pw(h.curve, t, 1, 0) : t;      // tiempo del video → dónde va el punto
+  const HANDLES = {
+    zipDown:  { clip:'zip',  dir: 1, label:'Bajá el cierre',     x0:51, y0:30, x1:52, y1:80, curve:ZIPC },
+    zipUp:    { clip:'zip',  dir:-1, label:'Subí el cierre',     x0:51, y0:30, x1:52, y1:80, curve:ZIPC },
+    hoodUp:   { clip:'hood', dir: 1, label:'Subí la capucha',    x0:50, y0:16, x1:50, y1:6 },
+    hoodDown: { clip:'hood', dir:-1, label:'Bajá la capucha',    x0:50, y0:16, x1:50, y1:6 },
+    flapOut:  { clip:'flap', dir: 1, label:'Corré el costado',   x0:55, y0:50, x1:72, y1:48, curve:FLAPC },
+    flapIn:   { clip:'flap', dir:-1, label:'Volvé el costado',   x0:55, y0:50, x1:72, y1:48, curve:FLAPC },
+    offUp:    { clip:'off',  dir: 1, label:'Tirá para sacarla', x0:33, y0:25, x1:33, y1:62 },
+    offDown:  { clip:'off',  dir:-1, label:'Subila para ponerla', x0:33, y0:25, x1:33, y1:62 }
+  };
+  const EDGES = [['A', 'B', 'zip'], ['B', 'C', 'flap'], ['A', 'D', 'hood'], ['B', 'E', 'off']];
+  const cv = document.getElementById('prc'), ctx = cv.getContext('2d');
+  const sheets = {}, still = {};
+  const pic = src => new Promise((ok, bad) => { const i = new Image(); i.onload = () => ok(i); i.onerror = bad; i.src = src; });
+  const loading = {};
+  const sheet = c => loading[c] || (loading[c] = pic(DIR + c + '.webp').then(i => (sheets[c] = i)));
+  let ready = false, clip = 'zip', t = 0, angle = 0, vel = 0, drag = null, anim = null, raf = 0, lastT = 0;
+  const state = () => angle % 360 ? 'A' : (t <= .001 ? CLIPS[clip].from : t >= .999 ? CLIPS[clip].to : null);
+  const zm = zoomer(st, cv, () => size());
+
+  async function load() {
+    await Promise.all(['spin', 'zip'].map(sheet)); ready = true; st.classList.add('ready'); size(); ui();
+    ['flap', 'hood', 'off'].forEach(c => sheet(c).then(() => {}, () => {}));
+  }
+  new IntersectionObserver((es, io) => { if (es[0].isIntersecting) { io.disconnect(); load(); } }, { rootMargin:'400px' }).observe(st);
+  function size() { const r = st.getBoundingClientRect(), d = Math.min(2, devicePixelRatio || 1), z = Math.min(zm.z, 4096 / (r.height * d)); cv.width = Math.round(r.width * d * z); cv.height = Math.round(r.height * d * z); draw(); }
+  addEventListener('resize', size);
+
+  function blit(c, k, a) { const img = sheets[c]; if (!(img instanceof Image)) return false; ctx.globalAlpha = a; ctx.drawImage(img, (k % COLS) * FW, Math.floor(k / COLS) * FH, FW, FH, 0, 0, cv.width, cv.height); ctx.globalAlpha = 1; return true; }
+  function frames(c, p) { const n = CLIPS[c].n, x = p * (n - 1), a = Math.floor(x), f = x - a; if (!blit(c, a, 1)) return false; if (f > .04 && a + 1 < n) blit(c, a + 1, f); return true; }
+  function draw() {
+    if (!ready) return;
+    const s = state();
+    if (zm.z > 1.05 && s && !(angle % 360)) {                       // con zoom y quieta: foto HD del estado
+      const h = still[s]; if (h instanceof Image) { ctx.drawImage(h, 0, 0, cv.width, cv.height); return; }
+      if (!h) still[s] = pic(DIR + 'hd/' + s + '.webp').then(i => { still[s] = i; draw(); }, () => {});
+    }
+    if (angle % 360) { const n = CLIPS.spin.n - 1, x = ((angle / 360 * n) % n + n) % n, a = Math.floor(x), f = x - a; blit('spin', a, 1); if (f > .04) blit('spin', (a + 1) % n, f); return; }
+    if (!frames(clip, t) && !frames('spin', 0)) return;
+  }
+
+  // ---------- puntos para agarrar ----------
+  const layer = document.getElementById('prHandles');
+  const hEls = {};
+  Object.entries(HANDLES).forEach(([k, h]) => {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'pr-hand'; b.dataset.k = k;
+    b.innerHTML = '<span class="dot"></span><em>' + h.label + '</em>'; b.setAttribute('aria-label', h.label);
+    layer.appendChild(b); hEls[k] = b;
+  });
+  const lerp = (a, b, x) => a + (b - a) * x;
+  function ui() {
+    const s = state(), front = !(angle % 360) && Math.abs(vel) < 4;
+    Object.entries(HANDLES).forEach(([k, h]) => {
+      const el = hEls[k], active = drag && drag.k === k;
+      const on = active || (front && !anim && s && (h.clip === clip || s === CLIPS[h.clip].from || s === CLIPS[h.clip].to) && ((h.dir > 0 && s === CLIPS[h.clip].from) || (h.dir < 0 && s === CLIPS[h.clip].to)));
+      el.classList.toggle('on', !!on && zm.z <= 1.02); el.tabIndex = on ? 0 : -1;
+      const p = h.clip === clip ? pOf(h, t) : (h.dir > 0 ? 0 : 1);
+      el.style.left = lerp(h.x0, h.x1, p) + '%'; el.style.top = lerp(h.y0, h.y1, p) + '%';
+    });
+    st.classList.toggle('front', front && state() === 'A');
+    document.querySelectorAll('#prActs button').forEach(b => { const g = b.dataset.go; b.setAttribute('aria-pressed', state() === g); });
+    const sl = document.getElementById('prState'); if (sl) sl.textContent = { A:'Cerrada', B:'Cierre abierto', C:'Costado corrido', D:'Capucha puesta', E:'Sin la campera' }[s] || '';
+  }
+
+  // ---------- animación ----------
+  function tick(ts) {
+    const dt = lastT ? Math.min(.05, (ts - lastT) / 1000) : 0; lastT = ts; let busy = false;
+    if (anim) {
+      anim.p = Math.min(1, anim.p + dt / anim.dur); const e = anim.p < .5 ? 2 * anim.p * anim.p : 1 - Math.pow(-2 * anim.p + 2, 2) / 2;
+      if (anim.kind === 'spin') angle = lerp(anim.a0, anim.a1, e); else t = lerp(anim.t0, anim.t1, e);
+      if (anim.p >= 1) { if (anim.kind === 'spin') angle = anim.a1 % 360 === 0 ? 0 : anim.a1; const nx = anim.next; anim = null; if (nx) nx(); }
+      busy = true;
+    } else if (!drag) {
+      if (Math.abs(vel) > 4) { angle += vel * dt; vel *= Math.pow(.05, dt); busy = true; }
+      else { vel = 0; const off = ((angle % 360) + 540) % 360 - 180; if (angle % 360 && Math.abs(off) < 16) { angle -= off * Math.min(1, dt * 10); if (Math.abs(off) < .3) angle = 0; busy = true; } }
+    }
+    draw(); ui(); raf = busy ? requestAnimationFrame(tick) : 0; if (!busy) lastT = 0;
+  }
+  const kick = () => { if (!raf) { lastT = 0; raf = requestAnimationFrame(tick); } };
+  function play(c, t1, next, dur) { clip = c; anim = { kind:'clip', t0:t, t1, p:0, dur:(dur || 1.3) * Math.max(.25, Math.abs(t1 - t)), next }; kick(); }
+  function toFront(next) { const a = ((angle % 360) + 360) % 360; if (!a) { angle = 0; return next(); } anim = { kind:'spin', a0:a, a1:a > 180 ? 360 : 0, p:0, dur:.6, next }; kick(); }
+  // camino más corto entre estados (A-B, B-C, A-D, B-E) y se reproduce paso a paso
+  function goTo(target) {
+    const s = state(); if (!s || s === target || anim) return;
+    const prev = { [s]:null }, q = [s];
+    while (q.length) { const u = q.shift(); for (const [a, b, c] of EDGES) for (const [x, y, fw] of [[a, b, 1], [b, a, 0]]) if (x === u && !(y in prev)) { prev[y] = [u, c, fw]; q.push(y); } }
+    const steps = []; for (let v = target; prev[v]; v = prev[v][0]) steps.unshift(prev[v]);
+    const run = i => { if (i >= steps.length) return; const [, c, fw] = steps[i]; sheet(c).then(() => play(c, fw ? 1 : 0, () => run(i + 1))); };
+    zm.reset(); toFront(() => run(0));
+  }
+  document.querySelectorAll('#prActs button').forEach(b => b.addEventListener('click', () => {
+    st.classList.add('used');
+    if (b.dataset.go === 'spin') { if (state() !== 'A' || anim) return goTo('A'); zm.reset(); anim = { kind:'spin', a0:0, a1:360, p:0, dur:2.4 }; kick(); return; }
+    goTo(state() === b.dataset.go ? CLIPS[{ B:'zip', C:'flap', D:'hood', E:'off' }[b.dataset.go]].from : b.dataset.go);
+  }));
+
+  // ---------- arrastre ----------
+  st.addEventListener('pointerdown', e => {
+    if (!ready || anim || e.target.closest('.zoomctl, #prActs')) return;
+    st.classList.add('used');
+    if (zm.down(e)) return;
+    const hb = e.target.closest('.pr-hand.on');
+    st.setPointerCapture(e.pointerId);
+    if (hb) {
+      const h = HANDLES[hb.dataset.k]; const r = st.getBoundingClientRect();
+      if (h.clip !== clip) { clip = h.clip; t = h.dir > 0 ? 0 : 1; }
+      sheet(h.clip);
+      const len = Math.hypot((h.x1 - h.x0) / 100 * r.width, (h.y1 - h.y0) / 100 * r.height);
+      drag = { k:hb.dataset.k, h, x:e.clientX, y:e.clientY, t0:t, p0:pOf(h, t), len, ux:(h.x1 - h.x0) / 100 * r.width / len, uy:(h.y1 - h.y0) / 100 * r.height / len };
+      st.classList.add('grabbing'); ui(); return;
+    }
+    if (state() === 'A' || angle % 360) { drag = { k:'spin', x:e.clientX, lx:e.clientX, lt:performance.now() }; vel = 0; clip = 'zip'; t = 0; st.classList.add('dragging'); }
+  });
+  st.addEventListener('pointermove', e => {
+    if (zm.busy(e) || !drag) return;
+    if (drag.k === 'spin') {
+      const now = performance.now(), dx = e.clientX - drag.lx, k = 360 / (st.clientWidth * 1.7);
+      angle += dx * k; vel = vel * .6 + Math.max(-540, Math.min(540, dx * k / Math.max(.008, (now - drag.lt) / 1000))) * .4; drag.lx = e.clientX; drag.lt = now;
+      draw(); ui(); return;
+    }
+    const d = (e.clientX - drag.x) * drag.ux + (e.clientY - drag.y) * drag.uy;       // cuánto se movió en la dirección del gesto
+    t = tOf(drag.h, Math.max(0, Math.min(1, drag.p0 + d / drag.len))); draw(); ui();
+  });
+  function up(e) {
+    zm.up(e); if (!drag) return; const d = drag; drag = null; st.classList.remove('grabbing', 'dragging');
+    if (d.k === 'spin') { if (performance.now() - d.lt > 60) vel = 0; kick(); return; }
+    const moved = Math.abs(t - d.t0) > .02;
+    play(clip, moved ? (Math.abs(t - d.t0) > .2 ? (d.h.dir > 0 ? 1 : 0) : d.t0) : (d.h.dir > 0 ? 1 : 0), null, 1);   // un toque sin arrastrar hace el movimiento entero
+  }
+  st.addEventListener('pointerup', up); st.addEventListener('pointercancel', up);
+  st.addEventListener('touchmove', e => { if (drag || zm.z > 1.02 || e.touches.length > 1) e.preventDefault(); }, { passive:false });
+  st.addEventListener('keydown', e => {
+    if (!ready || anim) return;
+    if ((e.key === 'ArrowLeft' || e.key === 'ArrowRight') && state() === 'A' && zm.z <= 1.02) { e.preventDefault(); angle += (e.key === 'ArrowRight' ? 10 : -10); if (Math.abs(angle % 360) < 1) angle = 0; draw(); ui(); }
+    const hb = e.target.closest && e.target.closest('.pr-hand.on');
+    if (hb && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); const h = HANDLES[hb.dataset.k]; clip = h.clip; t = h.dir > 0 ? 0 : 1; sheet(h.clip).then(() => play(h.clip, h.dir > 0 ? 1 : 0)); }
+  });
+})();
