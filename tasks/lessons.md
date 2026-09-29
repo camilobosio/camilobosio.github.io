@@ -38,3 +38,5 @@
   de una casa). Algunos con robots enchufados por fuera, otros vidriados mostrando una base de IA por dentro.
 - Motos y autos NO los maneja un robot: el vehículo ES el robot y se maneja solo. Nada sentado encima (ni "cabeza
   robot" donde iría el piloto): moto sin asiento ni piloto, autos sin nadie adentro.
+- Animaciones que tienen que seguir un trazo EXACTO (pincel sobre el logo): hacerlas con código sobre el SVG real,
+  no con video IA (Kling improvisa el grosor y el recorrido).

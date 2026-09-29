@@ -68,8 +68,8 @@ Objetivo: intro corta con el video de Camilo (cara y voz reales) pero en Rosario
 - Animaciones Kling 3.0 pro 1:1 5 s: chorreando f80c4169 · circuito c7af8c9d · pincel 5e4b9367 · balde d6a94c3d.
 - Mockups notebook + celu en piso de cemento con sol (nano_banana_pro 4:3): M Perfumerie 34a9fa0b · Campera 360 944fcfcf.
 - [x] Camilo eligió: BALDE en el inicio (animado). Pincel: rehacer (el pincel tiene que pintar TODO, letras y chorreado).
-- [ ] Balde en el inicio (video liviano + póster, se reproduce al verse)
-- [ ] Pincel v2 (Kling 10 s, pincel visible todo el tiempo) — job c168e6d9
-- [ ] Mockup M Perfumerie v2: PC portada/flyer, celu = productos — job b1731066
-- [ ] Mockup campera v2: celu = visor 3D; PC = VIDEO de una landing nueva hecha para esto, con cursor que gira la
+- [x] Balde en el inicio (video liviano + póster, se reproduce al verse)
+- [x] Pincel v2 Kling (c168e6d9): no le gustó (pincel muy grueso, no sigue el trazo). v3 HECHO CON CÓDIGO (herramientas-video/pincel.html): exacto.
+- [x] Mockup M Perfumerie v2: PC portada/flyer, celu = productos — job b1731066
+- [x] Mockup campera v2 (herramientas-video/): celu = visor 3D; PC = VIDEO de una landing nueva hecha para esto, con cursor que gira la
       campera, abre el cierre y desliza para cambiar de campera (grabada con Playwright, pegada en la pantalla con perspectiva)
