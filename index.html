@@ -174,15 +174,16 @@
   .p3-stage.ready .p3-canvas{ opacity:1; }
   .p3-srcs{ position:absolute; width:1px; height:1px; overflow:hidden; opacity:0; pointer-events:none; }
   .p3-srcs video{ width:2px; height:2px; }
-  /* cierre: al acercarte se ilumina y aparece la manito para agarrarlo */
-  .p3-zip{ position:absolute; left:50%; width:0; top:var(--zt, 24%); height:var(--zh, 50%); pointer-events:none; opacity:0; transition:opacity .25s; }
-  .p3-stage.near .p3-zip, .p3-stage.zipping .p3-zip{ opacity:1; }
+  /* cierre: al acercar el mouse al tirador (el cierre chiquito) se ilumina; se agarra y se baja. Se cierra con un clic */
+  .p3-stage{ --zt:23.5%; --zh:48.5%; }
+  .p3-zip{ position:absolute; left:50%; width:0; top:var(--zt); height:var(--zh); pointer-events:none; }
+  .p3-zip .pull{ position:absolute; left:0; top:calc(var(--zp, 0) * 100%); width:clamp(4px, 1.5cqw, 7px); height:clamp(10px, 3.4cqw, 15px); transform:translate(-50%, -30%); border-radius:2px; background:#ffb27a; opacity:0; transition:opacity .2s; box-shadow:0 0 8px 2px rgba(255,140,60,.9); }
+  .p3-stage{ container-type:inline-size; }
+  .p3-stage.near .p3-zip .pull, .p3-stage.zipping .p3-zip .pull{ opacity:1; }
+  .p3-stage.near:not(.zipping) .p3-zip .pull{ animation:glow 1s ease-in-out infinite; }
+  @keyframes glow{ 50%{ box-shadow:0 0 12px 4px rgba(255,140,60,.6); background:#ffd2ad; } }
   .p3-stage.near, .p3-stage.near.dragging{ cursor:grab; }
   .p3-stage.zipping{ cursor:grabbing; }
-  .p3-zip .line{ position:absolute; left:-2px; top:0; width:4px; height:calc(var(--zp, 0) * 100% + 10px); border-radius:4px; background:linear-gradient(#fff, #ffb27a); box-shadow:0 0 12px 3px rgba(255,157,77,.85); }
-  .p3-zip .pull{ position:absolute; left:-9px; top:calc(var(--zp, 0) * 100%); width:18px; height:26px; border-radius:6px; background:linear-gradient(#fff, #ffd9bd); box-shadow:0 0 0 3px rgba(255,122,61,.55), 0 0 22px 6px rgba(255,157,77,.8); }
-  .p3-stage.near:not(.zipping) .p3-zip .pull{ animation:pulse 1.2s ease-in-out infinite; }
-  @keyframes pulse{ 50%{ box-shadow:0 0 0 6px rgba(255,122,61,.3), 0 0 30px 10px rgba(255,157,77,.6); } }
   .p3-load{ position:absolute; left:50%; bottom:20px; transform:translateX(-50%); display:flex; align-items:center; gap:8px; padding:7px 14px; border-radius:999px; background:rgba(0,0,0,.45); color:#fff; font-size:12px; white-space:nowrap; transition:opacity .4s; pointer-events:none; }
   .p3-load span{ width:12px; height:12px; border-radius:50%; border:2px solid rgba(255,255,255,.3); border-top-color:#fff; animation:spin .8s linear infinite; }
   @keyframes spin{ to{ transform:rotate(360deg); } }
@@ -480,7 +481,7 @@
         <div class="p3-txt">
           <span class="label">Portfolio · Hecho con IA</span>
           <h3>Contenido interactivo</h3>
-          <p>Probá girar la campera y abrirle el cierre. Arrastrala desde cualquier lado para verla de todos los ángulos; acercate al cierre, agarralo y bajalo para descubrir la remera.</p>
+          <p>Probá girar la campera y abrirle el cierre. Arrastrala desde cualquier lado para verla de todos los ángulos; acercate al cierre, agarralo y bajalo para descubrir la remera. Un clic la vuelve a cerrar.</p>
           <p class="p3-how">Las imágenes y los movimientos los generé con inteligencia artificial a partir de las fotos del producto; la interacción la programé yo. Se puede hacer con cualquier producto.</p>
           <div class="p3-tags"><span>Arrastrá para girar</span><span>Agarrá el cierre y bajalo</span></div>
         </div>
@@ -493,7 +494,7 @@
             <video class="p3-src" data-kind="spin" src="https://d8j0ntlcm91z4.cloudfront.net/user_3HIfCF8khEVPtKhxveCQOnXQy9S/hf_20260929_013101_43918be3-55aa-4f28-9d2c-18ecbd60d14a.mp4" muted playsinline preload="auto"></video>
             <video class="p3-src" data-kind="open" src="https://d8j0ntlcm91z4.cloudfront.net/user_3HIfCF8khEVPtKhxveCQOnXQy9S/hf_20260929_013154_29299012-9105-4435-bfec-4d1a8862b8a8.mp4" muted playsinline preload="auto"></video>
           </div>
-          <div class="p3-zip" id="p3zip" aria-hidden="true"><span class="line"></span><span class="pull"></span></div>
+          <div class="p3-zip" id="p3zip" aria-hidden="true"><span class="pull"></span></div>
           <div class="p3-load" id="p3load"><span></span>Preparando la campera…</div>
           <div class="p3-hint" id="p3hint"><span class="hand" aria-hidden="true">↔</span>Arrastrá para girar · Agarrá el cierre</div>
         </div>
@@ -751,25 +752,28 @@
       if(!ready || Math.abs(vel) > 4) return false; const n = N(), f = frameIdx(); if(!(f <= 3 || f >= n - 3)) return false;   // de frente o casi
       const r = st.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
       const zt = parseFloat(getComputedStyle(st).getPropertyValue('--zt')) / 100 || .24, zh = parseFloat(getComputedStyle(st).getPropertyValue('--zh')) / 100 || .5;
-      return Math.abs(x - .5) < .08 && y > zt - .05 && y < zt + zh + .05;          // cualquier punto del cierre
+      if(open > .98) return false;
+      const py = zt + open * zh;                                                       // donde está el tirador ahora
+      return Math.abs(x - .5) < .045 && Math.abs(y - py) < .04;
     }
     st.addEventListener('pointermove', e => {
       if(mode === 'spin'){
+        if(wasOpen){ if(Math.abs(e.clientX - downX) < 6) return; wasOpen = false; openGoal = 0; open = 0; }   // abierta: arrastrar la cierra y gira
         const dx = e.clientX - lastX; lastX = e.clientX; const k = 360 / (st.clientWidth * 1.25);
         angle += dx * k; const now = performance.now(); vel = vel * .5 + (dx * k) / Math.max(.008, (now - lastMove) / 1000) * .5; lastMove = now; draw();
       } else if(mode === 'zip'){
-        const r = zip.getBoundingClientRect(); open = Math.max(0, Math.min(1, zipStart + (e.clientY - zipY) / r.height)); openGoal = open; draw();
+        const r = zip.getBoundingClientRect(); open = Math.max(open, Math.min(1, zipStart + (e.clientY - zipY) / r.height)); openGoal = open; draw();   // solo baja, nunca sube
       } else st.classList.toggle('near', nearZip(e));
     });
-    let lastMove = 0, zipY = 0, zipStart = 0;
+    let lastMove = 0, zipY = 0, zipStart = 0, downX = 0, wasOpen = false;
     st.addEventListener('pointerdown', e => {
       if(!ready) return; st.classList.add('used'); st.setPointerCapture(e.pointerId); vel = 0;
       if(nearZip(e)){ mode = 'zip'; zipY = e.clientY; zipStart = open; angle = Math.round(angle / 360) * 360; st.classList.add('zipping'); }
-      else { mode = 'spin'; lastX = e.clientX; lastMove = performance.now(); if(openGoal > 0 || open > 0){ openGoal = 0; kick(); } st.classList.add('dragging'); }
+      else { mode = 'spin'; lastX = e.clientX; downX = e.clientX; lastMove = performance.now(); wasOpen = openGoal > 0 || open > 0; st.classList.add('dragging'); }
     });
     function up(){
-      if(mode === 'zip'){ openGoal = open > .4 ? 1 : 0; st.classList.remove('zipping'); kick(); }
-      if(mode === 'spin'){ st.classList.remove('dragging'); if(performance.now() - lastMove > 60) vel = 0; kick(); }
+      if(mode === 'zip'){ openGoal = open > .15 ? 1 : 0; st.classList.remove('zipping'); kick(); }
+      if(mode === 'spin'){ st.classList.remove('dragging'); if(wasOpen){ openGoal = 0; wasOpen = false; } if(performance.now() - lastMove > 60) vel = 0; kick(); }   // clic con la campera abierta: se cierra
       mode = null;
     }
     st.addEventListener('pointerup', up); st.addEventListener('pointercancel', up);
