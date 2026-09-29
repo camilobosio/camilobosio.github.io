@@ -80,8 +80,8 @@
   .phone{ position:relative; justify-self:center; width:min(290px, 72vw); border-radius:44px; background:#0c0c0e; padding:11px; box-shadow:0 50px 90px -40px rgba(17,17,19,.55), inset 0 0 0 1.5px #2b2b30; animation:float 7s ease-in-out infinite; }
   .phone::before{ content:""; position:absolute; top:19px; left:50%; width:84px; height:22px; margin-left:-42px; border-radius:20px; background:#0c0c0e; z-index:2; }
   .phone .screen{ width:100%; aspect-ratio:390/844; border-radius:34px; overflow:hidden; background:#000; position:relative; }
-  .phone .screen img{ width:100%; height:100%; object-fit:cover; object-position:top; position:absolute; inset:0; opacity:0; transition:opacity 1s ease; }
-  .phone .screen img.on{ opacity:1; }
+  .phone .screen img, .phone .screen video{ width:100%; height:100%; object-fit:cover; object-position:top; position:absolute; inset:0; opacity:0; transition:opacity 1s ease; }
+  .phone .screen .on{ opacity:1; }
   .phone .tag{ position:absolute; left:-18px; bottom:64px; z-index:3; background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:9px 12px; font-size:12.5px; box-shadow:0 16px 30px -18px rgba(0,0,0,.35); }
   .phone .tag b{ display:block; font-family:var(--display); font-size:14px; }
   @keyframes float{ 50%{ transform:translateY(-10px); } }
@@ -404,8 +404,7 @@
           </a>
           <div class="phone">
             <div class="screen" id="casePhone">
-              <img class="on" src="images/m_grid.jpg" alt="Productos de M Perfumerie en el celular">
-              <img src="images/m_modal.jpg" alt="Ficha de producto en el celular">
+              <video class="on" src="portfolio/interacciones/celular-producto.mp4" poster="portfolio/interacciones/celular-producto.jpg" muted loop playsinline autoplay preload="metadata" aria-label="En el celular: se toca un perfume y la ficha se abre en grande"></video>
             </div>
           </div>
         </div>
