@@ -14,6 +14,12 @@ Hablarle a Camilo en español rioplatense, simple y sin tecnicismos.
 - `portfolio/videos-ia/` — 3 videos (misma escena, 3 ángulos) con la cara de Camilo, hechos a partir de un par de fotos.
 - `Camilo-Bosio-Paginas-web.pdf` — PDF de planes. Solo tiene los planes de páginas web (falta sumar el de IA).
 
+## Estilo
+- Colores: violeta (`--violet`) como principal + **naranja del logo** (`--orange`, `--paint` = degradé naranja→rosa) como acento
+  (frases que rotan en la portada, puntos de la cinta, números de pasos, todo lo del servicio "Contenido con IA").
+- Sección "Quién está detrás": Camilo es el **creativo**, no solo alguien que automatiza con IA: idea, propone opciones,
+  se adapta a lo que quiere el cliente, diseña, programa y desarrolla (páginas, publicidades, videos, fotos).
+
 ## Posicionamiento (decidido)
 La página es general, no "solo páginas web": **diseño web + contenido con IA** (campañas publicitarias, flyers, fotos de producto, videos, interacciones para webs).
 
@@ -37,6 +43,10 @@ Dos servicios, dos planes cada uno (sin precios, botón "Consultar" por WhatsApp
 - Videos: en el mosaico se reproducen solos y mudos al verse; en el visor se abren con sonido.
 
 ## Pendiente (semana en curso)
+- Caso M Perfumerie: la PC ya muestra un video real de la portada (`portfolio/interacciones/portada-pc.mp4`, destellos que suben).
+  Falta el CELULAR: video de la grilla de productos → tocar uno → se abre la ficha en grande. No se pudo grabar porque los
+  productos vienen de Firestore y ese acceso fue denegado en este entorno; pedirle a Camilo una grabación de pantalla del
+  celular (o que habilite el acceso) y ponerla en `#casePhone`.
 - Camilo va a seguir creando contenido esta semana y pasarlo en tandas: campaña de **ropa**, videos de otros productos.
   Se puede usar el conector de **Higgsfield** para generar imágenes/videos con él.
 - El video `portfolio/perfumes/video-kling-1.mp4` figura como "Video de producto": preguntar qué perfume es.
