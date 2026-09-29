@@ -28,6 +28,12 @@ Objetivo: intro corta con el video de Camilo (cara y voz reales) pero en Rosario
 ## Plan
 - [x] Transcribir el video y marcar los momentos (presentación, señala drones, pasa un drone y sale corriendo)
 - [x] Cortar 3 tramos de ~9 s y subirlos a 720p (Kling Edit falla con 576p)
-- [ ] Kling 3.0 Omni Edit (pro, 18 créditos c/u): cambiar el departamento por calle de Rosario con vegetación y robots
-- [ ] 3 tomas sin Camilo (Kling 3.0): drone escaneando, cubo de carga de robots, autos/motos robot
-- [ ] Armar la intro con su audio original, revisar cuadros y mandársela
+- [x] Kling 3.0 Omni Edit (pro, 18 créditos c/u): cambiar el departamento por calle de Rosario con vegetación y robots
+- [x] 3 tomas sin Camilo (Kling 3.0): drone escaneando, cubo de carga de robots, autos/motos robot
+- [x] Armar la intro con su audio original, revisar cuadros y mandársela
+
+## Revisión
+- Tu cara, gorra y campera quedaron iguales en los 3 tramos (jobs f087477f, 12bf874d, 2d3daf6e). Kling Edit falla sin aviso con 576p: subir a 720p.
+- Tomas extra: drone (8c418ffb) y cubos de carga (9fe7bb04) sí; la de autos/moto (a747ee9a) no: la moto tiene un piloto humano.
+- En el tramo final (2d3daf6e) se ve una persona chiquita caminando en la calle: a revisar con Camilo.
+- Intro: 41 s vertical, audio original de Camilo, marca REC + "ROSARIO 12/03/2045", cierre con título. Créditos: ~90.
