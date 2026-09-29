@@ -132,15 +132,17 @@
         <div class="p3-txt">
           <span class="label">Ropa · Hecho con IA</span>
           <h3>Probador virtual</h3>
-          <p>Cinco camperas reales de adidas puestas sobre el mismo modelo. Deslizá sobre el modelo para cambiarle la campera y tocá "360°" para darlo vuelta arrastrando.</p>
+          <p>Cinco camperas reales de adidas puestas sobre el mismo modelo. Deslizá sobre el modelo para cambiarle la campera, tocá "360°" para darlo vuelta arrastrando y hacé doble clic para ver los detalles de cerca.</p>
           <p class="p3-how">El modelo, las camperas puestas y los giros los generé con inteligencia artificial a partir de las fotos de la tienda; la interacción la programé yo. Sirve para cualquier marca de ropa.</p>
-          <div class="p3-tags"><span>Deslizá para cambiar</span><span>Girá 360°</span></div>
+          <div class="p3-tags"><span>Deslizá para cambiar</span><span>Girá 360°</span><span>Doble clic: zoom HD</span></div>
         </div>
         <div class="pv-stage" id="pv" tabindex="0" role="application" aria-label="Probador: deslizá para cambiar la campera; el botón 360° permite girar al modelo arrastrando. Con el teclado: flechas para cambiar o girar, Enter para el 360°">
-          <img class="pv-lay" id="pvCur" alt="" draggable="false">
-          <img class="pv-lay pv-in" id="pvIn" alt="" draggable="false">
-          <canvas class="pv-spin" id="pvSpin"></canvas>
-          <div class="pv-scan" id="pvScan"></div>
+          <div class="pv-zoom" id="pvZoom">
+            <img class="pv-lay" id="pvCur" alt="" draggable="false">
+            <img class="pv-lay pv-in" id="pvIn" alt="" draggable="false">
+            <canvas class="pv-spin" id="pvSpin"></canvas>
+            <div class="pv-scan" id="pvScan"></div>
+          </div>
           <button type="button" class="pv-arrow l" id="pvPrev" aria-label="Campera anterior">←</button>
           <button type="button" class="pv-arrow r" id="pvNext" aria-label="Campera siguiente">→</button>
           <div class="pv-bar"><span class="pv-name"><b id="pvName">Audi F1 Team</b><span id="pvNum">1 / 5</span></span><button type="button" class="pv-360" id="pv360" aria-pressed="false">↻ 360°</button></div>
@@ -152,9 +154,9 @@
         <div class="p3-txt">
           <span class="label">Ropa · Hecho con IA</span>
           <h3>Campera 360</h3>
-          <p>Probá girar la campera y abrirle el cierre. Arrastrala desde cualquier lado para verla de todos los ángulos; acercate al cierre, agarralo y bajalo para descubrir la remera. Un clic la vuelve a cerrar.</p>
+          <p>Probá girar la campera y abrirle el cierre. Arrastrala desde cualquier lado para verla de todos los ángulos; acercate al cierre, agarralo y bajalo para descubrir la remera. Con doble clic (o pellizcando en el celular) la ves de cerca, en alta definición.</p>
           <p class="p3-how">Las imágenes y los movimientos los generé con inteligencia artificial a partir de las fotos del producto; la interacción la programé yo. Se puede hacer con cualquier producto.</p>
-          <div class="p3-tags"><span>Arrastrá para girar</span><span>Agarrá el cierre y bajalo</span></div>
+          <div class="p3-tags"><span>Arrastrá para girar</span><span>Agarrá el cierre y bajalo</span><span>Doble clic: zoom HD</span></div>
         </div>
         <div class="p3-stage" id="p3" tabindex="0" role="application" aria-label="Campera interactiva: arrastrá para girarla; acercate al cierre, agarralo y bajalo para abrirla. Con el teclado: flechas para girar, Enter para abrir o cerrar" style="background-image:url('https://d8j0ntlcm91z4.cloudfront.net/user_3HIfCF8khEVPtKhxveCQOnXQy9S/hf_20260929_012618_47894ddb-9015-4133-bd29-2203b262819f_min.webp')">
           <canvas class="p3-canvas" id="p3c"></canvas>

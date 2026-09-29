@@ -1,3 +1,50 @@
+/* Zoom compartido por los visores de producto: doble clic/doble toque, pellizco (o pellizco del trackpad) y botones
+   + / − dentro del cuadro. Con zoom, arrastrar mueve la vista; al volver a 1× todo sigue como antes.
+   `layer` es lo que se agranda (con CSS transform); `onZoom` avisa para redibujar en más resolución. */
+function zoomer(stage, layer, onZoom){
+  const MAX = 3, pts = new Map();
+  let z = 1, tx = 0, ty = 0, pan = null, pinch = null, lastTap = 0;
+  const ctl = document.createElement('div'); ctl.className = 'zoomctl';
+  ctl.innerHTML = '<button type="button" data-z="1" aria-label="Acercar">+</button><button type="button" data-z="-1" aria-label="Alejar" disabled>−</button>';
+  stage.appendChild(ctl);
+  const [bIn, bOut] = ctl.querySelectorAll('button');
+  const api = { get z(){ return z; }, onStart:null };
+  function clamp(){ const w = stage.clientWidth, h = stage.clientHeight; tx = Math.min(0, Math.max(w - w * z, tx)); ty = Math.min(0, Math.max(h - h * z, ty)); }
+  function apply(){ clamp(); layer.style.transformOrigin = '0 0'; layer.style.transform = z > 1.001 ? `translate(${tx}px, ${ty}px) scale(${z})` : ''; stage.classList.toggle('zoomed', z > 1.02); bOut.disabled = z <= 1.001; bIn.disabled = z >= MAX - .001; }
+  function set(nz, px, py){                                         // px, py: punto del cuadro que queda quieto
+    const was = z; nz = Math.max(1, Math.min(MAX, nz)); if(Math.abs(nz - was) < .001) return;
+    if(was <= 1.02 && nz > 1.02 && api.onStart) api.onStart();
+    const r = stage.getBoundingClientRect(); px = px ?? r.width / 2; py = py ?? r.height / 2;
+    tx = px - (px - tx) * nz / was; ty = py - (py - ty) * nz / was; z = nz; if(z <= 1.001){ z = 1; tx = ty = 0; }
+    apply(); onZoom();
+  }
+  api.set = set;
+  const local = e => { const r = stage.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+  ctl.addEventListener('click', e => { const b = e.target.closest('button'); if(!b) return; stage.classList.add('used'); set(b.dataset.z > 0 ? (z < 1.5 ? 2 : z + 1) : (z > 2.2 ? z - 1 : 1)); });
+  ctl.addEventListener('pointerdown', e => e.stopPropagation());
+  stage.addEventListener('dblclick', e => { if(e.target.closest('.zoomctl, button')) return; e.preventDefault(); const [x, y] = local(e); set(z > 1.02 ? 1 : 2.4, x, y); });
+  stage.addEventListener('wheel', e => { if(!e.ctrlKey) return; e.preventDefault(); const [x, y] = local(e); set(z * Math.exp(-e.deltaY * .01), x, y); }, { passive:false });   // pellizco del trackpad
+  // devuelve true si este toque lo maneja el zoom (mover la vista o pellizcar)
+  api.down = e => {
+    pts.set(e.pointerId, local(e));
+    if(e.pointerType === 'touch'){ const now = performance.now(); if(now - lastTap < 280 && pts.size === 1){ const [x, y] = local(e); set(z > 1.02 ? 1 : 2.4, x, y); lastTap = 0; return true; } lastTap = now; }
+    if(pts.size === 2){ const [a, b] = [...pts.values()]; pinch = { d:Math.hypot(a[0] - b[0], a[1] - b[1]), z }; pan = null; return true; }
+    if(z > 1.02){ stage.setPointerCapture(e.pointerId); pan = { x:e.clientX, y:e.clientY, tx, ty }; stage.classList.add('panning'); return true; }
+    return false;
+  };
+  api.busy = e => {
+    if(!pts.has(e.pointerId)) return false;
+    pts.set(e.pointerId, local(e));
+    if(pinch && pts.size === 2){ const [a, b] = [...pts.values()]; set(pinch.z * Math.hypot(a[0] - b[0], a[1] - b[1]) / pinch.d, (a[0] + b[0]) / 2, (a[1] + b[1]) / 2); return true; }
+    if(pan){ tx = pan.tx + e.clientX - pan.x; ty = pan.ty + e.clientY - pan.y; apply(); return true; }
+    return false;
+  };
+  api.up = e => { if(e && e.pointerId !== undefined) pts.delete(e.pointerId); if(pts.size < 2) pinch = null; if(!pts.size){ pan = null; stage.classList.remove('panning'); } };
+  api.reset = () => set(1);
+  addEventListener('resize', () => { if(z > 1.001) apply(); });
+  return api;
+}
+
 (function(){
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   // frases que cambian en la portada
@@ -34,55 +81,61 @@
   if('IntersectionObserver' in window){ const ixo = new IntersectionObserver(es => es.forEach(e => e.isIntersecting ? e.target.play().catch(() => {}) : e.target.pause()), { threshold:.3 }); ixVids.forEach(v => ixo.observe(v)); }
   else ixVids.forEach(v => v.play().catch(() => {}));
 
-  // producto interactivo: la campera NUNCA gira sola. Al cargar se sacan cuadros de los videos (giro y apertura) y se
-  // dibujan en un canvas según la posición del mouse: el giro sigue a la mano 1 a 1, sin demora. De frente, al acercarte
-  // al cierre se ilumina; lo agarrás y al bajarlo se abre a la par de tu mano.
+  // producto interactivo: la campera NUNCA gira sola. Los cuadros (sacados de los videos de Kling, mejorados a 2K)
+  // se dibujan en un canvas según la mano: el giro sigue al mouse 1 a 1 y entre un cuadro y el siguiente se funden,
+  // así la vuelta se ve continua. De frente, al acercarte al cierre se ilumina; lo agarrás y al bajarlo se abre.
+  // Zoom (doble clic, pellizco o los botones): se carga la foto HD de ese ángulo y arrastrar mueve la vista.
   (function(){
     const st = document.getElementById('p3'); if(!st) return;
     const cv = document.getElementById('p3c'), ctx = cv.getContext('2d'), zip = document.getElementById('p3zip');
-    // Los cuadros ya vienen sacados de los videos de Kling, en tiras (6 columnas de 450×800): 4 tramos de giro
-    // de 36 cuadros (144 = 2,5° cada uno) y 37 del cierre. Carga mucho más rápido que sacarlos del video en el navegador.
-    const DIR = 'portfolio/ropa/campera-360/', SPIN = ['giro-1', 'giro-2', 'giro-3', 'giro-4'], OPEN = 'apertura', FW = 450, FH = 800, COLS = 6;
-    const spinF = [], openF = [];
-    let ready = false, angle = 0, vel = 0, open = 0, openGoal = 0, mode = null, lastX = 0, lastT = 0, raf = 0, drawn = '';
-    const pic = name => new Promise((ok, bad) => { const i = new Image(); i.onload = () => ok(i); i.onerror = bad; i.src = DIR + name + '.webp'; });
-    const cut = (img, out) => { const n = (img.width / FW) * (img.height / FH);
-      for(let k = 0; k < n; k++){ const c = document.createElement('canvas'); c.width = FW; c.height = FH; c.getContext('2d').drawImage(img, (k % COLS) * FW, Math.floor(k / COLS) * FH, FW, FH, 0, 0, FW, FH); out.push(c); } };
+    // Tiras de 6 columnas de 450×800: 4 tramos de giro de 36 cuadros (144 = 2,5° cada uno) y 37 del cierre.
+    // HD (900×1600): un cuadro de giro cada 5° (hd/g-000…071) y uno del cierre cada 3 (hd/a-00…12).
+    const DIR = 'portfolio/ropa/campera-360/', SPIN = ['giro-1', 'giro-2', 'giro-3', 'giro-4'], OPEN = 'apertura', FW = 450, FH = 800, COLS = 6, PER = 36, SN = 144, ON = 37;
+    let sheets = null, ready = false, angle = 0, vel = 0, open = 0, openGoal = 0, mode = null, lastX = 0, lastT = 0, raf = 0, drawn = '';
+    const pic = src => new Promise((ok, bad) => { const i = new Image(); i.onload = () => ok(i); i.onerror = bad; i.src = src; });
     async function load(){
-      const imgs = await Promise.all([...SPIN, OPEN].map(pic));
-      imgs.slice(0, 4).forEach(i => cut(i, spinF)); cut(imgs[4], openF);
-      spinF.length = 144; openF.length = 37;                    // las tiras tienen celdas vacías al final
+      sheets = await Promise.all([...SPIN, OPEN].map(n => pic(DIR + n + '.webp')));
+      await Promise.all(sheets.map(i => i.decode ? i.decode().catch(() => {}) : 0));
       ready = true; st.classList.add('ready'); draw(true);
     }
     new IntersectionObserver((es, io) => { if(es[0].isIntersecting){ io.disconnect(); load(); } }, { rootMargin:'300px' }).observe(st);
-    function size(){ const r = st.getBoundingClientRect(), dpr = Math.min(2, devicePixelRatio || 1); cv.width = r.width * dpr; cv.height = r.height * dpr; drawn = ''; draw(true); }
+    const zm = zoomer(st, cv, () => { drawn = ''; size(); });
+    function size(){ const r = st.getBoundingClientRect(), dpr = Math.min(2, devicePixelRatio || 1), z = Math.min(zm.z, 4096 / (r.height * dpr)); cv.width = Math.round(r.width * dpr * z); cv.height = Math.round(r.height * dpr * z); drawn = ''; draw(true); }
     addEventListener('resize', size); size();
-    const N = () => spinF.length;
-    const frameIdx = () => { const n = N(); return ((Math.round(angle / 360 * n) % n) + n) % n; };
+    const spinPos = () => ((angle / 360 * SN) % SN + SN) % SN;                   // posición con decimales (0…144)
+    const frameIdx = () => Math.round(spinPos()) % SN;
+    const cell = (sheet, k) => [sheets[sheet], (k % COLS) * FW, Math.floor(k / COLS) * FH];
+    const spinCell = i => cell(Math.floor(i / PER), i % PER);
+    const hd = {}; const hdPic = name => hd[name] || (hd[name] = pic(DIR + 'hd/' + name + '.webp').then(i => (hd[name] = i, drawn = '', draw(true), i)).catch(() => {}));
+    function blit(c, alpha){ ctx.globalAlpha = alpha; ctx.drawImage(c[0], c[1], c[2], FW, FH, 0, 0, cv.width, cv.height); }
     function draw(force){
       if(!ready) return;
-      const img = open > .002 ? openF[Math.min(openF.length - 1, Math.round(open * (openF.length - 1)))] : spinF[frameIdx()];
-      const key = img === undefined ? '' : (open > .002 ? 'o' + Math.round(open * 100) : 's' + frameIdx());
+      let key, hdName = null;
+      if(open > .002){ const k = Math.min(ON - 1, Math.round(open * (ON - 1))); key = 'o' + k; if(zm.z > 1.05) hdName = 'a-' + String(Math.round(k / 3)).padStart(2, '0'); }
+      else { const p = spinPos(); key = 's' + Math.round(p * 8); if(zm.z > 1.05 && !mode) hdName = 'g-' + String(Math.round(p / 2) % 72).padStart(3, '0'); }
+      if(hdName){ const h = hd[hdName]; if(h instanceof Image){ key = 'hd' + hdName; if(!force && key === drawn) return; drawn = key; ctx.globalAlpha = 1; ctx.drawImage(h, 0, 0, cv.width, cv.height); return; } hdPic(hdName); }
       if(!force && key === drawn) return; drawn = key;
-      ctx.drawImage(img, 0, 0, cv.width, cv.height);
+      if(open > .002){ blit(cell(4, Math.min(ON - 1, Math.round(open * (ON - 1)))), 1); }
+      else { const p = spinPos(), a = Math.floor(p) % SN, t = p - Math.floor(p); blit(spinCell(a), 1); if(t > .04) blit(spinCell((a + 1) % SN), t); }   // fundido entre cuadros
+      ctx.globalAlpha = 1;
       zip.style.setProperty('--zp', open.toFixed(3));
-      const f = frameIdx(), n = N(); st.classList.toggle('front', open < .98 && (f <= 5 || f >= n - 5) && Math.abs(vel) <= 4);
+      const f = frameIdx(); st.classList.toggle('front', zm.z <= 1.02 && open < .98 && (f <= 5 || f >= SN - 5) && Math.abs(vel) <= 4);
     }
     function tick(ts){
       const dt = lastT ? Math.min(.05, (ts - lastT) / 1000) : 0; lastT = ts; let busy = false;
-      if(mode !== 'spin' && Math.abs(vel) > 4){ angle += vel * dt; vel *= Math.pow(.02, dt); busy = true; }   // inercia corta al soltar
+      if(mode !== 'spin' && Math.abs(vel) > 4){ angle += vel * dt; vel *= Math.pow(.05, dt); busy = true; }   // al soltar sigue un poco y frena suave
       if(mode !== 'zip' && open !== openGoal){ open += (openGoal - open) * Math.min(1, dt * 12); if(Math.abs(openGoal - open) < .01) open = openGoal; busy = true; }
       if(!mode && !busy){                                                             // imán suave: si quedó casi de frente, se acomoda de frente
         const off = ((angle % 360) + 540) % 360 - 180;
         if(Math.abs(off) > .3 && Math.abs(off) < 14){ angle -= off * Math.min(1, dt * 10); busy = true; }
       }
       if(!busy) vel = 0;
-      draw(); raf = busy ? requestAnimationFrame(tick) : 0; if(!busy) lastT = 0;
+      draw(); raf = busy ? requestAnimationFrame(tick) : 0; if(!busy){ lastT = 0; draw(true); }
     }
     const kick = () => { if(!raf) raf = requestAnimationFrame(tick); };
     // zona del cierre (en % del cuadro): una franja angosta en el centro, del cuello al ruedo
     function nearZip(e){
-      if(!ready || Math.abs(vel) > 4) return false; const n = N(), f = frameIdx(); if(!(f <= 5 || f >= n - 5)) return false;   // de frente o casi
+      if(!ready || zm.z > 1.02 || Math.abs(vel) > 4) return false; const f = frameIdx(); if(!(f <= 5 || f >= SN - 5)) return false;   // de frente o casi
       const r = st.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
       const zt = parseFloat(getComputedStyle(st).getPropertyValue('--zt')) / 100 || .308, zh = parseFloat(getComputedStyle(st).getPropertyValue('--zh')) / 100 || .427;
       if(open > .98) return false;
@@ -90,32 +143,38 @@
       return Math.abs(x - .5) < .1 && y > py - .07 && y < py + .09;
     }
     st.addEventListener('pointermove', e => {
+      if(zm.busy(e)) return;
       if(mode === 'spin'){
         if(wasOpen){ if(Math.abs(e.clientX - downX) < 6) return; wasOpen = false; openGoal = 0; open = 0; }   // abierta: arrastrar la cierra y gira
-        const dx = e.clientX - lastX; lastX = e.clientX; const k = 360 / (st.clientWidth * 1.25);
-        angle += dx * k; const now = performance.now(); vel = vel * .5 + (dx * k) / Math.max(.008, (now - lastMove) / 1000) * .5; lastMove = now; draw();
+        const dx = e.clientX - lastX; lastX = e.clientX; const k = 360 / (st.clientWidth * 1.7);              // una vuelta = 1,7 anchos: más control
+        angle += dx * k; const now = performance.now(); vel = vel * .6 + Math.max(-540, Math.min(540, (dx * k) / Math.max(.008, (now - lastMove) / 1000))) * .4; lastMove = now; draw();
       } else if(mode === 'zip'){
         lastY = e.clientY; const r = zip.getBoundingClientRect(); open = Math.max(open, Math.min(1, zipStart + (e.clientY - zipY) / r.height)); openGoal = open; draw();   // solo baja, nunca sube
       } else st.classList.toggle('near', nearZip(e));
     });
     let lastY = 0, lastMove = 0, zipY = 0, zipStart = 0, downX = 0, wasOpen = false;
     st.addEventListener('pointerdown', e => {
-      if(!ready) return; st.classList.add('used'); st.setPointerCapture(e.pointerId); vel = 0;
+      if(!ready || e.target.closest('.zoomctl')) return; st.classList.add('used');
+      if(zm.down(e)){ mode = null; st.classList.remove('dragging', 'zipping'); return; }                  // con zoom: arrastrar mueve la vista
+      st.setPointerCapture(e.pointerId); vel = 0;
       if(nearZip(e)){ mode = 'zip'; zipY = lastY = e.clientY; zipStart = open; angle = Math.round(angle / 360) * 360; st.classList.add('zipping'); }
       else { mode = 'spin'; lastX = e.clientX; downX = e.clientX; lastMove = performance.now(); wasOpen = openGoal > 0 || open > 0; st.classList.add('dragging'); }
     });
-    function up(){
+    function up(e){
+      zm.up(e);
       if(mode === 'zip'){ openGoal = (open > .15 || Math.abs(lastY - zipY) < 6) ? 1 : 0; st.classList.remove('zipping'); kick(); }
       if(mode === 'spin'){ st.classList.remove('dragging'); if(wasOpen){ openGoal = 0; wasOpen = false; } if(performance.now() - lastMove > 60) vel = 0; kick(); }   // clic con la campera abierta: se cierra
       mode = null;
     }
-    st.addEventListener('touchstart', e => { const t = e.touches[0]; if(t && nearZip(t)) e.preventDefault(); }, { passive:false });
-    st.addEventListener('touchmove', e => { if(mode === 'zip') e.preventDefault(); }, { passive:false });
+    zm.onStart = () => { if(mode === 'spin' || mode === 'zip') up({}); vel = 0; if(!open) angle = Math.round(spinPos() / 2) * 2 / SN * 360; };   // con zoom se para en un ángulo con foto HD
+    st.addEventListener('touchstart', e => { const t = e.touches[0]; if(t && e.touches.length === 1 && nearZip(t)) e.preventDefault(); }, { passive:false });
+    st.addEventListener('touchmove', e => { if(mode === 'zip' || zm.z > 1.02 || e.touches.length > 1) e.preventDefault(); }, { passive:false });
     st.addEventListener('pointerup', up); st.addEventListener('pointercancel', up);
     st.addEventListener('pointerleave', () => { if(!mode) st.classList.remove('near'); });
     st.addEventListener('keydown', e => {
       if(!ready) return; st.classList.add('used');
-      if(e.key === 'ArrowLeft' || e.key === 'ArrowRight'){ openGoal = 0; open = 0; angle += (e.key === 'ArrowRight' ? 1 : -1) * 360 / N() * 2; draw(); }
+      if(zm.z > 1.02 && (e.key === 'ArrowLeft' || e.key === 'ArrowRight' || e.key === 'Enter' || e.key === ' ')) return;
+      if(e.key === 'ArrowLeft' || e.key === 'ArrowRight'){ openGoal = 0; open = 0; angle += (e.key === 'ArrowRight' ? 1 : -1) * 360 / SN * 2; draw(); }
       if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); angle = Math.round(angle / 360) * 360; openGoal = openGoal ? 0 : 1; kick(); }
     });
   })();
@@ -434,7 +493,7 @@
     scan.style.left = (dir > 0 ? 100 - pct : pct) + '%';
   }
   function go(k, dir, from) {
-    stopTurn(); k = (k + TOPS.length) % TOPS.length; if (k === ti && from === undefined) return;
+    stopTurn(); zm.reset(); k = (k + TOPS.length) % TOPS.length; if (k === ti && from === undefined) return;
     cancelAnimationFrame(anim); inc.src = src(TOPS[k]); st.classList.add('swiping');
     const t0 = performance.now(), p0 = from || 0, dur = 520 * (1 - p0) + 120;
     const step = now => {
@@ -450,11 +509,27 @@
   }
 
   // 360°
-  const SN = 60, SC = 10, SW = 540, SH = 670, sheets = {};
+  // HD para el zoom girando: probador/hd/<id>/00…29.webp (un cuadro cada 12°, 960×1191)
+  const SN = 60, SC = 10, SW = 540, SH = 670, sheets = {}, hd = {};
   let turning = false, angle = 0, vel = 0, sd = null, sraf = 0, lastT = 0, img360 = null;
   const sheet = id => sheets[id] || (sheets[id] = new Promise((ok, bad) => { const i = new Image(); i.onload = () => ok(i); i.onerror = bad; i.src = 'probador/giros/' + id + '.webp'; }));
-  function drawSpin() { if (!img360) return; const k = ((Math.round(angle / 360 * SN) % SN) + SN) % SN; sctx.drawImage(img360, (k % SC) * SW, Math.floor(k / SC) * SH, SW, SH, 0, 0, spin.width, spin.height); }
-  function sizeSpin() { const r = st.getBoundingClientRect(), d = Math.min(2, devicePixelRatio || 1); spin.width = Math.round(r.width * d); spin.height = Math.round(r.height * d); drawSpin(); }
+  const zm = zoomer(st, $('pvZoom'), () => sizeSpin());
+  const pos = () => ((angle / 360 * SN) % SN + SN) % SN;
+  function drawSpin() {
+    if (!img360) return;
+    const p = pos();
+    if (zm.z > 1.05) {                                            // con zoom: foto HD del ángulo (si ya llegó)
+      const name = TOPS[ti].id + '/' + String(Math.round(p / 2) % 30).padStart(2, '0');
+      const h = hd[name];
+      if (h instanceof Image) { sctx.globalAlpha = 1; sctx.drawImage(h, 0, 0, spin.width, spin.height); return; }
+      if (!h) hd[name] = new Promise(ok => { const i = new Image(); i.onload = () => { hd[name] = i; drawSpin(); ok(); }; i.onerror = ok; i.src = 'probador/hd/' + name + '.webp'; });
+    }
+    const a = Math.floor(p) % SN, t = p - Math.floor(p), cellAt = k => [(k % SC) * SW, Math.floor(k / SC) * SH];
+    let [x, y] = cellAt(a); sctx.globalAlpha = 1; sctx.drawImage(img360, x, y, SW, SH, 0, 0, spin.width, spin.height);
+    if (t > .04) { [x, y] = cellAt((a + 1) % SN); sctx.globalAlpha = t; sctx.drawImage(img360, x, y, SW, SH, 0, 0, spin.width, spin.height); sctx.globalAlpha = 1; }   // fundido entre cuadros
+  }
+  function sizeSpin() { const r = st.getBoundingClientRect(), d = Math.min(2, devicePixelRatio || 1), z = Math.min(zm.z, 4096 / (r.height * d)); spin.width = Math.round(r.width * d * z); spin.height = Math.round(r.height * d * z); drawSpin(); }
+  zm.onStart = () => { if (turning) { vel = 0; angle = Math.round(pos() / 2) * 2 / SN * 360; } };
   addEventListener('resize', sizeSpin);
   async function startTurn() {
     const t = TOPS[ti]; b360.classList.add('loading'); st.classList.remove('turned');
@@ -464,13 +539,13 @@
     b360.setAttribute('aria-pressed', 'true'); b360.textContent = '✓ Listo';
   }
   function stopTurn() {
-    if (!turning) return; turning = false; cancelAnimationFrame(sraf); sraf = 0; st.classList.remove('turning');
+    if (!turning) return; turning = false; zm.reset(); cancelAnimationFrame(sraf); sraf = 0; st.classList.remove('turning');
     b360.setAttribute('aria-pressed', 'false'); b360.textContent = '↻ 360°';
   }
   function kick() { if (!sraf) { lastT = 0; sraf = requestAnimationFrame(tick); } }
   function tick(ts) {
     const dt = lastT ? Math.min(.05, (ts - lastT) / 1000) : 0; lastT = ts; let busy = false;
-    if (Math.abs(vel) > 4) { angle += vel * dt; vel *= Math.pow(.03, dt); busy = true; }
+    if (Math.abs(vel) > 4) { angle += vel * dt; vel *= Math.pow(.05, dt); busy = true; }
     else { vel = 0; const off = ((angle % 360) + 540) % 360 - 180; if (Math.abs(off) > .3 && Math.abs(off) < 16) { angle -= off * Math.min(1, dt * 10); busy = true; } }
     drawSpin(); sraf = busy ? requestAnimationFrame(tick) : 0;
   }
@@ -479,15 +554,18 @@
   // arrastre
   let drag = null;
   st.addEventListener('pointerdown', e => {
-    if (e.target.closest('button')) return;
-    st.setPointerCapture(e.pointerId); st.classList.add('drag', 'used');
+    if (e.target.closest('button, .zoomctl')) return;
+    st.classList.add('used');
+    if (zm.down(e)) { drag = null; sd = null; return; }             // con zoom: arrastrar mueve la vista
+    st.setPointerCapture(e.pointerId); st.classList.add('drag');
     if (turning) { sd = { x:e.clientX, t:performance.now() }; vel = 0; st.classList.add('turned'); return; }
     drag = { x:e.clientX, w:st.getBoundingClientRect().width, dir:0, p:0, moved:false };
   });
   st.addEventListener('pointermove', e => {
+    if (zm.busy(e)) return;
     if (turning) {
-      if (!sd) return; const now = performance.now(), dx = e.clientX - sd.x, k = 360 / (st.clientWidth * 1.3);
-      angle -= dx * k; vel = vel * .5 + (-dx * k) / Math.max(.008, (now - sd.t) / 1000) * .5; sd.x = e.clientX; sd.t = now; drawSpin(); return;
+      if (!sd) return; const now = performance.now(), dx = e.clientX - sd.x, k = 360 / (st.clientWidth * 1.7);   // una vuelta = 1,7 anchos
+      angle -= dx * k; vel = vel * .6 + Math.max(-540, Math.min(540, (-dx * k) / Math.max(.008, (now - sd.t) / 1000))) * .4; sd.x = e.clientX; sd.t = now; drawSpin(); return;
     }
     if (!drag) return; const dx = e.clientX - drag.x;
     if (!drag.moved && Math.abs(dx) < 8) return; drag.moved = true;
@@ -496,7 +574,7 @@
     drag.p = Math.min(1, Math.abs(dx) / (drag.w * .8)); reveal(drag.p, dir);
   });
   function up(e) {
-    st.classList.remove('drag');
+    zm.up(e); st.classList.remove('drag');
     if (turning) { if (sd) { if (performance.now() - sd.t > 60) vel = 0; sd = null; kick(); } return; }
     if (!drag) return; const d = drag; drag = null; if (!d.moved) return;
     const dx = (e.clientX ?? d.x) - d.x;
@@ -506,6 +584,7 @@
   $('pvPrev').addEventListener('click', () => { st.classList.add('used'); go(ti - 1, -1); });
   $('pvNext').addEventListener('click', () => { st.classList.add('used'); go(ti + 1, 1); });
   st.addEventListener('keydown', e => {
+    if ((e.key === 'ArrowRight' || e.key === 'ArrowLeft') && zm.z > 1.02) return;
     if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); const d = e.key === 'ArrowRight' ? 1 : -1; if (turning) { angle += d * 12; drawSpin(); } else go(ti + d, d); }
     if (e.key === 'Enter' && e.target === st) { e.preventDefault(); turning ? stopTurn() : startTurn(); }
   });

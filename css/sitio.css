@@ -424,3 +424,18 @@
     .top nav{ display:flex; gap:14px; }
     .top nav a:not([href="portfolio.html"]){ display:none; }
   }
+
+  /* ---------- zoom de los visores de producto ---------- */
+  .pv-zoom{ position:absolute; inset:0; }
+  .p3-canvas, .pv-zoom{ will-change:transform; }
+  .zoomctl{ position:absolute; right:10px; top:10px; z-index:4; display:flex; flex-direction:column; gap:6px; }
+  .zoomctl button{ width:36px; height:36px; border:0; border-radius:50%; display:grid; place-items:center; font:inherit; font-size:20px; line-height:1; cursor:pointer; color:#17140f; background:rgba(255,255,255,.72); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); box-shadow:0 6px 16px -8px rgba(0,0,0,.4); transition:opacity .2s, background .2s; }
+  .zoomctl button:hover{ background:#fff; }
+  .zoomctl button:disabled{ opacity:.35; cursor:default; }
+  .p3-stage .zoomctl{ top:auto; bottom:14px; }
+  .pv-stage .zoomctl{ top:10px; }
+  .p3-stage:not(.ready) .zoomctl{ opacity:0; pointer-events:none; }
+  .zoomed{ cursor:zoom-out; }
+  .zoomed.panning{ cursor:grabbing; }
+  .p3-stage.zoomed .p3-zip, .p3-stage.zoomed .p3-hint, .pv-stage.zoomed .pv-arrow, .pv-stage.zoomed .p3-hint{ opacity:0; pointer-events:none; }
+  .zoomed{ touch-action:none; }

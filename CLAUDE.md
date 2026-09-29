@@ -86,6 +86,17 @@ arrastrando (tira de 60 cuadros, nunca gira sola, imán al frente).
   tiendas Shopify que las venden (`<tienda>/products/<handle>.json` da las URLs) o store.audif1.com, y se importan a
   Higgsfield con media_import_url. Falta la negra acolchada con franjas beige (no pasó link).
 
+## Visores de producto (campera 360 y probador): calidad, giro y zoom
+- Videos mejorados con Higgsfield upscale_video (bytedance, 2k, preset aigc, 24 fps): mismos cuadros y timing, así
+  el cierre sigue alineado con el giro. Campera: jobs f3d191aa, 7678ca44, 3e901dde, ae222ff5 (giros) y a81f8045
+  (apertura). Probador: df8e9c02 (Audi), 74eb5fd9 (jean), a1c3b95b (blocked), e85b229e (workwear), 0ad60813 (teamgeist).
+- Giro: entre un cuadro y el siguiente se funden (se ve continuo); una vuelta = 1,7 anchos de arrastre; inercia suave
+  (vel *= 0.05^dt, tope 540°/s); imán al frente. Nunca gira sola.
+- Zoom compartido (`zoomer()` al principio de js/sitio.js): doble clic / doble toque, pellizco, pellizco de trackpad
+  (ctrl+rueda) y botones + / −. Con zoom, arrastrar mueve la vista. Al acercar se carga la foto HD del ángulo:
+  campera `portfolio/ropa/campera-360/hd/g-000…071` (cada 5°) y `a-00…12` (cierre), 900×1600;
+  probador `probador/hd/<id>/00…29` (cada 12°), 960×1191. La rueda sola NO hace zoom (no roba el scroll).
+
 ## Carteles en la calle (`portfolio/calle/`, también en el anillo de la portada)
 Flyers de perfumes puestos en una parada de colectivo, afiche en pared, subte, cartel en altura y vidriera, más el logo
 en neón y en papelería (nano_banana_pro con el flyer de referencia importado desde raw.githubusercontent.com).
