@@ -47,15 +47,14 @@ Dos servicios, dos planes cada uno (sin precios, botón "Consultar" por WhatsApp
   se abra la ficha (`celular-producto.mp4`). El del celular se grabó con el código real de la página pero con 4 productos
   de muestra (los mismos de las capturas, imágenes recortadas de `images/m_grid.jpg` y `m_modal.jpg`), porque los datos
   reales están en Firestore y ese acceso fue denegado en este entorno.
-- EN CURSO · Campera Adidas interactiva (sección `#producto-360`, clases `.p3-*`, ya programada en la rama
-  `claude/que-hago-aca-nnwq9p`, NO publicada en main): arrastrar gira la campera recorriendo `portfolio/ropa/campera-360.mp4`,
-  tocar abre el cierre con `portfolio/ropa/campera-abrir.mp4` (se cierra recorriéndolo al revés). Faltan esos 2 archivos +
-  póster `campera-360.jpg`. Están en Higgsfield (jobs): 360 = 8d989639-b521-418a-9d63-ac212bd92e9a, abrir =
-  c33f551b-92d7-4d30-a5ca-a501b5f5fb0f, foto cerrada = c9f3499d-..., abierta = 4d0efdeb-.... Por ahora la página los carga DIRECTO desde el CDN de Higgsfield (URLs en index.html) y ya está publicada.
-  Idealmente bajarlos al repo; no se pueden bajar porque
-  la red bloquea d8j0ntlcm91z4.cloudfront.net: o Camilo agrega ese dominio en Network access, o manda los archivos.
-  Al tenerlos: recodificar con keyframe en cada cuadro (`-g 1`) para que el arrastre sea fluido, y publicar.
-  También hay 3 publicidades de la campera (jobs 6b1c0c83, 7974a2e7, f7ac0fb1) para un filtro "Ropa" en la galería.
+- Campera Adidas interactiva (sección `#producto-360`, clases `.p3-*`, PUBLICADA): "Contenido interactivo".
+  Arrastrar desde cualquier lado gira (suavizado + inercia); de frente aparece un punto en el cierre: se agarra (cursor grab)
+  y se baja para abrir (recorre el video de apertura según cuánto bajes). Sin botón, sin piso/base (flota en fondo oscuro).
+  El giro son 4 videos Kling de 3 s (frente→costado→espalda→costado→frente) que el JS recorre como uno solo.
+  Jobs Higgsfield: fotos frente 47894ddb, costado 609bd543, espalda 9892caf9, otro costado 40a9f202, abierta 2bde9db7;
+  giros d1a5003c, af34253e, bba097b5, 43918be3; apertura 29299012. Los videos se cargan DIRECTO desde el CDN de Higgsfield
+  (d8j0ntlcm91z4.cloudfront.net) porque la red de este entorno bloquea bajarlos; ideal: bajarlos al repo y recodificar
+  con `-g 1` para que el arrastre sea más fluido. 3 publicidades de la campera (jobs 6b1c0c83, 7974a2e7, f7ac0fb1) sin sumar aún.
   Subir referencias a Higgsfield: la subida directa está bloqueada; se suben al repo y se importan con media_import_url
   desde raw.githubusercontent.com.
 - Camilo va a seguir creando contenido esta semana y pasarlo en tandas: campaña de **ropa**, videos de otros productos.
