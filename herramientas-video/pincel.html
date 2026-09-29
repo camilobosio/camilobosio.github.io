@@ -10,7 +10,7 @@
   <linearGradient id="wood" x1="0" x2="1"><stop offset="0" stop-color="#7a3b12"/><stop offset=".45" stop-color="#c8733a"/><stop offset="1" stop-color="#6b3210"/></linearGradient>
   <linearGradient id="metal" x1="0" x2="1"><stop offset="0" stop-color="#8d8f96"/><stop offset=".4" stop-color="#f1f2f5"/><stop offset="1" stop-color="#6e7078"/></linearGradient>
   <linearGradient id="hair" x1="0" x2="1"><stop offset="0" stop-color="#c9a36b"/><stop offset=".5" stop-color="#f0d7a8"/><stop offset="1" stop-color="#b48a52"/></linearGradient>
-  <filter id="sh" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation=".9"/></filter>
+  <filter id="sh" x="-50%" y="-50%" width="200%" height="200%"><feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0"/><feGaussianBlur stdDeviation=".8"/></filter>
   <clipPath id="dc"><rect id="dcr" x="0" y="0" width="64" height="0"/></clipPath>
 </defs>
 <rect width="64" height="64" fill="url(#bgv)"/>
@@ -22,14 +22,9 @@
   <g id="drips" fill="url(#dr)"></g>
 </g>
 <!-- pincel: la punta está en (0,0) y mide exactamente el ancho del trazo -->
-<g id="brushShadow" opacity=".35" filter="url(#sh)"><use href="#brushShape" fill="#000"/></g>
+<g id="brushShadow" opacity=".35" filter="url(#sh)"><use href="#brushShape"/></g>
 <g id="brush">
-  <g id="brushShape">
-    <path id="hairP" d="M-2.1 0 Q-2.35 -3.2 -2.25 -6.2 H2.25 Q2.35 -3.2 2.1 0 Q0 .7 -2.1 0 Z" fill="url(#hair)"/>
-    <path id="paintTip" d="M-2.1 0 Q-2.3 -1.6 -2.25 -3.3 H2.25 Q2.3 -1.6 2.1 0 Q0 .7 -2.1 0 Z" fill="#ff7f78"/>
-    <rect x="-2.45" y="-10.4" width="4.9" height="4.4" rx=".5" fill="url(#metal)"/>
-    <path d="M-2.2 -10.2 L-1.4 -34 Q0 -35.5 1.4 -34 L2.2 -10.2 Z" fill="url(#wood)"/>
-  </g>
+  <g id="brushShape"><image href="brush-cut.png" x="-2.3120" y="-33.8517" width="4.6107" height="33.8650" preserveAspectRatio="none"/></g>
 </g>
 </svg>
 <script>
@@ -54,7 +49,7 @@ const dotEls=DOTS.map(([x,y,r])=>{const c=document.createElementNS(NS,'circle');
 const p1=document.getElementById('p1'),p2=document.getElementById('p2');
 const L1=p1.getTotalLength(),L2=p2.getTotalLength();
 [p1,p2].forEach((p,i)=>{const L=i?L2:L1;p.style.strokeDasharray=L+' '+L;p.style.strokeDashoffset=L;});
-const brush=document.getElementById('brush'),bsh=document.getElementById('brushShadow'),tip=document.getElementById('paintTip'),hairP=document.getElementById('hairP');
+const brush=document.getElementById('brush'),bsh=document.getElementById('brushShadow');
 const cl=(v,a,b)=>Math.max(a,Math.min(b,v)),seg=(t,a,b)=>cl((t-a)/(b-a),0,1),ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2,lin=t=>t,lerp=(a,b,t)=>a+(b-a)*t;
 function place(x,y,lift,w){ // lift: 0 = apoyado, 1 = levantado; w = ancho de la punta (en unidades del logo)
   const s=w/4.2, up=lift*1.6;
@@ -95,7 +90,7 @@ window.render=function(t){
   }
   else{const u=ease(seg(t,...T.out2));const d=DOTS[2];bx=lerp(d[0],OUT[0],u);by=lerp(d[1],OUT[1],u);lift=seg(t,T.out2[0],T.out2[0]+.12);w=2.2;}
   // color de la punta: primero el degradé de las letras, después el del chorreado
-  tip.setAttribute('fill', t<T.back[0] ? '#ff8a6a' : '#ff6f8f');
+  
   place(bx,by,lift,w);
 };
 window.render(0);
