@@ -47,6 +47,10 @@ servidor; la foto no se sube): genera una base simple para probar →
 - Variaciones + foto → 6 (sobre color, degradé, blanco y negro, duotono, insignia, tarjeta). El chip usa `images/logo.svg`.
 - Texto con flyer/promo/oferta/2x1 + foto → 3 flyers.
 "Generar otras" cambia colores; cada resultado se descarga en PNG; "Pulirlo con Camilo" abre WhatsApp con el pedido.
+- A los costados (en compu; abajo en celular): ejemplos en abanico, izquierda = variaciones del logo de Camilo, derecha =
+  flyers del perfume (`images/crear/*.webp`, sacados del mismo generador). Tocarlos genera ese ejemplo en vivo.
+- Con el logo de Camilo (`imgName === 'logo de ejemplo'`): SIN descarga, marca "© Camilo Bosio" y su nombre/mail (pedido de Camilo).
+- Recuadro "Solo una prueba": aclara que es lo básico que una IA hace en segundos y que lo real se pule con Camilo.
 
 ## Portfolio (sección `#trabajo`)
 - Caso M Perfumerie (mperfumerie.com.ar), página web real.
@@ -74,7 +78,8 @@ servidor; la foto no se sube): genera una base simple para probar →
   24 del cierre (seek + drawImage en canvas) y los dibuja según el mouse: giro 1 a 1 sin demora, inercia corta, imán al frente,
   NUNCA gira sola (pedido de Camilo). El tirador del cierre se ve siempre que está de frente (clase .front), con zona de agarre
   amplia; tocarlo abre entero; en celular, touchstart sobre el cierre hace preventDefault para que no se mueva la página
-  (antes era invisible y diminuto y no se podía abrir). Zona: --zt/--zh del stage.
+  (antes era invisible y diminuto y no se podía abrir). Zona: --zt 30,8% (tirador REAL del cierre, donde
+  lo marcó Camilo, NO en el cuello) y --zh 42,7% (hasta el ruedo).
   Jobs Higgsfield: fotos frente 47894ddb, costado 609bd543, espalda 12750336 (mangas colgando, la vieja 9892caf9 tenía las mangas hacia atrás), otro costado 40a9f202, abierta 2bde9db7;
   giros d1a5003c, 04ca87b8, a0e8a095, 43918be3; apertura 29299012. Los videos se cargan DIRECTO desde el CDN de Higgsfield
   (d8j0ntlcm91z4.cloudfront.net) porque la red de este entorno bloquea bajarlos; ideal: bajarlos al repo y recodificar

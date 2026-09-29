@@ -336,7 +336,12 @@
   .gchips{ display:flex; flex-wrap:wrap; justify-content:center; gap:8px; margin-top:18px; }
   .gchips button{ border:1px solid var(--line); background:rgba(255,255,255,.7); border-radius:999px; padding:8px 14px; font:inherit; font-size:13.5px; color:var(--ink-2); cursor:pointer; transition:background .2s, border-color .2s, color .2s; }
   .gchips button:hover{ background:#fff; border-color:var(--ink); color:var(--ink); }
-  .gnote{ text-align:center; margin-top:14px; font-size:13px; color:var(--muted); }
+  .gtest{ margin:18px auto 0; max-width:640px; display:flex; align-items:center; gap:12px 16px; flex-wrap:wrap; justify-content:center; text-align:center; padding:14px 18px; border-radius:14px; background:rgba(255,255,255,.75); border:1px dashed #d7cff9; }
+  .gtest p{ margin:0; font-size:14.5px; color:var(--ink-2); flex:1 1 320px; }
+  .gtest .gtag{ font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:#fff; background:var(--violet); border-radius:999px; padding:5px 10px; }
+  .gtest a{ font-weight:700; font-size:14px; color:var(--violet); text-decoration:none; white-space:nowrap; }
+  .gtest a:hover{ text-decoration:underline; }
+  .gnote{ text-align:center; margin-top:10px; font-size:13px; color:var(--muted); }
   .gout{ margin-top:34px; display:none; }
   .gout.on{ display:block; }
   .gout-top{ display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:16px; }
@@ -350,6 +355,7 @@
   .gcard canvas{ display:block; width:100%; height:auto; }
   .gcard .cap{ display:flex; align-items:center; justify-content:space-between; gap:8px; padding:10px 12px; font-size:13px; font-weight:600; }
   .gcard .dl{ border:0; background:var(--paper); border-radius:8px; width:32px; height:32px; display:grid; place-items:center; color:var(--ink); cursor:pointer; flex:none; }
+  .gcard .own{ font-family:var(--mono); font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); }
   .gcard .dl:hover{ background:var(--ink); color:var(--paper); }
   .gskel{ aspect-ratio:var(--ar, 1); border-radius:14px; background:linear-gradient(100deg, #fff 30%, #f1efff 50%, #fff 70%) 0 0/300% 100%; animation:gshine 1.2s linear infinite; }
   @keyframes gshine{ to{ background-position:-150% 0; } }
@@ -359,7 +365,29 @@
     .gmode button{ padding:7px 9px; font-size:13px; }
     .ggrid{ grid-template-columns:1fr 1fr; gap:10px; }
   }
-  @media (prefers-reduced-motion:reduce){ .gcard, .gskel{ animation:none; } }
+  @media (prefers-reduced-motion:reduce){ .gcard, .gskel, .gfan img{ animation:none; transition:none; } }
+  /* ejemplos a los costados de la barra: logo a la izquierda, producto a la derecha */
+  .gstage{ position:relative; }
+  .gside{ position:absolute; top:10px; width:190px; border:0; background:none; padding:0; cursor:pointer; font:inherit; color:inherit; text-align:center; }
+  .gside.l{ right:calc(50% + 390px + 26px); } .gside.r{ left:calc(50% + 390px + 26px); }
+  .gfan{ display:block; position:relative; height:230px; }
+  .gfan img{ position:absolute; left:50%; top:0; width:140px; border-radius:12px; box-shadow:0 22px 36px -22px rgba(17,17,19,.55); transition:transform .5s var(--ease); transform:translateX(-50%) rotate(var(--r)) translate(var(--x), var(--y)); }
+  .gfan img:nth-child(1){ --r:-10deg; --x:-26px; --y:18px; } .gfan img:nth-child(2){ --r:7deg; --x:24px; --y:10px; } .gfan img:nth-child(3){ --r:-1deg; --x:0px; --y:0px; }
+  .gside.r .gfan img{ width:128px; }
+  .gside:hover .gfan img:nth-child(1), .gside:focus-visible .gfan img:nth-child(1){ --r:-16deg; --x:-46px; }
+  .gside:hover .gfan img:nth-child(2), .gside:focus-visible .gfan img:nth-child(2){ --r:13deg; --x:44px; }
+  .gside:hover .gfan img:nth-child(3), .gside:focus-visible .gfan img:nth-child(3){ --y:-8px; }
+  .gfan img{ pointer-events:none; -webkit-user-select:none; user-select:none; -webkit-touch-callout:none; }
+  .gside .glab{ display:block; margin-top:6px; font-family:var(--mono); font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); }
+  .gside .glab b{ display:block; font-family:var(--body); font-size:14px; letter-spacing:0; text-transform:none; color:var(--ink); font-weight:600; margin-top:2px; }
+  @media (max-width:1240px){
+    .gstage{ display:grid; grid-template-columns:1fr 1fr; gap:10px 16px; }
+    .gstage .gen{ grid-column:1 / -1; grid-row:1; width:100%; }
+    .gside{ position:static; width:auto; margin-top:26px; }
+    .gfan{ height:190px; } .gfan img{ width:118px; } .gside.r .gfan img{ width:106px; }
+  }
+  @media (max-width:420px){ .gfan{ height:160px; } .gfan img{ width:96px; } .gside.r .gfan img{ width:88px; } }
+
 </style>
 </head>
 <body>
@@ -466,8 +494,17 @@
     <div class="wrap">
       <div class="intro">
         <h2>¿Qué vamos a crear?</h2>
-        <p>Escribí tu idea o subí una foto (tu logo, un producto, lo que sea) y probá. Sale una base simple en segundos; después la pulimos juntos.</p>
+        <p>Escribí tu idea o subí una foto (tu logo, un producto, lo que sea) y probá. Es una <b>pequeña prueba</b> de lo que una IA arma en segundos.</p>
       </div>
+      <div class="gstage">
+      <button type="button" class="gside l" id="gexLogo" aria-label="Probar: variaciones de un logo">
+        <span class="gfan" aria-hidden="true"><img src="images/crear/logo-tarjeta.webp" alt="" draggable="false"><img src="images/crear/logo-insignia.webp" alt="" draggable="false"><img src="images/crear/logo-degrade.webp" alt="" draggable="false"></span>
+        <span class="glab">Ejemplo<b>Variaciones de tu logo</b></span>
+      </button>
+      <button type="button" class="gside r" id="gexProd" aria-label="Probar: flyers con un producto">
+        <span class="gfan" aria-hidden="true"><img src="images/crear/producto-flyer-elegante.webp" alt="" draggable="false"><img src="images/crear/producto-flyer-oscuro.webp" alt="" draggable="false"><img src="images/crear/producto-flyer-color.webp" alt="" draggable="false"></span>
+        <span class="glab">Ejemplo<b>Flyers de tu producto</b></span>
+      </button>
       <div class="gen">
         <form class="gbox" id="gbox" autocomplete="off">
           <label for="gtxt" class="label" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">¿Qué querés crear o modificar?</label>
@@ -489,7 +526,8 @@
           <button type="button" data-t="Variaciones de mi logo" data-m="variar" data-sample="1">Variaciones de un logo</button>
           <button type="button" data-t="Flyer: 2x1 este fin de semana" data-m="crear" data-pick="1">Flyer con tu producto</button>
         </div>
-        <p class="gnote">Demo de prueba: arma una base en tu navegador, tu foto no se sube a ningún lado.</p>
+        <div class="gtest"><span class="gtag">Solo una prueba</span><p>Esto es lo básico que sale en segundos. El trabajo de verdad lo hacemos juntos: <b>más personalizado, al detalle y con tu marca</b>, hasta que quede como lo imaginás.</p><a href="https://wa.me/5493468437518?text=Hola%20Camilo!%20Prob%C3%A9%20la%20barra%20de%20tu%20p%C3%A1gina%20y%20quiero%20algo%20a%20medida." target="_blank" rel="noopener">Pulirlo con Camilo →</a></div>
+        <p class="gnote">Tu foto no se sube a ningún lado: todo pasa en tu navegador.</p>
         <div class="gout" id="gout" aria-live="polite">
           <div class="gout-top">
             <span class="st" id="gst">Generando…</span>
@@ -500,6 +538,7 @@
           </div>
           <div class="ggrid" id="ggrid"></div>
         </div>
+      </div>
       </div>
     </div>
   </section>
@@ -966,6 +1005,8 @@
     else if (c.dataset.pick && !img) { pendingPick = () => form.requestSubmit(); fileIn.click(); ta.focus(); }
     else form.requestSubmit();
   });
+  document.getElementById('gexLogo').addEventListener('click', () => { ta.value = 'Variaciones de mi logo'; setMode('variar'); pendingPick = () => form.requestSubmit(); loadImg('images/logo.svg', 'logo de ejemplo'); });
+  document.getElementById('gexProd').addEventListener('click', () => { ta.value = 'Flyer: 20% off este finde'; setMode('crear'); pendingPick = () => form.requestSubmit(); loadImg('portfolio/perfumes/valentino-born-in-roma.webp', 'perfume de ejemplo'); });
   document.getElementById('gagain').addEventListener('click', () => { seed++; run(false); });
   form.addEventListener('submit', e => { e.preventDefault(); seed = (Date.now() % 997) + 1; run(true); });
 
@@ -1106,7 +1147,7 @@
       contain(x, im, -250, -130, 230, 260);
       x.fillStyle = '#111113'; x.textAlign = 'left'; x.textBaseline = 'alphabetic';
       const n = N || 'Tu marca'; x.font = `800 ${fit(x, n, s => `800 ${s}px ${D}`, 240, 46)}px ${D}`; x.fillText(n, 10, -10);
-      x.fillStyle = '#67666d'; x.font = `400 20px ${M}`; x.fillText('hola@tumarca.com', 10, 34); x.fillText('Rosario · AR', 10, 64);
+      x.fillStyle = '#67666d'; const mail = n === 'Camilo Bosio' ? 'camilobosio96@gmail.com' : 'hola@tumarca.com'; x.font = `400 ${fit(x, mail, z => `400 ${z}px ${M}`, 250, 20)}px ${M}`; x.fillText(mail, 10, 34); x.font = `400 20px ${M}`; x.fillText('Rosario · AR', 10, 64);
       x.fillStyle = lin(x, 10, 0, 250, 0, '#ff9d4d', '#ff5fa2'); x.fillRect(10, 96, 120, 8);
       x.restore(); out.push([c, 'Tarjeta']);
     }
@@ -1154,13 +1195,15 @@
     const steps = kind === 'var' ? ['Mirando tu foto…', 'Probando fondos y colores…', 'Armando variaciones…'] : kind === 'fly' ? ['Leyendo tu idea…', 'Acomodando la foto…', 'Diseñando el flyer…'] : ['Leyendo tu idea…', img ? 'Sacando colores de tu foto…' : 'Probando colores…', 'Dibujando logos…'];
     for (const s of steps) { st.textContent = s; await new Promise(r => setTimeout(r, 480)); }
     try { await Promise.all([`800 40px ${D}`, `800 italic 40px ${D}`, `600 40px ${B}`, `700 40px ${B}`, `40px ${S}`, `500 40px ${M}`].map(f => document.fonts.load(f))); } catch (e) {}
-    const r = rnd(seed * 97 + text.length);
+    const r = rnd(seed * 97 + text.length), mine = !!img && imgName === 'logo de ejemplo';
+    if (mine && !P.name) P.name = 'Camilo Bosio';
     const items = kind === 'var' ? variations(img, P, r) : kind === 'fly' ? flyers(img, P, r) : logos(P, r);
     grid.innerHTML = '';
     items.forEach(([c, label], i) => {
       const card = document.createElement('div'); card.className = 'gcard'; card.style.animationDelay = i * 70 + 'ms';
-      const cap = document.createElement('div'); cap.className = 'cap'; cap.innerHTML = `<span>${label}</span><button type="button" class="dl" aria-label="Descargar ${label}" title="Descargar"><svg viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5M5 19h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`;
-      cap.querySelector('.dl').addEventListener('click', () => { try { c.toBlob(b => { const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = `camilo-bosio-${label.toLowerCase().replace(/\s+/g, '-')}.png`; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 4000); }); } catch (e) {} });
+      if (mine) { const x = c.getContext('2d'); x.font = `600 22px ${B}`; x.textAlign = 'right'; x.textBaseline = 'bottom'; x.fillStyle = 'rgba(255,255,255,.75)'; x.shadowColor = 'rgba(0,0,0,.4)'; x.shadowBlur = 6; x.fillText('© Camilo Bosio', c.width - 22, c.height - 18); c.addEventListener('contextmenu', e => e.preventDefault()); }
+      const cap = document.createElement('div'); cap.className = 'cap'; cap.innerHTML = mine ? `<span>${label}</span><span class="own">Logo de Camilo</span>` : `<span>${label}</span><button type="button" class="dl" aria-label="Descargar ${label}" title="Descargar"><svg viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5M5 19h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`;
+      if (!mine) cap.querySelector('.dl').addEventListener('click', () => { try { c.toBlob(b => { const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = `camilo-bosio-${label.toLowerCase().replace(/\s+/g, '-')}.png`; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 4000); }); } catch (e) {} });
       card.append(c, cap); grid.append(card);
     });
     st.textContent = `${items.length} propuestas base · ${kind === 'var' ? 'variaciones de tu foto' : kind === 'fly' ? 'flyers' : 'logos'}`;
