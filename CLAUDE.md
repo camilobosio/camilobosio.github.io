@@ -5,7 +5,14 @@ Publicado con GitHub Pages en https://camilobosio.github.io/ (rama `main`, carpe
 Hablarle a Camilo en español rioplatense, simple y sin tecnicismos.
 
 ## Estructura
-- `index.html` — toda la página (HTML + CSS + JS en un solo archivo, sin build).
+- `index.html` — INICIO: solo pantallazos ("destellos") de todo. Portada con celular + anillo que gira detrás (`#orbit`,
+  imágenes en `images/orbita/` + logos de `images/crear/` + camperas del probador), servicios, "¿Qué vamos a crear?",
+  pantallazos del portfolio (`.peek`, 4 tarjetas que llevan a portfolio.html), planes, cómo trabajo, quién, contacto.
+- `portfolio.html` — PORTFOLIO completo y ordenado: Páginas web (M Perfumerie + experiencia interactiva), Contenido
+  interactivo (`#probador` y `#producto-360`), Contenido con IA (galería con filtros Perfumes / En la calle / Personas).
+- `css/sitio.css` y `js/sitio.js` — estilos y código COMPARTIDOS por las dos páginas (sin build). El JS chequea que
+  cada elemento exista, porque no todos están en las dos páginas.
+- En celular el inicio tiene que ser corto: servicios, planes y las grabaciones de M Perfumerie se deslizan de costado.
 - `images/` — capturas de M Perfumerie, foto de Camilo.
   - `logo.svg` + `logo-180.png` = logo "M1": CB de líneas rectas estilo circuito, pintada en naranja→rosa y chorreando pintura, sobre fondo violeta (arte + tecnología; elegido entre muchas pruebas), usado como ícono de la pestaña y en la barra superior. `icono.jpg` (foto de Camilo) ya no se usa: Camilo no quiere su cara en la pestaña.
   - `og-productos.jpg` = vista previa de WhatsApp/redes activa (todo producto).
@@ -66,29 +73,22 @@ servidor; la foto no se sube): genera una base simple para probar →
   Rubros actuales: `perfumes`, `personas` ("Videos con personas").
 - Videos: en el mosaico se reproducen solos y mudos al verse; en el visor se abren con sonido.
 
-## Probador virtual (`probador/`, landing aparte; en el portfolio es un CASO como M Perfumerie: `.case.case-2#probador`)
-Pedido de Camilo: landing tipo tienda de ropa, modelo con pelo rapado, encuadre de torso (sin zapatillas), deslizar para
-cambiarle camperas/buzos y gorros. Marca ficticia "PROBADOR · DEMO" (no es tienda real).
-- Modelo base: Higgsfield job 964f6c99 (nano_banana_pro 4:5 2k). Cada prenda = edición de esa foto con nano_banana_pro
-  ("keep everything else pixel-identical"): la pose queda igual al píxel, así que se cambian sin que el modelo se mueva.
-- `prendas/<id>.webp` (1080×1341) + `-mini.webp`. Jobs: capucha gris 1adb02de, buzo negro 5f336093, jean f3886ce5,
-  bomber 6aa6adb7, puffer 58491609, rompevientos 080300f6, cuero dbdf1e10, varsity 357b987d.
-- Gorros (jobs 29b44cec gorra, 221ad967 gorro lana, 3af00e03 piluso, 15663201 trucker): recortados como PNG transparente
-  comparando con la foto base (diferencia de píxeles) → `gorros/*.webp`, con su caja en % en `HATS` del JS. Van encima de
-  cualquier prenda.
-- Giro 360°: video Kling 3.0 pro 5 s (start = end = foto de la prenda, ~8,75 créditos) → 60 cuadros en tira
-  `giros/<id>.webp` (10 columnas de 540×670). Botón "Girar 360°": arrastrar gira, inercia corta, imán al frente, nunca sola.
-- El caso del portfolio muestra videos grabados de la landing (`portfolio/probador/probador-pc.mp4` 1440×900 y
-  `probador-celular.mp4` 390×844, Playwright recordVideo + cursor dibujado + ffmpeg H.264). Regrabarlos al sumar prendas.
-- Sumar prenda: editar la foto base con nano_banana_pro, generar el giro, agregar en `TOPS` (id, cat, name, desc).
-- Camperas REALES de adidas (links que pasó Camilo): Audi F1 KE8919, Teamgeist capucha gris KR7070, Blocked negra KR1378,
-  Workwear marrón KR9657, SST de jean KQ6332. adidas.com bloquea este entorno (403): las fotos se sacaron de tiendas
-  Shopify que las venden (`<tienda>/products/<handle>.json` da las URLs) y de store.audif1.com, y se importaron a
-  Higgsfield con media_import_url. Jobs de la foto: Audi 6c5881c0, jean 690b6bcb, blocked 1e03476f, workwear 2072b45b, teamgeist 033560df.
-  Falta la negra acolchada con franjas beige (primera que mandó por chat): no pasó link.
-- Gorros extra: gorra blanca, gorra de corderoy, gorro negro, gorro gris (8 en total). Script de recorte: comparar con la
-  foto base 964f6c99 y quedarse con la mancha más grande de la zona de la cabeza.
-- Camilo quería publicar el probador recién con sus camperas: ya están (14 prendas).
+## Probador virtual (`portfolio.html#probador`, clases `.pv-*`, código al final de `js/sitio.js`)
+Camilo NO quiere una landing aparte: es un ejemplo dentro del portfolio, con el mismo formato que la campera 360.
+Solo sus 5 camperas reales de adidas, SIN gorros. Deslizar = cambia la campera (efecto escáner); botón "360°" = girar
+arrastrando (tira de 60 cuadros, nunca gira sola, imán al frente).
+- Modelo base: Higgsfield job 964f6c99 (nano_banana_pro 4:5 2k, pelo rapado, encuadre de torso). Cada campera = edición
+  de esa foto ("keep everything else pixel-identical"), así no se mueve nada al cambiar.
+- `probador/prendas/<id>.webp` (1080×1341) + `-mini.webp`; `probador/giros/<id>.webp` (10 col. × 6 filas de 540×670,
+  del video Kling 3.0 pro 5 s con start = end = la foto, ~8,75 créditos).
+- Camperas (links de Camilo): Audi F1 KE8919 (job 6c5881c0), Teamgeist KR7070 (033560df), Blocked KR1378 (1e03476f),
+  Workwear KR9657 (2072b45b), SST jean KQ6332 (690b6bcb). adidas.com bloquea este entorno (403): las fotos salen de
+  tiendas Shopify que las venden (`<tienda>/products/<handle>.json` da las URLs) o store.audif1.com, y se importan a
+  Higgsfield con media_import_url. Falta la negra acolchada con franjas beige (no pasó link).
+
+## Carteles en la calle (`portfolio/calle/`, también en el anillo de la portada)
+Flyers de perfumes puestos en una parada de colectivo, afiche en pared, subte, cartel en altura y vidriera, más el logo
+en neón y en papelería (nano_banana_pro con el flyer de referencia importado desde raw.githubusercontent.com).
 
 ## Pendiente (semana en curso)
 - (Hecho) Caso M Perfumerie: PC = video real de la portada (`portada-pc.mp4`); celular = video de tocar un perfume y que
