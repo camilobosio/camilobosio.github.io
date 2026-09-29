@@ -75,8 +75,8 @@ Objetivo: intro corta con el video de Camilo (cara y voz reales) pero en Rosario
       campera, abre el cierre y desliza para cambiar de campera (grabada con Playwright, pegada en la pantalla con perspectiva)
 
 ## Pedidos 29/9 (noche)
-- [ ] Pincel v4: MISMO recorrido perfecto, pero pincel realista (foto de pincel generada, recortada) — no "emoji".
-- [ ] Landing demo campera SIN TEXTO: camperas en el centro flotando en una "dimensión" (fondo animado), mismas
+- [x] Pincel v4 (foto real de pincel 1e3940c0, recortada): MISMO recorrido perfecto, pero pincel realista (foto de pincel generada, recortada) — no "emoji".
+- [x] Landing demo campera SIN TEXTO (v3: fondo web3 sin círculo; gris regenerada con fondo oscuro: foto 17becc7c, giro Kling cbcf68cc): camperas en el centro flotando en una "dimensión" (fondo animado), mismas
       interacciones (girar, cierre, deslizar a la otra). Rehacer el mockup animado.
-- [ ] Interacción en la página: el logo limpio; entra un balde de pintura desde arriba al costado, se inclina, tira la
+- [x] (en #marca del inicio, foto de balde 82510ff9) Interacción en la página: el logo limpio; entra un balde de pintura desde arriba al costado, se inclina, tira la
       pintura naranja, cae sobre el logo y queda el logo final chorreado. Hecho con código (SVG), no video.

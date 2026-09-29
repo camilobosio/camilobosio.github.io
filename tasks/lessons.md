@@ -40,3 +40,6 @@
   robot" donde iría el piloto): moto sin asiento ni piloto, autos sin nadie adentro.
 - Animaciones que tienen que seguir un trazo EXACTO (pincel sobre el logo): hacerlas con código sobre el SVG real,
   no con video IA (Kling improvisa el grosor y el recorrido).
+- Pincel/objetos dibujados con código se ven "emoji": usar una FOTO real generada (fondo verde, recortada) y animarla.
+- Landing de la campera: sin texto, sin círculo/anillo de fondo; fondo estilo web3 (luces de colores, grilla fina).
+  Todas las prendas con el MISMO tratamiento (nada de resplandor blanco en una sola).
