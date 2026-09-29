@@ -161,6 +161,25 @@
   .ix-txt p{ font-size:14px; color:var(--ink-2); margin-top:4px; }
   @media (max-width:760px){ .ix-grid{ grid-template-columns:1fr; } }
 
+  /* producto interactivo: campera 360 que se abre */
+  .p3{ margin-top:72px; display:grid; grid-template-columns:1fr minmax(260px, 380px); gap:40px; align-items:center; }
+  .p3-txt h3{ font-family:var(--display); font-weight:800; font-size:clamp(34px, 4.8vw, 56px); line-height:.98; letter-spacing:-.035em; margin-top:10px; }
+  .p3-txt p{ color:var(--ink-2); margin-top:14px; max-width:50ch; }
+  .p3-txt .p3-how{ font-size:14px; color:var(--muted); }
+  .p3-tags{ display:flex; flex-wrap:wrap; gap:8px; margin-top:20px; }
+  .p3-tags span{ font-family:var(--mono); font-size:11.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--orange); background:var(--orange-soft); border-radius:999px; padding:6px 12px; }
+  .p3-stage{ position:relative; aspect-ratio:9/16; border-radius:26px; overflow:hidden; background:#16161a; cursor:grab; touch-action:pan-y; user-select:none; -webkit-user-select:none; box-shadow:0 40px 80px -40px rgba(17,17,19,.6); }
+  .p3-stage.dragging{ cursor:grabbing; }
+  .p3-stage video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; pointer-events:none; }
+  .p3-open{ opacity:0; transition:opacity .2s; }
+  .p3-stage.opened .p3-open, .p3-stage.opening .p3-open{ opacity:1; }
+  .p3-hint{ position:absolute; left:50%; top:18px; transform:translateX(-50%); display:flex; align-items:center; gap:8px; padding:7px 14px; border-radius:999px; background:rgba(255,255,255,.12); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); color:#fff; font-size:12.5px; white-space:nowrap; transition:opacity .4s; }
+  .p3-hint .hand{ display:inline-block; animation:nudge 1.6s ease-in-out infinite; }
+  @keyframes nudge{ 50%{ transform:translateX(5px); } }
+  .p3-stage.used .p3-hint{ opacity:0; }
+  .p3-btn{ position:absolute; left:50%; bottom:18px; transform:translateX(-50%); font:inherit; font-size:13.5px; font-weight:600; padding:10px 18px; border-radius:999px; border:0; background:var(--paint); color:#fff; cursor:pointer; box-shadow:0 10px 24px -10px rgba(255,95,162,.8); }
+  @media (max-width:820px){ .p3{ grid-template-columns:1fr; } .p3-stage{ max-width:340px; width:100%; justify-self:center; } }
+
   /* galería de contenido con IA */
   .ai{ margin-top:72px; }
   .ai-head{ display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:end; margin-bottom:22px; }
@@ -444,6 +463,21 @@
           </article>
         </div>
       </div>
+      <div class="p3" id="producto-360">
+        <div class="p3-txt">
+          <span class="label">Portfolio · Producto interactivo · Hecho con IA</span>
+          <h3>Girala. Abrila.</h3>
+          <p>Un producto que se puede tocar desde la pantalla. Arrastrá la campera para verla de todos los lados y tocala para bajar el cierre y descubrir la remera que va abajo.</p>
+          <p class="p3-how">Las imágenes y los movimientos los generé con inteligencia artificial a partir de las fotos del producto; la interacción la programé yo. Se puede hacer con cualquier producto.</p>
+          <div class="p3-tags"><span>Arrastrá para girar</span><span>Tocá para abrir</span></div>
+        </div>
+        <div class="p3-stage" id="p3" tabindex="0" role="application" aria-label="Campera interactiva: arrastrá para girarla y tocá para abrir el cierre">
+          <video class="p3-spin" id="p3spin" src="portfolio/ropa/campera-360.mp4" poster="portfolio/ropa/campera-360.jpg" muted playsinline preload="auto"></video>
+          <video class="p3-open" id="p3open" src="portfolio/ropa/campera-abrir.mp4" muted playsinline preload="auto"></video>
+          <div class="p3-hint" id="p3hint"><span class="hand" aria-hidden="true">↔</span>Arrastrá · Tocá</div>
+          <button type="button" class="p3-btn" id="p3btn">Abrir cierre</button>
+        </div>
+      </div>
       <div class="ai" id="contenido">
         <div class="ai-head">
           <div>
@@ -639,6 +673,55 @@
   const ixVids = document.querySelectorAll('.ix-card video');
   if('IntersectionObserver' in window){ const ixo = new IntersectionObserver(es => es.forEach(e => e.isIntersecting ? e.target.play().catch(() => {}) : e.target.pause()), { threshold:.3 }); ixVids.forEach(v => ixo.observe(v)); }
   else ixVids.forEach(v => v.play().catch(() => {}));
+
+  // producto interactivo: arrastrar gira la campera (recorre el video 360) y tocar abre el cierre (video de apertura)
+  (function(){
+    const st = document.getElementById('p3'); if(!st) return;
+    const spin = document.getElementById('p3spin'), open = document.getElementById('p3open'), btn = document.getElementById('p3btn');
+    let dur = 0, t = 0, dragging = false, moved = 0, lastX = 0, vel = 0, isOpen = false, busy = false, auto = !reduce, raf = 0, lastTs = 0;
+    const setT = v => { if(!dur) return; t = ((v % dur) + dur) % dur; spin.currentTime = t; };
+    spin.addEventListener('loadedmetadata', () => { dur = spin.duration || 0; });
+    function loop(ts){
+      const dt = lastTs ? (ts - lastTs) / 1000 : 0; lastTs = ts;
+      if(!dragging && !isOpen && !busy && dur){
+        if(Math.abs(vel) > .02){ setT(t + vel * dt); vel *= Math.pow(.04, dt); }   // inercia al soltar
+        else if(auto){ setT(t + dt * .35); }                                         // giro lento hasta que la toquen
+      }
+      raf = requestAnimationFrame(loop);
+    }
+    new IntersectionObserver(es => { cancelAnimationFrame(raf); lastTs = 0; if(es[0].isIntersecting) raf = requestAnimationFrame(loop); }).observe(st);
+    st.addEventListener('pointerdown', e => { if(e.target === btn || busy) return; dragging = true; moved = 0; lastX = e.clientX; vel = 0; auto = false; st.classList.add('dragging', 'used'); st.setPointerCapture(e.pointerId); });
+    st.addEventListener('pointermove', e => {
+      if(!dragging) return; const dx = e.clientX - lastX; lastX = e.clientX; moved += Math.abs(dx);
+      if(isOpen && moved > 6) closeJacket();
+      const k = dur / st.clientWidth * 1.1; setT(t + dx * k); vel = dx * k * 60;
+    });
+    const end = () => { if(!dragging) return; dragging = false; st.classList.remove('dragging'); if(moved < 6) toggle(); };
+    st.addEventListener('pointerup', end); st.addEventListener('pointercancel', () => { dragging = false; st.classList.remove('dragging'); });
+    btn.addEventListener('click', () => { st.classList.add('used'); auto = false; toggle(); });
+    st.addEventListener('keydown', e => { if(e.key === 'ArrowLeft') setT(t - .15); if(e.key === 'ArrowRight') setT(t + .15); if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggle(); } });
+    function toggle(){ isOpen ? closeJacket() : openJacket(); }
+    // antes de abrir, la campera vuelve de frente (el principio y el final del 360 son el frente)
+    function openJacket(){
+      if(busy || !dur) return; busy = true; vel = 0;
+      const target = t > dur / 2 ? dur : 0, from = t, t0 = performance.now(), ms = Math.abs(target - from) / dur * 900;
+      (function back(now){
+        const k = Math.min(1, (now - t0) / (ms || 1)); spin.currentTime = from + (target - from) * (1 - Math.pow(1 - k, 3));
+        if(k < 1) return requestAnimationFrame(back);
+        t = 0; open.currentTime = 0; st.classList.add('opening');
+        open.play().catch(() => {}); open.onended = () => { st.classList.add('opened'); st.classList.remove('opening'); isOpen = true; busy = false; btn.textContent = 'Cerrar cierre'; };
+      })(t0);
+    }
+    // cerrar: la apertura se recorre al revés
+    function closeJacket(){
+      if(!isOpen || busy) return; busy = true; open.pause(); const t0 = performance.now(), d = open.duration || 3, ms = d * 700;
+      (function rev(now){
+        const k = Math.min(1, (now - t0) / ms); open.currentTime = d * (1 - k);
+        if(k < 1) return requestAnimationFrame(rev);
+        st.classList.remove('opened', 'opening'); isOpen = false; busy = false; btn.textContent = 'Abrir cierre';
+      })(t0);
+    }
+  })();
 
   // galería de contenido con IA: filtros, videos que se reproducen al verse y visor
   const tiles = [...document.querySelectorAll('.tile')];
