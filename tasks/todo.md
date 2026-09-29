@@ -37,3 +37,12 @@ Objetivo: intro corta con el video de Camilo (cara y voz reales) pero en Rosario
 - Tomas extra: drone (8c418ffb) y cubos de carga (9fe7bb04) sí; la de autos/moto (a747ee9a) no: la moto tiene un piloto humano.
 - En el tramo final (2d3daf6e) se ve una persona chiquita caminando en la calle: a revisar con Camilo.
 - Intro: 41 s vertical, audio original de Camilo, marca REC + "ROSARIO 12/03/2045", cierre con título. Créditos: ~90.
+
+## Versión 2 (correcciones de Camilo)
+- [ ] Referencias fijas (nano_banana_pro): interior de casa abandonada con ventana rota mirando a la calle; ciudad con
+      casas abandonadas + edificios robot desde el piso (con robots enchufados / vidriados con base de IA); Monumento a la Bandera lejos
+- [ ] Rehacer los tramos de Camilo con la casa de fondo (siempre escondido), robots lejos, sin personas
+- [ ] Tomas extra: moto robot futurista, autos futuristas, drones altos rápidos, drone bajo escaneando casas,
+      edificios robot, cruce + muro alto con el Monumento de lejos
+- [ ] Revisar TODOS los cuadros: ninguna persona, robots lejos, Camilo siempre escondido
+- [ ] Armar y mandar

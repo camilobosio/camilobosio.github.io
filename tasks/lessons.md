@@ -26,3 +26,13 @@
 - Para 3D: primero una lámina de 4 vistas limpias (una sola imagen = vistas consistentes), después los motores 3D.
 - Cada motor 3D entrega el producto mirando para otro lado: corregir con `giro` en catalogo.json y verificar las 4 vistas.
 - El Chromium de pruebas no confía en el proxy: en los tests servir three.js local con page.route.
+
+## YouTube "Día del Juicio Final 2045" (29/9)
+- Camilo SIEMPRE escondido: dentro de una casa abandonada/rota, detrás de una pared alta o de una ventana rota,
+  filmando de costado hacia la calle. Nunca en el medio de la calle ni detrás de un murito.
+- Los robots, drones, autos y motos van LEJOS (si están cerca, lo ven). Excepción: un drone bajo y lento que escanea
+  las casas → es cuando él se esconde.
+- NINGUNA otra persona en ninguna toma (ni caminando al fondo, ni manejando): está solo. Pedirlo explícito en el prompt.
+- Motos robot = futuristas, sin piloto, no una moto común. Autos futuristas sin conductor.
+- Edificios robot: construidos desde el piso, de varios pisos, mezclados con casas abandonadas (no apoyados arriba
+  de una casa). Algunos con robots enchufados por fuera, otros vidriados mostrando una base de IA por dentro.
