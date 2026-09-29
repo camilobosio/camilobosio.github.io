@@ -80,10 +80,15 @@ cambiarle camperas/buzos y gorros. Marca ficticia "PROBADOR · DEMO" (no es tien
   `giros/<id>.webp` (10 columnas de 540×670). Botón "Girar 360°": arrastrar gira, inercia corta, imán al frente, nunca sola.
 - El caso del portfolio muestra videos grabados de la landing (`portfolio/probador/probador-pc.mp4` 1440×900 y
   `probador-celular.mp4` 390×844, Playwright recordVideo + cursor dibujado + ffmpeg H.264). Regrabarlos al sumar prendas.
-- Camilo NO quiere publicar el probador hasta que estén sus camperas Adidas.
 - Sumar prenda: editar la foto base con nano_banana_pro, generar el giro, agregar en `TOPS` (id, cat, name, desc).
-- Pendiente: Camilo pasó fotos de 4 camperas Adidas (negra con franjas beige, blanca equipo Audi F1, marrón de trabajo
-  con cuello de corderoy, gris con capucha y franjas). Hay que subirlas a Higgsfield (widget) para ponérselas al modelo.
+- Camperas REALES de adidas (links que pasó Camilo): Audi F1 KE8919, Teamgeist capucha gris KR7070, Blocked negra KR1378,
+  Workwear marrón KR9657, SST de jean KQ6332. adidas.com bloquea este entorno (403): las fotos se sacaron de tiendas
+  Shopify que las venden (`<tienda>/products/<handle>.json` da las URLs) y de store.audif1.com, y se importaron a
+  Higgsfield con media_import_url. Jobs de la foto: Audi 6c5881c0, jean 690b6bcb, blocked 1e03476f, workwear 2072b45b, teamgeist 033560df.
+  Falta la negra acolchada con franjas beige (primera que mandó por chat): no pasó link.
+- Gorros extra: gorra blanca, gorra de corderoy, gorro negro, gorro gris (8 en total). Script de recorte: comparar con la
+  foto base 964f6c99 y quedarse con la mancha más grande de la zona de la cabeza.
+- Camilo quería publicar el probador recién con sus camperas: ya están (14 prendas).
 
 ## Pendiente (semana en curso)
 - (Hecho) Caso M Perfumerie: PC = video real de la portada (`portada-pc.mp4`); celular = video de tocar un perfume y que
