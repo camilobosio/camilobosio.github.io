@@ -43,10 +43,10 @@ Dos servicios, dos planes cada uno (sin precios, botón "Consultar" por WhatsApp
 - Videos: en el mosaico se reproducen solos y mudos al verse; en el visor se abren con sonido.
 
 ## Pendiente (semana en curso)
-- Caso M Perfumerie: la PC ya muestra un video real de la portada (`portfolio/interacciones/portada-pc.mp4`, destellos que suben).
-  Falta el CELULAR: video de la grilla de productos → tocar uno → se abre la ficha en grande. No se pudo grabar porque los
-  productos vienen de Firestore y ese acceso fue denegado en este entorno; pedirle a Camilo una grabación de pantalla del
-  celular (o que habilite el acceso) y ponerla en `#casePhone`.
+- (Hecho) Caso M Perfumerie: PC = video real de la portada (`portada-pc.mp4`); celular = video de tocar un perfume y que
+  se abra la ficha (`celular-producto.mp4`). El del celular se grabó con el código real de la página pero con 4 productos
+  de muestra (los mismos de las capturas, imágenes recortadas de `images/m_grid.jpg` y `m_modal.jpg`), porque los datos
+  reales están en Firestore y ese acceso fue denegado en este entorno.
 - Camilo va a seguir creando contenido esta semana y pasarlo en tandas: campaña de **ropa**, videos de otros productos.
   Se puede usar el conector de **Higgsfield** para generar imágenes/videos con él.
 - El video `portfolio/perfumes/video-kling-1.mp4` figura como "Video de producto": preguntar qué perfume es.
