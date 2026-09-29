@@ -52,3 +52,13 @@ Objetivo: intro corta con el video de Camilo (cara y voz reales) pero en Rosario
 - Tomas: ciudad por la ventana b3f33496, monumento detrás del muro f84b7e4d, drone escaneando casas aceaecfb,
   autos/drones c50e61bb (recortado sin la moto), motos robot vacías a5c574ed (imagen aa0e7c6f, sin piloto).
 - Revisado cuadro por cuadro: sin personas, sin pilotos. Video final 1:22.
+
+## PARA RETOMAR (Camilo: "retomar desde el último video y corregirlo")
+- Video original de Camilo (2:03): Higgsfield media 5b429a47-a3c5-48ed-84fc-928cde8c3bd1
+- Intro v2 final (1:22, 54 MB): Higgsfield media 89d9b56a-ae12-4314-a433-0b5678517d3d
+- Armado (en orden): ciudad b3f33496 → tramo A 400c4661 (audio orig 5.9–15.9 s) → B 7fdcd57e (15.9–25.9) →
+  C bd82ea10 (33–43) → motos robot a5c574ed → autos/drones c50e61bb desde 1,4 s → E f7bbeb39 (71.9–81.9) →
+  drone escanea aceaecfb → F 7adc4a7b (108–118) → G corre 4784caaa (117.8–123) → monumento f84b7e4d → título.
+  Cada tramo de Camilo lleva el audio ORIGINAL del mismo recorte; encima marca REC + "ROSARIO 12/03/2045 18:42".
+- Kling Edit necesita 720p (576p falla sin aviso). Referencias: ropa 19ef3894, ciudad dd2964d3, monumento a7e6ad40,
+  foto real del monumento 01b126a2. Camilo dijo que hay "muchas cosas que corregir": preguntarle cuáles.
