@@ -289,6 +289,12 @@
     .apps small{ display:none; }
   }
 
+  /* mockup de la campera en compu y celular (portfolio) */
+  .p3-mock{ margin:44px 0 0; }
+  .p3-mock video{ width:100%; aspect-ratio:1280 / 956; display:block; border-radius:24px; background:#2a2622; object-fit:cover; }
+  .p3-mock figcaption{ margin-top:12px; font-size:14px; color:var(--muted); max-width:70ch; }
+  @media (max-width:760px){ .p3-mock{ margin-top:28px; } .p3-mock video{ border-radius:16px; } }
+
   /* logo animado (inicio) */
   .marca{ padding-bottom:0; }
   .marca-in{ display:grid; grid-template-columns:minmax(0, 340px) 1fr; gap:56px; align-items:center; }

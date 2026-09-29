@@ -836,3 +836,10 @@ function zoomer(stage, layer, onZoom){
   if (reduce || !('IntersectionObserver' in window)){ render(END); return; }
   new IntersectionObserver((es, io) => { if (es[0].isIntersecting){ io.disconnect(); setTimeout(play, 350); } }, { threshold:.5 }).observe(box);
 })();
+
+/* mockup de la campera: se reproduce solo cuando se ve */
+(function(){
+  const v = document.querySelector('.p3-mock video');
+  if (!v || !('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  new IntersectionObserver(es => es[0].isIntersecting ? v.play().catch(() => {}) : v.pause(), { threshold:.35 }).observe(v);
+})();
