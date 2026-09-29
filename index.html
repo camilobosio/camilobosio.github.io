@@ -171,6 +171,8 @@
   .p3-stage{ position:relative; aspect-ratio:9/16; border-radius:26px; overflow:hidden; background:#141417; cursor:grab; touch-action:pan-y; user-select:none; -webkit-user-select:none; box-shadow:0 40px 80px -40px rgba(17,17,19,.6); }
   .p3-stage.dragging{ cursor:grabbing; }
   .p3-stage video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; pointer-events:none; }
+  .p3-seg{ opacity:0; }
+  .p3-seg.on{ opacity:1; }
   .p3-open{ opacity:0; }
   .p3-stage.show-open .p3-open{ opacity:1; }
   /* zona del cierre: solo existe cuando la campera está de frente */
@@ -478,8 +480,11 @@
           <div class="p3-tags"><span>Arrastrá para girar</span><span>Agarrá el cierre y bajalo</span></div>
         </div>
         <div class="p3-stage" id="p3" tabindex="0" role="application" aria-label="Campera interactiva: arrastrá para girarla; agarrá el cierre y bajalo para abrirla. Con el teclado: flechas para girar, Enter para abrir o cerrar">
-          <video class="p3-spin" id="p3spin" src="https://d8j0ntlcm91z4.cloudfront.net/user_3HIfCF8khEVPtKhxveCQOnXQy9S/hf_20260929_010912_8d989639-b521-418a-9d63-ac212bd92e9a.mp4" poster="https://d8j0ntlcm91z4.cloudfront.net/user_3HIfCF8khEVPtKhxveCQOnXQy9S/hf_20260929_010820_c9f3499d-47a2-44bd-82d0-33330fbf20c8_min.webp" muted playsinline preload="auto"></video>
-          <video class="p3-open" id="p3open" src="https://d8j0ntlcm91z4.cloudfront.net/user_3HIfCF8khEVPtKhxveCQOnXQy9S/hf_20260929_011335_c33f551b-92d7-4d30-a5ca-a501b5f5fb0f.mp4" muted playsinline preload="auto"></video>
+          <video class="p3-seg on" data-seg="0" src="https://d8j0ntlcm91z4.cloudfront.net/user_3HIfCF8khEVPtKhxveCQOnXQy9S/hf_20260929_013101_d1a5003c-4782-4833-b36b-0b7ce4177c69.mp4" muted playsinline preload="auto" poster="https://d8j0ntlcm91z4.cloudfront.net/user_3HIfCF8khEVPtKhxveCQOnXQy9S/hf_20260929_012618_47894ddb-9015-4133-bd29-2203b262819f_min.webp"></video>
+          <video class="p3-seg" data-seg="1" src="https://d8j0ntlcm91z4.cloudfront.net/user_3HIfCF8khEVPtKhxveCQOnXQy9S/hf_20260929_013101_af34253e-b426-4f08-b75c-32c3a96a207c.mp4" muted playsinline preload="auto"></video>
+          <video class="p3-seg" data-seg="2" src="https://d8j0ntlcm91z4.cloudfront.net/user_3HIfCF8khEVPtKhxveCQOnXQy9S/hf_20260929_013101_bba097b5-4de9-4be3-9cd5-728e62bccdd6.mp4" muted playsinline preload="auto"></video>
+          <video class="p3-seg" data-seg="3" src="https://d8j0ntlcm91z4.cloudfront.net/user_3HIfCF8khEVPtKhxveCQOnXQy9S/hf_20260929_013101_43918be3-55aa-4f28-9d2c-18ecbd60d14a.mp4" muted playsinline preload="auto"></video>
+          <video class="p3-open" id="p3open" src="https://d8j0ntlcm91z4.cloudfront.net/user_3HIfCF8khEVPtKhxveCQOnXQy9S/hf_20260929_013154_29299012-9105-4435-bfec-4d1a8862b8a8.mp4" muted playsinline preload="auto"></video>
           <div class="p3-zip" id="p3zip" aria-hidden="true"><span class="pull" id="p3pull"></span></div>
           <div class="p3-hint" id="p3hint"><span class="hand" aria-hidden="true">↔</span>Arrastrá para girar · Agarrá el cierre</div>
         </div>
@@ -684,10 +689,18 @@
   // de frente aparece el cierre: se agarra y se baja para abrirla (recorre el video de apertura según cuánto bajes)
   (function(){
     const st = document.getElementById('p3'); if(!st) return;
-    const spin = document.getElementById('p3spin'), openV = document.getElementById('p3open'), zip = document.getElementById('p3zip');
+    const segs = [...st.querySelectorAll('.p3-seg')], openV = document.getElementById('p3open'), zip = document.getElementById('p3zip');
     let dur = 0, odur = 0, t = 0, target = 0, vel = 0, drag = null, lastX = 0, lastTs = 0, raf = 0, auto = !reduce;
     let open = 0, openTarget = 0;                     // 0 = cerrada, 1 = abierta
-    spin.addEventListener('loadedmetadata', () => { dur = spin.duration || 0; });
+    // el giro son 4 videos (cuarto de vuelta cada uno) que se recorren como uno solo
+    const sd = segs.map(() => 0);
+    segs.forEach((v, i) => v.addEventListener('loadedmetadata', () => { sd[i] = v.duration || 0; if(sd.every(Boolean)) dur = sd.reduce((a, b) => a + b, 0); }));
+    let cur = 0;
+    function show(time){
+      let i = 0, local = time; while(i < 3 && local >= sd[i]){ local -= sd[i]; i++; }
+      if(i !== cur){ segs[cur].classList.remove('on'); segs[i].classList.add('on'); cur = i; }
+      const v = segs[i], lt = Math.min(sd[i] - .04, local); if(Math.abs(v.currentTime - lt) > .01) v.currentTime = lt;
+    }
     openV.addEventListener('loadedmetadata', () => { odur = openV.duration || 0; });
     const wrap = v => dur ? ((v % dur) + dur) % dur : 0;
     const nearFront = () => { const a = wrap(t) / (dur || 1); return a < .035 || a > .965; };
@@ -700,7 +713,7 @@
         }
         if(open > 0 || openTarget > 0){ target = Math.round(target / dur) * dur; }       // abierta: queda de frente
         t += (target - t) * Math.min(1, dt * 14);                                         // suavizado: sigue al mouse sin tirones
-        spin.currentTime = wrap(t);
+        show(wrap(t));
         st.classList.toggle('front', nearFront() && !drag);
       }
       if(!drag || drag !== 'zip'){ open += (openTarget - open) * Math.min(1, dt * 7); if(Math.abs(openTarget - open) < .002) open = openTarget; }
@@ -711,7 +724,7 @@
       raf = requestAnimationFrame(loop);
     }
     let primed = false;   // en iPhone el video no se carga hasta reproducirlo una vez
-    new IntersectionObserver(es => { cancelAnimationFrame(raf); lastTs = 0; if(es[0].isIntersecting){ if(!primed){ primed = true; [spin, openV].forEach(v => v.play().then(() => v.pause()).catch(() => {})); } raf = requestAnimationFrame(loop); } }).observe(st);
+    new IntersectionObserver(es => { cancelAnimationFrame(raf); lastTs = 0; if(es[0].isIntersecting){ if(!primed){ primed = true; [...segs, openV].forEach(v => v.play().then(() => v.pause()).catch(() => {})); } raf = requestAnimationFrame(loop); } }).observe(st);
     // cierre: arrastrar hacia abajo lo abre, hacia arriba lo cierra; al soltar termina solo hacia el lado más cercano
     zip.addEventListener('pointerdown', e => {
       e.stopPropagation(); drag = 'zip'; auto = false; vel = 0; st.classList.add('zipping', 'used'); zip.setPointerCapture(e.pointerId);
