@@ -511,3 +511,94 @@
   });
   info();
 })();
+
+/* logo del inicio: entra un balde de pintura, lo vuelca y el logo queda pintado y chorreado.
+   Se reproduce una vez al verse; tocarlo (o Enter) lo repite. */
+(function(){
+  const box = document.querySelector('.marca-vid');
+  const sv = box && box.querySelector('.balde-svg');
+  if (!sv) return;
+  const NS = 'http://www.w3.org/2000/svg';
+  const q = s => sv.querySelector(s);
+  const front = q('.bz-front'), stream = q('.bz-stream'), bucket = q('.bz-bucket'), splash = q('.bz-splash'), dg = q('.bz-drips');
+  // chorreado del logo (mismas formas que images/logo.svg): [path, arriba, abajo]
+  const D = [
+    ['M9.7 40 Q10.9 41.2 10.9 42.5 V44 a1.1 1.1 0 0 0 2.2 0 V42.5 Q13.1 41.2 14.3 40 Z',40,45.1],
+    ['M12.4 50 Q13.6 51.2 13.6 52.5 V57 a1.4 1.4 0 0 0 2.8 0 V52.5 Q16.4 51.2 17.6 50 Z',50,58.4],
+    ['M20.2 50 Q21.4 51.2 21.4 52.5 V61 a1.6 1.6 0 0 0 3.2 0 V52.5 Q24.6 51.2 25.8 50 Z',50,62.6],
+    ['M26.7 50 Q27.9 51.2 27.9 52.5 V54 a1.1 1.1 0 0 0 2.2 0 V52.5 Q30.1 51.2 31.3 50 Z',50,55.1],
+    ['M42.9 14 Q44.1 15.2 44.1 16.5 V17.5 a0.9 0.9 0 0 0 1.8 0 V16.5 Q45.9 15.2 47.1 14 Z',14,18.4],
+    ['M37.7 32 Q38.9 33.2 38.9 34.5 V37 a1.1 1.1 0 0 0 2.2 0 V34.5 Q41.1 33.2 42.3 32 Z',32,38.1],
+    ['M37.5 50 Q38.7 51.2 38.7 52.5 V58 a1.3 1.3 0 0 0 2.6 0 V52.5 Q41.3 51.2 42.5 50 Z',50,59.3],
+    ['M44.7 49 Q45.9 50.2 45.9 51.5 V54 a1.1 1.1 0 0 0 2.2 0 V51.5 Q48.1 50.2 49.3 49 Z',49,55.1]
+  ];
+  const DOTS = [[15,59.5,.9],[24.6,62.5,1.3],[40,61,1]];
+  const defs = sv.querySelector('defs');
+  const clips = D.map((d, i) => {
+    const cp = document.createElementNS(NS,'clipPath'); cp.id = 'bz-d' + i;
+    const r = document.createElementNS(NS,'rect'); r.setAttribute('x',0); r.setAttribute('width',64); r.setAttribute('y',d[1]-1); r.setAttribute('height',0);
+    cp.appendChild(r); defs.appendChild(cp);
+    const p = document.createElementNS(NS,'path'); p.setAttribute('d', d[0]); p.setAttribute('clip-path', 'url(#bz-d' + i + ')'); dg.appendChild(p);
+    return r;
+  });
+  const dots = DOTS.map(([x,y,r]) => { const c = document.createElementNS(NS,'circle'); c.setAttribute('cx',x); c.setAttribute('cy',y); c.setAttribute('r',r); c.style.opacity = 0; dg.appendChild(c); return c; });
+  // gotas que salpican (siempre las mismas)
+  let sd = 11; const rnd = () => (sd = (sd * 16807) % 2147483647) / 2147483647;
+  const SP = Array.from({length:16}, () => ({ t0: 1.15 + rnd()*1.0, x: 10 + rnd()*44, vx: (rnd()-.5)*26, vy: -8 - rnd()*14, r: .35 + rnd()*.75 }));
+  const spEls = SP.map(p => { const c = document.createElementNS(NS,'circle'); c.setAttribute('r', p.r); c.style.opacity = 0; splash.appendChild(c); return c; });
+
+  const cl = (v,a,b) => Math.max(a, Math.min(b, v)), seg = (t,a,b) => cl((t-a)/(b-a),0,1);
+  const ease = t => t < .5 ? 2*t*t : 1 - Math.pow(-2*t+2, 2)/2, lerp = (a,b,t) => a + (b-a)*t;
+  const END = 3.8;
+  function bucketAt(t){ // posición y giro del balde
+    if (t < .7){ const u = ease(seg(t,0,.7)); return [lerp(92,58,u), lerp(-44,-15,u), lerp(10,-25,u)]; }
+    if (t < 1.1){ const u = ease(seg(t,.7,1.1)); return [58, -15, lerp(-25,-122,u)]; }
+    if (t < 2.3) return [58 + Math.sin(t*9)*.25, -15, -122 + Math.sin(t*7)*2];
+    if (t < 2.7){ const u = ease(seg(t,2.3,2.7)); return [58, -15, lerp(-122,-30,u)]; }
+    const u = ease(seg(t,2.7,3.3)); return [lerp(58,94,u), lerp(-15,-46,u), lerp(-30,12,u)];
+  }
+  function render(t){
+    const [bx, by, a] = bucketAt(t), r = a*Math.PI/180, co = Math.cos(r), si = Math.sin(r);
+    bucket.setAttribute('transform', `translate(${bx} ${by}) rotate(${a})`);
+    const lx = -9.9, ly = -9.5, px = bx + co*lx - si*ly, py = by + si*lx + co*ly; // borde por donde cae la pintura
+    // la pintura baja desde donde cae y se abre hacia los costados
+    const IMP = 54.7, F = t < 1.05 ? -3 : lerp(2, 92, ease(seg(t,1.05,2.3)));
+    let d = 'M0 -3 H64 ';
+    for (let x = 64; x >= 0; x -= 2){ const y = F - Math.abs(x - IMP)*.45 + Math.sin(x*.7 + t*9)*.9*(F < 80 ? 1 : 0); d += `L${x} ${Math.max(-3, y).toFixed(2)} `; }
+    front.setAttribute('d', d + 'Z');
+    // chorro
+    const w = 3.6 * seg(t,1.0,1.2) * (1 - seg(t,2.05,2.4));
+    if (w > .05){
+      const bot = Math.max(py, Math.min(F, 14)), top = py + (t > 2.05 ? (bot - py) * ease(seg(t,2.05,2.4)) : 0);
+      let L = '', Rr = '';
+      for (let y = top; y <= bot; y += 2){ const k = Math.sin(y*.55 + t*14)*.35; L += `L${(px - w/2 + k).toFixed(2)} ${y.toFixed(2)} `; Rr = `L${(px + w/2 + k*.6).toFixed(2)} ${y.toFixed(2)} ` + Rr; }
+      stream.setAttribute('d', `M${px - w/2} ${top} ` + L + `L${px} ${bot + 1.2} ` + Rr + 'Z');
+    } else stream.setAttribute('d', '');
+    // salpicaduras
+    SP.forEach((p, i) => { const u = t - p.t0; const e = spEls[i];
+      if (u < 0 || u > .6){ e.style.opacity = 0; return; }
+      const x0 = IMP + (p.x - IMP)*.6, y0 = cl(F - Math.abs(x0 - IMP)*.45, 6, 58);
+      e.setAttribute('cx', x0 + p.vx*u); e.setAttribute('cy', y0 + p.vy*u + 45*u*u); e.style.opacity = 1 - u/.6; });
+    // chorreado: cada gota crece cuando la pintura ya pasó por su altura
+    D.forEach((dd, i) => { const t0 = 1.9 + i*.12; const u = ease(seg(t, t0, t0 + .9)); clips[i].setAttribute('height', (dd[2] - dd[1] + 1.5)*u); });
+    dots.forEach((c, i) => { c.style.opacity = seg(t, 2.9 + i*.12, 3.05 + i*.12); });
+  }
+  let raf = 0, start = 0;
+  function play(){ cancelAnimationFrame(raf); start = performance.now();
+    const step = now => { const t = (now - start)/1000; render(Math.min(t, END)); if (t < END) raf = requestAnimationFrame(step); };
+    raf = requestAnimationFrame(step); }
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  window.__balde = render; // para grabar/probar cuadros
+  render(0);
+  box.addEventListener('click', play);
+  box.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); play(); } });
+  if (reduce || !('IntersectionObserver' in window)){ render(END); return; }
+  new IntersectionObserver((es, io) => { if (es[0].isIntersecting){ io.disconnect(); setTimeout(play, 350); } }, { threshold:.5 }).observe(box);
+})();
+
+/* mockup de la campera: se reproduce solo cuando se ve */
+(function(){
+  const v = document.querySelector('.p3-mock video');
+  if (!v || !('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  new IntersectionObserver(es => es[0].isIntersecting ? v.play().catch(() => {}) : v.pause(), { threshold:.35 }).observe(v);
+})();
