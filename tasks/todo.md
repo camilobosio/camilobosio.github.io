@@ -39,10 +39,16 @@ Objetivo: intro corta con el video de Camilo (cara y voz reales) pero en Rosario
 - Intro: 41 s vertical, audio original de Camilo, marca REC + "ROSARIO 12/03/2045", cierre con título. Créditos: ~90.
 
 ## Versión 2 (correcciones de Camilo)
-- [ ] Referencias fijas (nano_banana_pro): interior de casa abandonada con ventana rota mirando a la calle; ciudad con
+- [x] Referencias fijas (nano_banana_pro): interior de casa abandonada con ventana rota mirando a la calle; ciudad con
       casas abandonadas + edificios robot desde el piso (con robots enchufados / vidriados con base de IA); Monumento a la Bandera lejos
-- [ ] Rehacer los tramos de Camilo con la casa de fondo (siempre escondido), robots lejos, sin personas
-- [ ] Tomas extra: moto robot futurista, autos futuristas, drones altos rápidos, drone bajo escaneando casas,
+- [x] Rehacer los tramos de Camilo con la casa de fondo (siempre escondido), robots lejos, sin personas
+- [x] Tomas extra: moto robot futurista, autos futuristas, drones altos rápidos, drone bajo escaneando casas,
       edificios robot, cruce + muro alto con el Monumento de lejos
-- [ ] Revisar TODOS los cuadros: ninguna persona, robots lejos, Camilo siempre escondido
-- [ ] Armar y mandar
+- [x] Revisar TODOS los cuadros: ninguna persona, robots lejos, Camilo siempre escondido
+- [x] Armar y mandar
+
+## Revisión v2
+- Tramos de Camilo (Kling Edit pro): 400c4661, 7fdcd57e, bd82ea10, f7bbeb39, 7adc4a7b, 4784caaa. Siempre dentro de la casa rota.
+- Tomas: ciudad por la ventana b3f33496, monumento detrás del muro f84b7e4d, drone escaneando casas aceaecfb,
+  autos/drones c50e61bb (recortado sin la moto), motos robot vacías a5c574ed (imagen aa0e7c6f, sin piloto).
+- Revisado cuadro por cuadro: sin personas, sin pilotos. Video final 1:22.
