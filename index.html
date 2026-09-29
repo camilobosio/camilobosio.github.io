@@ -472,8 +472,8 @@
           <div class="p3-tags"><span>Arrastrá para girar</span><span>Tocá para abrir</span></div>
         </div>
         <div class="p3-stage" id="p3" tabindex="0" role="application" aria-label="Campera interactiva: arrastrá para girarla y tocá para abrir el cierre">
-          <video class="p3-spin" id="p3spin" src="portfolio/ropa/campera-360.mp4" poster="portfolio/ropa/campera-360.jpg" muted playsinline preload="auto"></video>
-          <video class="p3-open" id="p3open" src="portfolio/ropa/campera-abrir.mp4" muted playsinline preload="auto"></video>
+          <video class="p3-spin" id="p3spin" src="https://d8j0ntlcm91z4.cloudfront.net/user_3HIfCF8khEVPtKhxveCQOnXQy9S/hf_20260929_010912_8d989639-b521-418a-9d63-ac212bd92e9a.mp4" poster="https://d8j0ntlcm91z4.cloudfront.net/user_3HIfCF8khEVPtKhxveCQOnXQy9S/hf_20260929_010820_c9f3499d-47a2-44bd-82d0-33330fbf20c8_min.webp" muted playsinline preload="auto"></video>
+          <video class="p3-open" id="p3open" src="https://d8j0ntlcm91z4.cloudfront.net/user_3HIfCF8khEVPtKhxveCQOnXQy9S/hf_20260929_011335_c33f551b-92d7-4d30-a5ca-a501b5f5fb0f.mp4" muted playsinline preload="auto"></video>
           <div class="p3-hint" id="p3hint"><span class="hand" aria-hidden="true">↔</span>Arrastrá · Tocá</div>
           <button type="button" class="p3-btn" id="p3btn">Abrir cierre</button>
         </div>
@@ -689,7 +689,8 @@
       }
       raf = requestAnimationFrame(loop);
     }
-    new IntersectionObserver(es => { cancelAnimationFrame(raf); lastTs = 0; if(es[0].isIntersecting) raf = requestAnimationFrame(loop); }).observe(st);
+    let primed = false;   // en iPhone el video no se carga hasta reproducirlo una vez: se hace play/pause mudo al verse
+    new IntersectionObserver(es => { cancelAnimationFrame(raf); lastTs = 0; if(es[0].isIntersecting){ if(!primed){ primed = true; [spin, open].forEach(v => v.play().then(() => v.pause()).catch(() => {})); } raf = requestAnimationFrame(loop); } }).observe(st);
     st.addEventListener('pointerdown', e => { if(e.target === btn || busy) return; dragging = true; moved = 0; lastX = e.clientX; vel = 0; auto = false; st.classList.add('dragging', 'used'); st.setPointerCapture(e.pointerId); });
     st.addEventListener('pointermove', e => {
       if(!dragging) return; const dx = e.clientX - lastX; lastX = e.clientX; moved += Math.abs(dx);
