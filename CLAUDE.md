@@ -12,6 +12,10 @@ Hablarle a Camilo en español rioplatense, simple y sin tecnicismos.
   - `og-mixto.jpg` = alternativa (flyer + productos). `og-image.jpg` = versión vieja, sin uso.
 - `portfolio/perfumes/` — publicidades de perfumes hechas con IA + Canva (14 imágenes .webp + 1 video Kling).
 - `portfolio/videos-ia/` — 3 videos (misma escena, 3 ángulos) con la cara de Camilo, hechos a partir de un par de fotos.
+- `modelo-3d-producto/` — código base del visor 3D de un producto (Three.js por CDN, `index.html` + `LEEME.md`).
+  Carga `modelo.glb` de la carpeta (o se arrastra un .glb); si no hay, muestra un frasco de perfume de muestra.
+  Arrastrar gira con suavizado, NUNCA gira sola. Camilo lo tiene también en su PC: `C:\Users\Camilo\Desktop\modelo 3D producto`
+  (se le mandó en .zip: este entorno no accede a su compu). Todavía no se sabe qué producto va.
 - `Camilo-Bosio-Paginas-web.pdf` — PDF de planes. Solo tiene los planes de páginas web (falta sumar el de IA).
 
 ## Estilo
