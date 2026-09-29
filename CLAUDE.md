@@ -38,6 +38,11 @@ Hablarle a Camilo en español rioplatense, simple y sin tecnicismos.
   `C:\Users\Camilo\Desktop\modelo 3D producto` (se manda en .zip: este entorno no accede a su compu).
 - `Camilo-Bosio-Paginas-web.pdf` — PDF de planes. Solo tiene los planes de páginas web (falta sumar el de IA).
 
+- "Con qué trabajo" (`.apps`, dentro de `#quien` en index.html): 20 herramientas con logo (`images/herramientas/`).
+  Las de Camilo: Claude Code, ChatGPT, Higgsfield, Busy (la abejita, logo que pasó él), Canva (logo nuevo que pasó él),
+  Photoshop, Illustrator; las demás las sugerí yo y Camilo aprobó todas. Logos de simple-icons (SVG) y favicons.
+  En celular: grilla de 4 íconos con nombre, sin descripción.
+
 ## Estilo
 - Colores: violeta (`--violet`) como principal + **naranja del logo** (`--orange`, `--paint` = degradé naranja→rosa) como acento
   (frases que rotan en la portada, puntos de la cinta, números de pasos, todo lo del servicio "Contenido con IA").
