@@ -24,10 +24,12 @@ Dos servicios, dos planes cada uno (sin precios, botón "Consultar" por WhatsApp
 
 ## Portfolio (sección `#trabajo`)
 - Caso M Perfumerie (mperfumerie.com.ar), página web real.
-- Sección "Experiencia interactiva" (`#interactivo`, clases `.ix-*`): 4 demos jugables que recrean interacciones reales de
-  M Perfumerie (estrellas que explotan junto a "Tendencias", caja de regalo que se abre en "Nuevos ingresos", brillo al pasar
-  por los botones/burbujas, destellos dorados al tocar el flyer). Muestra el valor del plan Premium web; Esencial = formato
-  de tienda + carga de productos. En celular se animan solas cuando están a la vista.
+- Sección "Experiencia interactiva" (`#interactivo`, clases `.ix-*`): 4 videos cortos en loop (`portfolio/interacciones/*.mp4`
+  + póster .jpg) GRABADOS de la página real de M Perfumerie (repo `maugeperfumerie/mperfumerie`, código de las
+  interacciones en `experience/experience.js` e `index.html`): estrellas de "Tendencias", cajas de "Nuevos ingresos",
+  burbujas del inicio (hover + pop) y rocío dorado al tocar el flyer. Camilo pidió que sean las reales, no imitaciones.
+  Se grabaron con Playwright (screencast CDP, zoom CSS para agrandar) + ffmpeg de `pip install imageio-ffmpeg` (H.264).
+  Muestran el valor del plan Premium web; Esencial = formato de tienda + carga de productos.
 - Galería "Publicidades hechas con IA" (`#contenido`): mosaico con filtros por rubro (`.cats`, botones con `data-f`)
   y visor a pantalla completa. Cada pieza es un `<button class="tile" data-cat="...">` con `<img>` o `<video>` y un `.cap`
   (título en `<b>` + tipo de pieza). Para sumar un rubro nuevo: agregar botón en `.cats` + tiles con ese `data-cat`.
