@@ -36,3 +36,5 @@
 - Motos robot = futuristas, sin piloto, no una moto común. Autos futuristas sin conductor.
 - Edificios robot: construidos desde el piso, de varios pisos, mezclados con casas abandonadas (no apoyados arriba
   de una casa). Algunos con robots enchufados por fuera, otros vidriados mostrando una base de IA por dentro.
+- Motos y autos NO los maneja un robot: el vehículo ES el robot y se maneja solo. Nada sentado encima (ni "cabeza
+  robot" donde iría el piloto): moto sin asiento ni piloto, autos sin nadie adentro.
