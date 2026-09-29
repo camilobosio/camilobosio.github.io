@@ -30,6 +30,11 @@ Hablarle a Camilo en español rioplatense, simple y sin tecnicismos.
   `C:\Users\Camilo\Desktop\modelo 3D producto` (se manda en .zip: este entorno no accede a su compu).
 - `Camilo-Bosio-Paginas-web.pdf` — PDF de planes. Solo tiene los planes de páginas web (falta sumar el de IA).
 
+- "Con qué trabajo" (`.apps`, dentro de `#quien` en index.html): 20 herramientas con logo (`images/herramientas/`).
+  Las de Camilo: Claude Code, ChatGPT, Higgsfield, Busy (la abejita, logo que pasó él), Canva (logo nuevo que pasó él),
+  Photoshop, Illustrator; las demás las sugerí yo y Camilo aprobó todas. Logos de simple-icons (SVG) y favicons.
+  En celular: grilla de 4 íconos con nombre, sin descripción.
+
 ## Estilo
 - Colores: violeta (`--violet`) como principal + **naranja del logo** (`--orange`, `--paint` = degradé naranja→rosa) como acento
   (frases que rotan en la portada, puntos de la cinta, números de pasos, todo lo del servicio "Contenido con IA").
@@ -40,7 +45,7 @@ Hablarle a Camilo en español rioplatense, simple y sin tecnicismos.
 La página es general, no "solo páginas web": **diseño web + contenido con IA** (campañas publicitarias, flyers, fotos de producto, videos, interacciones para webs).
 
 Dos servicios, dos planes cada uno (sin precios, botón "Consultar" por WhatsApp):
-1. **Páginas web**: Esencial y Premium (Premium = como M Perfumerie).
+1. **Páginas web**: Básico y Premium (Premium = como M Perfumerie).
 2. **Contenido con IA**: Básico y Premium. Lo que cambia son los créditos de IA → más videos, más largos, más opciones/variantes.
    Todavía sin cantidades concretas: pedirle a Camilo números (cantidad y duración de videos por plan) si los quiere.
 
@@ -66,7 +71,7 @@ servidor; la foto no se sube): genera una base simple para probar →
   interacciones en `experience/experience.js` e `index.html`): estrellas de "Tendencias", cajas de "Nuevos ingresos",
   burbujas del inicio (hover + pop) y rocío dorado al tocar el flyer. Camilo pidió que sean las reales, no imitaciones.
   Se grabaron con Playwright (screencast CDP, zoom CSS para agrandar) + ffmpeg de `pip install imageio-ffmpeg` (H.264).
-  Muestran el valor del plan Premium web; Esencial = formato de tienda + carga de productos.
+  Muestran el valor del plan Premium web; Básico = formato de tienda + carga de productos.
 - Galería "Publicidades hechas con IA" (`#contenido`): mosaico con filtros por rubro (`.cats`, botones con `data-f`)
   y visor a pantalla completa. Cada pieza es un `<button class="tile" data-cat="...">` con `<img>` o `<video>` y un `.cap`
   (título en `<b>` + tipo de pieza). Para sumar un rubro nuevo: agregar botón en `.cats` + tiles con ese `data-cat`.
