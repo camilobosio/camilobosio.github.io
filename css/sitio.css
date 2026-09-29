@@ -272,6 +272,23 @@
   .exp div span:first-child{ font-family:var(--mono); font-size:12px; color:var(--muted); padding-top:2px; }
   @media (max-width:820px){ .about{ grid-template-columns:1fr; } .about .photo{ max-width:260px; } }
 
+  .apps{ margin-top:30px; }
+  .apps ul{ list-style:none; padding:0; margin:12px 0 0; display:grid; grid-template-columns:repeat(auto-fill, minmax(188px, 1fr)); gap:8px; }
+  .apps li{ display:grid; grid-template-columns:38px 1fr; column-gap:11px; align-items:center; padding:8px 10px; border:1px solid var(--line); border-radius:14px; background:var(--paper); }
+  .apps .i{ grid-row:span 2; width:38px; height:38px; border-radius:10px; background:var(--c); display:grid; place-items:center; overflow:hidden; }
+  .apps .i img{ width:21px; height:21px; }
+  .apps .i.full img{ width:100%; height:100%; object-fit:cover; }
+  .apps b{ font-size:14px; line-height:1.25; align-self:end; }
+  .apps small{ font-size:12px; color:var(--muted); line-height:1.25; align-self:start; }
+  @media (max-width:760px){
+    .apps ul{ grid-template-columns:repeat(4, 1fr); gap:10px 6px; }
+    .apps li{ grid-template-columns:1fr; justify-items:center; text-align:center; padding:0; border:0; background:none; row-gap:5px; }
+    .apps .i{ grid-row:auto; width:46px; height:46px; border-radius:12px; }
+    .apps .i img{ width:25px; height:25px; }
+    .apps b{ font-size:11.5px; font-weight:600; }
+    .apps small{ display:none; }
+  }
+
   /* contacto */
   .contact{ background:var(--violet); color:#fff; border-radius:28px; padding:56px 44px; display:grid; grid-template-columns:1.2fr 1fr; gap:30px; align-items:end; }
   .contact h2{ font-family:var(--display); font-weight:800; font-size:clamp(40px, 6.6vw, 88px); line-height:.9; letter-spacing:-.045em; }
