@@ -73,3 +73,10 @@ Objetivo: intro corta con el video de Camilo (cara y voz reales) pero en Rosario
 - [x] Mockup M Perfumerie v2: PC portada/flyer, celu = productos — job b1731066
 - [x] Mockup campera v2 (herramientas-video/): celu = visor 3D; PC = VIDEO de una landing nueva hecha para esto, con cursor que gira la
       campera, abre el cierre y desliza para cambiar de campera (grabada con Playwright, pegada en la pantalla con perspectiva)
+
+## Pedidos 29/9 (noche)
+- [ ] Pincel v4: MISMO recorrido perfecto, pero pincel realista (foto de pincel generada, recortada) — no "emoji".
+- [ ] Landing demo campera SIN TEXTO: camperas en el centro flotando en una "dimensión" (fondo animado), mismas
+      interacciones (girar, cierre, deslizar a la otra). Rehacer el mockup animado.
+- [ ] Interacción en la página: el logo limpio; entra un balde de pintura desde arriba al costado, se inclina, tira la
+      pintura naranja, cae sobre el logo y queda el logo final chorreado. Hecho con código (SVG), no video.
