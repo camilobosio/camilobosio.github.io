@@ -28,11 +28,16 @@ Dos servicios, dos planes cada uno (sin precios, botón "Consultar" por WhatsApp
 2. **Contenido con IA**: Básico y Premium. Lo que cambia son los créditos de IA → más videos, más largos, más opciones/variantes.
    Todavía sin cantidades concretas: pedirle a Camilo números (cantidad y duración de videos por plan) si los quiere.
 
-## "¿Qué vas a crear?" (sección `#crear`, clases `.make` / `.mk`)
-Entre "Lo que hago" y el portfolio. Copiada de la sección "What will you build?" de base44.com: fondo de puntitos,
-3 tarjetas (Páginas web → `#trabajo`, Contenido interactivo → `#interactivo`, Publicidades con IA → `#contenido`) con
-barra de color abajo que al pasar el mouse sube y pinta toda la tarjeta (web = violeta, las otras = `--paint`), y botón
-con texto que "rueda" hacia arriba. Agregado nuestro: una miniatura inclinada en el medio que se endereza al pasar el mouse.
+## "¿Qué vamos a crear?" (sección `#crear`, clases `.make` / `.g*`)
+Entre "Lo que hago" y el portfolio. Barra tipo la de la portada de base44.com (Camilo NO quería tarjetas, quería esto):
+recuadro para escribir "¿Qué querés crear o modificar?", botón "+" para subir una foto (también arrastrar o pegar),
+modo Crear / Variaciones, botón naranja de generar y sugerencias abajo. Todo corre en el navegador (canvas, sin IA ni
+servidor; la foto no se sube): genera una base simple para probar →
+- Crear + texto → 4 logos (Pintura que chorrea, Monograma, Ícono, Retro) con las iniciales o el nombre entre comillas;
+  si hay foto, usa sus colores.
+- Variaciones + foto → 6 (sobre color, degradé, blanco y negro, duotono, insignia, tarjeta). El chip usa `images/logo.svg`.
+- Texto con flyer/promo/oferta/2x1 + foto → 3 flyers.
+"Generar otras" cambia colores; cada resultado se descarga en PNG; "Pulirlo con Camilo" abre WhatsApp con el pedido.
 
 ## Portfolio (sección `#trabajo`)
 - Caso M Perfumerie (mperfumerie.com.ar), página web real.
