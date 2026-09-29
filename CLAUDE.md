@@ -50,9 +50,11 @@ Dos servicios, dos planes cada uno (sin precios, botón "Consultar" por WhatsApp
 - Campera Adidas interactiva (sección `#producto-360`, clases `.p3-*`, PUBLICADA): "Contenido interactivo".
   Arrastrar desde cualquier lado gira (suavizado + inercia); de frente aparece un punto en el cierre: se agarra (cursor grab)
   y se baja para abrir (recorre el video de apertura según cuánto bajes). Sin botón, sin piso/base (flota en fondo oscuro).
-  El giro son 4 videos Kling de 3 s (frente→costado→espalda→costado→frente) que el JS recorre como uno solo.
-  Jobs Higgsfield: fotos frente 47894ddb, costado 609bd543, espalda 9892caf9, otro costado 40a9f202, abierta 2bde9db7;
-  giros d1a5003c, af34253e, bba097b5, 43918be3; apertura 29299012. Los videos se cargan DIRECTO desde el CDN de Higgsfield
+  El giro son 4 videos Kling de 3 s (frente→costado→espalda→costado→frente). Al cargar, el JS saca 80 cuadros del giro y
+  24 del cierre (seek + drawImage en canvas) y los dibuja según el mouse: giro 1 a 1 sin demora, inercia corta, imán al frente,
+  NUNCA gira sola (pedido de Camilo). El cierre se ilumina al acercar el mouse (zona --zt/--zh del stage) y se baja arrastrando.
+  Jobs Higgsfield: fotos frente 47894ddb, costado 609bd543, espalda 12750336 (mangas colgando, la vieja 9892caf9 tenía las mangas hacia atrás), otro costado 40a9f202, abierta 2bde9db7;
+  giros d1a5003c, 04ca87b8, a0e8a095, 43918be3; apertura 29299012. Los videos se cargan DIRECTO desde el CDN de Higgsfield
   (d8j0ntlcm91z4.cloudfront.net) porque la red de este entorno bloquea bajarlos; ideal: bajarlos al repo y recodificar
   con `-g 1` para que el arrastre sea más fluido. 3 publicidades de la campera (jobs 6b1c0c83, 7974a2e7, f7ac0fb1) sin sumar aún.
   Subir referencias a Higgsfield: la subida directa está bloqueada; se suben al repo y se importan con media_import_url
