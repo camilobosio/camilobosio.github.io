@@ -19,3 +19,15 @@ Objetivo: cargar fotos o un video de un producto → modelo 3D real, lo más fie
 - Hunyuan3D v3: forma buena pero inventó un texto "adidas" en el pecho. Meshy 7 ultra (solo frente): tiras en la espalda
   (la real es lisa) y logo dentro de un parche. Elegido: Tripo.
 - Costo de esta prueba: lámina de vistas ~8 + Hunyuan 15 + Tripo 18 + Meshy 44 créditos.
+
+---
+
+# YouTube — "Día del Juicio Final, año 2045" (intro found footage)
+Objetivo: intro corta con el video de Camilo (cara y voz reales) pero en Rosario 2045 tomada por robots.
+
+## Plan
+- [x] Transcribir el video y marcar los momentos (presentación, señala drones, pasa un drone y sale corriendo)
+- [x] Cortar 3 tramos de ~9 s y subirlos a 720p (Kling Edit falla con 576p)
+- [ ] Kling 3.0 Omni Edit (pro, 18 créditos c/u): cambiar el departamento por calle de Rosario con vegetación y robots
+- [ ] 3 tomas sin Camilo (Kling 3.0): drone escaneando, cubo de carga de robots, autos/motos robot
+- [ ] Armar la intro con su audio original, revisar cuadros y mandársela
