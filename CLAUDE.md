@@ -63,7 +63,7 @@ Dos servicios, dos planes cada uno (sin precios, botón "Consultar" por WhatsApp
   a partir de las 4 vistas). Página de prueba `lab/campera-3d.html` con <model-viewer> (reemplazar GLB_URL por la URL del .glb).
   Si el navegador no puede cargar el .glb desde el CDN (CORS), pedirle a Camilo el archivo. Idea de Camilo: una BASE reutilizable
   para empresas (fotos del producto → vistas → giro/3D + acción: abrir cierre, destapar botella, etc.).
-- IDEA PRÓXIMA SESIÓN · Sección "¿Qué vas a crear?" (inspirada en una página que Camilo va a pasar; no copiar): el visitante
+- IDEA PRÓXIMA SESIÓN · Sección "¿Qué vas a crear?" (inspirada en https://base44.com — "si podés describirlo, podés construirlo", caja tipo chat con adjuntar; no copiar): el visitante
   sube su logo → 2-3 variaciones, sube un producto → escenas publicitarias, o describe algo → imágenes. Debajo: CTA "¿Algo
   profesional? Lo hago a medida". Requiere API de imágenes (fal.ai/Replicate/OpenAI o Higgsfield si tiene API) + intermediario
   (Cloudflare Worker) que guarde la clave; límites por persona/día, tope mensual, filtros y marca de agua. Plan: 1) diseño con
