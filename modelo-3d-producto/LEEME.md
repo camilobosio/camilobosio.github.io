@@ -1,18 +1,25 @@
-# Modelo 3D de producto — código base
+# Producto en 3D — código base
 
-Visor para mostrar un producto en 3D en la web: se gira arrastrando con el mouse o el dedo (con suavizado),
-se acerca con la rueda o pellizcando, y **nunca gira solo**.
+Dos ejemplos en la misma página (se eligen arriba a la derecha):
+
+- **Campera Adidas**: modelo 3D real, generado con Higgsfield a partir de las fotos (frente, costados y espalda).
+  Se gira arrastrando con el mouse o el dedo, **nunca gira sola**, y si la soltás casi de frente se acomoda de frente.
+  De frente aparece un **tirador naranja en el cuello**: lo agarrás y lo bajás, y la campera se va abriendo
+  (arriba del tirador se ve abierta, con la remera; abajo, cerrada). Tocarlo sin arrastrar la abre o cierra entera.
+  Abierta también se puede girar.
+- **Frasco de perfume**: ejemplo armado con formas, solo para girar.
+
+## Archivos
+- `index.html` — el visor (todo el código).
+- `campera-cerrada.glb` y `campera-abierta.glb` — los modelos 3D, comprimidos (menos de 2 MB cada uno).
 
 ## Cómo verlo
-Abrí `index.html` con doble clic (Chrome o Edge). Si todavía no hay modelo, aparece un frasco de perfume de muestra.
+Con doble clic el navegador no deja leer los .glb de la carpeta, así que los busca en internet (en Higgsfield) y tarda un poco más.
+Publicado en la página (GitHub Pages) usa los de la carpeta.
+Para probar otro producto: arrastrá cualquier archivo .glb encima de la página.
 
-## Cómo poner el producto real
-1. Conseguí el modelo 3D del producto en formato **.glb** (por ejemplo, Higgsfield lo genera a partir de una foto del producto).
-2. Para probarlo al toque: arrastralo arriba de la página o usá el botón **"Cargar modelo (.glb)"**.
-3. Para dejarlo fijo: guardalo en esta carpeta con el nombre **`modelo.glb`**.
-   Ojo: abriendo con doble clic el navegador no deja leer `modelo.glb` solo; ya publicado en la web (GitHub Pages) sí lo abre.
-
-## Ajustes rápidos (arriba de todo en el código de `index.html`)
-- `MODELO`: nombre del archivo 3D.
-- `TAMANIO`: qué tan grande se ve.
-- `GIRA_SOLO`: está en `false` a propósito.
+## Ajustes (arriba de todo en `index.html`)
+- `ALTO`: tamaño del producto.
+- `GIRA_SOLO`: en `false` a propósito.
+- `TORSO_NEGRO`: la textura que armó Higgsfield para la campera cerrada tenía el torso blanco; el visor lo pinta
+  de negro solo en el torso (las mangas y sus tiras quedan igual).
