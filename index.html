@@ -134,6 +134,8 @@
   .desk .view .on{ opacity:1; }
   .case-shots .phone{ position:absolute; right:44px; top:40px; width:230px; animation:none; box-shadow:0 40px 80px -30px rgba(0,0,0,.8), inset 0 0 0 1.5px #2b2b30; }
   .case-bottom{ padding:30px 44px 44px; display:flex; flex-wrap:wrap; gap:14px 30px; align-items:center; justify-content:space-between; border-top:1px solid #2b2b30; }
+  .case-2{ margin-top:40px; }
+  .case-2 h3 em{ background:var(--paint); -webkit-background-clip:text; background-clip:text; color:transparent; }
   .feat{ display:flex; flex-wrap:wrap; gap:8px; }
   .feat span{ font-size:12.5px; border:1px solid #3a3a40; border-radius:999px; padding:6px 12px; color:#d9d8de; }
   .case .btn{ border-color:var(--on-dark); color:var(--on-dark); }
@@ -173,16 +175,6 @@
   .p3-canvas{ position:absolute; inset:0; width:100%; height:100%; opacity:0; transition:opacity .4s; }
   .p3-stage.ready .p3-canvas{ opacity:1; }
   /* cierre: al acercar el mouse al tirador (el cierre chiquito) se ilumina; se agarra y se baja. Se cierra con un clic */
-  .pv{ margin-top:72px; display:grid; grid-template-columns:minmax(0, .9fr) minmax(0, 1.1fr); align-items:center; gap:32px; padding:28px; border-radius:28px; background:#d2c7bc; color:#17140f; text-decoration:none; transition:transform .3s var(--ease), box-shadow .3s var(--ease); }
-  .pv:hover{ transform:translateY(-4px); box-shadow:0 30px 60px -30px rgba(17,17,19,.45); }
-  .pv h3{ font-family:var(--display); font-weight:800; font-size:clamp(34px, 4.8vw, 56px); line-height:.98; letter-spacing:-.035em; margin-top:10px; }
-  .pv p{ color:#3b342c; margin-top:14px; max-width:46ch; }
-  .pv .label{ color:#6d6259; }
-  .pv-go{ display:inline-flex; gap:8px; align-items:center; margin-top:20px; padding:12px 18px; border-radius:999px; background:#17140f; color:#fff; font-weight:600; font-size:14.5px; }
-  .pv-go b{ transition:transform .3s var(--ease); }
-  .pv:hover .pv-go b{ transform:translateX(4px); }
-  .pv img{ width:100%; height:auto; border-radius:18px; }
-  @media (max-width:820px){ .pv{ grid-template-columns:1fr; padding:20px; } }
   .p3-stage{ --zt:30.8%; --zh:42.7%; }   /* tirador real del cierre (30,8% del alto) hasta el ruedo (73,5%) */
   .p3-zip{ position:absolute; left:50%; width:0; top:var(--zt); height:var(--zh); pointer-events:none; }
   .p3-zip .pull{ position:absolute; left:0; top:calc(var(--zp, 0) * 100%); width:clamp(6px, 2cqw, 9px); height:clamp(12px, 4cqw, 18px); transform:translate(-50%, -50%); border-radius:2px; background:#ffb27a; opacity:0; transition:opacity .2s; box-shadow:0 0 8px 2px rgba(255,140,60,.9); }
@@ -594,6 +586,42 @@
           </a>
         </div>
       </div>
+      <div class="case case-2" id="probador">
+        <div class="case-top">
+          <div>
+            <span class="label">Portfolio · Landing interactiva · 2026</span>
+            <h3>Probador <em>virtual</em></h3>
+            <p>Landing para una marca de ropa. El cliente desliza sobre el modelo y le cambia la campera o el buzo, le prueba gorros y gorras, y lo gira 360° para verlo de espalda. Cada combinación se consulta por WhatsApp con un toque. El modelo, las prendas y los giros los generé con IA; el diseño y la interacción los programé yo.</p>
+          </div>
+          <div class="facts">
+            <div class="fact"><b>9</b><span>prendas sobre el mismo modelo</span></div>
+            <div class="fact"><b>4</b><span>gorros que combinan con todo</span></div>
+            <div class="fact"><b>360°</b><span>cada prenda se puede girar</span></div>
+            <div class="fact"><b>0</b><span>sesiones de fotos</span></div>
+          </div>
+        </div>
+        <div class="case-shots">
+          <a class="desk" href="probador/" aria-label="Abrir el probador virtual" style="display:block;text-decoration:none;">
+            <div class="bar"><i></i><i></i><i></i><span>camilobosio.github.io/probador</span></div>
+            <div class="view">
+              <video class="on" src="portfolio/probador/probador-pc.mp4" poster="portfolio/probador/probador-pc.jpg" muted loop playsinline autoplay preload="metadata" aria-label="En la computadora: se desliza sobre el modelo y le cambia la campera, se le prueban gorros y se lo gira 360°"></video>
+            </div>
+          </a>
+          <div class="phone">
+            <div class="screen">
+              <video class="on" src="portfolio/probador/probador-celular.mp4" poster="portfolio/probador/probador-celular.jpg" muted loop playsinline autoplay preload="metadata" aria-label="En el celular: se desliza con el dedo para cambiar la ropa y se gira el modelo"></video>
+            </div>
+          </div>
+        </div>
+        <div class="case-bottom">
+          <div class="feat">
+            <span>Deslizar para cambiar la prenda</span><span>Gorros combinables</span><span>Giro 360° arrastrando</span><span>Consulta por WhatsApp</span><span>Hecho con IA</span>
+          </div>
+          <a class="btn" href="probador/">Probarlo
+            <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M9 7h8v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
       <div class="ix" id="interactivo">
         <div class="ai-head">
           <div>
@@ -637,15 +665,6 @@
           <div class="p3-hint" id="p3hint"><span class="hand" aria-hidden="true">↔</span>Arrastrá para girar · Agarrá el cierre</div>
         </div>
       </div>
-      <a class="pv" id="probador" href="probador/">
-        <div class="pv-txt">
-          <span class="label">Portfolio · Landing interactiva</span>
-          <h3>Probador virtual</h3>
-          <p>Una landing para marcas de ropa: deslizás sobre el modelo y le cambiás la campera o el buzo, le probás gorros y gorras, y lo girás 360° para verlo de espalda. Todo generado con IA sobre el mismo modelo, sin sesión de fotos.</p>
-          <span class="pv-go">Abrir el probador <b aria-hidden="true">→</b></span>
-        </div>
-        <img src="probador/og.jpg" width="1200" height="630" loading="lazy" alt="El mismo modelo con cinco camperas y gorros distintos">
-      </a>
       <div class="ai" id="contenido">
         <div class="ai-head">
           <div>

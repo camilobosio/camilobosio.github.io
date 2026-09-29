@@ -66,7 +66,7 @@ servidor; la foto no se sube): genera una base simple para probar →
   Rubros actuales: `perfumes`, `personas` ("Videos con personas").
 - Videos: en el mosaico se reproducen solos y mudos al verse; en el visor se abren con sonido.
 
-## Probador virtual (`probador/`, landing aparte, enlazada desde el portfolio con la tarjeta `.pv` / `#probador`)
+## Probador virtual (`probador/`, landing aparte; en el portfolio es un CASO como M Perfumerie: `.case.case-2#probador`)
 Pedido de Camilo: landing tipo tienda de ropa, modelo con pelo rapado, encuadre de torso (sin zapatillas), deslizar para
 cambiarle camperas/buzos y gorros. Marca ficticia "PROBADOR · DEMO" (no es tienda real).
 - Modelo base: Higgsfield job 964f6c99 (nano_banana_pro 4:5 2k). Cada prenda = edición de esa foto con nano_banana_pro
@@ -78,6 +78,9 @@ cambiarle camperas/buzos y gorros. Marca ficticia "PROBADOR · DEMO" (no es tien
   cualquier prenda.
 - Giro 360°: video Kling 3.0 pro 5 s (start = end = foto de la prenda, ~8,75 créditos) → 60 cuadros en tira
   `giros/<id>.webp` (10 columnas de 540×670). Botón "Girar 360°": arrastrar gira, inercia corta, imán al frente, nunca sola.
+- El caso del portfolio muestra videos grabados de la landing (`portfolio/probador/probador-pc.mp4` 1440×900 y
+  `probador-celular.mp4` 390×844, Playwright recordVideo + cursor dibujado + ffmpeg H.264). Regrabarlos al sumar prendas.
+- Camilo NO quiere publicar el probador hasta que estén sus camperas Adidas.
 - Sumar prenda: editar la foto base con nano_banana_pro, generar el giro, agregar en `TOPS` (id, cat, name, desc).
 - Pendiente: Camilo pasó fotos de 4 camperas Adidas (negra con franjas beige, blanca equipo Audi F1, marrón de trabajo
   con cuello de corderoy, gris con capucha y franjas). Hay que subirlas a Higgsfield (widget) para ponérselas al modelo.
