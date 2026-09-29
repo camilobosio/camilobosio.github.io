@@ -59,6 +59,10 @@ Dos servicios, dos planes cada uno (sin precios, botón "Consultar" por WhatsApp
   con `-g 1` para que el arrastre sea más fluido. 3 publicidades de la campera (jobs 6b1c0c83, 7974a2e7, f7ac0fb1) sin sumar aún.
   Subir referencias a Higgsfield: la subida directa está bloqueada; se suben al repo y se importan con media_import_url
   desde raw.githubusercontent.com.
+- EN CURSO · Modelo 3D real de la campera (Higgsfield multi_image_to_3d, 30 créditos, job 0a974476-8007-4738-bece-a13cd478ce0e,
+  a partir de las 4 vistas). Página de prueba `lab/campera-3d.html` con <model-viewer> (reemplazar GLB_URL por la URL del .glb).
+  Si el navegador no puede cargar el .glb desde el CDN (CORS), pedirle a Camilo el archivo. Idea de Camilo: una BASE reutilizable
+  para empresas (fotos del producto → vistas → giro/3D + acción: abrir cierre, destapar botella, etc.).
 - Camilo va a seguir creando contenido esta semana y pasarlo en tandas: campaña de **ropa**, videos de otros productos.
   Se puede usar el conector de **Higgsfield** para generar imágenes/videos con él.
 - El video `portfolio/perfumes/video-kling-1.mp4` figura como "Video de producto": preguntar qué perfume es.

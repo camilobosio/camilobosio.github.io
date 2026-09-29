@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Campera 3D · prueba</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="../images/logo.svg">
+<script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
+<style>
+  *{ margin:0; box-sizing:border-box; }
+  html,body{ height:100%; background:#141417; color:#f4f4f1; font-family:system-ui, sans-serif; }
+  .wrap{ min-height:100%; display:grid; grid-template-rows:auto 1fr auto; gap:12px; padding:16px; max-width:900px; margin:0 auto; }
+  h1{ font-size:20px; font-weight:700; }
+  h1 small{ display:block; font-size:13px; font-weight:400; color:#a3a2aa; margin-top:4px; }
+  model-viewer{ width:100%; height:min(78vh, 900px); background:radial-gradient(ellipse at 50% 35%, #2a2a31, #141417 70%); border-radius:22px; --poster-color:transparent; }
+  .err{ display:none; padding:14px; border-radius:14px; background:#3a1d1d; color:#ffd2d2; font-size:14px; }
+  .err.on{ display:block; }
+  p.note{ font-size:13px; color:#a3a2aa; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Campera 3D <small>Prueba del modelo 3D generado con IA a partir de 4 fotos. Arrastrá para girar en cualquier dirección, ruedita o dos dedos para zoom.</small></h1>
+  <div>
+    <model-viewer id="mv" src="GLB_URL" alt="Campera adidas Originals en 3D" camera-controls touch-action="pan-y" interaction-prompt="auto" shadow-intensity="0" exposure="1.1" environment-image="neutral" ar ar-modes="webxr scene-viewer quick-look"></model-viewer>
+    <div class="err" id="err">No se pudo cargar el modelo 3D desde Higgsfield. Descargá el archivo .glb y mandáselo a Claude para que lo suba a la página.</div>
+  </div>
+  <p class="note">Página de prueba, no está enlazada desde el portfolio.</p>
+</div>
+<script>
+  document.getElementById('mv').addEventListener('error', () => document.getElementById('err').classList.add('on'));
+</script>
+</body>
+</html>
