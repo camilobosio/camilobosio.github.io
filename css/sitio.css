@@ -289,6 +289,25 @@
     .apps small{ display:none; }
   }
 
+  /* logo animado (inicio) */
+  .marca{ padding-bottom:0; }
+  .marca-in{ display:grid; grid-template-columns:minmax(0, 340px) 1fr; gap:56px; align-items:center; }
+  .marca-vid{ aspect-ratio:1; border-radius:28px; overflow:hidden; background:#4b30e8; box-shadow:0 30px 60px -30px rgba(59,31,209,.6); cursor:pointer; }
+  .marca-vid video{ width:100%; height:100%; object-fit:cover; display:block; }
+  .marca h2{ font-family:var(--display); font-weight:800; font-size:clamp(34px, 4.6vw, 54px); letter-spacing:-.035em; line-height:1; margin-top:12px; }
+  .marca p{ margin:16px 0 24px; color:var(--ink-2); max-width:52ch; }
+  @media (max-width:760px){
+    .marca-in{ grid-template-columns:120px 1fr; gap:14px 18px; }
+    .marca-vid{ border-radius:20px; }
+    .marca-in > div:last-child{ display:contents; }
+    .marca .label{ grid-column:2; align-self:end; }
+    .marca h2{ grid-column:2; align-self:start; font-size:30px; margin-top:0; }
+    .marca-vid{ grid-row:1 / span 2; }
+    .marca p, .marca .btn{ grid-column:1 / -1; }
+    .marca p{ margin:4px 0 6px; }
+    .marca .btn{ justify-self:start; }
+  }
+
   /* contacto */
   .contact{ background:var(--violet); color:#fff; border-radius:28px; padding:56px 44px; display:grid; grid-template-columns:1.2fr 1fr; gap:30px; align-items:end; }
   .contact h2{ font-family:var(--display); font-weight:800; font-size:clamp(40px, 6.6vw, 88px); line-height:.9; letter-spacing:-.045em; }

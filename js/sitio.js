@@ -752,3 +752,19 @@ function zoomer(stage, layer, onZoom){
     if (hb && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); const h = HANDLES[hb.dataset.k]; clip = h.clip; t = h.dir > 0 ? 0 : 1; sheet(h.clip).then(() => play(h.clip, h.dir > 0 ? 1 : 0)); }
   });
 })();
+
+/* logo animado del inicio: se reproduce al verse, espera un poco y repite; tocarlo lo repite */
+(function(){
+  const v = document.querySelector('.marca-vid video');
+  if (!v) return;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let visible = false, t = 0;
+  const play = () => { clearTimeout(t); v.currentTime = 0; v.play().catch(() => {}); };
+  v.addEventListener('ended', () => { t = setTimeout(() => { if (visible) play(); }, 2500); });
+  v.parentElement.addEventListener('click', play);
+  if (reduce || !('IntersectionObserver' in window)) return;
+  new IntersectionObserver(es => {
+    visible = es[0].isIntersecting;
+    if (visible && (v.paused || v.ended)) play(); else if (!visible) { clearTimeout(t); v.pause(); }
+  }, { threshold:.5 }).observe(v);
+})();
