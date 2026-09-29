@@ -28,6 +28,12 @@ Dos servicios, dos planes cada uno (sin precios, botón "Consultar" por WhatsApp
 2. **Contenido con IA**: Básico y Premium. Lo que cambia son los créditos de IA → más videos, más largos, más opciones/variantes.
    Todavía sin cantidades concretas: pedirle a Camilo números (cantidad y duración de videos por plan) si los quiere.
 
+## "¿Qué vas a crear?" (sección `#crear`, clases `.make` / `.mk`)
+Entre "Lo que hago" y el portfolio. Copiada de la sección "What will you build?" de base44.com: fondo de puntitos,
+3 tarjetas (Páginas web → `#trabajo`, Contenido interactivo → `#interactivo`, Publicidades con IA → `#contenido`) con
+barra de color abajo que al pasar el mouse sube y pinta toda la tarjeta (web = violeta, las otras = `--paint`), y botón
+con texto que "rueda" hacia arriba. Agregado nuestro: una miniatura inclinada en el medio que se endereza al pasar el mouse.
+
 ## Portfolio (sección `#trabajo`)
 - Caso M Perfumerie (mperfumerie.com.ar), página web real.
 - Sección "Experiencia interactiva" (`#interactivo`, clases `.ix-*`): 4 videos cortos en loop (`portfolio/interacciones/*.mp4`

@@ -305,6 +305,32 @@
   footer{ padding-block:34px 44px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; }
 
   @media (prefers-reduced-motion: reduce){ *{ animation:none !important; transition:none !important; } .rot .words span.on{ opacity:1; transform:none; } }
+  /* ¿Qué vas a crear? (inspirado en base44.com: 3 tarjetas, barra de color abajo que al pasar el mouse sube y pinta toda la tarjeta) */
+  .make{ background-color:var(--paper-2); background-image:radial-gradient(circle, rgba(17,17,19,.13) 1px, transparent 1.3px); background-size:14px 14px; }
+  .make .head{ margin-bottom:40px; }
+  .make-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  .mk{ position:relative; isolation:isolate; overflow:hidden; display:flex; flex-direction:column; justify-content:space-between; gap:28px; min-height:clamp(380px, 34vw, 470px); padding:26px 26px 34px; background:#fbfaf7; color:var(--ink); text-decoration:none; }
+  .mk::before{ content:""; position:absolute; inset:0; z-index:-1; background:var(--paint); transform:scaleY(var(--fill, .024)); transform-origin:bottom; transition:transform .55s var(--ease); }
+  .mk:nth-child(1)::before{ background:linear-gradient(90deg, var(--violet), #8a6bff); }
+  .mk .n{ position:absolute; top:28px; right:26px; font-family:var(--mono); font-size:12px; letter-spacing:.08em; color:var(--muted); transition:color .3s; }
+  .mk h3{ font-family:var(--display); font-weight:800; font-size:clamp(28px, 2.6vw, 40px); line-height:1.02; letter-spacing:-.035em; max-width:9ch; }
+  .mk .pic{ align-self:center; width:62%; aspect-ratio:4/3; border-radius:14px; overflow:hidden; box-shadow:0 26px 40px -24px rgba(17,17,19,.5); transform:rotate(var(--rot, -4deg)); transition:transform .6s var(--ease), box-shadow .4s; background:#ddd; }
+  .mk:nth-child(2) .pic{ --rot:3deg; }
+  .mk .pic img{ width:100%; height:100%; object-fit:cover; }
+  .mk p{ font-size:16px; line-height:1.4; color:var(--ink-2); max-width:36ch; transition:color .3s; }
+  .mk .go{ margin-top:18px; display:inline-flex; align-items:center; height:42px; padding-inline:20px; border-radius:10px; background:var(--ink); color:var(--paper); font-weight:600; font-size:14.5px; width:fit-content; overflow:hidden; }
+  .mk .go .roll{ display:flex; flex-direction:column; height:1.2em; line-height:1.2em; overflow:hidden; }
+  .mk .go .roll span{ display:block; transition:transform .25s ease-out; }
+  @media (hover:hover){
+    .mk:hover, .mk:focus-visible{ --fill:1; }
+    .mk:hover .pic, .mk:focus-visible .pic{ transform:rotate(0) translateY(-6px) scale(1.04); box-shadow:0 34px 50px -26px rgba(17,17,19,.6); }
+    .mk:hover p, .mk:hover .n{ color:var(--ink); }
+    .mk:nth-child(1):hover, .mk:nth-child(1):hover p, .mk:nth-child(1):hover .n{ color:#fff; }
+    .mk:hover .go .roll span{ transform:translateY(-100%); }
+  }
+  .mk:focus-visible{ outline-offset:4px; }
+  @media (max-width:900px){ .make-grid{ grid-template-columns:1fr; gap:16px; } .mk{ min-height:0; } .mk .pic{ width:min(72%, 340px); margin-block:10px; } }
+  @media (prefers-reduced-motion:reduce){ .mk::before, .mk .pic, .mk .go .roll span{ transition:none; } }
 </style>
 </head>
 <body>
@@ -407,7 +433,45 @@
     </div>
   </section>
 
-  <section class="block" id="trabajo" style="padding-top:0;">
+  <section class="block make" id="crear">
+    <div class="wrap">
+      <div class="head">
+        <h2>¿Qué vas a crear?</h2>
+        <p>Lo que tengas en mente para tu negocio, lo diseñamos juntos: tu página, contenido que se toca y se mueve, o las publicidades para promocionarla.</p>
+      </div>
+      <div class="make-grid">
+        <a class="mk" href="#trabajo">
+          <span class="n">01</span>
+          <h3>Páginas web</h3>
+          <div class="pic"><img src="images/m_hero.jpg" alt="Portada de la página de M Perfumerie" loading="lazy" decoding="async"></div>
+          <div>
+            <p>Tu tienda o catálogo online con tu marca: carrito que te manda el pedido por WhatsApp y un panel para cargar productos vos mismo.</p>
+            <span class="go"><span class="roll"><span>Ver una página</span><span aria-hidden="true">Ver una página</span></span></span>
+          </div>
+        </a>
+        <a class="mk" href="#interactivo">
+          <span class="n">02</span>
+          <h3>Contenido interactivo</h3>
+          <div class="pic"><img src="portfolio/interacciones/burbujas.jpg" alt="Burbujas interactivas en la portada de M Perfumerie" loading="lazy" decoding="async"></div>
+          <div>
+            <p>Productos que se giran con el dedo, cierres que se abren, burbujas y animaciones. Hacen que tu página no se olvide.</p>
+            <span class="go"><span class="roll"><span>Probar uno</span><span aria-hidden="true">Probar uno</span></span></span>
+          </div>
+        </a>
+        <a class="mk" href="#contenido">
+          <span class="n">03</span>
+          <h3>Publicidades con IA</h3>
+          <div class="pic"><img src="portfolio/perfumes/valentino-born-in-roma.webp" alt="Publicidad de perfume Valentino Born in Roma hecha con IA" loading="lazy" decoding="async"></div>
+          <div>
+            <p>Fotos de producto, flyers y videos para tus campañas, con variantes para probar cuál vende más. Sin estudio ni modelos.</p>
+            <span class="go"><span class="roll"><span>Ver publicidades</span><span aria-hidden="true">Ver publicidades</span></span></span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="trabajo">
     <div class="wrap">
       <div class="case">
         <div class="case-top">
