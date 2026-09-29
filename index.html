@@ -25,7 +25,7 @@
 <style>
   :root{
     --paper:#f4f4f1; --paper-2:#eaeae5; --ink:#111113; --ink-2:#2a2a2e; --muted:#67666d; --line:#d8d7d1;
-    --violet:#5b3cf5; --violet-soft:#e7e2fe; --on-dark:#f4f4f1; --on-dark-muted:#a3a2aa;
+    --violet:#5b3cf5; --violet-soft:#e7e2fe; --orange:#ff7a3d; --orange-soft:#ffe8dc; --paint:linear-gradient(90deg, #ff9d4d, #ff5fa2); --on-dark:#f4f4f1; --on-dark-muted:#a3a2aa;
     --display:'Bricolage Grotesque', 'Arial Narrow', system-ui, sans-serif;
     --body:'Instrument Sans', system-ui, -apple-system, sans-serif;
     --mono:'JetBrains Mono', ui-monospace, Menlo, monospace;
@@ -70,6 +70,7 @@
   .rot{ margin-top:22px; font-family:var(--display); font-weight:600; font-size:clamp(22px, 3vw, 34px); letter-spacing:-.02em; line-height:1.2; display:flex; flex-wrap:wrap; gap:0 .35em; }
   .rot .fixed{ color:var(--muted); }
   .rot .words{ position:relative; display:inline-grid; color:var(--violet); }
+  .rot .words span{ background:linear-gradient(90deg, var(--violet) 10%, var(--orange)); -webkit-background-clip:text; background-clip:text; color:transparent; padding-bottom:.08em; }
   .rot .words span{ grid-area:1/1; opacity:0; transform:translateY(40%); transition:opacity .5s ease, transform .6s var(--ease); white-space:nowrap; }
   .rot .words span.on{ opacity:1; transform:none; }
   .rot .words span.out{ opacity:0; transform:translateY(-40%); }
@@ -91,6 +92,7 @@
   .ribbon .track{ display:flex; gap:42px; width:max-content; animation:slide 38s linear infinite; font-family:var(--display); font-weight:600; font-size:22px; letter-spacing:-.02em; }
   .ribbon .track span{ display:flex; align-items:center; gap:42px; white-space:nowrap; }
   .ribbon .track span::after{ content:""; width:8px; height:8px; border-radius:50%; background:var(--violet); }
+  .ribbon .track span:nth-child(even)::after{ background:var(--orange); }
   @keyframes slide{ to{ transform:translateX(-50%); } }
 
   section.block{ padding-block:96px; }
@@ -128,8 +130,8 @@
   .desk .bar i{ width:9px; height:9px; border-radius:50%; background:#3a3a40; }
   .desk .bar span{ margin-left:10px; font-family:var(--mono); font-size:11px; color:var(--on-dark-muted); }
   .desk .view{ position:relative; aspect-ratio:1440/900; }
-  .desk .view img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:top; opacity:0; transition:opacity .9s ease; }
-  .desk .view img.on{ opacity:1; }
+  .desk .view img, .desk .view video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:top; opacity:0; transition:opacity .9s ease; }
+  .desk .view .on{ opacity:1; }
   .case-shots .phone{ position:absolute; right:44px; top:40px; width:230px; animation:none; box-shadow:0 40px 80px -30px rgba(0,0,0,.8), inset 0 0 0 1.5px #2b2b30; }
   .case-bottom{ padding:30px 44px 44px; display:flex; flex-wrap:wrap; gap:14px 30px; align-items:center; justify-content:space-between; border-top:1px solid #2b2b30; }
   .feat{ display:flex; flex-wrap:wrap; gap:8px; }
@@ -154,7 +156,7 @@
   .ix-card video{ display:block; width:100%; aspect-ratio:2.33; object-fit:cover; background:#efe8e0; }
   .ix-card.dark video{ background:#0d0c0b; }
   .ix-txt{ display:grid; grid-template-columns:auto 1fr; gap:4px 14px; padding:18px 20px 20px; border-top:1px solid var(--line); }
-  .ix-txt .n{ font-family:var(--mono); font-size:12px; color:var(--violet); padding-top:4px; }
+  .ix-txt .n{ font-family:var(--mono); font-size:12px; color:var(--orange); padding-top:4px; }
   .ix-txt h4{ font-family:var(--display); font-size:21px; letter-spacing:-.02em; line-height:1.15; }
   .ix-txt p{ font-size:14px; color:var(--ink-2); margin-top:4px; }
   @media (max-width:760px){ .ix-grid{ grid-template-columns:1fr; } }
@@ -220,12 +222,20 @@
   .group h3 i{ font-style:normal; font-family:var(--mono); font-size:12px; font-weight:400; letter-spacing:.08em; color:#fff; background:var(--violet); border-radius:999px; padding:4px 10px; }
   .group p{ font-size:14.5px; color:var(--ink-2); max-width:56ch; }
   .group.second{ margin-top:64px; }
+  .group.second h3 i{ background:var(--paint); }
+  .group.second + .plans .chip{ background:var(--paint); }
+  .group.second + .plans .plan.pro .btn-dark{ background:var(--orange); border-color:var(--orange); }
+  .group.second + .plans li::before{ background-color:var(--orange-soft); background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.5 8.3l2.2 2.2 4.8-5' fill='none' stroke='%23ff7a3d' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
+  .group.second + .plans .plan.pro li::before{ background-color:#3a2418; }
+  .svc:nth-child(n+5) .kind{ color:var(--orange); }
+  .svc:nth-child(n+5) .ic{ background:var(--orange-soft); color:var(--orange); }
+  .svc:nth-child(n+5):hover .ic{ background:var(--orange); color:#fff; }
   @media (max-width:860px){ .plans{ grid-template-columns:1fr; } }
 
   /* proceso */
   .steps{ display:grid; grid-template-columns:repeat(4,1fr); gap:20px; counter-reset:s; }
   .step{ border-top:1.5px solid var(--ink); padding-top:18px; }
-  .step .n{ font-family:var(--mono); font-size:12px; color:var(--violet); }
+  .step .n{ font-family:var(--mono); font-size:12px; color:var(--orange); }
   .step h3{ font-family:var(--display); font-size:22px; letter-spacing:-.02em; margin:8px 0 6px; }
   .step p{ font-size:14.5px; color:var(--ink-2); }
   @media (max-width:860px){ .steps{ grid-template-columns:1fr 1fr; } }
@@ -237,6 +247,9 @@
   .about .photo img{ width:100%; height:100%; object-fit:cover; filter:saturate(.9); }
   .about h2{ font-family:var(--display); font-weight:800; font-size:clamp(34px, 4.6vw, 54px); letter-spacing:-.035em; line-height:1; text-wrap:balance; }
   .about p{ margin-top:16px; color:var(--ink-2); max-width:60ch; }
+  .roles{ display:flex; flex-wrap:wrap; align-items:center; gap:6px 10px; margin-top:22px; font-family:var(--display); font-weight:800; font-size:clamp(20px, 2.4vw, 26px); letter-spacing:-.02em; }
+  .roles span{ display:flex; align-items:center; gap:10px; }
+  .roles span + span::before{ content:"→"; font-weight:400; background:var(--paint); -webkit-background-clip:text; background-clip:text; color:transparent; }
   .tools{ display:flex; flex-wrap:wrap; gap:8px; margin-top:24px; }
   .tools span{ font-size:13px; padding:7px 13px; border-radius:999px; background:var(--paper-2); border:1px solid var(--line); }
   .exp{ margin-top:28px; display:grid; gap:0; border-top:1px solid var(--line); }
@@ -385,7 +398,7 @@
           <a class="desk" href="https://mperfumerie.com.ar" target="_blank" rel="noopener" aria-label="Abrir mperfumerie.com.ar" style="display:block;text-decoration:none;">
             <div class="bar"><i></i><i></i><i></i><span>mperfumerie.com.ar</span></div>
             <div class="view" id="deskView">
-              <img class="on" src="images/d_hero.jpg" alt="Portada de M Perfumerie en computadora">
+              <video class="on" src="portfolio/interacciones/portada-pc.mp4" poster="portfolio/interacciones/portada-pc.jpg" muted loop playsinline autoplay preload="metadata" aria-label="Portada de M Perfumerie en computadora, con destellos dorados que suben"></video>
               <img src="images/d_modal.jpg" alt="Ficha de producto de M Perfumerie en computadora">
             </div>
           </a>
@@ -565,7 +578,7 @@
       <div class="head"><h2>Cómo trabajamos</h2><p>Sea una página o una campaña, todo se coordina por WhatsApp y vas viendo avances en tu celular desde el primer día.</p></div>
       <div class="steps">
         <div class="step"><span class="n">01</span><h3>Charlamos</h3><p>Me contás qué hacés, a quién le vendés y qué necesitás: una página, contenido o los dos.</p></div>
-        <div class="step"><span class="n">02</span><h3>Propuesta con tu marca</h3><p>Elegimos el plan y armo una primera versión con tu logo, tus colores y tus productos.</p></div>
+        <div class="step"><span class="n">02</span><h3>Ideas y opciones</h3><p>Te propongo ideas y distintas opciones con tu marca, o sigo la que ya tenés en mente.</p></div>
         <div class="step"><span class="n">03</span><h3>Ajustamos juntos</h3><p>Vas viendo avances por WhatsApp y corregimos hasta que quede como querés.</p></div>
         <div class="step"><span class="n">04</span><h3>Entrega</h3><p>Publicamos tu página y te llevás las piezas listas para usar en redes y anuncios.</p></div>
       </div>
@@ -577,9 +590,11 @@
       <div class="photo"><img src="images/camilo.jpg" alt="Camilo Bosio"></div>
       <div>
         <span class="label">Quién está detrás</span>
-        <h2 style="margin-top:12px;">Tecnología, diseño y trato directo</h2>
-        <p>Soy Camilo, de Rosario. Programo páginas web y creo contenido con inteligencia artificial pensando en cómo compra tu cliente: rápido, desde el celular y sin vueltas. Hablás siempre conmigo, de principio a fin, y después te enseño a manejar tu página.</p>
-        <div class="tools"><span>Programación con IA</span><span>Diseño para celular</span><span>Panel de administración</span><span>Base de datos en la nube</span><span>Publicación en tu dominio</span><span>Imágenes con IA</span><span>Videos con IA</span></div>
+        <h2 style="margin-top:12px;">De la idea a la pantalla</h2>
+        <p>Soy Camilo, de Rosario. No me limito a automatizar con inteligencia artificial: soy el creativo detrás de cada proyecto. Pienso la idea, propongo conceptos y te muestro opciones para que elijas. Después lo diseño y lo desarrollo, ya sea una página web, una campaña publicitaria, videos o fotos de producto.</p>
+        <p>Si ya tenés algo en mente, me adapto a lo que querés hacer; si no, lo ideamos juntos. La IA es mi herramienta para llegar más rápido y más lejos, pero la idea, el diseño y el criterio los pongo yo. Hablás siempre conmigo, de principio a fin.</p>
+        <div class="roles"><span>Ideación</span><span>Diseño</span><span>Programación</span><span>Desarrollo</span></div>
+        <div class="tools"><span>Dirección creativa</span><span>Conceptos y propuestas</span><span>Páginas web</span><span>Campañas publicitarias</span><span>Videos para campañas</span><span>Fotos de producto</span><span>Programación con IA</span><span>Panel de administración</span></div>
       </div>
     </div>
   </section>
@@ -619,7 +634,7 @@
   cycle('heroScreen', 3200);
   let caseTimer = cycle('casePhone', 3600);
   // selector de captura del caso
-  const btns = document.querySelectorAll('.switch button'); const desk = [...document.querySelectorAll('#deskView img')];
+  const btns = document.querySelectorAll('.switch button'); const desk = [...document.querySelectorAll('#deskView > *')];
   btns.forEach(b => b.addEventListener('click', () => { btns.forEach(x => x.setAttribute('aria-pressed', x === b)); desk.forEach((im, k) => im.classList.toggle('on', k === +b.dataset.v)); }));
   // experiencia interactiva: los videos se reproducen solo cuando están a la vista
   const ixVids = document.querySelectorAll('.ix-card video');
