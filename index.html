@@ -177,8 +177,9 @@
   /* cierre: al acercar el mouse al tirador (el cierre chiquito) se ilumina; se agarra y se baja. Se cierra con un clic */
   .p3-stage{ --zt:23.5%; --zh:48.5%; }
   .p3-zip{ position:absolute; left:50%; width:0; top:var(--zt); height:var(--zh); pointer-events:none; }
-  .p3-zip .pull{ position:absolute; left:0; top:calc(var(--zp, 0) * 100%); width:clamp(4px, 1.5cqw, 7px); height:clamp(10px, 3.4cqw, 15px); transform:translate(-50%, -30%); border-radius:2px; background:#ffb27a; opacity:0; transition:opacity .2s; box-shadow:0 0 8px 2px rgba(255,140,60,.9); }
+  .p3-zip .pull{ position:absolute; left:0; top:calc(var(--zp, 0) * 100%); width:clamp(6px, 2cqw, 9px); height:clamp(12px, 4cqw, 18px); transform:translate(-50%, -30%); border-radius:2px; background:#ffb27a; opacity:0; transition:opacity .2s; box-shadow:0 0 8px 2px rgba(255,140,60,.9); }
   .p3-stage{ container-type:inline-size; }
+  .p3-stage.front .p3-zip .pull{ opacity:.85; animation:glow 1.4s ease-in-out infinite; }
   .p3-stage.near .p3-zip .pull, .p3-stage.zipping .p3-zip .pull{ opacity:1; }
   .p3-stage.near:not(.zipping) .p3-zip .pull{ animation:glow 1s ease-in-out infinite; }
   @keyframes glow{ 50%{ box-shadow:0 0 12px 4px rgba(255,140,60,.6); background:#ffd2ad; } }
@@ -830,6 +831,7 @@
       if(!force && key === drawn) return; drawn = key;
       ctx.drawImage(img, 0, 0, cv.width, cv.height);
       zip.style.setProperty('--zp', open.toFixed(3));
+      const f = frameIdx(), n = N(); st.classList.toggle('front', open < .98 && (f <= 3 || f >= n - 3) && Math.abs(vel) <= 4);
     }
     function tick(ts){
       const dt = lastT ? Math.min(.05, (ts - lastT) / 1000) : 0; lastT = ts; let busy = false;
@@ -850,7 +852,7 @@
       const zt = parseFloat(getComputedStyle(st).getPropertyValue('--zt')) / 100 || .24, zh = parseFloat(getComputedStyle(st).getPropertyValue('--zh')) / 100 || .5;
       if(open > .98) return false;
       const py = zt + open * zh;                                                       // donde está el tirador ahora
-      return Math.abs(x - .5) < .045 && Math.abs(y - py) < .04;
+      return Math.abs(x - .5) < .1 && y > py - .07 && y < py + .09;
     }
     st.addEventListener('pointermove', e => {
       if(mode === 'spin'){
@@ -858,20 +860,22 @@
         const dx = e.clientX - lastX; lastX = e.clientX; const k = 360 / (st.clientWidth * 1.25);
         angle += dx * k; const now = performance.now(); vel = vel * .5 + (dx * k) / Math.max(.008, (now - lastMove) / 1000) * .5; lastMove = now; draw();
       } else if(mode === 'zip'){
-        const r = zip.getBoundingClientRect(); open = Math.max(open, Math.min(1, zipStart + (e.clientY - zipY) / r.height)); openGoal = open; draw();   // solo baja, nunca sube
+        lastY = e.clientY; const r = zip.getBoundingClientRect(); open = Math.max(open, Math.min(1, zipStart + (e.clientY - zipY) / r.height)); openGoal = open; draw();   // solo baja, nunca sube
       } else st.classList.toggle('near', nearZip(e));
     });
-    let lastMove = 0, zipY = 0, zipStart = 0, downX = 0, wasOpen = false;
+    let lastY = 0, lastMove = 0, zipY = 0, zipStart = 0, downX = 0, wasOpen = false;
     st.addEventListener('pointerdown', e => {
       if(!ready) return; st.classList.add('used'); st.setPointerCapture(e.pointerId); vel = 0;
-      if(nearZip(e)){ mode = 'zip'; zipY = e.clientY; zipStart = open; angle = Math.round(angle / 360) * 360; st.classList.add('zipping'); }
+      if(nearZip(e)){ mode = 'zip'; zipY = lastY = e.clientY; zipStart = open; angle = Math.round(angle / 360) * 360; st.classList.add('zipping'); }
       else { mode = 'spin'; lastX = e.clientX; downX = e.clientX; lastMove = performance.now(); wasOpen = openGoal > 0 || open > 0; st.classList.add('dragging'); }
     });
     function up(){
-      if(mode === 'zip'){ openGoal = open > .15 ? 1 : 0; st.classList.remove('zipping'); kick(); }
+      if(mode === 'zip'){ openGoal = (open > .15 || Math.abs(lastY - zipY) < 6) ? 1 : 0; st.classList.remove('zipping'); kick(); }
       if(mode === 'spin'){ st.classList.remove('dragging'); if(wasOpen){ openGoal = 0; wasOpen = false; } if(performance.now() - lastMove > 60) vel = 0; kick(); }   // clic con la campera abierta: se cierra
       mode = null;
     }
+    st.addEventListener('touchstart', e => { const t = e.touches[0]; if(t && nearZip(t)) e.preventDefault(); }, { passive:false });
+    st.addEventListener('touchmove', e => { if(mode === 'zip') e.preventDefault(); }, { passive:false });
     st.addEventListener('pointerup', up); st.addEventListener('pointercancel', up);
     st.addEventListener('pointerleave', () => { if(!mode) st.classList.remove('near'); });
     st.addEventListener('keydown', e => {
