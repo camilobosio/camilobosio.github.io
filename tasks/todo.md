@@ -62,3 +62,9 @@ Objetivo: intro corta con el video de Camilo (cara y voz reales) pero en Rosario
   Cada tramo de Camilo lleva el audio ORIGINAL del mismo recorte; encima marca REC + "ROSARIO 12/03/2045 18:42".
 - Kling Edit necesita 720p (576p falla sin aviso). Referencias: ropa 19ef3894, ciudad dd2964d3, monumento a7e6ad40,
   foto real del monumento 01b126a2. Camilo dijo que hay "muchas cosas que corregir": preguntarle cuáles.
+
+## Logo animado + mockups (29/9, Higgsfield)
+- Logo base 1024 (media 01ef7047), logo limpio sin pintura b151a9f3, fondo vacío 9982eeba.
+- Animaciones Kling 3.0 pro 1:1 5 s: chorreando f80c4169 · circuito c7af8c9d · pincel 5e4b9367 · balde d6a94c3d.
+- Mockups notebook + celu en piso de cemento con sol (nano_banana_pro 4:3): M Perfumerie 34a9fa0b · Campera 360 944fcfcf.
+- [ ] Camilo elige cuáles van a la página y dónde (portada / portfolio / redes).
