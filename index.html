@@ -175,9 +175,9 @@
   .p3-srcs{ position:absolute; width:1px; height:1px; overflow:hidden; opacity:0; pointer-events:none; }
   .p3-srcs video{ width:2px; height:2px; }
   /* cierre: al acercar el mouse al tirador (el cierre chiquito) se ilumina; se agarra y se baja. Se cierra con un clic */
-  .p3-stage{ --zt:23.5%; --zh:48.5%; }
+  .p3-stage{ --zt:30.8%; --zh:42.7%; }   /* tirador real del cierre (30,8% del alto) hasta el ruedo (73,5%) */
   .p3-zip{ position:absolute; left:50%; width:0; top:var(--zt); height:var(--zh); pointer-events:none; }
-  .p3-zip .pull{ position:absolute; left:0; top:calc(var(--zp, 0) * 100%); width:clamp(6px, 2cqw, 9px); height:clamp(12px, 4cqw, 18px); transform:translate(-50%, -30%); border-radius:2px; background:#ffb27a; opacity:0; transition:opacity .2s; box-shadow:0 0 8px 2px rgba(255,140,60,.9); }
+  .p3-zip .pull{ position:absolute; left:0; top:calc(var(--zp, 0) * 100%); width:clamp(6px, 2cqw, 9px); height:clamp(12px, 4cqw, 18px); transform:translate(-50%, -50%); border-radius:2px; background:#ffb27a; opacity:0; transition:opacity .2s; box-shadow:0 0 8px 2px rgba(255,140,60,.9); }
   .p3-stage{ container-type:inline-size; }
   .p3-stage.front .p3-zip .pull{ opacity:.85; animation:glow 1.4s ease-in-out infinite; }
   .p3-stage.near .p3-zip .pull, .p3-stage.zipping .p3-zip .pull{ opacity:1; }
@@ -849,7 +849,7 @@
     function nearZip(e){
       if(!ready || Math.abs(vel) > 4) return false; const n = N(), f = frameIdx(); if(!(f <= 3 || f >= n - 3)) return false;   // de frente o casi
       const r = st.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
-      const zt = parseFloat(getComputedStyle(st).getPropertyValue('--zt')) / 100 || .24, zh = parseFloat(getComputedStyle(st).getPropertyValue('--zh')) / 100 || .5;
+      const zt = parseFloat(getComputedStyle(st).getPropertyValue('--zt')) / 100 || .308, zh = parseFloat(getComputedStyle(st).getPropertyValue('--zh')) / 100 || .427;
       if(open > .98) return false;
       const py = zt + open * zh;                                                       // donde está el tirador ahora
       return Math.abs(x - .5) < .1 && y > py - .07 && y < py + .09;
