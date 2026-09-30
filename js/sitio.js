@@ -956,3 +956,6 @@ function zoomer(stage, layer, onZoom){
   if (!v || !('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   new IntersectionObserver(es => es[0].isIntersecting ? v.play().catch(() => {}) : v.pause(), { threshold:.35 }).observe(v);
 })();
+
+/* pintura al cargar: se saca del todo cuando termina */
+(function(){ const s = document.getElementById('splashLoad'); if (s) setTimeout(() => s.remove(), 1900); })();
