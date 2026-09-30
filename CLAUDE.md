@@ -41,7 +41,7 @@ Hablarle a Camilo en español rioplatense, simple y sin tecnicismos.
   (mancha con brazos gorditos y bolitas, uno largo a la derecha), golpe que se abre desde el centro sin rebote ni onda,
   gotitas arriba/abajo/costados que caen con hilito, y 3 chorreadas. Versión PLANA (probó 3D con relieve y no le gustó).
   El logo animado del balde arranca recién cuando termina el salpicón (`splashDone` en js/sitio.js).
-- Colores: azul (`--violet` = #2b50d8; la variable conserva el nombre viejo) como principal. La frase que rota en la portada va en degradé de azules, SIN naranja (lila+naranja "parecía Instagram") + **naranja del logo** (`--orange`, `--paint` = degradé naranja→rosa) como acento
+- Colores: azul (`--violet` = #2b50d8; la variable conserva el nombre viejo) como principal. La frase que rota en la portada: degradé original azul 10% → naranja (leve destello; probó sin naranja y con más naranja, eligió este). Logo de la portada en la línea de "Bosio", un espacio después de la o (`.hero-balde`, igual en compu y celular) + **naranja del logo** (`--orange`, `--paint` = degradé naranja→rosa) como acento
   (frases que rotan en la portada, puntos de la cinta, números de pasos, todo lo del servicio "Contenido con IA").
 - Sección "Quién está detrás": Camilo es el **creativo**, no solo alguien que automatiza con IA: idea, propone opciones,
   se adapta a lo que quiere el cliente, diseña, programa y desarrolla (páginas, publicidades, videos, fotos).
@@ -129,6 +129,7 @@ en neón y en papelería (nano_banana_pro con el flyer de referencia importado d
 - Contacto: WhatsApp 3468 437518 (wa.me/5493468437518), camilobosio96@gmail.com.
 
 ## Cómo trabajar
+- REGLA DE CAMILO: todo cambio VISUAL se le muestra primero con captura(s) en el chat y se publica SOLO cuando él dice que sí. Nunca publicar un cambio visual sin su OK.
 - Guardar archivos nuevos que mande Camilo en `portfolio/<rubro>/` con nombres descriptivos.
 - Revisar en compu (1280px) y celular (390px) con Playwright (Chromium en /opt/pw-browsers) que no haya scroll horizontal.
 - Para publicar: los cambios tienen que llegar a `main`. WhatsApp guarda la vista previa vieja: compartir el link con `?v=N`.
