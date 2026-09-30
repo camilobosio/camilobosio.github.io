@@ -43,10 +43,11 @@ Hablarle a Camilo en español rioplatense, simple y sin tecnicismos.
   Photoshop, Illustrator; las demás las sugerí yo y Camilo aprobó todas. Logos de simple-icons (SVG) y favicons.
   En celular: grilla de 4 íconos con nombre, sin descripción.
 
-- "Así nace una marca" (`#marca` en index.html, PUBLICADO): logo limpio en blanco; entra un balde de pintura REAL
-  (`images/balde/balde.webp`, foto Higgsfield 82510ff9 recortada del verde) arriba a un costado, lo vuelca y la pintura
-  cubre la CB y chorrea (SVG + JS al final de js/sitio.js, `window.__balde(t)` dibuja un instante para probar).
-  Se reproduce una vez al verse; tocarlo lo repite.
+- Logo animado (PUBLICADO, código al final de js/sitio.js, se arma en `.logo-balde` / `.logo-pincel`):
+  balde de pintura REAL (`images/balde/balde.webp`, foto 82510ff9) que vuelca pintura sobre el logo limpio, y pincel REAL
+  (`images/balde/pincel.webp`, foto 1e3940c0) que sigue el trazo exacto de la C y la B y después pinta las gotas.
+  Dónde: chiquito al lado de "Bosio" en la portada (solo compu, `.hero-balde`) y abajo de todo los dos juntos (`.firma`).
+  Camilo NO quiere una franja/sección con explicación ("Así nace una marca" se sacó). `window.__logos(t)` dibuja un instante.
 - Portfolio, debajo de la Campera 360 (`.p3-mock`, PUBLICADO): video del mockup notebook + celu
   (`portfolio/ropa/mockup-campera.mp4`). Se genera con `herramientas-video/` (landing web3 sin texto grabada cuadro a
   cuadro con Playwright y pegada con perspectiva en la foto del mockup, job 944fcfcf).
