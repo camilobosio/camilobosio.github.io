@@ -20,7 +20,8 @@ Hablarle a Camilo en español rioplatense, simple y sin tecnicismos.
   interactivo (`#probador` y `#producto-360`), Contenido con IA (galería con filtros Perfumes / En la calle / Personas).
 - `css/sitio.css` y `js/sitio.js` — estilos y código COMPARTIDOS por las dos páginas (sin build). El JS chequea que
   cada elemento exista, porque no todos están en las dos páginas.
-- En celular el inicio tiene que ser corto: servicios, planes y las grabaciones de M Perfumerie se deslizan de costado.
+- En celular el inicio tiene que ser corto: servicios y las grabaciones de M Perfumerie se deslizan de costado; los PLANES
+  van apilados (Básico arriba, Premium abajo) y compactos, sin deslizar (pedido de Camilo).
 - `images/` — capturas de M Perfumerie, foto de Camilo.
   - `logo.svg` + `logo-180.png` = logo "M1": CB de líneas rectas estilo circuito, pintada en naranja→rosa y chorreando pintura, sobre fondo violeta (arte + tecnología; elegido entre muchas pruebas), usado como ícono de la pestaña y en la barra superior. `icono.jpg` (foto de Camilo) ya no se usa: Camilo no quiere su cara en la pestaña.
   - `og-logo.jpg` = vista previa de WhatsApp/redes ACTIVA (solo el logo sobre violeta, pedido de Camilo).
@@ -47,7 +48,7 @@ Hablarle a Camilo en español rioplatense, simple y sin tecnicismos.
 - Logo animado (PUBLICADO, código al final de js/sitio.js, se arma en `.logo-balde` / `.logo-pincel`):
   balde de pintura REAL (`images/balde/balde.webp`, foto 82510ff9) que vuelca pintura sobre el logo limpio, y pincel REAL
   (`images/balde/pincel.webp`, foto 1e3940c0) que sigue el trazo exacto de la C y la B y después pinta las gotas.
-  Dónde: el BALDE chiquito al lado de "Bosio" en la portada (solo compu, `.hero-balde`), sale y vuelve a esconderse atrás
+  Dónde: el BALDE chiquito al lado de "Bosio" en la portada (compu y celular, `.hero-balde`), sale y vuelve a esconderse atrás
   de la "o" de "Camilo" (recortado con la caja de tinta de la letra), queda ELEVADO arriba del logo y la pintura cae con
   distancia sobre la línea larga de la B y baja; pocas salpicaduras. Abajo de todo SOLO el pincel, grande (`.firma`).
   Camilo NO quiere una franja/sección con explicación ("Así nace una marca" se sacó). `window.__logos(t)` dibuja un instante.
