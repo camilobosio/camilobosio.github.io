@@ -59,7 +59,7 @@
           <div>
             <span class="label">Portfolio · Página web · 2025 – hoy</span>
             <h3>M <em>Perfumerie</em></h3>
-            <p>Tienda de perfumería importada de Rosario. Diseñé y programé toda la página: catálogo con buscador y filtros, fichas con acordes y notas de cada perfume, carrito que envía el pedido por WhatsApp y un panel propio para cargar productos, publicidades y datos de contacto.</p>
+            <p>Tienda de perfumería importada de Rosario. Diseñé y programé toda la página: catálogo con buscador y filtros, fichas con acordes y notas de cada perfume, carrito que envía el pedido por WhatsApp (también se puede cerrar la compra en la página con Mercado Pago o tarjetas) y un panel propio para cargar productos, publicidades y datos de contacto.</p>
             <div class="switch" role="group" aria-label="Ver captura">
               <button type="button" aria-pressed="true" data-v="0">Portada</button>
               <button type="button" aria-pressed="false" data-v="1">Ficha de producto</button>
@@ -68,7 +68,7 @@
           <div class="facts">
             <div class="fact"><b>+640</b><span>perfumes en el catálogo</span></div>
             <div class="fact"><b>3</b><span>secciones editables desde el panel</span></div>
-            <div class="fact"><b>100%</b><span>pensada para celular</span></div>
+            <div class="fact"><b>2</b><span>diseños: uno para compu y otro para celular</span></div>
             <div class="fact"><b>0</b><span>comisiones por venta</span></div>
           </div>
         </div>
@@ -128,30 +128,10 @@
   <section class="block pf-sec" id="ropa">
     <div class="wrap">
       <h2 class="pf-h">Contenido interactivo</h2>
-      <div class="p3 pv" id="probador">
-        <div class="p3-txt">
-          <span class="label">Ropa · Hecho con IA</span>
-          <h3>Probador virtual</h3>
-          <p>Cinco camperas reales de adidas puestas sobre el mismo modelo. Deslizá sobre el modelo para cambiarle la campera y tocá "360°" para darlo vuelta arrastrando.</p>
-          <p class="p3-how">El modelo, las camperas puestas y los giros los generé con inteligencia artificial a partir de las fotos de la tienda; la interacción la programé yo. Sirve para cualquier marca de ropa.</p>
-          <div class="p3-tags"><span>Deslizá para cambiar</span><span>Girá 360°</span></div>
-        </div>
-        <div class="pv-stage" id="pv" tabindex="0" role="application" aria-label="Probador: deslizá para cambiar la campera; el botón 360° permite girar al modelo arrastrando. Con el teclado: flechas para cambiar o girar, Enter para el 360°">
-          <img class="pv-lay" id="pvCur" alt="" draggable="false">
-          <img class="pv-lay pv-in" id="pvIn" alt="" draggable="false">
-          <canvas class="pv-spin" id="pvSpin"></canvas>
-          <div class="pv-scan" id="pvScan"></div>
-          <button type="button" class="pv-arrow l" id="pvPrev" aria-label="Campera anterior">←</button>
-          <button type="button" class="pv-arrow r" id="pvNext" aria-label="Campera siguiente">→</button>
-          <div class="pv-bar"><span class="pv-name"><b id="pvName">Audi F1 Team</b><span id="pvNum">1 / 5</span></span><button type="button" class="pv-360" id="pv360" aria-pressed="false">↻ 360°</button></div>
-          <div class="p3-hint pv-hint"><span class="hand" aria-hidden="true">↔</span>Deslizá para cambiar la campera</div>
-          <div class="p3-hint pv-hint2"><span class="hand" aria-hidden="true">↻</span>Arrastrá para girarlo</div>
-        </div>
-      </div>
       <div class="p3" id="producto-360">
         <div class="p3-txt">
           <span class="label">Ropa · Hecho con IA</span>
-          <h3>Campera 360</h3>
+          <h3>Producto 360</h3>
           <p>Probá girar la campera y abrirle el cierre. Arrastrala desde cualquier lado para verla de todos los ángulos; acercate al cierre, agarralo y bajalo para descubrir la remera. Un clic la vuelve a cerrar.</p>
           <p class="p3-how">Las imágenes y los movimientos los generé con inteligencia artificial a partir de las fotos del producto; la interacción la programé yo. Se puede hacer con cualquier producto.</p>
           <div class="p3-tags"><span>Arrastrá para girar</span><span>Agarrá el cierre y bajalo</span></div>
@@ -168,6 +148,25 @@
         <video src="portfolio/ropa/mockup-campera.mp4" poster="portfolio/ropa/mockup-campera.jpg" muted loop playsinline preload="none" aria-label="Así se ve en una tienda: en la compu las camperas flotan y se manejan con el mouse; en el celular, el mismo visor"></video>
         <figcaption>Así se ve en una tienda: en la compu las camperas flotan y se manejan con el mouse (girar, bajar el cierre, pasar a otra); en el celular, el mismo visor.</figcaption>
       </figure>
+      <div class="p3 pv" id="probador">
+        <div class="p3-txt">
+          <span class="label">Ropa · Hecho con IA</span>
+          <h3>Probador virtual</h3>
+          <p>Cinco camperas reales de adidas puestas sobre el mismo modelo. Deslizá sobre el modelo (o usá las flechas) para cambiarle la campera.</p>
+          <p class="p3-how">El modelo y las camperas puestas los generé con inteligencia artificial a partir de las fotos de la tienda; la interacción la programé yo. Sirve para cualquier marca de ropa.</p>
+          <div class="p3-tags"><span>Deslizá para cambiar</span></div>
+        </div>
+        <div class="pv-stage" id="pv" tabindex="0" role="application" aria-label="Probador: deslizá para cambiar la campera. Con el teclado: flechas para cambiar">
+          <img class="pv-lay" id="pvCur" alt="" draggable="false">
+          <img class="pv-lay pv-in" id="pvIn" alt="" draggable="false">
+          <canvas class="pv-spin" id="pvSpin"></canvas>
+          <div class="pv-scan" id="pvScan"></div>
+          <button type="button" class="pv-arrow l" id="pvPrev" aria-label="Campera anterior">←</button>
+          <button type="button" class="pv-arrow r" id="pvNext" aria-label="Campera siguiente">→</button>
+          <div class="pv-bar"><span class="pv-name"><b id="pvName">Audi F1 Team</b><span id="pvNum">1 / 5</span></span></div>
+          <div class="p3-hint pv-hint"><span class="hand" aria-hidden="true">↔</span>Deslizá para cambiar la campera</div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -228,7 +227,7 @@
           <a class="btn" href="https://wa.me/5493468437518?text=Hola%20Camilo%2C%20quiero%20consultarte%20por%20mi%20negocio" target="_blank" rel="noopener">Escribime por WhatsApp</a>
         </div>
       </div>
-      <footer><span class="label">© 2026 Camilo Bosio · Rosario, Argentina</span><a class="label" href="#inicio" style="text-decoration:none;">Volver arriba ↑</a></footer>
+      <footer><span class="label">© 2026</span><a class="label" href="#inicio" style="text-decoration:none;">Volver arriba ↑</a></footer>
     </div>
   </section>
 </main>
