@@ -693,6 +693,9 @@
   }
 
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // la animación del logo arranca recién cuando se va el salpicón de pintura de la carga, así se ve entera
+  const splashDone = new Promise(r => { const s = document.getElementById('splashLoad'); if (!s) return r();
+    s.addEventListener('animationend', e => { if (e.animationName === 'slOut') r(); }); setTimeout(r, 1900); });
   const anims = els.map(el => {
     const a = (el.classList.contains('logo-pincel') ? pincel : balde)(el);
     let raf = 0;
@@ -703,7 +706,7 @@
     el.addEventListener('click', a.play);
     el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); a.play(); } });
     if (!reduce && 'IntersectionObserver' in window)
-      new IntersectionObserver((es, io) => { if (es[0].isIntersecting){ io.disconnect(); setTimeout(a.play, 350); } }, { threshold:.5 }).observe(el);
+      new IntersectionObserver((es, io) => { if (es[0].isIntersecting){ io.disconnect(); splashDone.then(() => setTimeout(a.play, 150)); } }, { threshold:.5 }).observe(el);
     return a;
   });
   window.__logos = (t) => anims.forEach(a => a.render(Math.min(t, a.end))); // para probar cuadros

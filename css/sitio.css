@@ -1,5 +1,5 @@
   :root{
-    --paper:#f4f4f1; --paper-2:#eaeae5; --ink:#111113; --ink-2:#2a2a2e; --muted:#67666d; --line:#d8d7d1;
+    --paper:#d6d5d0; --paper-2:#cac9c3; --ink:#111113; --ink-2:#2a2a2e; --muted:#4f4e55; --line:#b9b8b1;
     --violet:#5b3cf5; --violet-soft:#e7e2fe; --orange:#ff7a3d; --orange-soft:#ffe8dc; --paint:linear-gradient(90deg, #ff9d4d, #ff5fa2); --on-dark:#f4f4f1; --on-dark-muted:#a3a2aa;
     --display:'Bricolage Grotesque', 'Arial Narrow', system-ui, sans-serif;
     --body:'Instrument Sans', system-ui, -apple-system, sans-serif;

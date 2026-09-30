@@ -36,6 +36,11 @@ Hablarle a Camilo en español rioplatense, simple y sin tecnicismos.
   En celular: grilla de 4 íconos con nombre, sin descripción.
 
 ## Estilo
+- Fondo gris "cemento" (`--paper:#d6d5d0`, `--paper-2:#cac9c3`, `--line:#b9b8b1`, `--muted:#4f4e55`): Camilo no quiere blanco (cansa la vista). Probó perla/piedra y eligió cemento.
+- Salpicón de carga (`#splashLoad`, en index.html y portfolio.html, iguales): forma copiada de una referencia de Camilo
+  (mancha con brazos gorditos y bolitas, uno largo a la derecha), golpe que se abre desde el centro sin rebote ni onda,
+  gotitas arriba/abajo/costados que caen con hilito, y 3 chorreadas. Versión PLANA (probó 3D con relieve y no le gustó).
+  El logo animado del balde arranca recién cuando termina el salpicón (`splashDone` en js/sitio.js).
 - Colores: violeta (`--violet`) como principal + **naranja del logo** (`--orange`, `--paint` = degradé naranja→rosa) como acento
   (frases que rotan en la portada, puntos de la cinta, números de pasos, todo lo del servicio "Contenido con IA").
 - Sección "Quién está detrás": Camilo es el **creativo**, no solo alguien que automatiza con IA: idea, propone opciones,
