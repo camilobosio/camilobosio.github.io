@@ -46,7 +46,7 @@ Hablarle a Camilo en español rioplatense, simple y sin tecnicismos.
 - Menú de arriba: SOLO el logo (sin "Camilo Bosio"); en celular todas las secciones en una 2ª fila. Al entrar es una franja
   de pintura naranja con borde ondulado suave (`.top::before/::after`); al bajar se va para arriba y queda el gris.
 - "¿Qué vamos a crear?" (`.make`) con fondo gris muy suave #ebeae6 (más claro que el resto; blanco le pareció demasiado) y puntitos suaves.
-- "¿Arrancamos tu proyecto?" (`.contact`): el recuadro azul se derrite por abajo con brillo (`paintDrip` al final de
+- "¿Arrancamos tu proyecto?" (`.contact`): el recuadro azul se derrite por abajo con brillo (al bajar se estira de ondulado a chorreado, siempre curvo; `paintDrip` al final de
   js/sitio.js; perfil copiado de una referencia de Camilo, gotas afinadas; en celular 3 gotas). Sin sombra 3D.
 - Miniatura de M Perfumerie en el portfolio del inicio = video del celular con los productos (`celular-producto.mp4`).
 - Herramientas: sumado Pomelli (Google), ícono propio `images/herramientas/pomelli.svg`.
