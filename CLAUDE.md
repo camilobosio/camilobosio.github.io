@@ -56,6 +56,15 @@ Hablarle a Camilo en español rioplatense, simple y sin tecnicismos.
   (`portfolio/ropa/mockup-campera.mp4`). Se genera con `herramientas-video/` (landing web3 sin texto grabada cuadro a
   cuadro con Playwright y pegada con perspectiva en la foto del mockup, job 944fcfcf).
 
+## Textos y orden (pedido de Camilo, 30/9)
+- NADA de "pensado para celular" solo: las páginas se piensan para compu Y celular, con un diseño para cada uno.
+- Pedidos: por WhatsApp O compra cerrada en la página (Mercado Pago, débito, crédito, transferencia).
+- Página de administrador: entra solo el dueño con mail y contraseña; cambia títulos, productos, precios, fotos, stock,
+  publicidades y ve las compras.
+- Sin "Como M Perfumerie" en el Premium; sin "Rosario, Santa Fe" arriba; pie = solo "© 2026" (sin nombre ni ciudad).
+- Portfolio "Contenido interactivo": primero PRODUCTO 360 (antes "Campera 360") + video del mockup, abajo el probador
+  SIN giro 360 (solo cambia la campera). En celular las 4 interacciones de M Perfumerie van 2×2 y se abren en grande al tocar.
+
 ## Estilo
 - Colores: violeta (`--violet`) como principal + **naranja del logo** (`--orange`, `--paint` = degradé naranja→rosa) como acento
   (frases que rotan en la portada, puntos de la cinta, números de pasos, todo lo del servicio "Contenido con IA").

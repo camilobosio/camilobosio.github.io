@@ -47,3 +47,6 @@
 - Balde: que vuelque ELEVADO, con distancia entre el balde y el logo, sobre la línea larga de la B, y que se expanda hacia
   abajo desde ahí. No pegado al logo ni salpicando por todos lados.
 - Vista previa de links (WhatsApp): solo el logo.
+- Textos: no decir "pensado para celular"/"hecho para celular primero": es para compu y celular (diseño para cada uno).
+  Aclarar que también se puede cobrar dentro de la página, y que hay página de administrador con mail y contraseña.
+- Nada de datos de ubicación/nombre en el pie ni arriba de todo. En celular, nada que se corte de costado: grillas.
