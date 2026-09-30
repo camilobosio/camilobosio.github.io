@@ -43,6 +43,13 @@ Hablarle a Camilo en español rioplatense, simple y sin tecnicismos.
   El logo animado del balde arranca recién cuando termina el salpicón (`splashDone` en js/sitio.js).
 - Colores: azul (`--violet` = #2b50d8; la variable conserva el nombre viejo) como principal. La frase que rota en la portada: degradé original azul 10% → naranja (leve destello; probó sin naranja y con más naranja, eligió este). Logo de la portada en la línea de "Bosio", un espacio después de la o (`.hero-balde`, igual en compu y celular) + **naranja del logo** (`--orange`, `--paint` = degradé naranja→rosa) como acento
   (frases que rotan en la portada, puntos de la cinta, números de pasos, todo lo del servicio "Contenido con IA").
+- Menú de arriba: SOLO el logo (sin "Camilo Bosio"); en celular todas las secciones en una 2ª fila. Al entrar es una franja
+  de pintura naranja con borde ondulado suave (`.top::before/::after`); al bajar se va para arriba y queda el gris.
+- "¿Qué vamos a crear?" (`.make`) con fondo casi blanco #f4f4f1 y puntitos suaves.
+- "¿Arrancamos tu proyecto?" (`.contact`): el recuadro azul se derrite por abajo con brillo (`paintDrip` al final de
+  js/sitio.js; perfil copiado de una referencia de Camilo, gotas afinadas; en celular 3 gotas). Sin sombra 3D.
+- Miniatura de M Perfumerie en el portfolio del inicio = video del celular con los productos (`celular-producto.mp4`).
+- Herramientas: sumado Pomelli (Google), ícono propio `images/herramientas/pomelli.svg`.
 - Sección "Quién está detrás": Camilo es el **creativo**, no solo alguien que automatiza con IA: idea, propone opciones,
   se adapta a lo que quiere el cliente, diseña, programa y desarrolla (páginas, publicidades, videos, fotos).
 

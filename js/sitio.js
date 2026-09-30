@@ -719,3 +719,50 @@
   new IntersectionObserver(es => es[0].isIntersecting ? v.play().catch(() => {}) : v.pause(), { threshold:.35 }).observe(v);
 })();
 
+
+/* "¿Arrancamos tu proyecto?": el recuadro azul se derrite por abajo (forma copiada de una referencia de Camilo) */
+(function(){
+  const card = document.querySelector('.contact'); if (!card) return;
+  // pintura en el borde de abajo del recuadro, con la forma de la referencia de Camilo
+  // (borde ondulado con lomos redondos y pocas gotas cortas). PROF = perfil medido de la referencia (x 0..1, y en px de la foto).
+  function paintDrip(card, opt){
+    opt = opt || {};
+    const PROF = [[0.0,85.4],[0.0035,87.6],[0.007,91.0],[0.0106,95.0],[0.0141,99.1],[0.0176,104.4],[0.0211,111.9],[0.0246,130.1],[0.0281,147.1],[0.0317,150.6],[0.0352,151.7],[0.0387,151.9],[0.0422,151.0],[0.0457,149.3],[0.0493,146.3],[0.0528,141.3],[0.0563,135.1],[0.0598,129.0],[0.0633,123.7],[0.0668,119.6],[0.0704,116.4],[0.0739,114.0],[0.0774,112.1],[0.0809,111.1],[0.0844,111.0],[0.088,111.1],[0.0915,112.0],[0.095,113.3],[0.0985,115.1],[0.102,117.7],[0.1055,120.4],[0.1091,124.0],[0.1126,127.4],[0.1161,131.3],[0.1196,135.7],[0.1231,140.9],[0.1266,148.0],[0.1302,157.0],[0.1337,167.4],[0.1372,182.6],[0.1407,224.7],[0.1442,268.7],[0.1478,276.1],[0.1513,278.4],[0.1548,279.3],[0.1583,278.9],[0.1618,277.1],[0.1653,273.6],[0.1689,266.1],[0.1724,242.6],[0.1759,204.7],[0.1794,179.0],[0.1829,164.4],[0.1865,158.0],[0.19,153.6],[0.1935,150.0],[0.197,146.4],[0.2005,143.7],[0.204,141.4],[0.2076,139.6],[0.2111,138.0],[0.2146,136.7],[0.2181,135.7],[0.2216,135.1],[0.2252,134.9],[0.2287,134.9],[0.2322,135.1],[0.2357,135.7],[0.2392,136.6],[0.2427,138.1],[0.2463,140.3],[0.2498,142.6],[0.2533,145.4],[0.2568,149.1],[0.2603,154.1],[0.2639,160.1],[0.2674,166.1],[0.2709,170.7],[0.2744,173.4],[0.2779,174.7],[0.2814,175.0],[0.285,175.0],[0.2885,174.0],[0.292,171.7],[0.2955,168.6],[0.299,163.6],[0.3026,156.3],[0.3061,146.6],[0.3096,135.3],[0.3131,123.7],[0.3166,114.3],[0.3201,108.1],[0.3237,104.1],[0.3272,100.9],[0.3307,98.3],[0.3342,96.3],[0.3377,94.4],[0.3412,92.4],[0.3448,90.7],[0.3483,89.6],[0.3518,88.4],[0.3553,88.0],[0.3588,88.0],[0.3624,88.6],[0.3659,90.0],[0.3694,92.0],[0.3729,94.9],[0.3764,97.4],[0.3799,99.7],[0.3835,101.6],[0.387,103.1],[0.3905,104.3],[0.394,104.9],[0.3975,105.0],[0.4011,105.0],[0.4046,104.7],[0.4081,104.1],[0.4116,104.0],[0.4151,104.6],[0.4186,106.6],[0.4222,110.6],[0.4257,117.9],[0.4292,154.3],[0.4327,197.4],[0.4362,202.9],[0.4398,206.4],[0.4433,208.6],[0.4468,209.7],[0.4503,209.9],[0.4538,208.7],[0.4573,206.4],[0.4609,202.4],[0.4644,193.4],[0.4679,164.3],[0.4714,123.0],[0.4749,100.0],[0.4785,89.7],[0.482,83.4],[0.4855,78.9],[0.489,74.9],[0.4925,71.6],[0.496,69.0],[0.4996,66.9],[0.5031,65.1],[0.5066,64.0],[0.5101,63.3],[0.5136,62.9],[0.5172,63.1],[0.5207,64.1],[0.5242,65.4],[0.5277,67.7],[0.5312,70.6],[0.5347,74.3],[0.5383,79.1],[0.5418,85.0],[0.5453,92.3],[0.5488,100.7],[0.5523,108.9],[0.5558,115.7],[0.5594,120.7],[0.5629,123.7],[0.5664,125.3],[0.5699,126.0],[0.5734,125.6],[0.577,123.6],[0.5805,120.3],[0.584,115.3],[0.5875,107.3],[0.591,98.7],[0.5945,93.9],[0.5981,92.4],[0.6016,92.4],[0.6051,93.6],[0.6086,95.3],[0.6121,97.9],[0.6157,101.1],[0.6192,104.4],[0.6227,108.4],[0.6262,113.0],[0.6297,117.3],[0.6332,122.0],[0.6368,126.7],[0.6403,131.3],[0.6438,136.1],[0.6473,142.3],[0.6508,153.4],[0.6544,169.0],[0.6579,181.0],[0.6614,188.3],[0.6649,192.7],[0.6684,195.1],[0.6719,196.0],[0.6755,196.0],[0.679,196.0],[0.6825,195.7],[0.686,194.6],[0.6895,192.7],[0.6931,189.7],[0.6966,184.7],[0.7001,177.0],[0.7036,159.9],[0.7071,141.6],[0.7106,133.7],[0.7142,128.1],[0.7177,124.1],[0.7212,121.0],[0.7247,118.3],[0.7282,116.1],[0.7318,114.3],[0.7353,112.7],[0.7388,111.4],[0.7423,110.6],[0.7458,110.0],[0.7493,110.0],[0.7529,110.0],[0.7564,110.0],[0.7599,110.6],[0.7634,111.6],[0.7669,113.0],[0.7704,114.6],[0.774,116.3],[0.7775,118.6],[0.781,120.7],[0.7845,122.7],[0.788,124.4],[0.7916,126.0],[0.7951,126.9],[0.7986,127.0],[0.8021,127.0],[0.8056,126.1],[0.8091,124.4],[0.8127,121.9],[0.8162,118.7],[0.8197,114.7],[0.8232,109.4],[0.8267,102.9],[0.8303,92.9],[0.8338,82.1],[0.8373,76.0],[0.8408,74.1],[0.8443,74.1],[0.8478,75.0],[0.8514,76.4],[0.8549,78.3],[0.8584,80.7],[0.8619,84.3],[0.8654,88.9],[0.869,92.3],[0.8725,93.7],[0.876,94.0],[0.8795,93.4],[0.883,91.9],[0.8865,89.4],[0.8901,85.7],[0.8936,81.3],[0.8971,79.1],[0.9006,79.1],[0.9041,80.0],[0.9077,82.1],[0.9112,85.7],[0.9147,91.1],[0.9182,129.7],[0.9217,179.1],[0.9252,199.7],[0.9288,209.1],[0.9323,213.4],[0.9358,216.1],[0.9393,218.4],[0.9428,220.0],[0.9464,220.9],[0.9499,220.3],[0.9534,218.6],[0.9569,215.7],[0.9604,211.7],[0.9639,206.6],[0.9675,198.9],[0.971,184.4],[0.9745,165.4],[0.978,150.4],[0.9815,138.0],[0.985,126.6],[0.9886,116.0],[0.9921,106.0],[0.9956,97.4],[0.9991,91.6],[1,91.57142857142857]], MID = 63;
+    const old = card.querySelector('.drip-svg'); if (old) old.remove();
+    const W = card.offsetWidth, H = card.offsetHeight, R = parseFloat(getComputedStyle(card).borderBottomLeftRadius) || 28;
+    const ky = W < 500 ? .5 : .5, band = W < 500 ? 14 : 18, B = H, top = H - band;
+    const span = W < 500 ? .56 : .87;   // en celular se usa un tramo de la referencia (3 gotas)
+    const fade = x => Math.max(0, Math.min(1, (Math.min(x, W - x) - R*.6) / 50));   // en las puntas sigue la curva del recuadro
+    // profundidad por pixel, interpolando el perfil medido
+    const src = PROF.filter(p => p[0] <= span + .01).map(([u, y]) => [u/span*W, Math.max(0, y - MID)*ky]);
+    const dep = new Float32Array(W + 1);
+    for (let x = 0, j = 0; x <= W; x++){ while (j < src.length - 2 && src[j+1][0] < x) j++; const [x0,y0] = src[j], [x1,y1] = src[j+1]; dep[x] = y0 + (y1 - y0) * Math.max(0, Math.min(1, (x - x0)/((x1 - x0) || 1))); }
+    // afinar las gotas: se "comen" los costados (erosión), así lo que chorrea queda más finito
+    const er = W < 500 ? 2 : 8, thin = new Float32Array(W + 1);
+    for (let x = 0; x <= W; x++){ let m = Infinity; for (let t = -er; t <= er; t++){ const v = dep[Math.max(0, Math.min(W, x + t))]; if (v < m) m = v; } thin[x] = m; }
+    // suavizar después de afinar, así la punta de cada gota queda redonda (no en pico)
+    const sm = new Float32Array(W + 1), rs = W < 500 ? 3 : 5;
+    for (let x = 0; x <= W; x++){ let a = 0, n = 0; for (let t = -rs; t <= rs; t++){ a += thin[Math.max(0, Math.min(W, x + t))]; n++; } sm[x] = a / n; }
+    let d = `M0,${top} `;
+    for (let x = 0; x <= W; x += 16) d += `L${x},${(top + 2.5*Math.sin(x/90) + 1.5*Math.sin(x/33+1)).toFixed(1)} `;
+    d += `L${W},${B} `;
+    for (let x = W; x >= 0; x -= 2) d += `L${x},${(B - 2 + sm[x]*fade(x)).toFixed(1)} `;
+    d += `Z`;
+    const fill = opt.color === 'azul' ? ['#3d64e6','#2b50d8','#1f3fb8'] : ['#ff9a45','#ff812c','#e8640f'];
+    const ns = 'http://www.w3.org/2000/svg', svg = document.createElementNS(ns, 'svg'), id = 'dp' + Math.random().toString(36).slice(2,7);
+    svg.setAttribute('class', 'drip-svg'); svg.setAttribute('width', W); svg.setAttribute('height', H); svg.setAttribute('aria-hidden', 'true');
+    svg.style.cssText = 'position:absolute;left:0;top:0;overflow:visible;pointer-events:none;z-index:0';
+    const gloss = opt.gloss;
+    // recorte: dentro del recuadro respeta las esquinas redondeadas; debajo del recuadro deja caer las gotas
+    svg.innerHTML = `<defs><clipPath id="${id}c"><rect x="0" y="0" width="${W}" height="${H}" rx="${R}"/><rect x="0" y="${B-2}" width="${W}" height="400"/></clipPath>
+      <linearGradient id="${id}g" gradientUnits="userSpaceOnUse" x1="0" y1="${top}" x2="0" y2="${B+110*ky}"><stop offset="0" stop-color="${fill[0]}"/><stop offset=".45" stop-color="${fill[1]}"/><stop offset="1" stop-color="${fill[2]}"/></linearGradient>
+      ${gloss ? `<filter id="${id}f" x="-5%" y="-30%" width="110%" height="200%"><feGaussianBlur in="SourceAlpha" stdDeviation="3.5" result="b"/>
+        <feSpecularLighting in="b" surfaceScale="4" specularConstant=".85" specularExponent="26" lighting-color="#fff" result="s"><fePointLight x="${W*.3}" y="${top-220}" z="260"/></feSpecularLighting>
+        <feComposite in="s" in2="SourceAlpha" operator="in" result="sc"/><feComposite in="SourceGraphic" in2="sc" operator="arithmetic" k2="1" k3=".5"/></filter>` : ''}</defs>
+      <g clip-path="url(#${id}c)"><path d="${d}" fill="url(#${id}g)" ${gloss ? `filter="url(#${id}f)"` : ''}/></g>`;
+    card.appendChild(svg);
+  };
+  const draw = () => paintDrip(card, { gloss:true, color:'azul' });
+  draw(); let t = 0; addEventListener('resize', () => { clearTimeout(t); t = setTimeout(draw, 150); });
+  if (document.fonts) document.fonts.ready.then(draw);
+})();
