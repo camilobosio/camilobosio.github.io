@@ -750,9 +750,10 @@
     let d = `M0,${top} `;
     for (let x = 0; x <= W; x += 16) d += `L${x},${(top + 2.5*Math.sin(x/90) + 1.5*Math.sin(x/33+1)).toFixed(1)} `;
     d += `L${W},${B} `;
-    const reach = p * Dmax * 1.05;
-    for (let x = W; x >= 0; x -= 2){ const full = sm[x]*fade(x), b0 = Math.min(base(x), full + 3)*fade(x);
-      d += `L${x},${(B - 2 + Math.max(b0, Math.min(full, b0 + reach))).toFixed(1)} `; }
+    // toda la forma se estira de a poco (nunca se corta en recto); las gotas más largas bajan un poco después
+    const ease = t => t < 0 ? 0 : t > 1 ? 1 : t*t*(3 - 2*t);
+    for (let x = W; x >= 0; x -= 2){ const full = sm[x]*fade(x), b0 = Math.min(base(x)*fade(x), full), rel = (full - b0) / (Dmax || 1);
+      d += `L${x},${(B - 2 + b0 + (full - b0) * ease(p*1.35 - rel*.35)).toFixed(1)} `; }
     return d + 'Z';
   }
   const d = pathFor(opt.progress == null ? 1 : opt.progress);
