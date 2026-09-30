@@ -300,11 +300,12 @@
   .logo-balde svg, .logo-pincel svg{ width:100%; height:100%; display:block; overflow:visible; }
   .logo-balde:focus-visible, .logo-pincel:focus-visible{ outline:3px solid var(--orange); outline-offset:4px; border-radius:14px; }
   .hero h1{ position:relative; }
-  .hero-balde{ position:absolute; left:2.74em; top:.72em; width:.8em; }
+  .hero h1 .ln{ position:relative; z-index:1; }
+  .hero-balde{ position:absolute; left:2.74em; top:.72em; width:.8em; z-index:0; }
   @media (max-width:860px){ .hero-balde{ display:none; } }
   .firma{ display:flex; justify-content:center; gap:28px; padding-top:40px; }
-  .firma > div{ width:110px; }
-  @media (max-width:760px){ .firma{ gap:20px; padding-top:34px; } .firma > div{ width:96px; } }
+  .firma > div{ width:170px; }
+  @media (max-width:760px){ .firma{ gap:20px; padding-top:34px; } .firma > div{ width:150px; } }
 
   /* contacto */
   .contact{ background:var(--violet); color:#fff; border-radius:28px; padding:56px 44px; display:grid; grid-template-columns:1.2fr 1fr; gap:30px; align-items:end; }
