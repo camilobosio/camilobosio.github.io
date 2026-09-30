@@ -19,6 +19,15 @@
   /* barra superior */
   .top{ position:sticky; top:env(safe-area-inset-top,0px); z-index:40; background:color-mix(in srgb, var(--paper) 86%, transparent); -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px); border-bottom:1px solid transparent; transition:border-color .3s; }
   .top.scrolled{ border-bottom-color:var(--line); }
+  .top .mark img{ width:34px; height:34px; }
+  /* arriba de todo el menú es una franja de pintura naranja con borde ondulado; al bajar se va para arriba y vuelve el gris */
+  .top:not(.scrolled){ background:transparent; -webkit-backdrop-filter:none; backdrop-filter:none; }
+  .top::before, .top::after{ content:""; position:absolute; left:0; right:0; z-index:-1; pointer-events:none; transition:transform .55s cubic-bezier(.5,0,.3,1); }
+  .top::before{ top:0; bottom:0; background:#ff8a3a; }
+  .top::after{ top:100%; height:16px; background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%2216%22%20viewBox%3D%220%200%20600%2016%22%3E%3Cpath%20fill%3D%22%23ff8a3a%22%20d%3D%22M0%2C0%20L0%2C8.00%20L6%2C8.75%20L12%2C9.47%20L18%2C10.14%20L24%2C10.74%20L30%2C11.24%20L36%2C11.62%20L42%2C11.87%20L48%2C11.99%20L54%2C11.97%20L60%2C11.80%20L66%2C11.51%20L72%2C11.08%20L78%2C10.55%20L84%2C9.93%20L90%2C9.24%20L96%2C8.50%20L102%2C7.75%20L108%2C7.01%20L114%2C6.30%20L120%2C5.65%20L126%2C5.08%20L132%2C4.62%20L138%2C4.28%20L144%2C4.07%20L150%2C4.00%20L156%2C4.07%20L162%2C4.28%20L168%2C4.62%20L174%2C5.08%20L180%2C5.65%20L186%2C6.30%20L192%2C7.01%20L198%2C7.75%20L204%2C8.50%20L210%2C9.24%20L216%2C9.93%20L222%2C10.55%20L228%2C11.08%20L234%2C11.51%20L240%2C11.80%20L246%2C11.97%20L252%2C11.99%20L258%2C11.87%20L264%2C11.62%20L270%2C11.24%20L276%2C10.74%20L282%2C10.14%20L288%2C9.47%20L294%2C8.75%20L300%2C8.00%20L306%2C7.25%20L312%2C6.53%20L318%2C5.86%20L324%2C5.26%20L330%2C4.76%20L336%2C4.38%20L342%2C4.13%20L348%2C4.01%20L354%2C4.03%20L360%2C4.20%20L366%2C4.49%20L372%2C4.92%20L378%2C5.45%20L384%2C6.07%20L390%2C6.76%20L396%2C7.50%20L402%2C8.25%20L408%2C8.99%20L414%2C9.70%20L420%2C10.35%20L426%2C10.92%20L432%2C11.38%20L438%2C11.72%20L444%2C11.93%20L450%2C12.00%20L456%2C11.93%20L462%2C11.72%20L468%2C11.38%20L474%2C10.92%20L480%2C10.35%20L486%2C9.70%20L492%2C8.99%20L498%2C8.25%20L504%2C7.50%20L510%2C6.76%20L516%2C6.07%20L522%2C5.45%20L528%2C4.92%20L534%2C4.49%20L540%2C4.20%20L546%2C4.03%20L552%2C4.01%20L558%2C4.13%20L564%2C4.38%20L570%2C4.76%20L576%2C5.26%20L582%2C5.86%20L588%2C6.53%20L594%2C7.25%20L600%2C8.00%20L600%2C0%20Z%22/%3E%3C/svg%3E") 0 0/600px 16px repeat-x; }
+  .top.scrolled::before, .top.scrolled::after{ transform:translateY(calc(-100% - 86px)); }
+  .top:not(.scrolled) nav a{ color:var(--ink); font-weight:600; }
+  .top:not(.scrolled) nav a:hover{ color:#fff; }
   .top .wrap{ display:flex; align-items:center; justify-content:space-between; gap:16px; height:62px; }
   .mark{ font-family:var(--display); font-weight:800; font-size:18px; letter-spacing:-.02em; text-decoration:none; display:flex; align-items:center; gap:8px; }
   .mark i{ width:9px; height:9px; border-radius:50%; background:var(--violet); display:inline-block; }
@@ -32,7 +41,10 @@
   .btn-line:hover{ background:var(--ink); color:var(--paper); }
   .btn svg{ width:17px; height:17px; }
   .top .btn{ padding:9px 16px; font-size:13.5px; }
-  @media (max-width:760px){ .top nav{ display:none; } }
+  @media (max-width:760px){
+    .top .wrap{ height:auto; flex-wrap:wrap; row-gap:4px; padding-top:8px; padding-bottom:6px; }
+    .top nav{ order:3; width:100%; justify-content:space-between; gap:0; font-size:13.5px; }
+  }
 
   /* portada */
   .hero{ padding-block:64px 40px; }
@@ -309,6 +321,8 @@
 
   /* contacto */
   .contact{ background:var(--violet); color:#fff; border-radius:28px; padding:56px 44px; display:grid; grid-template-columns:1.2fr 1fr; gap:30px; align-items:end; }
+  .contact{ position:relative; margin-bottom:90px; }
+  .contact > *:not(.drip-svg){ position:relative; z-index:1; }
   .contact h2{ font-family:var(--display); font-weight:800; font-size:clamp(40px, 6.6vw, 88px); line-height:.9; letter-spacing:-.045em; }
   .contact .lines{ display:flex; flex-direction:column; gap:14px; }
   .contact .row{ display:flex; flex-wrap:wrap; justify-content:space-between; gap:6px 12px; align-items:center; border-bottom:1px solid rgba(255,255,255,.28); padding-bottom:12px; }
@@ -323,7 +337,7 @@
 
   @media (prefers-reduced-motion: reduce){ *{ animation:none !important; transition:none !important; } .rot .words span.on{ opacity:1; transform:none; } }
   /* ¿Qué vamos a crear? — barra tipo base44.com: escribís qué querés, sumás una foto y se genera una base simple en el navegador */
-  .make{ background-color:var(--paper-2); background-image:radial-gradient(circle, rgba(17,17,19,.13) 1px, transparent 1.3px); background-size:14px 14px; }
+  .make{ background-color:#f4f4f1; background-image:radial-gradient(circle, rgba(17,17,19,.10) 1px, transparent 1.3px); background-size:14px 14px; }
   .make .intro{ text-align:center; max-width:760px; margin:0 auto 34px; }
   .make h2{ font-family:var(--display); font-weight:800; font-size:clamp(40px, 6.4vw, 84px); line-height:.98; letter-spacing:-.03em; text-wrap:balance; }
   .make .intro p{ margin:18px auto 0; max-width:54ch; color:var(--ink-2); font-size:17px; }
@@ -384,6 +398,7 @@
   .pk.dark{ background:#141417; }
   .pk img, .pk video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform .6s var(--ease); }
   .pk video{ object-position:top; }
+  .pk video.pk-cel{ object-position:center 6%; }
   .pk::after{ content:""; position:absolute; inset:45% 0 0; background:linear-gradient(transparent, rgba(0,0,0,.72)); z-index:1; }
   .pk:hover img, .pk:hover video{ transform:scale(1.05); }
   .pk-cap{ position:absolute; left:16px; right:16px; bottom:14px; z-index:2; }
@@ -466,9 +481,6 @@
     .ix-txt .n{ display:none; }
     .ix-txt h4{ font-size:13.5px; line-height:1.25; }
     .ix-txt p{ display:none; }
-    .top .mark{ white-space:nowrap; }
-    .top nav{ display:flex; gap:14px; }
-    .top nav a:not([href="portfolio.html"]){ display:none; }
   }
 
 
