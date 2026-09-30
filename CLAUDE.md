@@ -65,11 +65,7 @@ Hablarle a Camilo en español rioplatense, simple y sin tecnicismos.
 - Portfolio "Contenido interactivo": primero PRODUCTO 360 (antes "Campera 360") + video del mockup, abajo el probador
   SIN giro 360 (solo cambia la campera). En celular las 4 interacciones de M Perfumerie van 2×2 y se abren en grande al tocar.
 
-- Pintura al cargar (`#splashLoad`, PUBLICADO): mancha naranja chica al centro que pega "¡pum!" contra la pantalla, gotitas que saltan y un par que bajan, y se desvanece (~1,4 s). SIN logo (pedido de Camilo). Sale en CADA carga y actualización. Su estilo y código van DENTRO de index.html y portfolio.html (no en sitio.css): en PC el navegador tenía el sitio.css viejo en caché y la pintura quedaba pegada arriba. Al cambiar css/js subir el `?v=N` de los links.
-- Colores: violeta (`--violet`) como principal + **naranja del logo** (`--orange`, `--paint` = degradé naranja→rosa) como acento
-  (frases que rotan en la portada, puntos de la cinta, números de pasos, todo lo del servicio "Contenido con IA").
-- Sección "Quién está detrás": Camilo es el **creativo**, no solo alguien que automatiza con IA: idea, propone opciones,
-  se adapta a lo que quiere el cliente, diseña, programa y desarrolla (páginas, publicidades, videos, fotos).
+- Pintura al cargar (`#splashLoad`, PUBLICADO): mancha naranja REDONDEADA (como la referencia de Camilo: cuerpo con lóbulos, brazos cortos con bolita en la punta; hecha con círculos + filtro "goo", NADA de puntas triangulares), grande, naranja oscuro con opacidad .9; detrás la página se ve BORROSA (backdrop-filter). Después aparecen gotitas salpicadas arriba y abajo y las grandes se escurren para abajo con rastro, como gota en un vidrio. Se va a los ~1,9 s. SIN logo. Sale en CADA carga. Estilo y código DENTRO de index.html y portfolio.html (no en sitio.css: en PC había un sitio.css viejo en caché y la pintura quedaba pegada arriba). Al cambiar css/js subir el `?v=N` de los links (hoy 29). Generador: scratchpad splash3.py.
 
 ## Posicionamiento (decidido)
 La página es general, no "solo páginas web": **diseño web + contenido con IA** (campañas publicitarias, flyers, fotos de producto, videos, interacciones para webs).

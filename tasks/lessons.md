@@ -50,3 +50,6 @@
 - Textos: no decir "pensado para celular"/"hecho para celular primero": es para compu y celular (diseño para cada uno).
   Aclarar que también se puede cobrar dentro de la página, y que hay página de administrador con mail y contraseña.
 - Nada de datos de ubicación/nombre en el pie ni arriba de todo. En celular, nada que se corte de costado: grillas.
+- Pintura al cargar: sin logo; salpicado REDONDEADO (nada de puntas/triángulos), grande, naranja oscuro poco transparente,
+  página borrosa detrás, gotitas arriba y abajo que se escurren como agua. Que salga en CADA carga.
+- Si algo anda en celular y no en PC: sospechar caché del navegador. Lo crítico (splash) va dentro del HTML y css/js con `?v=N`.
