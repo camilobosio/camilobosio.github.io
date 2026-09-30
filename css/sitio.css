@@ -69,6 +69,7 @@
   .orbit{ position:absolute; left:50%; top:46%; width:0; height:0; z-index:1; pointer-events:none; }
   .orbit img{ position:absolute; width:var(--cw); max-width:none; aspect-ratio:4/5; object-fit:cover; left:calc(var(--cw) / -2); top:calc(var(--cw) * -.625); border-radius:16px; box-shadow:0 24px 44px -24px rgba(17,17,19,.55); opacity:0; will-change:transform, opacity; -webkit-user-select:none; user-select:none; }
   @media (max-width:860px){ .showcase{ --cw:112px; margin-top:20px; } .showcase .phone{ margin-top:0; } }
+  @media (max-width:760px){ .showcase .phone{ width:min(180px, 47vw); border-radius:30px; padding:7px; } .showcase .phone .screen{ border-radius:24px; } .showcase .phone .tag{ left:-10px; bottom:40px; padding:7px 10px; font-size:11.5px; } .showcase .phone .tag b{ font-size:12.5px; } }
 
   /* cinta */
   .ribbon{ border-block:1px solid var(--line); overflow:hidden; padding-block:16px; background:var(--paper); }
@@ -301,8 +302,8 @@
   .logo-balde:focus-visible, .logo-pincel:focus-visible{ outline:3px solid var(--orange); outline-offset:4px; border-radius:14px; }
   .hero h1{ position:relative; }
   .hero h1 .ln{ position:relative; z-index:1; }
-  .hero-balde{ position:absolute; left:3.4em; top:.74em; width:.8em; z-index:0; }
-  @media (max-width:860px){ .hero-balde{ left:3.75em; top:.12em; width:1.85em; } }
+  .hero-balde{ position:absolute; left:3.18em; top:.74em; width:.8em; z-index:0; }
+  @media (max-width:860px){ .hero-balde{ left:3.75em; top:-.48em; width:1.85em; } }
   .firma{ display:flex; justify-content:center; gap:28px; padding-top:40px; }
   .firma > div{ width:170px; }
   @media (max-width:760px){ .firma{ gap:20px; padding-top:34px; } .firma > div{ width:150px; } }
