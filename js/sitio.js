@@ -166,7 +166,7 @@
 
   const D = "'Bricolage Grotesque', 'Arial Narrow', sans-serif", B = "'Instrument Sans', system-ui, sans-serif", M = "'JetBrains Mono', monospace", S = "'DM Serif Display', Georgia, serif";
   const PAL = [
-    { bg:'#5b3cf5', a:'#ff9d4d', b:'#ff5fa2', ink:'#ffffff', lt:'#f4f1ea' },
+    { bg:'#2b50d8', a:'#ff9d4d', b:'#ff5fa2', ink:'#ffffff', lt:'#f4f1ea' },
     { bg:'#111113', a:'#ff9d4d', b:'#ff5fa2', ink:'#f4f4f1', lt:'#f4f1ea' },
     { bg:'#0f3d2e', a:'#e9c46a', b:'#f4a261', ink:'#f4f1ea', lt:'#f3eee2' },
     { bg:'#1d2a5b', a:'#7dd3fc', b:'#a78bfa', ink:'#ffffff', lt:'#eef2ff' },
@@ -320,7 +320,7 @@
   function variations(im, P, r) {
     const N = P.name, out = [], p1 = PAL[Math.floor(r() * PAL.length)], p2 = PAL[Math.floor(r() * PAL.length)];
     const shadowed = (x, f) => { x.save(); x.shadowColor = 'rgba(0,0,0,.35)'; x.shadowBlur = 40; x.shadowOffsetY = 20; f(); x.restore(); };
-    { const [c, x] = cv(800, 800); x.fillStyle = seed % 2 ? '#5b3cf5' : p1.bg; x.fillRect(0, 0, 800, 800); shadowed(x, () => contain(x, im, 140, 140, 520, 520)); out.push([c, 'Sobre color']); }
+    { const [c, x] = cv(800, 800); x.fillStyle = seed % 2 ? '#2b50d8' : p1.bg; x.fillRect(0, 0, 800, 800); shadowed(x, () => contain(x, im, 140, 140, 520, 520)); out.push([c, 'Sobre color']); }
     { const [c, x] = cv(800, 800); x.fillStyle = lin(x, 0, 0, 800, 800, p2.a, p2.b); x.fillRect(0, 0, 800, 800); shadowed(x, () => contain(x, im, 140, 140, 520, 520)); out.push([c, 'Degradé']); }
     { const [c, x] = cv(800, 800); x.fillStyle = '#111113'; x.fillRect(0, 0, 800, 800); x.filter = 'grayscale(1) contrast(1.2) brightness(1.1)'; contain(x, im, 140, 140, 520, 520); x.filter = 'none'; out.push([c, 'Blanco y negro']); }
     { // duotono
@@ -545,11 +545,11 @@
   function base(el, painted){
     const p = 'lg' + (++uid) + '-';
     el.innerHTML = `<svg viewBox="-6 -30 82 96" aria-hidden="true"><defs>
-      <linearGradient id="${p}bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7b61ff"/><stop offset="1" stop-color="#3a1fd1"/></linearGradient>
+      <linearGradient id="${p}bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4d7cff"/><stop offset="1" stop-color="#1d3fc4"/></linearGradient>
       <linearGradient id="${p}pv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff9d4d"/><stop offset="1" stop-color="#ff5fa2"/></linearGradient>
       <linearGradient id="${p}st" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff8a2a"/><stop offset="1" stop-color="#ff9d4d"/></linearGradient>
       <filter id="${p}wet" x="-10%" y="-10%" width="120%" height="130%"><feTurbulence type="fractalNoise" baseFrequency=".35" numOctaves="1" seed="7"/><feDisplacementMap in="SourceGraphic" scale="1.2"/></filter>
-      <filter id="${p}sh" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#3b1fd1" flood-opacity=".4"/></filter>
+      <filter id="${p}sh" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#1c3cc0" flood-opacity=".4"/></filter>
       <filter id="${p}bs" x="-50%" y="-50%" width="200%" height="200%"><feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0"/><feGaussianBlur stdDeviation=".8"/></filter>
       <clipPath id="${p}cl"><rect width="64" height="64" rx="15"/></clipPath>
       <mask id="${p}fl"><path class="front" fill="#fff" d="M0 -3H64V-3H0Z"/></mask>

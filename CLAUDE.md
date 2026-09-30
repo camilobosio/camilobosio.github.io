@@ -14,7 +14,7 @@ Hablarle a Camilo en español rioplatense, simple y sin tecnicismos.
   cada elemento exista, porque no todos están en las dos páginas.
 - En celular el inicio tiene que ser corto: servicios, planes y las grabaciones de M Perfumerie se deslizan de costado.
 - `images/` — capturas de M Perfumerie, foto de Camilo.
-  - `logo.svg` + `logo-180.png` = logo "M1": CB de líneas rectas estilo circuito, pintada en naranja→rosa y chorreando pintura, sobre fondo violeta (arte + tecnología; elegido entre muchas pruebas), usado como ícono de la pestaña y en la barra superior. `icono.jpg` (foto de Camilo) ya no se usa: Camilo no quiere su cara en la pestaña.
+  - `logo.svg` + `logo-180.png` = logo "M1": CB de líneas rectas estilo circuito, pintada en naranja→rosa y chorreando pintura, sobre fondo AZUL (#4d7cff→#1d3fc4; antes violeta, Camilo lo cambió: "más azul, un poco más fuerte, nada de celeste ni lila") (arte + tecnología; elegido entre muchas pruebas), usado como ícono de la pestaña y en la barra superior. `icono.jpg` (foto de Camilo) ya no se usa: Camilo no quiere su cara en la pestaña.
   - `og-productos.jpg` = vista previa de WhatsApp/redes activa (todo producto).
   - `og-mixto.jpg` = alternativa (flyer + productos). `og-image.jpg` = versión vieja, sin uso.
 - `portfolio/perfumes/` — publicidades de perfumes hechas con IA + Canva (14 imágenes .webp + 1 video Kling).
@@ -41,7 +41,7 @@ Hablarle a Camilo en español rioplatense, simple y sin tecnicismos.
   (mancha con brazos gorditos y bolitas, uno largo a la derecha), golpe que se abre desde el centro sin rebote ni onda,
   gotitas arriba/abajo/costados que caen con hilito, y 3 chorreadas. Versión PLANA (probó 3D con relieve y no le gustó).
   El logo animado del balde arranca recién cuando termina el salpicón (`splashDone` en js/sitio.js).
-- Colores: violeta (`--violet`) como principal + **naranja del logo** (`--orange`, `--paint` = degradé naranja→rosa) como acento
+- Colores: azul (`--violet` = #2b50d8; la variable conserva el nombre viejo) como principal. La frase que rota en la portada va en degradé de azules, SIN naranja (lila+naranja "parecía Instagram") + **naranja del logo** (`--orange`, `--paint` = degradé naranja→rosa) como acento
   (frases que rotan en la portada, puntos de la cinta, números de pasos, todo lo del servicio "Contenido con IA").
 - Sección "Quién está detrás": Camilo es el **creativo**, no solo alguien que automatiza con IA: idea, propone opciones,
   se adapta a lo que quiere el cliente, diseña, programa y desarrolla (páginas, publicidades, videos, fotos).
