@@ -460,9 +460,13 @@
     .about > div:last-child{ grid-column:1 / -1; }
     .about .tools{ display:none; }
     section.block{ padding-block:56px; }
-    .ix-grid{ display:flex; gap:12px; overflow-x:auto; scroll-snap-type:x mandatory; margin-inline:-20px; padding:0 20px 8px; scrollbar-width:none; }
-    .ix-grid::-webkit-scrollbar{ display:none; }
-    .ix-card{ flex:0 0 80%; scroll-snap-align:start; }
+    /* interacciones de M Perfumerie: de a cuatro (2×2), sin deslizar; al tocar se abren en grande */
+    .ix-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .ix-card{ cursor:zoom-in; border-radius:16px; }
+    .ix-txt{ padding:10px 10px 12px; grid-template-columns:1fr; gap:2px; }
+    .ix-txt .n{ display:none; }
+    .ix-txt h4{ font-size:13.5px; line-height:1.25; }
+    .ix-txt p{ display:none; }
     .top .mark{ white-space:nowrap; }
     .top nav{ display:flex; gap:14px; }
     .top nav a:not([href="portfolio.html"]){ display:none; }

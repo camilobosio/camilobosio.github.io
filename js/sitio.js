@@ -189,8 +189,13 @@ function zoomer(stage, layer, onZoom){
   if(lb){
   const shown = () => tiles.filter(t => !t.hidden);
   function show(t){ const m = t.querySelector('img, video'); const n = m.cloneNode(); if(n.tagName === 'VIDEO'){ n.controls = true; n.loop = true; n.playsInline = true; n.muted = false; n.play().catch(() => { n.muted = true; n.play().catch(() => {}); }); } else { n.loading = 'eager'; } stage.replaceChildren(n); const c = t.querySelector('.cap'); txt.innerHTML = '<b>' + c.querySelector('b').textContent + '</b> ' + c.lastChild.textContent; cur = shown().indexOf(t); }
-  function step(d){ const l = shown(); show(l[(cur + d + l.length) % l.length]); }
-  tiles.forEach(t => t.addEventListener('click', () => { show(t); if(lb.showModal) lb.showModal(); }));
+  // en celular, las interacciones de M Perfumerie (.ix-card) también se abren en grande en este visor
+  const ixCards = [...document.querySelectorAll('.ix-card')], small = matchMedia('(max-width:760px)'); let inIx = false;
+  function showIx(c){ const v = c.querySelector('video').cloneNode(); v.loop = true; v.muted = true; v.playsInline = true; v.controls = true; v.play().catch(() => {});
+    stage.replaceChildren(v); txt.innerHTML = '<b>' + c.querySelector('h4').textContent + '</b> ' + c.querySelector('p').textContent; cur = ixCards.indexOf(c); inIx = true; }
+  ixCards.forEach(c => c.addEventListener('click', () => { if (!small.matches) return; showIx(c); if(lb.showModal) lb.showModal(); }));
+  function step(d){ if (inIx) { showIx(ixCards[(cur + d + ixCards.length) % ixCards.length]); return; } const l = shown(); show(l[(cur + d + l.length) % l.length]); }
+  tiles.forEach(t => t.addEventListener('click', () => { inIx = false; show(t); if(lb.showModal) lb.showModal(); }));
   document.getElementById('lbX').onclick = () => lb.close();
   document.getElementById('lbPrev').onclick = () => step(-1);
   document.getElementById('lbNext').onclick = () => step(1);
@@ -549,7 +554,7 @@ function zoomer(stage, layer, onZoom){
     else { vel = 0; const off = ((angle % 360) + 540) % 360 - 180; if (Math.abs(off) > .3 && Math.abs(off) < 16) { angle -= off * Math.min(1, dt * 10); busy = true; } }
     drawSpin(); sraf = busy ? requestAnimationFrame(tick) : 0;
   }
-  b360.addEventListener('click', () => turning ? stopTurn() : startTurn());
+  if (b360) b360.addEventListener('click', () => turning ? stopTurn() : startTurn()); // el giro 360 está en "Producto 360"; acá solo se cambia de campera
 
   // arrastre
   let drag = null;
@@ -586,7 +591,7 @@ function zoomer(stage, layer, onZoom){
   st.addEventListener('keydown', e => {
     if ((e.key === 'ArrowRight' || e.key === 'ArrowLeft') && zm.z > 1.02) return;
     if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); const d = e.key === 'ArrowRight' ? 1 : -1; if (turning) { angle += d * 12; drawSpin(); } else go(ti + d, d); }
-    if (e.key === 'Enter' && e.target === st) { e.preventDefault(); turning ? stopTurn() : startTurn(); }
+    if (b360 && e.key === 'Enter' && e.target === st) { e.preventDefault(); turning ? stopTurn() : startTurn(); }
   });
   info();
 })();
