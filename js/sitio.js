@@ -743,12 +743,20 @@
     // suavizar después de afinar, así la punta de cada gota queda redonda (no en pico)
     const sm = new Float32Array(W + 1), rs = W < 500 ? 3 : 5;
     for (let x = 0; x <= W; x++){ let a = 0, n = 0; for (let t = -rs; t <= rs; t++){ a += thin[Math.max(0, Math.min(W, x + t))]; n++; } sm[x] = a / n; }
+    // borde ondulado de base (como el menú de arriba); al bajar, la pintura se estira hasta formar las gotas
+  const base = x => 5 + 3*Math.sin(x/70) + 2*Math.sin(x/27 + 1);
+  const Dmax = Math.max(...sm);
+  function pathFor(p){
     let d = `M0,${top} `;
     for (let x = 0; x <= W; x += 16) d += `L${x},${(top + 2.5*Math.sin(x/90) + 1.5*Math.sin(x/33+1)).toFixed(1)} `;
     d += `L${W},${B} `;
-    for (let x = W; x >= 0; x -= 2) d += `L${x},${(B - 2 + sm[x]*fade(x)).toFixed(1)} `;
-    d += `Z`;
-    const fill = opt.color === 'azul' ? ['#3d64e6','#2b50d8','#1f3fb8'] : ['#ff9a45','#ff812c','#e8640f'];
+    const reach = p * Dmax * 1.05;
+    for (let x = W; x >= 0; x -= 2){ const full = sm[x]*fade(x), b0 = Math.min(base(x), full + 3)*fade(x);
+      d += `L${x},${(B - 2 + Math.max(b0, Math.min(full, b0 + reach))).toFixed(1)} `; }
+    return d + 'Z';
+  }
+  const d = pathFor(opt.progress == null ? 1 : opt.progress);
+  const fill = opt.color === 'azul' ? ['#3d64e6','#2b50d8','#1f3fb8'] : ['#ff9a45','#ff812c','#e8640f'];
     const ns = 'http://www.w3.org/2000/svg', svg = document.createElementNS(ns, 'svg'), id = 'dp' + Math.random().toString(36).slice(2,7);
     svg.setAttribute('class', 'drip-svg'); svg.setAttribute('width', W); svg.setAttribute('height', H); svg.setAttribute('aria-hidden', 'true');
     svg.style.cssText = 'position:absolute;left:0;top:0;overflow:visible;pointer-events:none;z-index:0';
@@ -761,8 +769,18 @@
         <feComposite in="s" in2="SourceAlpha" operator="in" result="sc"/><feComposite in="SourceGraphic" in2="sc" operator="arithmetic" k2="1" k3=".5"/></filter>` : ''}</defs>
       <g clip-path="url(#${id}c)"><path d="${d}" fill="url(#${id}g)" ${gloss ? `filter="url(#${id}f)"` : ''}/></g>`;
     card.appendChild(svg);
+    const path = svg.querySelector('path');
+    return p => path.setAttribute('d', pathFor(p));
   };
-  const draw = () => paintDrip(card, { gloss:true, color:'azul' });
+  // la pintura chorrea a medida que el recuadro sube en la pantalla (ligado al scroll)
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let update = null, raf = 0;
+  const progress = () => { if (reduce) return 1; const r = card.getBoundingClientRect(), vh = innerHeight;
+    if (scrollY + vh >= document.documentElement.scrollHeight - 4) return 1;   // llegaste al final: chorreado entero
+    const u = (vh - r.bottom + 20) / (vh * .42); return Math.max(0, Math.min(1, u)); };   // arranca cuando se ve el borde de abajo
+  const tick = () => { raf = 0; if (update) update(progress()); };
+  const draw = () => { update = paintDrip(card, { gloss:true, color:'azul', progress:progress() }); };
   draw(); let t = 0; addEventListener('resize', () => { clearTimeout(t); t = setTimeout(draw, 150); });
+  addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(tick); }, { passive:true });
   if (document.fonts) document.fonts.ready.then(draw);
 })();
