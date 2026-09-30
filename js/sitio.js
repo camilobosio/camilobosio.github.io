@@ -614,8 +614,8 @@
     }
     function pose(t, O){
       const o = O ? [O.x, O.y, 0, .62] : [92, -44, 10, 1];
-      // vuelca siempre por encima de la "o" (si quedara adentro de la letra, el recorte lo escondería)
-      const PX = POUR[0], PY = O ? Math.min(POUR[1], O.box[1] - 15) : POUR[1];
+      // vuelca al costado de la "o" (si quedara adentro de la letra, el recorte lo escondería)
+      const PX = O ? Math.max(POUR[0], O.box[2] + 9) : POUR[0], PY = POUR[1];
       if (t < .75){ const u = ease(seg(t,0,.75)); return [lerp(o[0],PX,u), lerp(o[1],PY,u), lerp(o[2],-25,u), lerp(o[3],1,u)]; }
       if (t < 1.1){ const u = ease(seg(t,.75,1.1)); return [PX, PY, lerp(-25,-128,u), 1]; }
       if (t < 2.0) return [PX + Math.sin(t*9)*.2, PY, -128 + Math.sin(t*7)*1.5, 1];
