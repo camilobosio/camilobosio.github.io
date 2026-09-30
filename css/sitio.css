@@ -301,7 +301,7 @@
   .logo-balde:focus-visible, .logo-pincel:focus-visible{ outline:3px solid var(--orange); outline-offset:4px; border-radius:14px; }
   .hero h1{ position:relative; }
   .hero h1 .ln{ position:relative; z-index:1; }
-  .hero-balde{ position:absolute; left:2.74em; top:.72em; width:.8em; z-index:0; }
+  .hero-balde{ position:absolute; left:3.4em; top:.74em; width:.8em; z-index:0; }
   @media (max-width:860px){ .hero-balde{ display:none; } }
   .firma{ display:flex; justify-content:center; gap:28px; padding-top:40px; }
   .firma > div{ width:170px; }
