@@ -80,3 +80,15 @@ Objetivo: intro corta con el video de Camilo (cara y voz reales) pero en Rosario
       interacciones (girar, cierre, deslizar a la otra). Rehacer el mockup animado.
 - [x] (en #marca del inicio, foto de balde 82510ff9) Interacción en la página: el logo limpio; entra un balde de pintura desde arriba al costado, se inclina, tira la
       pintura naranja, cae sobre el logo y queda el logo final chorreado. Hecho con código (SVG), no video.
+
+## 30/9 (noche) — Pintura al cargar (PUBLICADO, PR #28 y #29)
+- [x] Sin logo, sale en cada carga, más grande, mancha REDONDA como la referencia, naranja oscuro poco transparente.
+- [x] Página borrosa detrás; gotitas arriba y abajo que se escurren como gotas en un vidrio.
+- [x] Bug en PC (pintura pegada arriba): era el sitio.css viejo en caché → el salpicado va dentro del HTML y css/js con ?v=29.
+- Generador: herramientas-video/salpicado.py.
+
+## Para retomar mañana
+- Preguntarle a Camilo si el salpicado quedó bien en su compu (con Ctrl+F5 o ?v=29).
+- Intro de YouTube "Día del Juicio Final 2045" v2: corregir lo que diga Camilo (ver sección de arriba).
+- Sin publicar, esperando OK: visores 2K, Prenda interactiva (#prenda), motor 3D (modelo-3d-producto).
+- Pendientes viejos: PDF de planes con el servicio de IA; qué perfume es video-kling-1.mp4; cantidades de los planes de IA.
