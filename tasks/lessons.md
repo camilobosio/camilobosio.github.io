@@ -44,3 +44,6 @@
 - Landing de la campera: sin texto, sin círculo/anillo de fondo; fondo estilo web3 (luces de colores, grilla fina).
   Todas las prendas con el MISMO tratamiento (nada de resplandor blanco en una sola).
 - El logo animado NO va en una sección nueva con texto: chiquito, integrado (al lado del nombre en compu, abajo de todo).
+- Balde: que vuelque ELEVADO, con distancia entre el balde y el logo, sobre la línea larga de la B, y que se expanda hacia
+  abajo desde ahí. No pegado al logo ni salpicando por todos lados.
+- Vista previa de links (WhatsApp): solo el logo.

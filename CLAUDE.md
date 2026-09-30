@@ -23,7 +23,8 @@ Hablarle a Camilo en español rioplatense, simple y sin tecnicismos.
 - En celular el inicio tiene que ser corto: servicios, planes y las grabaciones de M Perfumerie se deslizan de costado.
 - `images/` — capturas de M Perfumerie, foto de Camilo.
   - `logo.svg` + `logo-180.png` = logo "M1": CB de líneas rectas estilo circuito, pintada en naranja→rosa y chorreando pintura, sobre fondo violeta (arte + tecnología; elegido entre muchas pruebas), usado como ícono de la pestaña y en la barra superior. `icono.jpg` (foto de Camilo) ya no se usa: Camilo no quiere su cara en la pestaña.
-  - `og-productos.jpg` = vista previa de WhatsApp/redes activa (todo producto).
+  - `og-logo.jpg` = vista previa de WhatsApp/redes ACTIVA (solo el logo sobre violeta, pedido de Camilo).
+  - `og-productos.jpg` = vista previa vieja (productos), sin uso.
   - `og-mixto.jpg` = alternativa (flyer + productos). `og-image.jpg` = versión vieja, sin uso.
 - `portfolio/perfumes/` — publicidades de perfumes hechas con IA + Canva (14 imágenes .webp + 1 video Kling).
 - `portfolio/videos-ia/` — 3 videos (misma escena, 3 ángulos) con la cara de Camilo, hechos a partir de un par de fotos.
@@ -47,7 +48,8 @@ Hablarle a Camilo en español rioplatense, simple y sin tecnicismos.
   balde de pintura REAL (`images/balde/balde.webp`, foto 82510ff9) que vuelca pintura sobre el logo limpio, y pincel REAL
   (`images/balde/pincel.webp`, foto 1e3940c0) que sigue el trazo exacto de la C y la B y después pinta las gotas.
   Dónde: el BALDE chiquito al lado de "Bosio" en la portada (solo compu, `.hero-balde`), sale y vuelve a esconderse atrás
-  de la "o" de "Camilo" (recortado con la caja de tinta de la letra); abajo de todo SOLO el pincel, grande (`.firma`).
+  de la "o" de "Camilo" (recortado con la caja de tinta de la letra), queda ELEVADO arriba del logo y la pintura cae con
+  distancia sobre la línea larga de la B y baja; pocas salpicaduras. Abajo de todo SOLO el pincel, grande (`.firma`).
   Camilo NO quiere una franja/sección con explicación ("Así nace una marca" se sacó). `window.__logos(t)` dibuja un instante.
 - Portfolio, debajo de la Campera 360 (`.p3-mock`, PUBLICADO): video del mockup notebook + celu
   (`portfolio/ropa/mockup-campera.mp4`). Se genera con `herramientas-video/` (landing web3 sin texto grabada cuadro a
