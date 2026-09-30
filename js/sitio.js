@@ -564,48 +564,86 @@
     return { sv, p, clips, dots };
   }
 
-  // BALDE: entra desde arriba al costado, se inclina, vuelca y la pintura baja cubriendo el logo
+  // BALDE: sale de atrás de la "o" de Camilo, vuelca un chorro grueso de pintura sobre el logo y vuelve a esconderse
   function balde(el){
     const { sv, p, clips, dots } = base(el, 'mask');
-    const front = sv.querySelector('.front');
-    const stream = mk('path', { fill: `url(#${p}st)`, d: '' }, sv);
-    const splash = mk('g', { fill: '#ff8f3f' }, sv);
-    const bucket = mk('image', { href: 'images/balde/balde.webp', width: 21, height: 25.6, x: -10.5, y: -12.8 }, sv);
+    const front = sv.querySelector('.front'), defs = sv.querySelector('defs');
+    defs.insertAdjacentHTML('beforeend', `<linearGradient id="${p}ch" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#e8641c"/><stop offset=".35" stop-color="#ff9a45"/><stop offset=".5" stop-color="#ffc58f"/><stop offset=".65" stop-color="#ff9a45"/><stop offset="1" stop-color="#d9551a"/></linearGradient>
+      <radialGradient id="${p}pl" cx=".5" cy=".4" r=".6"><stop offset="0" stop-color="#ffb36b"/><stop offset=".6" stop-color="#ff8a3a"/><stop offset="1" stop-color="#f06a2a"/></radialGradient>`);
+    const sheetG = mk('g', { 'clip-path': `url(#${p}cl)` }, sv);            // ola de pintura que baja sobre el logo
+    const sheet = mk('path', { fill: `url(#${p}pl)`, d: '' }, sheetG);
+    const pool = mk('path', { fill: `url(#${p}pl)`, d: '' }, sv);         // charco donde pega el chorro
+    const stream = mk('path', { fill: `url(#${p}ch)`, d: '' }, sv);        // chorro con brillo en el medio
+    const shine = mk('path', { fill: 'none', stroke: 'rgba(255,240,220,.75)', 'stroke-width': .5, 'stroke-linecap': 'round', d: '' }, sv);
+    const splash = mk('g', { fill: '#ff8a3a' }, sv);
+    // el balde se recorta con la caja de la "o": así parece que sale de atrás de la letra y no se ve en el hueco
+    const hide = mk('clipPath', { id: p + 'o', 'clip-rule': 'evenodd' }, defs), hideP = mk('path', { 'clip-rule': 'evenodd', d: '' }, hide);
+    const bucket = mk('image', { href: 'images/balde/balde.webp', width: 21, height: 25.6, x: -10.5, y: -12.8, 'clip-path': `url(#${p}o)` }, sv);
+    const wrap = mk('g', { 'clip-path': `url(#${p}o)` }, sv); wrap.appendChild(bucket); bucket.removeAttribute('clip-path');
     let sd = 11; const rnd = () => (sd = (sd * 16807) % 2147483647) / 2147483647;
-    const SP = Array.from({length:16}, () => ({ t0: 1.15 + rnd(), x: 10 + rnd()*44, vx: (rnd()-.5)*26, vy: -8 - rnd()*14, r: .35 + rnd()*.75 }));
-    const spEls = SP.map(q => { const c = mk('circle', { r: q.r }, splash); c.style.opacity = 0; return c; });
-    const ORDER = [1,0,2,3,5,4,6,7];
-    function pose(t){
-      if (t < .7){ const u = ease(seg(t,0,.7)); return [lerp(92,58,u), lerp(-44,-15,u), lerp(10,-25,u)]; }
-      if (t < 1.1){ const u = ease(seg(t,.7,1.1)); return [58, -15, lerp(-25,-122,u)]; }
-      if (t < 2.3) return [58 + Math.sin(t*9)*.25, -15, -122 + Math.sin(t*7)*2];
-      if (t < 2.7){ const u = ease(seg(t,2.3,2.7)); return [58, -15, lerp(-122,-30,u)]; }
-      const u = ease(seg(t,2.7,3.3)); return [lerp(58,94,u), lerp(-15,-46,u), lerp(-30,12,u)];
+    const SP = Array.from({length:26}, () => ({ t0: 1.2 + rnd()*1.1, a: Math.PI*(1.05 + rnd()*.9), v: 10 + rnd()*22, r: .45 + rnd()*1.1 }));
+    const spEls = SP.map(q => { const c = mk('ellipse', { rx: q.r, ry: q.r }, splash); c.style.opacity = 0; return c; });
+    const ORDER = [1,0,2,3,5,4,6,7], POUR = [60, -9], IMP = 54;
+    // centro de la "o" de Camilo (en las coordenadas del dibujo); si no hay portada, entra desde arriba a la derecha
+    const oSpan = el.closest('h1') && el.closest('h1').querySelector('.ln span');
+    function origin(){
+      if (!oSpan || !oSpan.firstChild) return null;
+      const r = document.createRange(), s = oSpan.firstChild, n = s.textContent.length; r.setStart(s, n - 1); r.setEnd(s, n);
+      const b = r.getBoundingClientRect(), m = sv.getScreenCTM(); if (!m || !b.width) return null;
+      const inv = m.inverse(), P = (x, y) => { const pt = sv.createSVGPoint(); pt.x = x; pt.y = y; return pt.matrixTransform(inv); };
+      // caja de la tinta de la "o" (no la de la línea): de la altura x a la línea de base
+      const base = b.bottom - b.height*.2, xh = b.height*.5, a = P(b.left + b.width*.06, base - xh), z = P(b.right - b.width*.06, base + b.height*.02), c = P(b.left + b.width*.5, base - xh*.5);
+      return { x: c.x, y: c.y, box: [a.x, a.y, z.x, z.y] };
+    }
+    function pose(t, O){
+      const o = O ? [O.x, O.y, 0, .62] : [92, -44, 10, 1];
+      if (t < .75){ const u = ease(seg(t,0,.75)); return [lerp(o[0],POUR[0],u), lerp(o[1],POUR[1],u), lerp(o[2],-25,u), lerp(o[3],1,u)]; }
+      if (t < 1.1){ const u = ease(seg(t,.75,1.1)); return [POUR[0], POUR[1], lerp(-25,-128,u), 1]; }
+      if (t < 2.5) return [POUR[0] + Math.sin(t*9)*.25, POUR[1], -128 + Math.sin(t*7)*2, 1];
+      if (t < 2.85){ const u = ease(seg(t,2.5,2.85)); return [POUR[0], POUR[1], lerp(-128,-20,u), 1]; }
+      const u = ease(seg(t,2.85,3.55)); return [lerp(POUR[0],o[0],u), lerp(POUR[1],o[1],u), lerp(-20,o[2],u), lerp(1,o[3],u)];
     }
     function render(t){
-      const [bx, by, a] = pose(t), r = a*Math.PI/180, co = Math.cos(r), si = Math.sin(r);
-      bucket.setAttribute('transform', `translate(${bx} ${by}) rotate(${a})`);
-      bucket.style.opacity = seg(t, 0, .25) * (1 - seg(t, 3.05, 3.4));
-      const px = bx + co*-9.9 - si*-9.5, py = by + si*-9.9 + co*-9.5, IMP = 54.7;
-      const F = t < 1.05 ? -3 : lerp(2, 92, ease(seg(t,1.05,2.3)));
+      const O = origin(), [bx, by, a, sc] = pose(t, O), r = a*Math.PI/180, co = Math.cos(r), si = Math.sin(r);
+      bucket.setAttribute('transform', `translate(${bx} ${by}) rotate(${a}) scale(${sc})`);
+      hideP.setAttribute('d', O ? `M-200 -300 H300 V300 H-200 Z M${O.box[0]} ${O.box[1]} V${O.box[3]} H${O.box[2]} V${O.box[1]} Z` : 'M-200 -300 H300 V300 H-200 Z');
+      bucket.style.opacity = O ? (t >= 3.55 ? 0 : 1) : seg(t, 0, .25) * (1 - seg(t, 3.2, 3.5));
+      const px = bx + (co*-9.9 - si*-9.5)*sc, py = by + (si*-9.9 + co*-9.5)*sc;   // borde por donde sale la pintura
+      // la pintura baja desde donde pega y se abre hacia los costados
+      const F = t < 1.15 ? -3 : lerp(2, 92, ease(seg(t,1.15,2.45)));
       let d = 'M0 -3 H64 ';
       for (let x = 64; x >= 0; x -= 2){ const y = F - Math.abs(x - IMP)*.45 + Math.sin(x*.7 + t*9)*.9*(F < 80 ? 1 : 0); d += `L${x} ${Math.max(-3, y).toFixed(2)} `; }
       front.setAttribute('d', d + 'Z');
-      const w = 3.6 * seg(t,1.0,1.2) * (1 - seg(t,2.05,2.4));
+      // la ola: una franja de pintura justo arriba del frente, que se desvanece cuando termina de bajar
+      const so = (F < -2 ? 0 : 1) * (1 - seg(t, 2.05, 2.55));
+      if (so > .01){ let tp = '', bt = '';
+        for (let x = 0; x <= 64; x += 2){ const y = F - Math.abs(x - IMP)*.45 + Math.sin(x*.7 + t*9)*.9, th = 7 + Math.sin(x*.4 + t*5)*2;
+          bt += `L${x} ${y.toFixed(2)} `; tp = `L${x} ${(y - th).toFixed(2)} ` + tp; }
+        sheet.setAttribute('d', 'M' + bt.slice(1) + tp + 'Z'); sheet.style.opacity = .9*so; } else sheet.setAttribute('d', '');
+      // chorro: sale grueso del borde, se ensancha al caer y ondula; al final se corta y cae
+      const w = 5.2 * seg(t,1.05,1.3) * (1 - seg(t,2.2,2.6)), hit = 10;
       if (w > .05){
-        const bot = Math.max(py, Math.min(F, 14)), top = py + (t > 2.05 ? (bot - py) * ease(seg(t,2.05,2.4)) : 0);
-        let L = '', R = '';
-        for (let y = top; y <= bot; y += 2){ const k = Math.sin(y*.55 + t*14)*.35; L += `L${(px - w/2 + k).toFixed(2)} ${y.toFixed(2)} `; R = `L${(px + w/2 + k*.6).toFixed(2)} ${y.toFixed(2)} ` + R; }
-        stream.setAttribute('d', `M${px - w/2} ${top} ` + L + `L${px} ${bot + 1.2} ` + R + 'Z');
-      } else stream.setAttribute('d', '');
+        const top = py + (t > 2.2 ? (hit - py) * ease(seg(t,2.2,2.6)) : 0), steps = 10;
+        let Lp = [], Rp = [], Sp = [];
+        for (let i = 0; i <= steps; i++){ const y = lerp(top, hit, i/steps), k = (y - py)/(hit - py || 1), ww = w*(.75 + .55*k), wob = Math.sin(y*.5 + t*12)*.5 + (IMP - px)*k;
+          Lp.push(`${(px + wob - ww/2).toFixed(2)} ${y.toFixed(2)}`); Rp.unshift(`${(px + wob + ww/2).toFixed(2)} ${y.toFixed(2)}`); Sp.push(`${(px + wob - ww*.12).toFixed(2)} ${y.toFixed(2)}`); }
+        stream.setAttribute('d', `M${Lp.join(' L')} L${Rp.join(' L')} Z`); shine.setAttribute('d', `M${Sp.join(' L')}`);
+      } else { stream.setAttribute('d', ''); shine.setAttribute('d', ''); }
+      // charco que se abre donde pega y se escurre
+      const pr = 7.5 * ease(seg(t,1.15,1.7)) * (1 - ease(seg(t,2.35,2.9)));
+      if (pr > .2){ let q = ''; for (let i = 0; i <= 16; i++){ const an = i/16*Math.PI*2, rr = pr*(1 + .18*Math.sin(an*5 + t*6)); q += (i ? 'L' : 'M') + (IMP + Math.cos(an)*rr*1.35).toFixed(2) + ' ' + (hit + 1 + Math.sin(an)*rr*.55).toFixed(2) + ' '; }
+        pool.setAttribute('d', q + 'Z'); } else pool.setAttribute('d', '');
+      // salpicaduras: gotas que saltan del charco y caen
       SP.forEach((q, i) => { const u = t - q.t0, e = spEls[i];
-        if (u < 0 || u > .6){ e.style.opacity = 0; return; }
-        const x0 = IMP + (q.x - IMP)*.6, y0 = cl(F - Math.abs(x0 - IMP)*.45, 6, 58);
-        e.setAttribute('cx', x0 + q.vx*u); e.setAttribute('cy', y0 + q.vy*u + 45*u*u); e.style.opacity = 1 - u/.6; });
-      ORDER.forEach((k, i) => { const d = D[k], u = ease(seg(t, 1.9 + i*.12, 2.8 + i*.12)); clips[k].setAttribute('height', (d[3] - d[2] + 1.5)*u); });
-      dots.forEach((c, i) => { c.style.opacity = seg(t, 2.9 + i*.12, 3.05 + i*.12); });
+        if (u < 0 || u > .7){ e.style.opacity = 0; return; }
+        const vx = Math.cos(q.a)*q.v, vy = Math.sin(q.a)*q.v, sp = Math.hypot(vx, vy - 40*u);
+        e.setAttribute('cx', IMP + vx*u); e.setAttribute('cy', hit + vy*u + 40*u*u);
+        e.setAttribute('rx', q.r*(1 + sp*.012)); e.setAttribute('ry', q.r*.85); e.style.opacity = 1 - u/.7; });
+      ORDER.forEach((k, i) => { const d = D[k], u = ease(seg(t, 2.0 + i*.12, 2.9 + i*.12)); clips[k].setAttribute('height', (d[3] - d[2] + 1.5)*u); });
+      dots.forEach((c, i) => { c.style.opacity = seg(t, 3.0 + i*.12, 3.15 + i*.12); });
     }
-    return { render, end: 3.8 };
+    return { render, end: 3.9 };
   }
 
   // PINCEL: un pincel real (foto recortada) sigue el trazo exacto de la C y la B, y después pinta cada gota
