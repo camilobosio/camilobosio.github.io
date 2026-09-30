@@ -65,6 +65,9 @@ Hablarle a Camilo en español rioplatense, simple y sin tecnicismos.
 - Portfolio "Contenido interactivo": primero PRODUCTO 360 (antes "Campera 360") + video del mockup, abajo el probador
   SIN giro 360 (solo cambia la campera). En celular las 4 interacciones de M Perfumerie van 2×2 y se abren en grande al tocar.
 
+- Pintura al cargar (`#splashLoad`, PUBLICADO): mancha naranja con el logo que se abre y muestra la página; una vez por
+  visita (sessionStorage "pintura"); SVG + CSS al final de sitio.css.
+
 ## Estilo
 - Colores: violeta (`--violet`) como principal + **naranja del logo** (`--orange`, `--paint` = degradé naranja→rosa) como acento
   (frases que rotan en la portada, puntos de la cinta, números de pasos, todo lo del servicio "Contenido con IA").
