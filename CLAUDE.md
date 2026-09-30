@@ -46,7 +46,8 @@ Hablarle a Camilo en español rioplatense, simple y sin tecnicismos.
 - Logo animado (PUBLICADO, código al final de js/sitio.js, se arma en `.logo-balde` / `.logo-pincel`):
   balde de pintura REAL (`images/balde/balde.webp`, foto 82510ff9) que vuelca pintura sobre el logo limpio, y pincel REAL
   (`images/balde/pincel.webp`, foto 1e3940c0) que sigue el trazo exacto de la C y la B y después pinta las gotas.
-  Dónde: chiquito al lado de "Bosio" en la portada (solo compu, `.hero-balde`) y abajo de todo los dos juntos (`.firma`).
+  Dónde: el BALDE chiquito al lado de "Bosio" en la portada (solo compu, `.hero-balde`), sale y vuelve a esconderse atrás
+  de la "o" de "Camilo" (recortado con la caja de tinta de la letra); abajo de todo SOLO el pincel, grande (`.firma`).
   Camilo NO quiere una franja/sección con explicación ("Así nace una marca" se sacó). `window.__logos(t)` dibuja un instante.
 - Portfolio, debajo de la Campera 360 (`.p3-mock`, PUBLICADO): video del mockup notebook + celu
   (`portfolio/ropa/mockup-campera.mp4`). Se genera con `herramientas-video/` (landing web3 sin texto grabada cuadro a
