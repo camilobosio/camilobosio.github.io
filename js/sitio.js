@@ -146,6 +146,17 @@
   }
   // barra superior con borde al bajar
   const top = document.getElementById('top'); addEventListener('scroll', () => top.classList.toggle('scrolled', scrollY > 10), { passive:true });
+  // la franja naranja del menú baja recién cuando se va el salpicón de la carga;
+  // en el inicio espera a que el balde empiece a volcar la pintura sobre el logo
+  (function(){
+    const s = document.getElementById('splashLoad'), pour = document.querySelector('.hero-balde') ? 1150 : 150;
+    let done = false;
+    const drop = () => { if (done) return; done = true; top.classList.add('drop'); requestAnimationFrame(() => top.classList.remove('pre'));
+      setTimeout(() => top.classList.remove('drop'), 900); };
+    if (!s) return drop();
+    s.addEventListener('animationend', e => { if (e.animationName === 'slOut') setTimeout(drop, pour); });
+    setTimeout(drop, 1900 + pour);
+  })();
   // copiar email
   const copy = document.getElementById('copyMail');
   if(copy) copy.addEventListener('click', e => {
