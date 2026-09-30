@@ -129,6 +129,7 @@ en neón y en papelería (nano_banana_pro con el flyer de referencia importado d
 - Contacto: WhatsApp 3468 437518 (wa.me/5493468437518), camilobosio96@gmail.com.
 
 ## Cómo trabajar
+- REGLA DE CAMILO: todo cambio VISUAL se le muestra primero con captura(s) en el chat y se publica SOLO cuando él dice que sí. Nunca publicar un cambio visual sin su OK.
 - Guardar archivos nuevos que mande Camilo en `portfolio/<rubro>/` con nombres descriptivos.
 - Revisar en compu (1280px) y celular (390px) con Playwright (Chromium en /opt/pw-browsers) que no haya scroll horizontal.
 - Para publicar: los cambios tienen que llegar a `main`. WhatsApp guarda la vista previa vieja: compartir el link con `?v=N`.
