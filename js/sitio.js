@@ -614,13 +614,11 @@
     }
     function pose(t, O){
       const o = O ? [O.x, O.y, 0, .62] : [92, -44, 10, 1];
-      // vuelca al costado de la "o" (si quedara adentro de la letra, el recorte lo escondería)
-      const PX = O ? Math.max(POUR[0], O.box[2] + 9) : POUR[0], PY = POUR[1];
-      if (t < .75){ const u = ease(seg(t,0,.75)); return [lerp(o[0],PX,u), lerp(o[1],PY,u), lerp(o[2],-25,u), lerp(o[3],1,u)]; }
-      if (t < 1.1){ const u = ease(seg(t,.75,1.1)); return [PX, PY, lerp(-25,-128,u), 1]; }
-      if (t < 2.0) return [PX + Math.sin(t*9)*.2, PY, -128 + Math.sin(t*7)*1.5, 1];
-      if (t < 2.85){ const u = ease(seg(t,2.0,2.4)); return [PX, PY, lerp(-128,-20,u), 1]; }
-      const u = ease(seg(t,2.85,3.55)); return [lerp(PX,o[0],u), lerp(PY,o[1],u), lerp(-20,o[2],u), lerp(1,o[3],u)];
+      if (t < .75){ const u = ease(seg(t,0,.75)); return [lerp(o[0],POUR[0],u), lerp(o[1],POUR[1],u), lerp(o[2],-25,u), lerp(o[3],1,u)]; }
+      if (t < 1.1){ const u = ease(seg(t,.75,1.1)); return [POUR[0], POUR[1], lerp(-25,-128,u), 1]; }
+      if (t < 2.0) return [POUR[0] + Math.sin(t*9)*.2, POUR[1], -128 + Math.sin(t*7)*1.5, 1];
+      if (t < 2.85){ const u = ease(seg(t,2.0,2.4)); return [POUR[0], POUR[1], lerp(-128,-20,u), 1]; }
+      const u = ease(seg(t,2.85,3.55)); return [lerp(POUR[0],o[0],u), lerp(POUR[1],o[1],u), lerp(-20,o[2],u), lerp(1,o[3],u)];
     }
     function render(t){
       const O = origin(), [bx, by, a, sc] = pose(t, O), r = a*Math.PI/180, co = Math.cos(r), si = Math.sin(r);
@@ -642,9 +640,8 @@
       // chorro: sale grueso del borde, se ensancha al caer y ondula; al final se corta y cae
       const w = 3.8 * seg(t,1.05,1.2) * (1 - seg(t,1.95,2.05)), hit = HIT;
       if (t > 1.05 && t < 2.45){
-        const gg = Math.max(96, (hit - py) / .09);   // si cae de más alto, cae más rápido: siempre llega a tiempo
-        const head = Math.min(hit, py + gg*Math.pow(Math.max(0, t - 1.05), 2));             // la punta cae acelerando
-        const top = t > 1.95 ? Math.min(hit, py + gg*Math.pow(t - 1.95, 2)) : py;          // al final la cola también cae
+        const head = Math.min(hit, py + 60*Math.pow(Math.max(0, t - 1.05), 2)*1.6);             // la punta cae acelerando
+        const top = t > 1.95 ? Math.min(hit, py + 60*Math.pow(t - 1.95, 2)*1.6) : py;          // al final la cola también cae
         const ww = Math.max(w, 2.2*(1 - seg(t,2.2,2.45))), steps = 12;
         if (head - top > .3){ let Lp = [], Rp = [], Sp = [];
           for (let i = 0; i <= steps; i++){ const y = lerp(top, head, i/steps), k = (y - py)/(hit - py || 1), wd = ww*(.8 + .35*k)*(i === steps ? 1.25 : 1), wob = Math.sin(y*.45 + t*11)*.35 + (IMP - px)*k;
