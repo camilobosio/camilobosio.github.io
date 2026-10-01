@@ -52,6 +52,7 @@ Hablarle a Camilo en español rioplatense, simple y sin tecnicismos.
 - Miniatura de M Perfumerie en el portfolio del inicio = video del celular con los productos (`celular-producto.mp4`).
 - Herramientas: sumado Pomelli (Google), ícono propio `images/herramientas/pomelli.svg`.
 - Inicio, orden: Lo que hago → Planes → ¿Qué vamos a crear? → Portfolio → Cómo trabajamos → Quién → Contacto.
+- Título de servicios: "Lo que hago por tu marca" (no "por tu negocio": puede ser empresa o emprendimiento).
 - Textos: primero "página para tu empresa" (institucional, sin vender) y después tienda online / e-commerce
   (pedido por WhatsApp o pago en la página). Premium web = PÁGINA INTERACTIVA (no "landing page").
 - Planes resumidos: 3 puntos + "Ver más" que despliega el resto ahí mismo (`.plan.short`, JS al final de sitio.js).
