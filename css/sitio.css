@@ -82,7 +82,12 @@
   .hero .wrap > div:first-child{ position:relative; z-index:3; }
   .showcase .phone{ z-index:2; }
   .orbit{ position:absolute; left:50%; top:46%; width:0; height:0; z-index:1; pointer-events:none; }
-  .orbit img, .orbit video{ position:absolute; width:var(--cw); max-width:none; aspect-ratio:4/5; object-fit:cover; left:calc(var(--cw) / -2); top:calc(var(--cw) * -.625); border-radius:16px; box-shadow:0 24px 44px -24px rgba(17,17,19,.55); opacity:0; will-change:transform, opacity; -webkit-user-select:none; user-select:none; }
+  .orbit > img, .orbit > video, .orbit > .ocyc{ position:absolute; width:var(--cw); max-width:none; aspect-ratio:4/5; object-fit:cover; left:calc(var(--cw) / -2); top:calc(var(--cw) * -.625); border-radius:16px; box-shadow:0 24px 44px -24px rgba(17,17,19,.55); opacity:0; will-change:transform, opacity; -webkit-user-select:none; user-select:none; }
+  .orbit video::-webkit-media-controls, .orbit video::-webkit-media-controls-panel, .orbit video::-webkit-media-controls-overlay-play-button,
+  .orbit video::-webkit-media-controls-start-playback-button{ display:none !important; -webkit-appearance:none; opacity:0 !important; }   /* en Safari no deben aparecer botones: solo pasa */
+  .ocyc{ overflow:hidden; background:var(--paper-2); }
+  .ocyc img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; clip-path:inset(0 0 100% 0); transition:clip-path .9s cubic-bezier(.6,0,.2,1); }
+  .ocyc img.on{ clip-path:inset(0); }
   @media (max-width:860px){ .showcase{ --cw:112px; margin-top:20px; } .showcase .phone{ margin-top:0; } }
   @media (max-width:760px){ .showcase .phone{ width:min(180px, 47vw); border-radius:30px; padding:7px; } .showcase .phone .screen{ border-radius:24px; } .showcase .phone .tag{ left:-10px; bottom:40px; padding:7px 10px; font-size:11.5px; } .showcase .phone .tag b{ font-size:12.5px; } }
 
