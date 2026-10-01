@@ -682,6 +682,8 @@
     function render(t){
       const a = seg(t,...T.s1), b = seg(t,...T.s2), n = D.length, span = (T.dr[1]-T.dr[0])/n;
       st[0].style.strokeDashoffset = L[0]*(1-a); st[1].style.strokeDashoffset = L[1]*(1-b);
+      // en el iPhone (Safari) un trazo de largo 0 igual dibuja la punta redonda: se oculta hasta que el pincel arranca
+      st[0].style.visibility = a > 0 ? '' : 'hidden'; st[1].style.visibility = b > 0 ? '' : 'hidden';
       D.forEach((d, i) => { const t0 = T.dr[0] + i*span, u = seg(t, t0 + span*.3, t0 + span); clips[i].setAttribute('height', (d[3] - d[2] + 1)*u); });
       DOTS.forEach((d, i) => { dots[i].style.opacity = seg(t, T.dots[0] + i*.2 + .08, T.dots[0] + i*.2 + .18); });
       let x = OUT[0], y = OUT[1], lift = 1, w = 4.2;
