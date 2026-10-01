@@ -798,3 +798,14 @@
   addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(tick); }, { passive:true });
   if (document.fonts) document.fonts.ready.then(draw);
 })();
+
+/* planes resumidos en el inicio: se ven los primeros puntos y "Ver más" muestra el detalle completo */
+document.querySelectorAll('.plan').forEach(plan => {
+  const ul = plan.querySelector('ul'); if (!ul || ul.children.length <= 3) return;
+  plan.classList.add('short');
+  const b = document.createElement('button'); b.type = 'button'; b.className = 'more-btn';
+  const n = ul.children.length - 3, label = () => plan.classList.contains('open') ? 'Ver menos' : `Ver más (${n} más) ↓`;
+  b.textContent = label(); b.setAttribute('aria-expanded', 'false');
+  b.addEventListener('click', () => { plan.classList.toggle('open'); b.textContent = label(); b.setAttribute('aria-expanded', plan.classList.contains('open')); });
+  ul.after(b);
+});
