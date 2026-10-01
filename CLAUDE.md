@@ -8,6 +8,10 @@ Hablarle a Camilo en español rioplatense, simple y sin tecnicismos.
 - `index.html` — INICIO: solo pantallazos ("destellos") de todo. Portada con celular + anillo que gira detrás (`#orbit`,
   imágenes en `images/orbita/` + logos de `images/crear/` + camperas del probador), servicios, "¿Qué vamos a crear?",
   pantallazos del portfolio (`.peek`, 4 tarjetas que llevan a portfolio.html), planes, cómo trabajo, quién, contacto.
+- Anillo de la portada (`#orbit`): tarjetas = img, video o `.ocyc` (2 del probador que cambian de campera con barrido,
+  JS "tarjetas del probador en el anillo"). Videos: `images/orbita/dia-madre.mp4` y `campera-360.mp4` (gira 360° y abre el
+  cierre), sin controles en Safari (disablepictureinpicture + CSS). Logo en blanco y negro (`images/crear/logo-bn.webp`)
+  reemplazó al "hecho con IA" (insignia verde), que Camilo no quiere en el anillo. Tampoco las remeras con el logo.
 - `portfolio.html` — PORTFOLIO completo y ordenado: Páginas web (M Perfumerie + experiencia interactiva), Contenido
   interactivo (`#probador` y `#producto-360`), Contenido con IA (galería con filtros Perfumes / En la calle / Personas).
 - `css/sitio.css` y `js/sitio.js` — estilos y código COMPARTIDOS por las dos páginas (sin build). El JS chequea que
