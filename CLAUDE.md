@@ -47,7 +47,7 @@ Hablarle a Camilo en español rioplatense, simple y sin tecnicismos.
   de pintura naranja con borde ondulado suave (`.top::before/::after`); al bajar se va para arriba y queda el gris.
 - "¿Qué vamos a crear?" (`.make`) con fondo gris muy suave #ebeae6 (más claro que el resto; blanco le pareció demasiado) y puntitos suaves.
 - Títulos de grupos de planes ("Páginas web" azul, "Contenido con IA" naranja): pintados con marcador (bloque lleno, bordes rectos irregulares, letras blancas), sin números ni subrayado. Menú sin "Planes"; sección "Elegí tu plan"; Premium en naranja.
-- "¿Arrancamos tu proyecto?" (`.contact`): el recuadro azul se derrite por abajo con brillo (al bajar se estira de ondulado a chorreado, siempre curvo; `paintDrip` al final de
+- "¿Arrancamos tu proyecto?" (`.contact`): el recuadro azul se derrite por abajo con brillo (al bajar se estira de ondulado a chorreado, siempre curvo; una vez completo queda así al subir y se reinicia recién arriba de todo; `paintDrip` al final de
   js/sitio.js; perfil copiado de una referencia de Camilo, gotas afinadas; en celular 3 gotas). Sin sombra 3D.
 - Miniatura de M Perfumerie en el portfolio del inicio = video del celular con los productos (`celular-producto.mp4`).
 - Herramientas: sumado Pomelli (Google), ícono propio `images/herramientas/pomelli.svg`.
@@ -56,7 +56,7 @@ Hablarle a Camilo en español rioplatense, simple y sin tecnicismos.
 - Textos: primero "página para tu empresa" (institucional, sin vender) y después tienda online / e-commerce
   (pedido por WhatsApp o pago en la página). Premium web = PÁGINA INTERACTIVA (no "landing page").
 - Planes resumidos: 3 puntos + "Ver más" que despliega el resto ahí mismo (`.plan.short`, JS al final de sitio.js).
-- Al entrar, la franja naranja del menú baja cuando el balde vuelca (`.top.pre` → `.drop`). NO tocar el balde ni el logo
+- Al entrar, la franja naranja del menú baja cuando el balde vuelca (`.top.pre` → `.drop`), en 1,5 s suave y sin rebote. NO tocar el balde ni el logo
   de compu. En celular el logo va centrado en el espacio libre al lado de "Bosio", apoyado en su línea.
 - Previsualizar con la tipografía real (fuentes por curl en Playwright); sin ella la "o" se corre y el balde parece roto.
 - Sección "Quién está detrás": Camilo es el **creativo**, no solo alguien que automatiza con IA: idea, propone opciones,
@@ -98,6 +98,8 @@ servidor; la foto no se sube): genera una base simple para probar →
   (título en `<b>` + tipo de pieza). Para sumar un rubro nuevo: agregar botón en `.cats` + tiles con ese `data-cat`.
   Rubros actuales: `perfumes`, `personas` ("Videos con personas").
 - Videos: en el mosaico se reproducen solos y mudos al verse; en el visor se abren con sonido.
+- El mosaico se arma en columnas por JS (`layout()` en sitio.js, `.gallery.js .gcol`), NO con CSS columns: en iPhone dejaban un recuadro gris al filtrar.
+- Videos "Escena con IA – Persona en Ferrari · ángulo 1/2/3": el 2 y el 3 tienen póster propio (.jpg) y `data-t` para arrancar en otro momento; en celular se oculta el `.sub` (`.tile.wide`).
 
 ## Probador virtual (`portfolio.html#probador`, clases `.pv-*`, código al final de `js/sitio.js`)
 Camilo NO quiere una landing aparte: es un ejemplo dentro del portfolio, con el mismo formato que la campera 360.
