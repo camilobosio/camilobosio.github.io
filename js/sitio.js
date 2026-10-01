@@ -22,6 +22,14 @@
     new IntersectionObserver(es => { on = es[0].isIntersecting; if(on && !raf){ last = 0; raf = requestAnimationFrame(tick); } }).observe(host);
     addEventListener('resize', place);
   })();
+  // tarjetas del probador en el anillo: van cambiando de campera con un barrido de arriba hacia abajo
+  document.querySelectorAll('.ocyc').forEach((box, k) => {
+    const imgs = [...box.children]; let i = 0, z = 1; if (reduce || imgs.length < 2) return;
+    setTimeout(() => setInterval(() => {
+      const nx = imgs[(i + 1) % imgs.length]; nx.style.transition = 'none'; nx.classList.remove('on'); void nx.offsetWidth;
+      nx.style.transition = ''; nx.style.zIndex = ++z; nx.classList.add('on'); i = (i + 1) % imgs.length;
+    }, 2600), k * 1300);
+  });
   // capturas que se van alternando
   function cycle(id, ms){ const imgs = [...document.querySelectorAll('#' + id + ' img')]; let i = 0; if(reduce || imgs.length < 2) return; return setInterval(() => { imgs[i].classList.remove('on'); i = (i + 1) % imgs.length; imgs[i].classList.add('on'); }, ms); }
   cycle('heroScreen', 3200);
