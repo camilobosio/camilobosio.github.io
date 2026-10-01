@@ -114,6 +114,15 @@ arrastrando (tira de 60 cuadros, nunca gira sola, imán al frente).
   tiendas Shopify que las venden (`<tienda>/products/<handle>.json` da las URLs) o store.audif1.com, y se importan a
   Higgsfield con media_import_url. Falta la negra acolchada con franjas beige (no pasó link).
 
+## Publicidad animada Día de la Madre (M Perfumerie, PUBLICADA)
+Video vertical 16 s para historias, estilo de una publicidad de Shopify que pasó Camilo pero con formas propias (flores,
+cintas, recuadros redondeados) para que no parezca copia. Hecho 100% con código: canvas + Playwright cuadro a cuadro,
+sonido sintetizado con Python (música chill bajita, tic-tac, "ding" de notificaciones, toques suaves; el soplido bien bajo;
+en el logo un acorde cálido — NO destello agudo ni spray, Camilo los descartó). Perfumes = fotos del catálogo sin fondo.
+Conteo desde el domingo 4/10 14 h → 13:10:00:00. Final = logo solo (sin "M PERFUMERIE") + "Ver catálogo".
+En `portfolio/perfumes/dia-de-la-madre-animada.mp4` (galería) y `images/orbita/dia-madre.mp4` (anillo de la portada,
+reemplazó a las remeras con el logo, que Camilo no quiere). Python figura en "Con qué trabajo".
+
 ## Carteles en la calle (`portfolio/calle/`, también en el anillo de la portada)
 Flyers de perfumes puestos en una parada de colectivo, afiche en pared, subte, cartel en altura y vidriera, más el logo
 en neón y en papelería (nano_banana_pro con el flyer de referencia importado desde raw.githubusercontent.com).
