@@ -134,6 +134,8 @@
   layout(); let lw = gal ? gal.clientWidth : 0; addEventListener('resize', () => { if (gal && gal.clientWidth !== lw){ lw = gal.clientWidth; layout(); } });
   cats.forEach(c => c.addEventListener('click', () => { cats.forEach(x => x.setAttribute('aria-pressed', x === c)); tiles.forEach(t => t.hidden = c.dataset.f !== 'all' && t.dataset.cat !== c.dataset.f); layout(); }));
   const vids = document.querySelectorAll('.tile video');
+  // los videos con data-t arrancan en otro momento, así los ángulos de una misma escena no se ven iguales
+  vids.forEach(v => { if (v.dataset.t) v.addEventListener('loadedmetadata', () => { v.currentTime = +v.dataset.t; }, { once:true }); });
   if('IntersectionObserver' in window && !reduce){ const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting ? e.target.play().catch(() => {}) : e.target.pause()), { threshold:.4 }); vids.forEach(v => io.observe(v)); }
   const lb = document.getElementById('lb'), stage = document.getElementById('lbStage'), txt = document.getElementById('lbTxt'); let cur = 0;
   if(lb){

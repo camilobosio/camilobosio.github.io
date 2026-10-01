@@ -212,7 +212,7 @@
   .gallery.js{ columns:auto; display:flex; gap:14px; align-items:flex-start; }
   .gallery.js .gcol{ flex:1; min-width:0; }
   @media (hover:none){ .tile .cap{ opacity:1; transform:none; } }
-  @media (max-width:760px){ .ai-head{ grid-template-columns:1fr; } .ai-head p{ justify-self:start; } .gallery{ columns:2; column-gap:10px; } .gallery.js{ gap:10px; } .tile{ margin-bottom:10px; border-radius:12px; } .tile .cap{ padding:22px 10px 9px; font-size:11.5px; } .tile .cap b{ font-size:13px; } }
+  @media (max-width:760px){ .ai-head{ grid-template-columns:1fr; } .ai-head p{ justify-self:start; } .gallery{ columns:2; column-gap:10px; } .gallery.js{ gap:10px; } .tile{ margin-bottom:10px; border-radius:12px; } .tile .cap{ padding:22px 10px 9px; font-size:11.5px; } .tile .cap b{ font-size:13px; } .tile.wide .cap .sub{ display:none; } }
   .lb{ border:0; padding:0; background:transparent; max-width:100vw; max-height:100vh; width:100vw; height:100vh; }
   .lb::backdrop{ background:rgba(10,10,12,.92); }
   .lb .stage{ position:absolute; inset:56px 64px 70px; display:grid; place-items:center; }
