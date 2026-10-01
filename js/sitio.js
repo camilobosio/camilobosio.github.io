@@ -123,7 +123,16 @@
   // galería de contenido con IA: filtros, videos que se reproducen al verse y visor
   const tiles = [...document.querySelectorAll('.tile')];
   const cats = document.querySelectorAll('.cats button');
-  cats.forEach(c => c.addEventListener('click', () => { cats.forEach(x => x.setAttribute('aria-pressed', x === c)); tiles.forEach(t => t.hidden = c.dataset.f !== 'all' && t.dataset.cat !== c.dataset.f); }));
+  // el mosaico se arma en columnas a mano (no con CSS columns): en iPhone las columnas dejaban un hueco gris al filtrar
+  const gal = document.getElementById('gallery');
+  function layout(){ if (!gal) return;
+    const W = gal.clientWidth, small = matchMedia('(max-width:760px)').matches, gap = small ? 10 : 14, n = small ? 2 : Math.max(1, Math.min(4, Math.floor((W + gap) / (240 + gap))));
+    const cols = Array.from({ length:n }, () => { const c = document.createElement('div'); c.className = 'gcol'; return c; }), h = new Array(n).fill(0);
+    tiles.forEach(t => { const m = t.querySelector('img, video'), r = (+m.getAttribute('height') || 1) / (+m.getAttribute('width') || 1);
+      if (t.hidden){ cols[0].appendChild(t); return; } let k = 0; for (let i = 1; i < n; i++) if (h[i] < h[k] - .01) k = i; cols[k].appendChild(t); h[k] += r + .05; });
+    gal.classList.add('js'); gal.replaceChildren(...cols); }
+  layout(); let lw = gal ? gal.clientWidth : 0; addEventListener('resize', () => { if (gal && gal.clientWidth !== lw){ lw = gal.clientWidth; layout(); } });
+  cats.forEach(c => c.addEventListener('click', () => { cats.forEach(x => x.setAttribute('aria-pressed', x === c)); tiles.forEach(t => t.hidden = c.dataset.f !== 'all' && t.dataset.cat !== c.dataset.f); layout(); }));
   const vids = document.querySelectorAll('.tile video');
   if('IntersectionObserver' in window && !reduce){ const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting ? e.target.play().catch(() => {}) : e.target.pause()), { threshold:.4 }); vids.forEach(v => io.observe(v)); }
   const lb = document.getElementById('lb'), stage = document.getElementById('lbStage'), txt = document.getElementById('lbTxt'); let cur = 0;
@@ -152,7 +161,7 @@
     const s = document.getElementById('splashLoad'), pour = document.querySelector('.hero-balde') ? 1150 : 150;
     let done = false;
     const drop = () => { if (done) return; done = true; top.classList.add('drop'); requestAnimationFrame(() => top.classList.remove('pre'));
-      setTimeout(() => top.classList.remove('drop'), 900); };
+      setTimeout(() => top.classList.remove('drop'), 1700); };
     if (!s) return drop();
     s.addEventListener('animationend', e => { if (e.animationName === 'slOut') setTimeout(drop, pour); });
     setTimeout(drop, 1900 + pour);
@@ -788,10 +797,12 @@
   };
   // la pintura chorrea a medida que el recuadro sube en la pantalla (ligado al scroll)
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let update = null, raf = 0;
-  const progress = () => { if (reduce) return 1; const r = card.getBoundingClientRect(), vh = innerHeight;
-    if (scrollY + vh >= document.documentElement.scrollHeight - 4) return 1;   // llegaste al final: chorreado entero
-    const u = (vh - r.bottom + 20) / (vh * .42); return Math.max(0, Math.min(1, u)); };   // arranca cuando se ve el borde de abajo
+  let update = null, raf = 0, full = false;
+  // una vez que chorreó entero queda así aunque subas; recién se reinicia si volvés arriba de todo
+  const progress = () => { if (reduce) return 1; if (scrollY < 80) full = false; if (full) return 1;
+    const r = card.getBoundingClientRect(), vh = innerHeight;
+    if (scrollY + vh >= document.documentElement.scrollHeight - 4) return (full = true, 1);   // llegaste al final: chorreado entero
+    const u = (vh - r.bottom + 20) / (vh * .42); if (u >= 1) full = true; return Math.max(0, Math.min(1, u)); };   // arranca cuando se ve el borde de abajo
   const tick = () => { raf = 0; if (update) update(progress()); };
   const draw = () => { update = paintDrip(card, { gloss:true, color:'azul', progress:progress() }); };
   draw(); let t = 0; addEventListener('resize', () => { clearTimeout(t); t = setTimeout(draw, 150); });
