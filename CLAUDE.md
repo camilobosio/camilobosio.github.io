@@ -50,6 +50,13 @@ Hablarle a Camilo en español rioplatense, simple y sin tecnicismos.
   js/sitio.js; perfil copiado de una referencia de Camilo, gotas afinadas; en celular 3 gotas). Sin sombra 3D.
 - Miniatura de M Perfumerie en el portfolio del inicio = video del celular con los productos (`celular-producto.mp4`).
 - Herramientas: sumado Pomelli (Google), ícono propio `images/herramientas/pomelli.svg`.
+- Inicio, orden: Lo que hago → Planes → ¿Qué vamos a crear? → Portfolio → Cómo trabajamos → Quién → Contacto.
+- Textos: primero "página para tu empresa" (institucional, sin vender) y después tienda online / e-commerce
+  (pedido por WhatsApp o pago en la página). Premium web = PÁGINA INTERACTIVA (no "landing page").
+- Planes resumidos: 3 puntos + "Ver más" que despliega el resto ahí mismo (`.plan.short`, JS al final de sitio.js).
+- Al entrar, la franja naranja del menú baja cuando el balde vuelca (`.top.pre` → `.drop`). NO tocar el balde ni el logo
+  de compu. En celular el logo va centrado en el espacio libre al lado de "Bosio", apoyado en su línea.
+- Previsualizar con la tipografía real (fuentes por curl en Playwright); sin ella la "o" se corre y el balde parece roto.
 - Sección "Quién está detrás": Camilo es el **creativo**, no solo alguien que automatiza con IA: idea, propone opciones,
   se adapta a lo que quiere el cliente, diseña, programa y desarrolla (páginas, publicidades, videos, fotos).
 
