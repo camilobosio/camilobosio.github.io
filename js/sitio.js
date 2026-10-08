@@ -131,15 +131,10 @@
   // galería de contenido con IA: filtros, videos que se reproducen al verse y visor
   const tiles = [...document.querySelectorAll('.tile')];
   const cats = document.querySelectorAll('.cats button');
-  // el mosaico se arma en columnas a mano (no con CSS columns): en iPhone las columnas dejaban un hueco gris al filtrar
+  // la galería es una grilla tipo feed de Instagram (cuadrados de 3 en fondo); los filtros solo ocultan piezas
   const gal = document.getElementById('gallery');
-  function layout(){ if (!gal) return;
-    const W = gal.clientWidth, small = matchMedia('(max-width:760px)').matches, gap = small ? 10 : 14, n = small ? 2 : Math.max(1, Math.min(4, Math.floor((W + gap) / (240 + gap))));
-    const cols = Array.from({ length:n }, () => { const c = document.createElement('div'); c.className = 'gcol'; return c; }), h = new Array(n).fill(0);
-    tiles.forEach(t => { const m = t.querySelector('img, video'), r = (+m.getAttribute('height') || 1) / (+m.getAttribute('width') || 1);
-      if (t.hidden){ cols[0].appendChild(t); return; } let k = 0; for (let i = 1; i < n; i++) if (h[i] < h[k] - .01) k = i; cols[k].appendChild(t); h[k] += r + .05; });
-    gal.classList.add('js'); gal.replaceChildren(...cols); }
-  layout(); let lw = gal ? gal.clientWidth : 0; addEventListener('resize', () => { if (gal && gal.clientWidth !== lw){ lw = gal.clientWidth; layout(); } });
+  function layout(){ if (gal) gal.classList.add('feed'); }
+  layout();
   cats.forEach(c => c.addEventListener('click', () => { cats.forEach(x => x.setAttribute('aria-pressed', x === c)); tiles.forEach(t => t.hidden = c.dataset.f !== 'all' && t.dataset.cat !== c.dataset.f); layout(); }));
   const vids = document.querySelectorAll('.tile video');
   // los videos con data-t arrancan en otro momento, así los ángulos de una misma escena no se ven iguales
@@ -969,4 +964,60 @@ document.querySelectorAll('.plan').forEach(plan => {
     wake();
   }, { threshold:.25 }).observe(box);
   let rw = innerWidth; addEventListener('resize', () => { if(innerWidth === rw) return; rw = innerWidth; build(false); draw(); });
+})();
+
+// al hacer clic en cualquier lado: una gota de pintura naranja que explota en gotitas (como el "blob cursor" que pasó Camilo, pero chico)
+(function(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  let cv = null, cx = null, drops = [], raf = 0, last = 0;
+  function setup(){
+    cv = document.createElement('canvas'); cv.className = 'paint-pop'; cv.setAttribute('aria-hidden', 'true');
+    cv.style.cssText = 'position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:9999';
+    document.body.appendChild(cv); cx = cv.getContext('2d');
+  }
+  function size(){ const d = Math.min(devicePixelRatio || 1, 2), w = innerWidth, h = innerHeight;
+    if(cv.width !== Math.round(w * d) || cv.height !== Math.round(h * d)){ cv.width = Math.round(w * d); cv.height = Math.round(h * d); }
+    cx.setTransform(d, 0, 0, d, 0, 0); }
+  // gota brillante: degradé naranja con luz arriba a la izquierda, estirada según hacia dónde va
+  function blob(x, y, r, vx, vy, a){
+    const sp = Math.hypot(vx, vy), st = Math.min(1 + sp / 650, 2.1);
+    cx.save(); cx.globalAlpha = a; cx.translate(x, y); cx.rotate(Math.atan2(vy, vx)); cx.scale(st, 1 / Math.sqrt(st));
+    const g = cx.createRadialGradient(-r * .35, -r * .4, r * .1, 0, 0, r);
+    g.addColorStop(0, '#ffd3a6'); g.addColorStop(.4, '#ff8a3a'); g.addColorStop(1, '#e24d1c');
+    cx.fillStyle = g; cx.beginPath(); cx.arc(0, 0, r, 0, Math.PI * 2); cx.fill();
+    cx.fillStyle = 'rgba(255,255,255,.75)'; cx.beginPath(); cx.ellipse(-r * .38, -r * .42, r * .26, r * .16, -.6, 0, Math.PI * 2); cx.fill();
+    cx.restore();
+  }
+  function tick(ts){
+    const dt = Math.min((ts - (last || ts)) / 1000, .05); last = ts;
+    size(); cx.clearRect(0, 0, innerWidth, innerHeight);
+    drops = drops.filter(d => (d.t += dt) < d.life);
+    drops.forEach(d => {
+      const k = d.t / d.life;
+      if(d.core){                                                                      // la gota del centro: se infla rápido y se achica
+        const r = d.r * (k < .18 ? k / .18 : 1 - (k - .18) / .82 * .9) * (1 + Math.sin(d.t * 38) * .06 * (1 - k));
+        blob(d.x, d.y, Math.max(r, .1), 0, 0, 1 - Math.max(0, k - .7) / .3);
+        return;
+      }
+      if(d.t < d.delay) return;
+      d.vx *= Math.pow(.02, dt); d.vy = d.vy * Math.pow(.02, dt) + 900 * dt;              // frenan rápido y caen un poco
+      d.x += d.vx * dt; d.y += d.vy * dt;
+      const r = d.r * (k < .75 ? 1 : 1 - (k - .75) / .25);
+      blob(d.x, d.y, Math.max(r, .1), d.vx, d.vy, 1);
+    });
+    raf = drops.length ? requestAnimationFrame(tick) : 0;
+    if(!raf){ last = 0; cx.clearRect(0, 0, innerWidth, innerHeight); }
+  }
+  addEventListener('pointerdown', e => {
+    if(e.button !== 0) return;
+    if(!cv) setup();
+    const x = e.clientX, y = e.clientY;
+    drops.push({ core:true, x, y, r:9, t:0, life:.42 });
+    const n = 7 + Math.floor(Math.random() * 4);
+    for(let i = 0; i < n; i++){
+      const a = i / n * Math.PI * 2 + Math.random() * .6, v = 220 + Math.random() * 260;
+      drops.push({ x, y, vx:Math.cos(a) * v, vy:Math.sin(a) * v - 60, r:2 + Math.random() * 3.6, t:0, delay:.04, life:.5 + Math.random() * .3 });
+    }
+    if(!raf) raf = requestAnimationFrame(tick);
+  }, { passive:true });
 })();

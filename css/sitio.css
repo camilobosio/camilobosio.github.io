@@ -540,3 +540,9 @@
     .about .lanyard{ grid-column:1 / -1; --cw:190px; --ch:238px; height:330px; margin-top:36px; }
     .ly-back b{ font-size:18px; }
   }
+
+  /* ---------- portfolio: contenido con IA como feed de Instagram (cuadrados, 3 por fila, sin bordes redondeados) ---------- */
+  .gallery.feed{ columns:auto; display:grid; grid-template-columns:repeat(3, 1fr); gap:4px; }
+  .gallery.feed .tile{ margin:0; border-radius:0; aspect-ratio:1 / 1; }
+  .gallery.feed .tile img, .gallery.feed .tile video{ width:100%; height:100%; object-fit:cover; }
+  @media (max-width:760px){ .gallery.feed{ gap:2px; margin-inline:-20px; } .gallery.feed .tile{ border-radius:0; } .gallery.feed .tile .cap{ display:none; } .gallery.feed .tile .play{ width:22px; height:22px; top:6px; right:6px; background-size:14px; } }

@@ -22,7 +22,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=DM+Serif+Display&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="css/sitio.css?v=46">
+<link rel="stylesheet" href="css/sitio.css?v=47">
 </head>
 <body>
   <div class="splash-load" id="splashLoad" aria-hidden="true">
@@ -74,10 +74,57 @@
     <div class="wrap">
       <span class="label">Portfolio</span>
       <h1 class="pf-title">Lo que hice</h1>
-      <p class="pf-lead">Páginas web, contenido interactivo y publicidades con IA. Todo real: tocá, arrastrá y probá.</p>
+      <p class="pf-lead">Publicidades y videos con IA, páginas web y contenido interactivo. Todo real: tocá, arrastrá y probá.</p>
       <nav class="pf-jump" aria-label="Ir a">
-        <a href="#web">Páginas web</a><a href="#ropa">Contenido interactivo</a><a href="#ia">Contenido con IA</a>
+        <a href="#ia">Contenido con IA</a><a href="#web">Páginas web</a><a href="#ropa">Contenido interactivo</a>
       </nav>
+    </div>
+  </section>
+
+  <section class="block pf-sec" id="ia">
+    <div class="wrap">
+      <h2 class="pf-h">Contenido con IA</h2>
+      <div class="ai" id="contenido">
+        <div class="ai-head">
+          <div>
+            <span class="label">Contenido con IA</span>
+            <h3>Publicidades hechas con IA</h3>
+          </div>
+          <p>Fotos de producto, banners, flyers con precio y videos creados con inteligencia artificial, y cómo se ven puestos en la calle. Incluso escenas filmadas con una persona real a partir de un par de fotos, desde distintos ángulos.</p>
+        </div>
+        <div class="cats" role="group" aria-label="Filtrar por rubro">
+          <button type="button" aria-pressed="true" data-f="all">Todo</button>
+          <button type="button" aria-pressed="false" data-f="perfumes">Perfumes</button>
+          <button type="button" aria-pressed="false" data-f="calle">En la calle</button>
+          <button type="button" aria-pressed="false" data-f="personas">Videos con personas</button>
+        </div>
+        <div class="gallery" id="gallery">
+          <button type="button" class="tile" data-cat="perfumes"><video src="portfolio/perfumes/dia-de-la-madre-animada.mp4" poster="portfolio/perfumes/dia-de-la-madre-animada.jpg" width="720" height="1280" muted loop playsinline preload="metadata" aria-label="Publicidad animada Día de la Madre, M Perfumerie"></video><span class="play" aria-hidden="true"></span><span class="cap"><b>Día de la Madre · M Perfumerie</b>Publicidad animada para historias</span></button>
+          <button type="button" class="tile" data-cat="calle"><img src="portfolio/calle/parada-1million.webp" width="1080" height="1350" loading="lazy" alt="Parada de colectivo · 1 Million"><span class="cap"><b>Parada de colectivo · 1 Million</b>Flyer en la calle</span></button>
+          <button type="button" class="tile" data-cat="calle"><img src="portfolio/calle/afiche-polo-sport.webp" width="1080" height="1350" loading="lazy" alt="Afiche en la pared · Polo Sport"><span class="cap"><b>Afiche en la pared · Polo Sport</b>Flyer en la calle</span></button>
+          <button type="button" class="tile" data-cat="calle"><img src="portfolio/calle/subte-khamrah.webp" width="1080" height="1350" loading="lazy" alt="Subte · Khamrah Waha"><span class="cap"><b>Subte · Khamrah Waha</b>Flyer en la calle</span></button>
+          <button type="button" class="tile" data-cat="calle"><img src="portfolio/calle/cartel-1million.webp" width="1080" height="1350" loading="lazy" alt="Cartel en altura · 1 Million"><span class="cap"><b>Cartel en altura · 1 Million</b>Banner en la calle</span></button>
+          <button type="button" class="tile" data-cat="calle"><img src="portfolio/calle/vidriera-tommy.webp" width="1080" height="1350" loading="lazy" alt="Vidriera · Tommy Now"><span class="cap"><b>Vidriera · Tommy Now</b>Flyer en la calle</span></button>
+          <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/1million-horizontal.webp" width="2000" height="751" loading="lazy" alt="Banner de campaña: 1 Million · Rabanne"><span class="cap"><b>1 Million · Rabanne</b>Banner de campaña</span></button>
+          <button type="button" class="tile wide" data-cat="personas"><video src="portfolio/videos-ia/escena-angulo-1.mp4" width="1296" height="708" muted loop playsinline preload="metadata" aria-label="Escena con IA, persona en Ferrari, ángulo 1"></video><span class="play" aria-hidden="true"></span><span class="cap"><b>Escena con IA – Persona en Ferrari · ángulo 1</b><span class="sub">Mi cara, a partir de un par de fotos</span></span></button>
+          <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/polo-sport-precio.webp" width="941" height="1672" loading="lazy" alt="Flyer con precio: Polo Sport · Ralph Lauren"><span class="cap"><b>Polo Sport · Ralph Lauren</b>Flyer con precio</span></button>
+          <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/asad-zanzibar-telas.webp" width="896" height="1120" loading="lazy" alt="Foto de producto: Asad Zanzibar · Lattafa"><span class="cap"><b>Asad Zanzibar · Lattafa</b>Foto de producto</span></button>
+          <button type="button" class="tile" data-cat="perfumes"><video src="portfolio/perfumes/video-kling-1.mp4" width="1288" height="1608" muted loop playsinline preload="metadata" aria-label="Video de producto"></video><span class="play" aria-hidden="true"></span><span class="cap"><b>Video de producto</b>Video con IA</span></button>
+          <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/tommy-now-precio.webp" width="941" height="1672" loading="lazy" alt="Flyer con precio: Tommy Now · Tommy Hilfiger"><span class="cap"><b>Tommy Now · Tommy Hilfiger</b>Flyer con precio</span></button>
+          <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/perfumes-cintas-horizontal.webp" width="1686" height="933" loading="lazy" alt="Banner de campaña: Colección de perfumes"><span class="cap"><b>Colección de perfumes</b>Banner de campaña</span></button>
+          <button type="button" class="tile wide" data-cat="personas"><video src="portfolio/videos-ia/escena-angulo-2.mp4" poster="portfolio/videos-ia/escena-angulo-2.jpg" data-t="5.3" width="1296" height="708" muted loop playsinline preload="metadata" aria-label="Escena con IA, persona en Ferrari, ángulo 2"></video><span class="play" aria-hidden="true"></span><span class="cap"><b>Escena con IA – Persona en Ferrari · ángulo 2</b><span class="sub">Mi cara, a partir de un par de fotos</span></span></button>
+          <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/valentino-born-in-roma.webp" width="896" height="1120" loading="lazy" alt="Foto de producto: Born in Roma · Valentino"><span class="cap"><b>Born in Roma · Valentino</b>Foto de producto</span></button>
+          <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/khamrah-waha-precio.webp" width="941" height="1672" loading="lazy" alt="Flyer con precio: Khamrah Waha · Lattafa"><span class="cap"><b>Khamrah Waha · Lattafa</b>Flyer con precio</span></button>
+          <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/lattafa-khamrah.webp" width="768" height="1365" loading="lazy" alt="Foto de producto: Khamrah · Lattafa"><span class="cap"><b>Khamrah · Lattafa</b>Foto de producto</span></button>
+          <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/fame-winter-crush.webp" width="2000" height="667" loading="lazy" alt="Banner de campaña: Fame Winter Crush · Rabanne"><span class="cap"><b>Fame Winter Crush · Rabanne</b>Banner de campaña</span></button>
+          <button type="button" class="tile wide" data-cat="personas"><video src="portfolio/videos-ia/escena-angulo-3.mp4" poster="portfolio/videos-ia/escena-angulo-3.jpg" data-t="6" width="1296" height="708" muted loop playsinline preload="metadata" aria-label="Escena con IA, persona en Ferrari, ángulo 3"></video><span class="play" aria-hidden="true"></span><span class="cap"><b>Escena con IA – Persona en Ferrari · ángulo 3</b><span class="sub">Mi cara, a partir de un par de fotos</span></span></button>
+          <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/polo-big-pony-1-precio.webp" width="941" height="1672" loading="lazy" alt="Flyer con precio: Big Pony 1 · Ralph Lauren"><span class="cap"><b>Big Pony 1 · Ralph Lauren</b>Flyer con precio</span></button>
+          <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/asad-zanzibar-aros.webp" width="896" height="1120" loading="lazy" alt="Foto de producto: Asad Zanzibar · Lattafa"><span class="cap"><b>Asad Zanzibar · Lattafa</b>Foto de producto</span></button>
+          <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/1million-vertical.webp" width="941" height="1672" loading="lazy" alt="Historia vertical: 1 Million · Rabanne"><span class="cap"><b>1 Million · Rabanne</b>Historia vertical</span></button>
+          <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/polo-big-pony-2-precio.webp" width="941" height="1672" loading="lazy" alt="Flyer con precio: Big Pony 2 · Ralph Lauren"><span class="cap"><b>Big Pony 2 · Ralph Lauren</b>Flyer con precio</span></button>
+          <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/perfumes-cintas-vertical.webp" width="941" height="1672" loading="lazy" alt="Historia vertical: Colección de perfumes"><span class="cap"><b>Colección de perfumes</b>Historia vertical</span></button>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -200,53 +247,6 @@
     </div>
   </section>
 
-  <section class="block pf-sec" id="ia">
-    <div class="wrap">
-      <h2 class="pf-h">Contenido con IA</h2>
-      <div class="ai" id="contenido">
-        <div class="ai-head">
-          <div>
-            <span class="label">Contenido con IA</span>
-            <h3>Publicidades hechas con IA</h3>
-          </div>
-          <p>Fotos de producto, banners, flyers con precio y videos creados con inteligencia artificial, y cómo se ven puestos en la calle. Incluso escenas filmadas con una persona real a partir de un par de fotos, desde distintos ángulos.</p>
-        </div>
-        <div class="cats" role="group" aria-label="Filtrar por rubro">
-          <button type="button" aria-pressed="true" data-f="all">Todo</button>
-          <button type="button" aria-pressed="false" data-f="perfumes">Perfumes</button>
-          <button type="button" aria-pressed="false" data-f="calle">En la calle</button>
-          <button type="button" aria-pressed="false" data-f="personas">Videos con personas</button>
-        </div>
-        <div class="gallery" id="gallery">
-          <button type="button" class="tile" data-cat="perfumes"><video src="portfolio/perfumes/dia-de-la-madre-animada.mp4" poster="portfolio/perfumes/dia-de-la-madre-animada.jpg" width="720" height="1280" muted loop playsinline preload="metadata" aria-label="Publicidad animada Día de la Madre, M Perfumerie"></video><span class="play" aria-hidden="true"></span><span class="cap"><b>Día de la Madre · M Perfumerie</b>Publicidad animada para historias</span></button>
-          <button type="button" class="tile" data-cat="calle"><img src="portfolio/calle/parada-1million.webp" width="1080" height="1350" loading="lazy" alt="Parada de colectivo · 1 Million"><span class="cap"><b>Parada de colectivo · 1 Million</b>Flyer en la calle</span></button>
-          <button type="button" class="tile" data-cat="calle"><img src="portfolio/calle/afiche-polo-sport.webp" width="1080" height="1350" loading="lazy" alt="Afiche en la pared · Polo Sport"><span class="cap"><b>Afiche en la pared · Polo Sport</b>Flyer en la calle</span></button>
-          <button type="button" class="tile" data-cat="calle"><img src="portfolio/calle/subte-khamrah.webp" width="1080" height="1350" loading="lazy" alt="Subte · Khamrah Waha"><span class="cap"><b>Subte · Khamrah Waha</b>Flyer en la calle</span></button>
-          <button type="button" class="tile" data-cat="calle"><img src="portfolio/calle/cartel-1million.webp" width="1080" height="1350" loading="lazy" alt="Cartel en altura · 1 Million"><span class="cap"><b>Cartel en altura · 1 Million</b>Banner en la calle</span></button>
-          <button type="button" class="tile" data-cat="calle"><img src="portfolio/calle/vidriera-tommy.webp" width="1080" height="1350" loading="lazy" alt="Vidriera · Tommy Now"><span class="cap"><b>Vidriera · Tommy Now</b>Flyer en la calle</span></button>
-          <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/1million-horizontal.webp" width="2000" height="751" loading="lazy" alt="Banner de campaña: 1 Million · Rabanne"><span class="cap"><b>1 Million · Rabanne</b>Banner de campaña</span></button>
-          <button type="button" class="tile wide" data-cat="personas"><video src="portfolio/videos-ia/escena-angulo-1.mp4" width="1296" height="708" muted loop playsinline preload="metadata" aria-label="Escena con IA, persona en Ferrari, ángulo 1"></video><span class="play" aria-hidden="true"></span><span class="cap"><b>Escena con IA – Persona en Ferrari · ángulo 1</b><span class="sub">Mi cara, a partir de un par de fotos</span></span></button>
-          <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/polo-sport-precio.webp" width="941" height="1672" loading="lazy" alt="Flyer con precio: Polo Sport · Ralph Lauren"><span class="cap"><b>Polo Sport · Ralph Lauren</b>Flyer con precio</span></button>
-          <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/asad-zanzibar-telas.webp" width="896" height="1120" loading="lazy" alt="Foto de producto: Asad Zanzibar · Lattafa"><span class="cap"><b>Asad Zanzibar · Lattafa</b>Foto de producto</span></button>
-          <button type="button" class="tile" data-cat="perfumes"><video src="portfolio/perfumes/video-kling-1.mp4" width="1288" height="1608" muted loop playsinline preload="metadata" aria-label="Video de producto"></video><span class="play" aria-hidden="true"></span><span class="cap"><b>Video de producto</b>Video con IA</span></button>
-          <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/tommy-now-precio.webp" width="941" height="1672" loading="lazy" alt="Flyer con precio: Tommy Now · Tommy Hilfiger"><span class="cap"><b>Tommy Now · Tommy Hilfiger</b>Flyer con precio</span></button>
-          <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/perfumes-cintas-horizontal.webp" width="1686" height="933" loading="lazy" alt="Banner de campaña: Colección de perfumes"><span class="cap"><b>Colección de perfumes</b>Banner de campaña</span></button>
-          <button type="button" class="tile wide" data-cat="personas"><video src="portfolio/videos-ia/escena-angulo-2.mp4" poster="portfolio/videos-ia/escena-angulo-2.jpg" data-t="5.3" width="1296" height="708" muted loop playsinline preload="metadata" aria-label="Escena con IA, persona en Ferrari, ángulo 2"></video><span class="play" aria-hidden="true"></span><span class="cap"><b>Escena con IA – Persona en Ferrari · ángulo 2</b><span class="sub">Mi cara, a partir de un par de fotos</span></span></button>
-          <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/valentino-born-in-roma.webp" width="896" height="1120" loading="lazy" alt="Foto de producto: Born in Roma · Valentino"><span class="cap"><b>Born in Roma · Valentino</b>Foto de producto</span></button>
-          <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/khamrah-waha-precio.webp" width="941" height="1672" loading="lazy" alt="Flyer con precio: Khamrah Waha · Lattafa"><span class="cap"><b>Khamrah Waha · Lattafa</b>Flyer con precio</span></button>
-          <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/lattafa-khamrah.webp" width="768" height="1365" loading="lazy" alt="Foto de producto: Khamrah · Lattafa"><span class="cap"><b>Khamrah · Lattafa</b>Foto de producto</span></button>
-          <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/fame-winter-crush.webp" width="2000" height="667" loading="lazy" alt="Banner de campaña: Fame Winter Crush · Rabanne"><span class="cap"><b>Fame Winter Crush · Rabanne</b>Banner de campaña</span></button>
-          <button type="button" class="tile wide" data-cat="personas"><video src="portfolio/videos-ia/escena-angulo-3.mp4" poster="portfolio/videos-ia/escena-angulo-3.jpg" data-t="6" width="1296" height="708" muted loop playsinline preload="metadata" aria-label="Escena con IA, persona en Ferrari, ángulo 3"></video><span class="play" aria-hidden="true"></span><span class="cap"><b>Escena con IA – Persona en Ferrari · ángulo 3</b><span class="sub">Mi cara, a partir de un par de fotos</span></span></button>
-          <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/polo-big-pony-1-precio.webp" width="941" height="1672" loading="lazy" alt="Flyer con precio: Big Pony 1 · Ralph Lauren"><span class="cap"><b>Big Pony 1 · Ralph Lauren</b>Flyer con precio</span></button>
-          <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/asad-zanzibar-aros.webp" width="896" height="1120" loading="lazy" alt="Foto de producto: Asad Zanzibar · Lattafa"><span class="cap"><b>Asad Zanzibar · Lattafa</b>Foto de producto</span></button>
-          <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/1million-vertical.webp" width="941" height="1672" loading="lazy" alt="Historia vertical: 1 Million · Rabanne"><span class="cap"><b>1 Million · Rabanne</b>Historia vertical</span></button>
-          <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/polo-big-pony-2-precio.webp" width="941" height="1672" loading="lazy" alt="Flyer con precio: Big Pony 2 · Ralph Lauren"><span class="cap"><b>Big Pony 2 · Ralph Lauren</b>Flyer con precio</span></button>
-          <button type="button" class="tile" data-cat="perfumes"><img src="portfolio/perfumes/perfumes-cintas-vertical.webp" width="941" height="1672" loading="lazy" alt="Historia vertical: Colección de perfumes"><span class="cap"><b>Colección de perfumes</b>Historia vertical</span></button>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <section class="block" id="contacto" style="padding-top:0;">
     <div class="wrap">
       <div class="contact">
@@ -271,6 +271,6 @@
   <button type="button" class="next" id="lbNext" aria-label="Siguiente">›</button>
 </dialog>
 
-<script src="js/sitio.js?v=44"></script>
+<script src="js/sitio.js?v=45"></script>
 </body>
 </html>

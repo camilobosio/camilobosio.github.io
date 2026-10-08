@@ -8,8 +8,10 @@ Hablarle a Camilo en español rioplatense, simple y sin tecnicismos.
 - `index.html` — INICIO: solo pantallazos ("destellos") de todo. Portada con celular + anillo que gira detrás (`#orbit`,
   imágenes en `images/orbita/` + logos de `images/crear/` + camperas del probador), servicios, "¿Qué vamos a crear?",
   pantallazos del portfolio (`.peek`, 4 tarjetas que llevan a portfolio.html), planes, cómo trabajo, quién, contacto.
-- `portfolio.html` — PORTFOLIO completo y ordenado: Páginas web (M Perfumerie + experiencia interactiva), Contenido
-  interactivo (`#probador` y `#producto-360`), Contenido con IA (galería con filtros Perfumes / En la calle / Personas).
+- `portfolio.html` — PORTFOLIO, en este ORDEN (pedido de Camilo, 8/10): 1) Contenido con IA (`#ia`, galería como FEED DE
+  INSTAGRAM: cuadrados, 3 por fila, sin bordes redondeados, clase `.gallery.feed`; filtros Perfumes / En la calle / Personas),
+  2) Páginas web (`#web`, M Perfumerie + experiencia interactiva), 3) Contenido interactivo (`#ropa`: `#probador` y
+  `#producto-360`) AL FINAL, porque es lo más nuevo y sigue en desarrollo.
 - `css/sitio.css` y `js/sitio.js` — estilos y código COMPARTIDOS por las dos páginas (sin build). El JS chequea que
   cada elemento exista, porque no todos están en las dos páginas.
 - En celular el inicio tiene que ser corto: servicios, planes y las grabaciones de M Perfumerie se deslizan de costado.
@@ -61,6 +63,14 @@ Hablarle a Camilo en español rioplatense, simple y sin tecnicismos.
 - Previsualizar con la tipografía real (fuentes por curl en Playwright); sin ella la "o" se corre y el balde parece roto.
 - Sección "Quién está detrás": Camilo es el **creativo**, no solo alguien que automatiza con IA: idea, propone opciones,
   se adapta a lo que quiere el cliente, diseña, programa y desarrolla (páginas, publicidades, videos, fotos).
+
+- Clic en cualquier lado (las dos páginas): gotita de pintura naranja brillante que explota en gotitas chicas (`.paint-pop`,
+  canvas fijo, al final de js/sitio.js). Referencia de Camilo: "Blob Cursor" (gota azul cromada), pero chica, naranja y solo al clic.
+- "Quién": la foto es una CREDENCIAL COLGANTE (`#lanyard`, `.ly-*`, física al final de js/sitio.js): cinta negra con las
+  iniciales CB del logo en naranja (3 veces, arrancando un poco arriba de la chapita), chapita de metal + aro que pasa por una
+  ranura finita. Arrastrar = se mueve y gira; clic = se da vuelta (dorso azul con logo, nombre y web). Frente SIN nombre.
+  Al aparecer se mece suave (no cae ni da vueltas: a Camilo le pareció "loco"). Referencia: componente "Lanyard".
+- Copia local del sitio: `C:UsersCamiloDesktopMi web personal` (clon de este repo).
 
 ## Posicionamiento (decidido)
 La página es general, no "solo páginas web": **diseño web + contenido con IA** (campañas publicitarias, flyers, fotos de producto, videos, interacciones para webs).
