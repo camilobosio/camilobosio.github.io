@@ -9,7 +9,7 @@ Hablarle a Camilo en español rioplatense, simple y sin tecnicismos.
   imágenes en `images/orbita/` + logos de `images/crear/` + camperas del probador), servicios, "¿Qué vamos a crear?",
   pantallazos del portfolio (`.peek`, 4 tarjetas que llevan a portfolio.html), planes, cómo trabajo, quién, contacto.
 - `portfolio.html` — PORTFOLIO, en este ORDEN (pedido de Camilo, 8/10): 1) Contenido con IA (`#ia`, mosaico con cada pieza en su
-  formato (estiradas, horizontales: "imperfecto", así le gusta) y esquinas RECTAS, sin redondeo; NO cuadrados; filtros Perfumes / En la calle / Personas),
+  formato, tal cual el original: bordes REDONDEADOS (probó cuadrados y esquinas rectas, no le gustaron); filtros Perfumes / En la calle / Personas),
   2) Páginas web (`#web`, M Perfumerie + experiencia interactiva), 3) Contenido interactivo (`#ropa`: `#probador` y
   `#producto-360`) AL FINAL, porque es lo más nuevo y sigue en desarrollo.
 - `css/sitio.css` y `js/sitio.js` — estilos y código COMPARTIDOS por las dos páginas (sin build). El JS chequea que

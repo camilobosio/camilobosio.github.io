@@ -540,6 +540,3 @@
     .about .lanyard{ grid-column:1 / -1; --cw:190px; --ch:238px; height:330px; margin-top:36px; }
     .ly-back b{ font-size:18px; }
   }
-
-  /* portfolio: mosaico como antes (cada pieza en su formato), pero con esquinas rectas, estilo feed */
-  .gallery .tile, .gallery.js .tile{ border-radius:0; }
