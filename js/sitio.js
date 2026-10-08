@@ -131,10 +131,15 @@
   // galería de contenido con IA: filtros, videos que se reproducen al verse y visor
   const tiles = [...document.querySelectorAll('.tile')];
   const cats = document.querySelectorAll('.cats button');
-  // la galería es una grilla tipo feed de Instagram (cuadrados de 3 en fondo); los filtros solo ocultan piezas
+  // el mosaico se arma en columnas a mano (no con CSS columns): en iPhone las columnas dejaban un hueco gris al filtrar
   const gal = document.getElementById('gallery');
-  function layout(){ if (gal) gal.classList.add('feed'); }
-  layout();
+  function layout(){ if (!gal) return;
+    const W = gal.clientWidth, small = matchMedia('(max-width:760px)').matches, gap = small ? 10 : 14, n = small ? 2 : Math.max(1, Math.min(4, Math.floor((W + gap) / (240 + gap))));
+    const cols = Array.from({ length:n }, () => { const c = document.createElement('div'); c.className = 'gcol'; return c; }), h = new Array(n).fill(0);
+    tiles.forEach(t => { const m = t.querySelector('img, video'), r = (+m.getAttribute('height') || 1) / (+m.getAttribute('width') || 1);
+      if (t.hidden){ cols[0].appendChild(t); return; } let k = 0; for (let i = 1; i < n; i++) if (h[i] < h[k] - .01) k = i; cols[k].appendChild(t); h[k] += r + .05; });
+    gal.classList.add('js'); gal.replaceChildren(...cols); }
+  layout(); let lw = gal ? gal.clientWidth : 0; addEventListener('resize', () => { if (gal && gal.clientWidth !== lw){ lw = gal.clientWidth; layout(); } });
   cats.forEach(c => c.addEventListener('click', () => { cats.forEach(x => x.setAttribute('aria-pressed', x === c)); tiles.forEach(t => t.hidden = c.dataset.f !== 'all' && t.dataset.cat !== c.dataset.f); layout(); }));
   const vids = document.querySelectorAll('.tile video');
   // los videos con data-t arrancan en otro momento, así los ángulos de una misma escena no se ven iguales
@@ -1010,6 +1015,7 @@ document.querySelectorAll('.plan').forEach(plan => {
   }
   addEventListener('pointerdown', e => {
     if(e.button !== 0) return;
+    if(e.target.closest && e.target.closest('#lanyard')) return;                    // en la credencial con la foto, no (pedido de Camilo)
     if(!cv) setup();
     const x = e.clientX, y = e.clientY;
     drops.push({ core:true, x, y, r:9, t:0, life:.42 });

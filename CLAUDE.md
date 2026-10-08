@@ -8,8 +8,8 @@ Hablarle a Camilo en español rioplatense, simple y sin tecnicismos.
 - `index.html` — INICIO: solo pantallazos ("destellos") de todo. Portada con celular + anillo que gira detrás (`#orbit`,
   imágenes en `images/orbita/` + logos de `images/crear/` + camperas del probador), servicios, "¿Qué vamos a crear?",
   pantallazos del portfolio (`.peek`, 4 tarjetas que llevan a portfolio.html), planes, cómo trabajo, quién, contacto.
-- `portfolio.html` — PORTFOLIO, en este ORDEN (pedido de Camilo, 8/10): 1) Contenido con IA (`#ia`, galería como FEED DE
-  INSTAGRAM: cuadrados, 3 por fila, sin bordes redondeados, clase `.gallery.feed`; filtros Perfumes / En la calle / Personas),
+- `portfolio.html` — PORTFOLIO, en este ORDEN (pedido de Camilo, 8/10): 1) Contenido con IA (`#ia`, mosaico con cada pieza en su
+  formato (estiradas, horizontales: "imperfecto", así le gusta) y esquinas RECTAS, sin redondeo; NO cuadrados; filtros Perfumes / En la calle / Personas),
   2) Páginas web (`#web`, M Perfumerie + experiencia interactiva), 3) Contenido interactivo (`#ropa`: `#probador` y
   `#producto-360`) AL FINAL, porque es lo más nuevo y sigue en desarrollo.
 - `css/sitio.css` y `js/sitio.js` — estilos y código COMPARTIDOS por las dos páginas (sin build). El JS chequea que
@@ -65,7 +65,7 @@ Hablarle a Camilo en español rioplatense, simple y sin tecnicismos.
   se adapta a lo que quiere el cliente, diseña, programa y desarrolla (páginas, publicidades, videos, fotos).
 
 - Clic en cualquier lado (las dos páginas): gotita de pintura naranja brillante que explota en gotitas chicas (`.paint-pop`,
-  canvas fijo, al final de js/sitio.js). Referencia de Camilo: "Blob Cursor" (gota azul cromada), pero chica, naranja y solo al clic.
+  canvas fijo, al final de js/sitio.js). Referencia de Camilo: "Blob Cursor" (gota azul cromada), pero chica, naranja y solo al clic. NO sobre la credencial (`#lanyard`).
 - "Quién": la foto es una CREDENCIAL COLGANTE (`#lanyard`, `.ly-*`, física al final de js/sitio.js): cinta negra con las
   iniciales CB del logo en naranja (3 veces, arrancando un poco arriba de la chapita), chapita de metal + aro que pasa por una
   ranura finita. Arrastrar = se mueve y gira; clic = se da vuelta (dorso azul con logo, nombre y web). Frente SIN nombre.
