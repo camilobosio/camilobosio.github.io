@@ -65,7 +65,7 @@ Hablarle a Camilo en español rioplatense, simple y sin tecnicismos.
   se adapta a lo que quiere el cliente, diseña, programa y desarrolla (páginas, publicidades, videos, fotos).
 
 - Clic en cualquier lado (las dos páginas): gotita de pintura naranja brillante que explota en gotitas chicas (`.paint-pop`,
-  canvas fijo, al final de js/sitio.js). Referencia de Camilo: "Blob Cursor" (gota azul cromada), pero chica, naranja y solo al clic. NO sobre la credencial (`#lanyard`).
+  canvas fijo, al final de js/sitio.js). Referencia de Camilo: "Blob Cursor" (gota azul cromada), pero chica, naranja y solo al clic. NO sobre la credencial (`#lanyard`). En celular solo con un toque corto y quieto (deslizar para bajar NO hace gotitas).
 - "Quién": la foto es una CREDENCIAL COLGANTE (`#lanyard`, `.ly-*`, física al final de js/sitio.js): cinta negra con las
   iniciales CB del logo en naranja (3 veces, arrancando un poco arriba de la chapita), chapita de metal + aro que pasa por una
   ranura finita. Arrastrar = se mueve y gira; clic = se da vuelta (dorso azul con logo, nombre y web). Frente SIN nombre.

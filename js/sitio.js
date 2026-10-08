@@ -1013,11 +1013,8 @@ document.querySelectorAll('.plan').forEach(plan => {
     raf = drops.length ? requestAnimationFrame(tick) : 0;
     if(!raf){ last = 0; cx.clearRect(0, 0, innerWidth, innerHeight); }
   }
-  addEventListener('pointerdown', e => {
-    if(e.button !== 0) return;
-    if(e.target.closest && e.target.closest('#lanyard')) return;                    // en la credencial con la foto, no (pedido de Camilo)
+  function pop(x, y){
     if(!cv) setup();
-    const x = e.clientX, y = e.clientY;
     drops.push({ core:true, x, y, r:9, t:0, life:.42 });
     const n = 7 + Math.floor(Math.random() * 4);
     for(let i = 0; i < n; i++){
@@ -1025,5 +1022,20 @@ document.querySelectorAll('.plan').forEach(plan => {
       drops.push({ x, y, vx:Math.cos(a) * v, vy:Math.sin(a) * v - 60, r:2 + Math.random() * 3.6, t:0, delay:.04, life:.5 + Math.random() * .3 });
     }
     if(!raf) raf = requestAnimationFrame(tick);
+  }
+  const skip = e => e.target.closest && e.target.closest('#lanyard');                // en la credencial con la foto, no (pedido de Camilo)
+  // mouse: al apretar. Dedo: solo si fue un toque corto y quieto (al deslizar para bajar la página, no)
+  let tap = null;
+  addEventListener('pointerdown', e => {
+    if(e.button !== 0 || skip(e)) return;
+    if(e.pointerType === 'mouse') return pop(e.clientX, e.clientY);
+    tap = { id:e.pointerId, x:e.clientX, y:e.clientY, t:performance.now(), sy:scrollY };
+  }, { passive:true });
+  addEventListener('pointermove', e => { if(tap && e.pointerId === tap.id && Math.hypot(e.clientX - tap.x, e.clientY - tap.y) > 10) tap = null; }, { passive:true });
+  addEventListener('pointercancel', () => { tap = null; }, { passive:true });
+  addEventListener('pointerup', e => {
+    const t = tap; tap = null;
+    if(!t || e.pointerId !== t.id || performance.now() - t.t > 450 || Math.abs(scrollY - t.sy) > 2 || Math.hypot(e.clientX - t.x, e.clientY - t.y) > 10) return;
+    pop(e.clientX, e.clientY);
   }, { passive:true });
 })();
