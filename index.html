@@ -22,7 +22,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=DM+Serif+Display&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="css/sitio.css?v=44">
+<link rel="stylesheet" href="css/sitio.css?v=46">
 </head>
 <body>
   <div class="splash-load" id="splashLoad" aria-hidden="true">
@@ -326,7 +326,7 @@
 
   <section class="block" id="como" style="padding-top:0;">
     <div class="wrap">
-      <div class="head"><h2>Cómo trabajamos</h2><p>Sea una página o una campaña, todo se coordina por WhatsApp y vas viendo avances en tu celular desde el primer día.</p></div>
+      <div class="head"><h2>Cómo trabajo</h2></div>
       <div class="steps">
         <div class="step"><span class="n">01</span><h3>Charlamos</h3><p>Me contás qué hacés, a quién le vendés y qué necesitás: una página, contenido o los dos.</p></div>
         <div class="step"><span class="n">02</span><h3>Ideas y opciones</h3><p>Te propongo ideas y distintas opciones con tu marca, o sigo la que ya tenés en mente.</p></div>
@@ -336,9 +336,19 @@
     </div>
   </section>
 
-  <section class="block" id="quien" style="padding-top:0;">
+  <section class="block" id="quien" style="padding-top:0; overflow-x:clip;">
     <div class="wrap about">
-      <div class="photo"><img src="images/camilo.jpg" alt="Camilo Bosio"></div>
+      <div class="lanyard" id="lanyard">
+        <canvas class="ly-band" aria-hidden="true"></canvas>
+        <div class="ly-card" role="button" tabindex="0" aria-label="Credencial de Camilo Bosio: tocala para darla vuelta">
+          <span class="ly-ring" aria-hidden="true"></span>
+          <div class="ly-in">
+            <div class="ly-face ly-front"><img src="images/camilo.jpg" alt="Camilo Bosio" draggable="false"><span class="ly-slot" aria-hidden="true"></span><i class="ly-sheen" aria-hidden="true"></i></div>
+            <div class="ly-face ly-back" aria-hidden="true"><img src="images/logo.svg" alt="" draggable="false"><span class="ly-slot"></span><b>Camilo Bosio</b><small>camilobosio.github.io</small><i class="ly-sheen"></i></div>
+          </div>
+        </div>
+        <span class="ly-hint label" aria-hidden="true">Arrastrala · tocala para darla vuelta</span>
+      </div>
       <div>
         <span class="label">Quién está detrás</span>
         <h2 style="margin-top:12px;">Ideas, diseño y desarrollo</h2>
@@ -374,7 +384,7 @@
 </main>
 
 
-<script src="js/sitio.js?v=41"></script>
+<script src="js/sitio.js?v=44"></script>
 
 </body>
 </html>

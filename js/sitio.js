@@ -830,3 +830,143 @@ document.querySelectorAll('.plan').forEach(plan => {
   b.addEventListener('click', () => { plan.classList.toggle('open'); b.textContent = label(); b.setAttribute('aria-expanded', plan.classList.contains('open')); });
   ul.after(b);
 });
+
+// credencial colgante (sección "Quién"): cinta + tarjeta con física simple (puntos y varillas).
+// Arrastrar = se mueve, se balancea y gira; un clic = la da vuelta (atrás: logo y nombre). Siempre vuelve al lado elegido.
+(function(){
+  const box = document.getElementById('lanyard'); if(!box) return;
+  const cv = box.querySelector('.ly-band'), cx = cv.getContext('2d'), card = box.querySelector('.ly-card'), inner = box.querySelector('.ly-in');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const N = 10, TOP = -90, HOOK = -5, DT = 1 / 120, G = 2000;                          // HOOK: arriba del aro, que pasa por la ranura
+  let W, cw, ch, L, seg, P = [], sticks = [], grab = null, spin = 0, vspin = 0, side = 0, t = 0, on = false, raf = 0, last = 0, acc = 0, started = false;
+  const pt = (x, y, w) => ({ x, y, px:x, py:y, w });
+  function build(intro){
+    W = box.clientWidth; cw = card.offsetWidth; ch = card.offsetHeight; L = innerWidth <= 760 ? 150 : 165; seg = L / N;
+    const ax = W / 2, ia = intro ? .38 : 0, hx = ax + Math.sin(ia) * L, hy = TOP + Math.cos(ia) * L;   // al aparecer: cinta tensa, un poco de costado
+    P = []; sticks = [];
+    for(let i = 0; i <= N; i++){ const k = i / N; P.push(pt(ax + (hx - ax) * k, TOP + (hy - TOP) * k, i ? 1 : 0)); }
+    const a = -ia * .6, c = Math.cos(a), s = Math.sin(a);
+    const loc = [[-cw / 2, ch - HOOK], [cw / 2, ch - HOOK]];                              // esquinas de abajo, relativas al gancho
+    P[N].w = .25; loc.forEach(([x, y]) => P.push(pt(hx + x * c - y * s, hy + x * s + y * c, .25)));
+    for(let i = 0; i < N; i++) sticks.push([i, i + 1, seg, 1]);                           // la cinta: solo no se estira (puede aflojarse)
+    [[N, N + 1], [N, N + 2], [N + 1, N + 2]].forEach(([i, j]) => sticks.push([i, j, Math.hypot(P[i].x - P[j].x, P[i].y - P[j].y), 0]));
+    side = 0; spin = intro ? 35 : 0; vspin = 0;
+  }
+  // tres puntos de la tarjeta: gancho (arriba al centro), abajo-izq, abajo-der → posición y ángulo
+  function frame(){
+    const h = P[N], l = P[N + 1], r = P[N + 2], a = Math.atan2(r.y - l.y, r.x - l.x), c = Math.cos(a), s = Math.sin(a);
+    const gx = (h.x + l.x + r.x) / 3, gy = (h.y + l.y + r.y) / 3, lx = cw / 2, ly = (HOOK + 2 * ch) / 3;
+    return { a, ox: gx - (lx * c - ly * s), oy: gy - (lx * s + ly * c) };
+  }
+  function bary(x, y){
+    const a = P[N], b = P[N + 1], c = P[N + 2], d = (b.y - c.y) * (a.x - c.x) + (c.x - b.x) * (a.y - c.y);
+    const u = ((b.y - c.y) * (x - c.x) + (c.x - b.x) * (y - c.y)) / d, v = ((c.y - a.y) * (x - c.x) + (a.x - c.x) * (y - c.y)) / d;
+    return [u, v, 1 - u - v];
+  }
+  function step(){
+    t += DT;
+    const wind = reduce ? 0 : Math.sin(t * .8) * 40 + Math.sin(t * 1.9) * 15;
+    P.forEach((p, i) => { if(!p.w) return;
+      const vx = (p.x - p.px) * .992, vy = (p.y - p.py) * .992; p.px = p.x; p.py = p.y;
+      p.x += vx + (i >= N ? wind : 0) * DT * DT; p.y += vy + G * DT * DT; });
+    for(let k = 0; k < 14; k++){
+      sticks.forEach(([i, j, len, slack]) => {
+        const a = P[i], b = P[j], dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy) || 1e-6, ws = a.w + b.w;
+        if(!ws || (slack && d <= len)) return;
+        const f = (d - len) / d / ws; a.x += dx * f * a.w; a.y += dy * f * a.w; b.x -= dx * f * b.w; b.y -= dy * f * b.w;
+      });
+      if(grab && grab.moved){                                                              // el punto agarrado sigue al dedo/mouse
+        const q = [P[N], P[N + 1], P[N + 2]], b = grab.b, bb = b[0] * b[0] + b[1] * b[1] + b[2] * b[2];
+        let tx = grab.x, ty = grab.y; const ax = P[0].x, ay = P[0].y, dd = Math.hypot(tx - ax, ty - ay), mx = L + grab.r;
+        if(dd > mx){ tx = ax + (tx - ax) / dd * mx; ty = ay + (ty - ay) / dd * mx; }
+        const gx = q.reduce((s, p, i) => s + p.x * b[i], 0), gy = q.reduce((s, p, i) => s + p.y * b[i], 0);
+        q.forEach((p, i) => { p.x += (tx - gx) * b[i] / bb; p.y += (ty - gy) * b[i] / bb; });
+      }
+    }
+    // giro sobre la cinta: lo empuja el movimiento de costado, y vuelve solo al lado elegido (frente o dorso)
+    const hv = (P[N].x - P[N].px) / DT, goal = side * 180, near = goal + Math.round((spin - goal) / 360) * 360;
+    vspin += (hv * (grab ? .9 : .35) - 70 * (spin - near)) * DT; vspin *= .983; spin += vspin * DT;
+  }
+  // logo impreso en la cinta (como el de la referencia: marca clara cada tanto)
+  const CB = [new Path2D('M27 14 H17 L12 19 V45 L17 50 H46 L51 45 V37 L46 32 H33'), new Path2D('M33 50 V14 H44 L49 19 V27 L44 32 H33')];
+  function band(){
+    const pts = [P[0]];                                                                    // camino suave de la cinta, muestreado
+    for(let i = 1; i < N; i++){ const a = P[i], b = P[i + 1], m = { x:(a.x + b.x) / 2, y:(a.y + b.y) / 2 }, s = pts[pts.length - 1];
+      for(let k = 1; k <= 6; k++){ const u = k / 6, v = 1 - u; pts.push({ x: v * v * s.x + 2 * v * u * a.x + u * u * m.x, y: v * v * s.y + 2 * v * u * a.y + u * u * m.y }); } }
+    pts.push(P[N]);
+    return pts;
+  }
+  function draw(){
+    const dpr = Math.min(devicePixelRatio || 1, 2), w = cv.clientWidth, h = cv.clientHeight, mob = innerWidth <= 760;
+    if(cv.width !== Math.round(w * dpr) || cv.height !== Math.round(h * dpr)){ cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); }
+    cx.setTransform(dpr, 0, 0, dpr, 160 * dpr, 90 * dpr); cx.clearRect(-160, -90, w, h);
+    const pts = band(), bw = mob ? 15 : 18, CAP = mob ? 12 : 14;
+    // la cinta termina en la pieza de metal: la corto CAP px antes del gancho
+    let end = pts.length - 1, rest = CAP;
+    while(end > 1){ const d = Math.hypot(pts[end].x - pts[end - 1].x, pts[end].y - pts[end - 1].y); if(d >= rest) break; rest -= d; end--; }
+    const A = pts[end - 1], B = pts[end], dl = Math.hypot(B.x - A.x, B.y - A.y) || 1, k = 1 - rest / dl;
+    const cut = { x: A.x + (B.x - A.x) * k, y: A.y + (B.y - A.y) * k };
+    const strap = pts.slice(0, end).concat([cut]);
+    cx.lineJoin = 'round'; cx.lineCap = 'butt';
+    cx.beginPath(); strap.forEach((p, i) => i ? cx.lineTo(p.x, p.y) : cx.moveTo(p.x, p.y));
+    cx.lineWidth = bw; cx.strokeStyle = '#121214'; cx.stroke();
+    cx.lineWidth = bw - 5; cx.strokeStyle = 'rgba(255,255,255,.05)'; cx.stroke();          // leve relieve de tela
+    // logos impresos a lo largo de la cinta
+    // 3 veces, desde un poco arriba de la chapita y con el mismo espacio hacia arriba
+    const at = mob ? [20, 54, 88] : [22, 60, 98], sc = (bw - 5) / 39;
+    let walked = 0, n = 0;
+    for(let i = strap.length - 1; i > 0 && n < at.length; i--){
+      const a = strap[i], b = strap[i - 1], d = Math.hypot(b.x - a.x, b.y - a.y);
+      while(n < at.length && walked + d >= at[n]){
+        const u = (at[n] - walked) / d, x = a.x + (b.x - a.x) * u, y = a.y + (b.y - a.y) * u;
+        cx.save(); cx.translate(x, y); cx.rotate(Math.atan2(a.y - b.y, a.x - b.x) - Math.PI / 2); cx.scale(sc, sc); cx.translate(-31.5, -32);
+        cx.lineWidth = 4.6; cx.lineJoin = 'round'; cx.lineCap = 'round';
+        const og = cx.createLinearGradient(0, 14, 0, 50); og.addColorStop(0, '#ff9d4d'); og.addColorStop(1, '#ff5fa2'); cx.strokeStyle = og;
+        CB.forEach(pa => cx.stroke(pa)); cx.restore(); n++;
+      }
+      walked += d;
+    }
+    // pieza de metal donde termina la cinta
+    const ang = Math.atan2(P[N].y - cut.y, P[N].x - cut.x);
+    cx.save(); cx.translate(cut.x, cut.y); cx.rotate(ang - Math.PI / 2);
+    const cwid = bw - 2, mg = cx.createLinearGradient(-cwid / 2, 0, cwid / 2, 0);
+    mg.addColorStop(0, '#7d7d84'); mg.addColorStop(.35, '#f1f1f3'); mg.addColorStop(.6, '#b3b3ba'); mg.addColorStop(1, '#5f5f66');
+    cx.fillStyle = mg; cx.beginPath(); cx.roundRect(-cwid / 2, -2, cwid, CAP + 1, [2, 2, 4, 4]); cx.fill();
+    cx.fillStyle = 'rgba(0,0,0,.25)'; cx.fillRect(-cwid / 2, 3, cwid, 1);
+    cx.restore();
+    cx.globalCompositeOperation = 'destination-out';                                       // la cinta aparece desde arriba, sin corte
+    const g = cx.createLinearGradient(0, TOP, 0, TOP + 45); g.addColorStop(0, 'rgba(0,0,0,1)'); g.addColorStop(1, 'rgba(0,0,0,0)');
+    cx.fillStyle = g; cx.fillRect(-160, TOP, w, 45); cx.globalCompositeOperation = 'source-over';
+    const f = frame();
+    card.style.transform = `translate(${f.ox.toFixed(2)}px, ${f.oy.toFixed(2)}px) rotate(${f.a.toFixed(4)}rad)`;
+    inner.style.transform = `rotateY(${spin.toFixed(2)}deg)`;
+    box.style.setProperty('--sh', (50 + f.a * 60 + Math.sin(spin * Math.PI / 180) * 40).toFixed(1));
+  }
+  function tick(ts){
+    if(last){ acc = Math.min(acc + (ts - last) / 1000, .1); while(acc >= DT){ step(); acc -= DT; } }
+    last = ts; draw(); raf = on ? requestAnimationFrame(tick) : 0;
+  }
+  function wake(){ if(on && !raf){ last = 0; raf = requestAnimationFrame(tick); } }
+  const local = e => { const r = box.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; };
+  card.addEventListener('pointerdown', e => {
+    const p = local(e), f = frame(), c = Math.cos(f.a), s = Math.sin(f.a);
+    const lx = (p.x - f.ox) * c + (p.y - f.oy) * s, ly = -(p.x - f.ox) * s + (p.y - f.oy) * c;   // dónde se agarró, en la tarjeta
+    grab = { b: bary(p.x, p.y), x: p.x, y: p.y, x0: p.x, y0: p.y, r: Math.hypot(lx - cw / 2, ly - HOOK), moved: false };
+    card.setPointerCapture(e.pointerId); card.classList.add('drag'); e.preventDefault(); wake();
+  });
+  card.addEventListener('pointermove', e => { if(!grab) return; const p = local(e); grab.x = p.x; grab.y = p.y;
+    if(!grab.moved && Math.hypot(p.x - grab.x0, p.y - grab.y0) > 6){ grab.moved = true; box.classList.add('used'); } });
+  const drop = e => {
+    if(grab && !grab.moved && e.type === 'pointerup'){ side = 1 - side; vspin += side ? 260 : -260; box.classList.add('used'); }   // clic = darla vuelta
+    grab = null; card.classList.remove('drag');
+  };
+  card.addEventListener('pointerup', drop); card.addEventListener('pointercancel', drop);
+  card.addEventListener('keydown', e => { if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); side = 1 - side; vspin += side ? 260 : -260; wake(); } });
+  build(false); draw();
+  new IntersectionObserver(es => {
+    on = es[0].isIntersecting;
+    if(on && !started){ started = true; if(!reduce) build(true); }                        // la primera vez cae desde un costado y se balancea
+    wake();
+  }, { threshold:.25 }).observe(box);
+  let rw = innerWidth; addEventListener('resize', () => { if(innerWidth === rw) return; rw = innerWidth; build(false); draw(); });
+})();
