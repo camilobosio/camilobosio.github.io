@@ -89,7 +89,7 @@ servidor; la foto no se sube): genera una base simple para probar →
   si hay foto, usa sus colores.
 - Variaciones + foto → 6 (sobre color, degradé, blanco y negro, duotono, insignia, tarjeta). El chip usa `images/logo.svg`.
 - Texto con flyer/promo/oferta/2x1 + foto → 3 flyers.
-"Generar otras" cambia colores; cada resultado se descarga en PNG; "Pulirlo con Camilo" abre WhatsApp con el pedido.
+"Generar otras" cambia colores; cada resultado se descarga en PNG; "Pulirlo con Camilo" abre WhatsApp con el mensaje único (ver Contacto).
 - A los costados (en compu; abajo en celular): ejemplos en abanico, izquierda = variaciones del logo de Camilo, derecha =
   flyers del perfume (`images/crear/*.webp`, sacados del mismo generador). Tocarlos genera ese ejemplo en vivo.
 - Con el logo de Camilo (`imgName === 'logo de ejemplo'`): SIN descarga, marca "© Camilo Bosio" y su nombre/mail (pedido de Camilo).
@@ -164,6 +164,8 @@ en neón y en papelería (nano_banana_pro con el flyer de referencia importado d
 - Confirmar que los videos se vean bien en el navegador real (en el entorno de pruebas no se pueden reproducir, son H.264).
 - Actualizar el PDF de planes con el servicio de contenido con IA.
 - Contacto: WhatsApp 3468 437518 (wa.me/5493468437518), camilobosio96@gmail.com.
+- MENSAJE DE WHATSAPP ÚNICO (10/10, pedido de Camilo): TODOS los botones/links a WhatsApp (index, portfolio y el `#gwa` del generador en sitio.js) mandan el mismo texto:
+  "Hola Camilo, vi tu página y quería consultarte por tus servicios. ¿Me podrías pasar más información para armar un presupuesto?" No poner textos distintos por botón.
 
 ## Cómo trabajar
 - REGLA DE CAMILO: todo cambio VISUAL se le muestra primero con captura(s) en el chat y se publica SOLO cuando él dice que sí. Nunca publicar un cambio visual sin su OK.
