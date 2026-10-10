@@ -439,7 +439,7 @@
       card.append(c, cap); grid.append(card);
     });
     st.textContent = `${items.length} propuestas base · ${kind === 'var' ? 'variaciones de tu foto' : kind === 'fly' ? 'flyers' : 'logos'}`;
-    wa.href = 'https://wa.me/5493468437518?text=' + encodeURIComponent(`Hola Camilo! Probé el generador de tu página con: "${text || 'variaciones de mi logo'}". Me gustaría pulirlo con vos.`);
+    wa.href = 'https://wa.me/5493468437518?text=Hola%20Camilo%2C%20vi%20tu%20p%C3%A1gina%20y%20quer%C3%ADa%20consultarte%20por%20tus%20servicios.%20%C2%BFMe%20podr%C3%ADas%20pasar%20m%C3%A1s%20informaci%C3%B3n%20para%20armar%20un%20presupuesto%3F';
     busy = false; document.getElementById('gsend').disabled = false;
   }
 })();
