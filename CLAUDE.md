@@ -1,7 +1,7 @@
 # Página de Camilo Bosio — memoria del proyecto
 
 Sitio personal de Camilo Bosio (Rosario, Argentina): portfolio + servicios + planes.
-Publicado con GitHub Pages en https://camilobosio.github.io/ (rama `main`, carpeta raíz).
+Publicado con GitHub Pages (rama `main`, carpeta raíz) con dominio propio https://camilobosio.com/ (archivo `CNAME`; antes camilobosio.github.io, que redirige solo).
 Hablarle a Camilo en español rioplatense, simple y sin tecnicismos.
 
 ## Estructura
