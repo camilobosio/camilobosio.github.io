@@ -22,7 +22,8 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=DM+Serif+Display&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="css/sitio.css?v=49">
+<script>try{if(localStorage.getItem("tema")==="oscuro")document.documentElement.dataset.theme="dark"}catch(e){}</script>
+<link rel="stylesheet" href="css/sitio.css?v=50">
 </head>
 <body>
   <div class="splash-load" id="splashLoad" aria-hidden="true">
@@ -65,7 +66,10 @@
       <a href="portfolio.html" aria-current="page">Portfolio</a>
       <a href="index.html#como">Cómo trabajo</a>
     </nav>
+    <div class="top-act">
+      <div class="theme-seg" id="themeSeg" role="group" aria-label="Modo de la página"><button type="button" data-t="claro" aria-label="Modo claro" aria-pressed="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg></button><button type="button" data-t="oscuro" aria-label="Modo oscuro" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M20 14.6A8.2 8.2 0 1 1 9.4 4a6.6 6.6 0 0 0 10.6 10.6z"/></svg></button></div>
     <a class="btn btn-dark" href="https://wa.me/5493468437518?text=Hola%20Camilo%2C%20vi%20tu%20p%C3%A1gina%20y%20quiero%20consultarte" target="_blank" rel="noopener">Escribime</a>
+    </div>
   </div>
 </header>
 
@@ -271,6 +275,6 @@
   <button type="button" class="next" id="lbNext" aria-label="Siguiente">›</button>
 </dialog>
 
-<script src="js/sitio.js?v=47"></script>
+<script src="js/sitio.js?v=48"></script>
 </body>
 </html>

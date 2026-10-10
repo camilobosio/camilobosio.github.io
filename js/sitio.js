@@ -1039,3 +1039,18 @@ document.querySelectorAll('.plan').forEach(plan => {
     pop(e.clientX, e.clientY);
   }, { passive:true });
 })();
+
+/* Modo oscuro: sol | luna en la barra (arranca en claro); el activo queda pintado y se guarda la elección */
+(function(){
+  var seg = document.getElementById('themeSeg'); if (!seg) return;
+  var root = document.documentElement, btns = seg.querySelectorAll('button');
+  function sync(){ var t = root.dataset.theme === 'dark' ? 'oscuro' : 'claro';
+    btns.forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.t === t ? 'true' : 'false'); }); }
+  sync();
+  btns.forEach(function(b){ b.addEventListener('click', function(){
+    var d = b.dataset.t === 'oscuro';
+    if (d) root.dataset.theme = 'dark'; else delete root.dataset.theme;
+    try { localStorage.setItem('tema', b.dataset.t); } catch(e){}
+    sync();
+  }); });
+})();

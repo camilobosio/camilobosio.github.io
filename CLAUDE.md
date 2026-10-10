@@ -170,3 +170,14 @@ en neón y en papelería (nano_banana_pro con el flyer de referencia importado d
 - Guardar archivos nuevos que mande Camilo en `portfolio/<rubro>/` con nombres descriptivos.
 - Revisar en compu (1280px) y celular (390px) con Playwright (Chromium en /opt/pw-browsers) que no haya scroll horizontal.
 - Para publicar: los cambios tienen que llegar a `main`. WhatsApp guarda la vista previa vieja: compartir el link con `?v=N`.
+
+## Modo oscuro (10/10, PUBLICADO)
+- Arriba, al lado de "Escribime": botones **sol | luna** solo con íconos (`#themeSeg`, `.theme-seg`); el activo queda pintado.
+  Arranca SIEMPRE en claro; la elección se guarda en `localStorage` (`tema` = claro/oscuro) y un script en el `<head>` la aplica antes de pintar.
+- Colores oscuros en `html[data-theme="dark"]` al final de `css/sitio.css` (fondo #141416). Lo que tiene color propio queda igual
+  (franja naranja, contacto azul, Premium naranja). Paneles negros (`.case`, `.plan.pro`, `.fact`) pasan a #1f1f25 con borde.
+- Camilo eligió de 4 bocetos: sin palabras "Claro/Oscuro", solo sol y luna.
+
+## Portfolio del inicio (10/10)
+- Sin texto al costado del título. Tarjetas: M Perfumerie → Publicidades (video Día de la Madre) → Videos con personas
+  (`portfolio/videos-ia/lentes-inicio.mp4`, recorte vertical del ángulo 2 desde 4,15 s, cuando se pone los lentes) → Producto 360. Sin probador.

@@ -541,3 +541,34 @@
     .about .lanyard{ grid-column:1 / -1; --cw:190px; --ch:238px; height:330px; margin-top:36px; }
     .ly-back b{ font-size:18px; }
   }
+
+  /* ---------- modo oscuro: sol | luna arriba, el activo queda pintado; se recuerda en el navegador ---------- */
+  .theme-seg{ display:flex; gap:2px; padding:3px; border-radius:999px; border:1.5px solid var(--line); flex:none; }
+  .theme-seg button{ width:32px; height:30px; border-radius:999px; border:0; background:none; color:var(--muted); display:grid; place-items:center; cursor:pointer; transition:background .25s, color .25s; }
+  .theme-seg button:hover{ color:var(--ink); }
+  .theme-seg button[aria-pressed="true"]{ background:var(--ink); color:var(--paper); cursor:default; }
+  .theme-seg svg{ width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round; }
+  .top:not(.scrolled):not(.pre) .theme-seg{ border-color:rgba(17,17,19,.3); }
+  .top:not(.scrolled):not(.pre) .theme-seg button:not([aria-pressed="true"]){ color:#111113; }
+  .top-act{ display:flex; align-items:center; gap:10px; }
+
+  html[data-theme="dark"]{
+    --paper:#141416; --paper-2:#1c1c20; --ink:#f1f0ec; --ink-2:#d9d8d3; --muted:#a3a2aa; --line:#2f2f35;
+    --violet:#4d6ef0; --violet-soft:#1e2647; --orange-soft:#3a2418;
+    color-scheme:dark;
+  }
+  html[data-theme="dark"] .top:not(.scrolled):not(.pre) nav a{ color:#111113; }
+  html[data-theme="dark"] .make{ background-color:#19191c; background-image:radial-gradient(circle, rgba(255,255,255,.07) 1px, transparent 1.3px); }
+  html[data-theme="dark"] .gbox, html[data-theme="dark"] .gadd, html[data-theme="dark"] .gcard, html[data-theme="dark"] .gthumb img,
+  html[data-theme="dark"] .gmode button[aria-pressed="true"], html[data-theme="dark"] .gchips button:hover, html[data-theme="dark"] .pf-jump a{ background:#222227; }
+  html[data-theme="dark"] .gchips button{ background:rgba(255,255,255,.05); }
+  html[data-theme="dark"] .gbox.drag{ background:#1e2340; }
+  html[data-theme="dark"] .gskel{ background:linear-gradient(100deg, #222227 30%, #2c2c36 50%, #222227 70%) 0 0/300% 100%; }
+  html[data-theme="dark"] .svc{ background:#1b1b1f; }
+  html[data-theme="dark"] .contact .btn:hover{ color:var(--paper); }
+  html[data-theme="dark"] .splash-load{ background:rgba(20,20,22,.45) !important; }
+  /* paneles que en claro son negros: en oscuro, un gris apenas más claro que el fondo, con borde */
+  html[data-theme="dark"] .case, html[data-theme="dark"] .plan.pro{ background:#1f1f25; box-shadow:inset 0 0 0 1px #33333b; }
+  html[data-theme="dark"] .fact{ background:#1f1f25; }
+  html[data-theme="dark"] .case .btn:hover, html[data-theme="dark"] .switch button[aria-pressed="true"],
+  html[data-theme="dark"] .plan.pro .btn-dark:hover, html[data-theme="dark"] .plan.pro .btn-line:hover{ color:#111113; }
