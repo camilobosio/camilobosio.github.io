@@ -180,4 +180,6 @@ en neón y en papelería (nano_banana_pro con el flyer de referencia importado d
 
 ## Portfolio del inicio (10/10)
 - Sin texto al costado del título. Tarjetas: M Perfumerie → Publicidades (video Día de la Madre) → Videos con personas
-  (`portfolio/videos-ia/lentes-inicio.mp4`, recorte vertical del ángulo 2 desde 4,15 s, cuando se pone los lentes) → Producto 360. Sin probador.
+  (`portfolio/videos-ia/lentes-inicio.mp4`, recorte vertical del ÁNGULO 3 desde 2,38 s: se pone los lentes + primer plano; Camilo lo prefirió al ángulo 2)
+  → Producto 360 (gira solo: `portfolio/ropa/campera-360/giro-inicio.mp4`, los 144 cuadros de las tiras giro-1..4 a 24 fps). Sin probador.
+- En oscuro, los recuadros de "Lo que hago" NO llevan fondo en compu (igual que en claro); en celular sí (#1b1b1f).
