@@ -202,7 +202,7 @@ en neón y en papelería (nano_banana_pro con el flyer de referencia importado d
 - Las capturas por sección con Playwright muestran la franja naranja del menú en el medio: es el menú fijo, no un error.
   Para mostrarle a Camilo, sacar captura de pantalla completa (viewport), no del elemento.
 
-## Idioma ES | EN (19/10, en prueba hasta que Camilo dé el OK)
+## Idioma ES | EN (19/10, PUBLICADO)
 - Botones **ES | EN** (`#langSeg`, `.theme-seg.lang-seg`) a la DERECHA de "Escribime", mismo estilo que sol | luna.
 - `js/idioma.js` (se carga antes de sitio.js): la página sigue escrita en español; en inglés traduce en el navegador con un
   diccionario texto exacto → inglés (`EN`) + reglas para textos con partes variables (`RX`). Un MutationObserver traduce
