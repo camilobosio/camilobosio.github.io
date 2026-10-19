@@ -220,10 +220,13 @@ en neón y en papelería (nano_banana_pro con el flyer de referencia importado d
 - Last Rental (`#personal`): texto = "me armé una habitación ambientada en un videoclub de los 2000, estilo juego… organizo
   películas que vi y tengo, juegos e imágenes de mi PC".
 
-## Overesthetic en Páginas web (19/10)
+## Overesthetic en Páginas web (19/10, PUBLICADO)
 - `#web` ahora tiene 2 páginas que se pasan con flechitas/pestañas (`#wnav`, `.wslide`, JS al final de sitio.js):
   1) M Perfumerie (igual que antes) y 2) **Overesthetic** (`.case.ov`, "En desarrollo", sin link: "Próximamente online").
 - Videos en `portfolio/overesthetic/`: GRABACIONES REALES de la página (carpeta `Desktop\LABURO\Overesthetic web`) con
   Playwright recordVideo: portada-pc (intro llanta→logo), celular, y 4 interacciones (intro-llanta, titulo-brillo, modulos, reflejo).
   Para grabar: copiar la página, pasar sus .mp4 a .webm (el Chromium de pruebas no reproduce H.264) y servir las fuentes
   (Big Shoulders Display, Archivo, IBM Plex Mono) desde @fontsource por npm porque fonts.googleapis está bloqueado.
+- portada-pc de Overesthetic (aprobada por Camilo): arranca con la página YA desenfocada y la llanta entrando (fuentes
+  cargadas antes: se graba con un reload), el logo sube y en ese instante la página baja RÁPIDO hasta el final (~6,5 s),
+  "un pantallazo, no para leer". ~10 s en total, fundido de entrada de 0,3 s.
