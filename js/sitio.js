@@ -1128,3 +1128,22 @@ document.querySelectorAll('.plan').forEach(plan => {
   addEventListener('keydown', e => { if (e.key === 'Escape' && cur > -1) close(); });
   document.querySelectorAll('#langSeg button').forEach(b => b.addEventListener('click', () => { if (cur > -1) setTimeout(render, 0); }));
 })();
+
+/* Páginas web del portfolio (portfolio.html#web): flechitas y pestañas para pasar de M Perfumerie a Overesthetic */
+(() => {
+  const nav = document.getElementById('wnav'); if (!nav) return;
+  const slides = [...document.querySelectorAll('.wslide')], tabs = [...nav.querySelectorAll('.wnav-tabs button')], n = document.getElementById('wnavN');
+  const next = nav.querySelector('.wnav-arr.next'); let cur = 0;
+  next.classList.add('hint');
+  function go(i, dir) {
+    i = (i + slides.length) % slides.length; if (i === cur) return;
+    slides[cur].classList.remove('on'); slides[cur].hidden = true;
+    const s = slides[i]; s.style.setProperty('--dx', (dir < 0 ? -40 : 40) + 'px'); s.hidden = false; void s.offsetWidth; s.classList.add('on');
+    cur = i; tabs.forEach((t, k) => t.setAttribute('aria-pressed', k === i)); n.textContent = (i + 1) + ' / ' + slides.length;
+    next.classList.remove('hint');
+    const top = nav.getBoundingClientRect().top; if (top < 0) scrollBy({ top: top - 90, behavior: 'smooth' });
+    s.querySelectorAll('.case video').forEach(v => v.play().catch(() => {}));
+  }
+  nav.querySelectorAll('.wnav-arr').forEach(b => b.addEventListener('click', () => go(cur + +b.dataset.d, +b.dataset.d)));
+  tabs.forEach(t => t.addEventListener('click', () => go(+t.dataset.i, +t.dataset.i - cur)));
+})();

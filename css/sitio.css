@@ -634,3 +634,23 @@
     .vo.open .vo-panel{ display:block; }
     .vo.open .vo-hint{ display:none; }
   }
+  /* páginas web del portfolio: flechitas para pasar de M Perfumerie a Overesthetic (#wnav / .wslide, JS al final de sitio.js) */
+  .wnav{ display:flex; align-items:center; gap:8px; margin:-4px 0 22px; flex-wrap:wrap; }
+  .wnav-tabs{ display:flex; gap:8px; flex-wrap:wrap; }
+  .wnav-tabs button{ font:inherit; font-size:14px; padding:9px 15px; border-radius:999px; border:1px solid var(--line); background:#fff; color:var(--ink); cursor:pointer; transition:background .2s, color .2s; }
+  .wnav-tabs button[aria-pressed="true"]{ background:var(--ink); color:var(--paper); border-color:var(--ink); cursor:default; }
+  .wnav-n{ margin-left:auto; font-family:var(--mono); font-size:12px; letter-spacing:.08em; color:var(--muted); margin-right:4px; }
+  .wnav-arr{ width:44px; height:44px; border-radius:50%; border:1px solid var(--line); background:#fff; color:var(--ink); display:grid; place-items:center; cursor:pointer; transition:background .2s, color .2s, transform .2s; }
+  .wnav-arr svg{ width:20px; height:20px; }
+  .wnav-arr.prev svg{ transform:rotate(180deg); }
+  .wnav-arr:hover{ background:var(--ink); color:var(--paper); }
+  .wnav-arr.next{ background:var(--ink); color:var(--paper); border-color:var(--ink); }
+  .wnav-arr.next.hint{ animation:wNudge 1.6s ease-in-out infinite; }
+  @keyframes wNudge{ 0%,100%{ transform:none; } 50%{ transform:translateX(4px); } }
+  .wslide.on{ animation:wIn .45s cubic-bezier(.2,.8,.2,1); }
+  @keyframes wIn{ from{ opacity:0; transform:translateX(var(--dx, 40px)); } }
+  .case.ov h3 em{ background:linear-gradient(90deg, #f6d43c, #f19a78 45%, #e8251d); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .case-bottom .soon{ font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--on-dark-muted); border:1px dashed #3a3a40; border-radius:999px; padding:10px 16px; }
+  html[data-theme="dark"] .wnav-tabs button, html[data-theme="dark"] .wnav-arr{ background:#222227; color:var(--ink); }
+  html[data-theme="dark"] .wnav-tabs button[aria-pressed="true"], html[data-theme="dark"] .wnav-arr.next{ background:var(--ink); color:#111113; }
+  @media (max-width:760px){ .wnav-n{ display:none; } .wnav-arr{ width:40px; height:40px; } .wnav-tabs button{ font-size:13px; padding:8px 12px; } .wnav{ justify-content:space-between; } }
