@@ -11,7 +11,7 @@ Hablarle a Camilo en español rioplatense, simple y sin tecnicismos.
 - `portfolio.html` — PORTFOLIO, en este ORDEN (pedido de Camilo, 8/10): 1) Contenido con IA (`#ia`, mosaico con cada pieza en su
   formato, tal cual el original: bordes REDONDEADOS (probó cuadrados y esquinas rectas, no le gustaron); filtros Perfumes / En la calle / Personas),
   2) Páginas web (`#web`, M Perfumerie + experiencia interactiva), 3) Contenido interactivo (`#ropa`: `#probador` y
-  `#producto-360`) AL FINAL, porque es lo más nuevo y sigue en desarrollo.
+  `#producto-360`), 4) Prototipos (`#prototipos`, 19/10) AL FINAL.
 - `css/sitio.css` y `js/sitio.js` — estilos y código COMPARTIDOS por las dos páginas (sin build). El JS chequea que
   cada elemento exista, porque no todos están en las dos páginas.
 - En celular el inicio tiene que ser corto: servicios, planes y las grabaciones de M Perfumerie se deslizan de costado.
@@ -185,3 +185,19 @@ en neón y en papelería (nano_banana_pro con el flyer de referencia importado d
   (`portfolio/videos-ia/lentes-inicio.mp4`, recorte vertical del ÁNGULO 3 desde 2,38 s: se pone los lentes + primer plano; Camilo lo prefirió al ángulo 2)
   → Producto 360 (gira solo: `portfolio/ropa/campera-360/giro-inicio.mp4`, los 144 cuadros de las tiras giro-1..4 a 24 fps). Sin probador.
 - En oscuro, los recuadros de "Lo que hago" NO llevan fondo en compu (igual que en claro); en celular sí (#1b1b1f).
+
+## Sumado el 19/10 (PUBLICADO)
+- Galería `#contenido`: **Tesla volador** (`portfolio/videos-ia/tesla-volador.mp4` + .jpg, `tile wide`, personas): Camilo
+  reemplazó al actor y habla con su voz real. Tiene la marca de agua de sync.so y Camilo decidió dejarla ("quiero mostrar lo
+  que se puede hacer"). **Reel de lanzamiento de M Perfumerie** (`portfolio/perfumes/lanzamiento-pagina.mp4`, notebook + celular).
+- Sección **Prototipos** (`#prototipos`, botón en `.pf-jump`):
+  - **Oficina virtual** (`.case.proto`, panel oscuro como el caso M Perfumerie): PRODUCTO PARA EMPRESAS, NO un juego (la estética
+    de juego es para que sea agradable). Texto básico: "adaptable para tu empresa, cada empleado es un bot que configurás".
+    Camilo NO quiere cifras (cantidad de empleados/áreas): es configurable. Video `portfolio/prototipos/oficina-paneo.mp4`
+    = paneo hecho con capturas reales de la app (zoom suave + fundidos; la app en este entorno renderiza a ~1 cuadro/s,
+    no se puede grabar en vivo). Botón "Quiero una para mi empresa" → WhatsApp con el mensaje único.
+    App en la PC de Camilo: `Desktop\Oficina Virtual\virtual-office-ai` (build en `apps/web/dist`, sin servidor = sin chat).
+  - **Last Rental** (`.lr`, más chico, sin prioridad): juego personal, 2 capturas (`last-rental-portada.webp`, `last-rental-local.webp`).
+    Juego en `Desktop\LAST-RENTAL` (`dist/last-rental.js`).
+- Las capturas por sección con Playwright muestran la franja naranja del menú en el medio: es el menú fijo, no un error.
+  Para mostrarle a Camilo, sacar captura de pantalla completa (viewport), no del elemento.

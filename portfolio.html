@@ -78,9 +78,9 @@
     <div class="wrap">
       <span class="label">Portfolio</span>
       <h1 class="pf-title">Lo que hice</h1>
-      <p class="pf-lead">Publicidades y videos con IA, páginas web y contenido interactivo. Todo real: tocá, arrastrá y probá.</p>
+      <p class="pf-lead">Publicidades y videos con IA, páginas web, contenido interactivo y prototipos. Todo real: tocá, arrastrá y probá.</p>
       <nav class="pf-jump" aria-label="Ir a">
-        <a href="#ia">Contenido con IA</a><a href="#web">Páginas web</a><a href="#ropa">Contenido interactivo</a>
+        <a href="#ia">Contenido con IA</a><a href="#web">Páginas web</a><a href="#ropa">Contenido interactivo</a><a href="#prototipos">Prototipos</a>
       </nav>
     </div>
   </section>
@@ -94,7 +94,7 @@
             <span class="label">Contenido con IA</span>
             <h3>Publicidades hechas con IA</h3>
           </div>
-          <p>Fotos de producto, banners, flyers con precio y videos creados con inteligencia artificial, y cómo se ven puestos en la calle. Incluso escenas filmadas con una persona real a partir de un par de fotos, desde distintos ángulos.</p>
+          <p>Fotos de producto, banners, flyers con precio y videos creados con inteligencia artificial, y cómo se ven puestos en la calle. Incluso escenas con una persona real a partir de un par de fotos, desde distintos ángulos y hablando con su propia voz.</p>
         </div>
         <div class="cats" role="group" aria-label="Filtrar por rubro">
           <button type="button" aria-pressed="true" data-f="all">Todo</button>
@@ -104,6 +104,8 @@
         </div>
         <div class="gallery" id="gallery">
           <button type="button" class="tile" data-cat="perfumes"><video src="portfolio/perfumes/dia-de-la-madre-animada.mp4" poster="portfolio/perfumes/dia-de-la-madre-animada.jpg" width="720" height="1280" muted loop playsinline preload="metadata" aria-label="Publicidad animada Día de la Madre, M Perfumerie"></video><span class="play" aria-hidden="true"></span><span class="cap"><b>Día de la Madre · M Perfumerie</b>Publicidad animada para historias</span></button>
+          <button type="button" class="tile wide" data-cat="personas"><video src="portfolio/videos-ia/tesla-volador.mp4" poster="portfolio/videos-ia/tesla-volador.jpg" width="1280" height="960" muted loop playsinline preload="metadata" aria-label="Escena con IA: un Tesla volador aterriza en una terraza y me bajo a hablar a cámara"></video><span class="play" aria-hidden="true"></span><span class="cap"><b>Escena con IA – Tesla volador</b><span class="sub">Me puse en lugar del actor, hablando con mi voz real</span></span></button>
+          <button type="button" class="tile" data-cat="perfumes"><video src="portfolio/perfumes/lanzamiento-pagina.mp4" poster="portfolio/perfumes/lanzamiento-pagina.jpg" width="720" height="1280" muted loop playsinline preload="metadata" aria-label="Reel de lanzamiento de la página de M Perfumerie, en la compu y el celular"></video><span class="play" aria-hidden="true"></span><span class="cap"><b>Lanzamiento de la página · M Perfumerie</b>Reel con la página en la compu y el celular</span></button>
           <button type="button" class="tile" data-cat="calle"><img src="portfolio/calle/parada-1million.webp" width="1080" height="1350" loading="lazy" alt="Parada de colectivo · 1 Million"><span class="cap"><b>Parada de colectivo · 1 Million</b>Flyer en la calle</span></button>
           <button type="button" class="tile" data-cat="calle"><img src="portfolio/calle/afiche-polo-sport.webp" width="1080" height="1350" loading="lazy" alt="Afiche en la pared · Polo Sport"><span class="cap"><b>Afiche en la pared · Polo Sport</b>Flyer en la calle</span></button>
           <button type="button" class="tile" data-cat="calle"><img src="portfolio/calle/subte-khamrah.webp" width="1080" height="1350" loading="lazy" alt="Subte · Khamrah Waha"><span class="cap"><b>Subte · Khamrah Waha</b>Flyer en la calle</span></button>
@@ -246,6 +248,48 @@
           <button type="button" class="pv-arrow r" id="pvNext" aria-label="Campera siguiente">→</button>
           <div class="pv-bar"><span class="pv-name"><b id="pvName">Audi F1 Team</b><span id="pvNum">1 / 5</span></span></div>
           <div class="p3-hint pv-hint"><span class="hand" aria-hidden="true">↔</span>Deslizá para cambiar la campera</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block pf-sec" id="prototipos">
+    <div class="wrap">
+      <h2 class="pf-h">Prototipos</h2>
+      <div class="case proto">
+        <div class="case-top">
+          <div>
+            <span class="label">Prototipo · Adaptable para tu empresa</span>
+            <h3>Oficina <em>virtual</em></h3>
+            <p>Una oficina con empleados de inteligencia artificial, adaptable para tu empresa. Cada empleado es un bot que configurás según cómo querés que trabaje: programación, desarrollo, tecnología, marketing, atención al cliente o lo que necesites.</p>
+          </div>
+        </div>
+        <div class="case-shots proto-shots">
+          <div class="desk">
+            <div class="bar"><i></i><i></i><i></i><span>Oficina virtual · prototipo</span></div>
+            <div class="view">
+              <video class="on" src="portfolio/prototipos/oficina-paneo.mp4" poster="portfolio/prototipos/oficina-paneo.jpg" muted loop playsinline autoplay preload="metadata" aria-label="Recorrido por la oficina virtual: vista general, el estudio creativo y el perfil de una empleada con IA"></video>
+            </div>
+          </div>
+        </div>
+        <div class="case-bottom">
+          <div class="feat">
+            <span>Programación</span><span>Desarrollo</span><span>Tecnología</span><span>Marketing</span><span>Atención al cliente</span><span>Lo que tu empresa necesite</span>
+          </div>
+          <a class="btn" href="https://wa.me/5493468437518?text=Hola%20Camilo%2C%20vi%20tu%20p%C3%A1gina%20y%20quer%C3%ADa%20consultarte%20por%20tus%20servicios.%20%C2%BFMe%20podr%C3%ADas%20pasar%20m%C3%A1s%20informaci%C3%B3n%20para%20armar%20un%20presupuesto%3F" target="_blank" rel="noopener">Quiero una para mi empresa
+            <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M9 7h8v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="lr">
+        <div class="lr-txt">
+          <span class="label">Proyecto personal · Juego 3D</span>
+          <h3>Last Rental</h3>
+          <p>Un videoclub de los 2000 que se recorre en primera persona desde el navegador: más de 9.000 películas y juegos en las estanterías, cajas que se sacan y se dan vuelta, heladera, flippers, teles de tubo y música propia. Lo cerré solo para mí.</p>
+        </div>
+        <div class="lr-shots">
+          <img src="portfolio/prototipos/last-rental-portada.webp" width="1280" height="640" loading="lazy" alt="Pantalla de inicio de Last Rental">
+          <img src="portfolio/prototipos/last-rental-local.webp" width="1280" height="640" loading="lazy" alt="Adentro del videoclub de Last Rental">
         </div>
       </div>
     </div>
