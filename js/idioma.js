@@ -184,7 +184,11 @@ const EN = {
   'Recorrido por la oficina virtual: vista general, el estudio creativo y el perfil de una empleada con IA':'Tour of the virtual office: overview, the creative studio and the profile of an AI employee',
   'Proyecto personal · Juego 3D':'Personal project · 3D game',
   'Un videoclub de los 2000 que se recorre en primera persona desde el navegador: más de 9.000 películas y juegos en las estanterías, cajas que se sacan y se dan vuelta, heladera, flippers, teles de tubo y música propia. Lo cerré solo para mí.':'A 2000s video rental store you explore in first person from the browser: over 9,000 movies and games on the shelves, cases you can pick up and flip, a fridge, pinball machines, CRT TVs and my own music. I closed it just for me.',
-  'Pantalla de inicio de Last Rental':'Last Rental start screen', 'Adentro del videoclub de Last Rental':'Inside the Last Rental video store'
+  'Pantalla de inicio de Last Rental':'Last Rental start screen', 'Adentro del videoclub de Last Rental':'Inside the Last Rental video store',
+  'Prototipo para empresas':'Prototype for companies', 'Oficina virtual':'Virtual office', 'Proyecto personal':'Personal project',
+  'Tocá un empleado para ver su ficha':'Tap an employee to see their profile',
+  'La oficina virtual vista desde arriba, con cada empleado en su puesto':'The virtual office seen from above, with each employee at their desk',
+  'Me armé una habitación ambientada en un videoclub de los 2000, estilo juego, que recorro en primera persona desde el navegador. Ahí organizo todas las películas que vi y tengo, mis juegos y las imágenes de mi PC: saco las cajas de los estantes, las doy vuelta, pongo mi música y miro videos en las teles de tubo.':'I built myself a room set in a 2000s video rental store, game-style, that I walk through in first person from the browser. There I organize all the movies I’ve watched and own, my games and the images on my PC: I pull cases off the shelves, flip them over, play my music and watch videos on the CRT TVs.'
 };
 // textos con partes variables
 const RX = [

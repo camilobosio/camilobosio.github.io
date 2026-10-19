@@ -1055,3 +1055,76 @@ document.querySelectorAll('.plan').forEach(plan => {
     sync();
   }); });
 })();
+
+/* Oficina virtual (portfolio.html#oficina): imagen FIJA de la oficina (sin zoom ni movimiento, pedido de Camilo);
+   al tocar un empleado se abre su ficha al costado, como en la app real. Posiciones = cajas de cada puesto
+   proyectadas desde la app (en % de 1280×800). Textos en español e inglés (sigue al botón ES | EN). */
+(() => {
+  const vo = document.getElementById('vo'); if (!vo) return;
+  const spots = document.getElementById('voSpots'), panel = document.getElementById('voPanel'), hint = document.getElementById('voHint');
+  const C = { dir:'#b98c40', cre:'#c8603c', tec:'#3f7f8c', mkt:'#c98a2e', inv:'#6f8a55', ate:'#a0704f' };
+  const E = [
+    { n:'Elena Ríos', c:C.dir, b:[1056,454,1100,502], area:['Dirección','Management'], role:['Asesora general y jefa de operaciones','General advisor and head of operations'],
+      sum:['Puerta de entrada de la oficina. Resuelve consultas generales y decide cuándo hace falta un especialista.','The office’s front door. Handles general questions and decides when a specialist is needed.'],
+      sp:[['Coordinación de especialistas','Diagnóstico de consultas','Planificación operativa','Síntesis de decisiones'],['Specialist coordination','Request triage','Operational planning','Decision summaries']], to:['Todo el equipo','The whole team'] },
+    { n:'Lucía Ferrer', c:C.cre, b:[666,220,707,266], area:['Estudio creativo','Creative studio'], role:['Directora creativa y diseñadora gráfica','Creative director and graphic designer'],
+      sum:['Define cómo se ve cada marca y produce piezas visuales coherentes.','Defines how each brand looks and produces consistent visual pieces.'],
+      sp:[['Identidad visual','Dirección de arte','Tipografía','Campañas','Banners','Producción creativa con IA'],['Visual identity','Art direction','Typography','Campaigns','Banners','AI creative production']], to:['Marketing · Tecnología · Estilismo','Marketing · Technology · Styling'] },
+    { n:'Bruno Lago', c:C.cre, b:[777,272,819,317], area:['Estudio creativo','Creative studio'], role:['Estilista personal e imagen','Personal stylist and image'],
+      sum:['Recomienda ropa, cortes, colores y outfits, y justifica cada sugerencia.','Recommends clothes, cuts, colors and outfits, and explains each suggestion.'],
+      sp:[['Asesoramiento de moda','Colorimetría','Outfits por ocasión','Tendencias'],['Fashion advice','Color analysis','Outfits for each occasion','Trends']], to:['Dirección creativa','Creative direction'] },
+    { n:'Tomás Varela', c:C.tec, b:[484,331,522,374], area:['Tecnología','Technology'], role:['Director de tecnología y desarrollador de software','CTO and software developer'],
+      sum:['Diseña, construye y depura software, desde sitios web hasta experiencias 3D.','Designs, builds and debugs software, from websites to 3D experiences.'],
+      sp:[['Frontend','Backend','APIs','Bases de datos','Despliegues','Experiencias interactivas'],['Frontend','Backend','APIs','Databases','Deployments','Interactive experiences']], to:['Proyectos · Creativo · Investigación','Projects · Creative · Research'] },
+    { n:'Martín Sosa', c:C.mkt, b:[680,443,706,475], area:['Marketing y comercial','Marketing and sales'], role:['Director de marketing y publicidad','Marketing and advertising director'],
+      sum:['Convierte objetivos de negocio en estrategia, campañas y contenidos medibles.','Turns business goals into strategy, campaigns and measurable content.'],
+      sp:[['Estrategia','Posicionamiento','Campañas','Calendario de contenidos','Análisis de resultados'],['Strategy','Positioning','Campaigns','Content calendar','Results analysis']], to:['Creativo · Ventas · Investigación · Finanzas','Creative · Sales · Research · Finance'] },
+    { n:'Julia Paz', c:C.mkt, b:[730,474,756,504], area:['Marketing y comercial','Marketing and sales'], role:['Directora comercial y de ventas','Sales director'],
+      sum:['Arma propuestas, ofertas y argumentos para convertir interesados en clientes.','Builds proposals, offers and pitches to turn leads into customers.'],
+      sp:[['Propuestas comerciales','Precios de venta','Seguimiento de clientes','Manejo de objeciones'],['Sales proposals','Pricing','Customer follow-up','Handling objections']], to:['Finanzas · Marketing · Atención','Finance · Marketing · Customer service'] },
+    { n:'Ana Quiroga', c:C.inv, b:[809,524,847,568], area:['Investigación','Research'], role:['Investigadora y analista estratégica','Researcher and strategy analyst'],
+      sum:['Investiga mercados, competidores y herramientas con fuentes verificables.','Researches markets, competitors and tools with verifiable sources.'],
+      sp:[['Investigación de mercado','Competidores','Tendencias','Oportunidades de negocio'],['Market research','Competitors','Trends','Business opportunities']], to:['Finanzas · Marketing · Tecnología','Finance · Marketing · Technology'] },
+    { n:'Diego Ortiz', c:C.inv, b:[865,558,903,602], area:['Finanzas','Finance'], role:['Responsable de administración y finanzas','Head of administration and finance'],
+      sum:['Calcula costos, márgenes y escenarios, siempre por empresa y sin mezclar números.','Calculates costs, margins and scenarios, always per company and without mixing numbers.'],
+      sp:[['Costos','Márgenes','Presupuestos','Precios','Escenarios'],['Costs','Margins','Budgets','Pricing','Scenarios']], to:['Ventas · Investigación · Proyectos','Sales · Research · Projects'] },
+    { n:'Sofía Méndez', c:C.inv, b:[768,582,806,626], area:['Proyectos · QA','Projects · QA'], role:['Gerente de proyectos y control de calidad','Project manager and quality control'],
+      sum:['Convierte objetivos en planes con responsables, sigue el avance y revisa la calidad.','Turns goals into plans with owners, tracks progress and checks quality.'],
+      sp:[['Planificación','Priorización','Seguimiento','Pruebas','Revisión de entregables'],['Planning','Prioritization','Follow-up','Testing','Deliverable review']], to:['Dirección · Tecnología · Creativo','Management · Technology · Creative'] },
+    { n:'Nico Funes', c:C.ate, b:[937,615,984,664], area:['Atención al cliente','Customer service'], role:['Especialista en atención al cliente','Customer service specialist'],
+      sum:['Prepara respuestas claras para clientes y organiza el seguimiento de cada consulta.','Prepares clear replies for customers and organizes follow-up for each inquiry.'],
+      sp:[['Comunicación con clientes','Respuesta a consultas','Seguimiento','Soporte'],['Customer communication','Answering inquiries','Follow-up','Support']], to:['Ventas · Tecnología · Dirección','Sales · Technology · Management'] }
+  ];
+  const L = () => (window.idioma && window.idioma() === 'en') ? 1 : 0;
+  const ini = n => n.split(' ').map(w => w[0]).join('');
+  let cur = -1;
+  E.forEach((e, i) => {
+    const [x1, y1, x2, y2] = e.b, s = document.createElement('button');
+    s.type = 'button'; s.className = 'vo-spot'; s.style.cssText = `left:${x1 / 12.8}%;top:${y1 / 8}%;width:${(x2 - x1) / 12.8}%;height:${(y2 - y1) / 8}%;--c:${e.c}`;
+    s.innerHTML = `<span class="ring" aria-hidden="true"></span><span class="tip">${e.n}</span>`;
+    s.setAttribute('aria-label', e.n);
+    s.addEventListener('click', ev => { ev.stopPropagation(); open(i); });
+    spots.appendChild(s);
+  });
+  function render() {
+    const e = E[cur], l = L();
+    panel.innerHTML = `<button type="button" class="vo-x" aria-label="${l ? 'Close' : 'Cerrar'}">×</button>
+      <div class="vo-who"><span class="av" style="background:${e.c}">${ini(e.n)}</span><div><b>${e.n}</b><span>${e.role[l]}</span></div></div>
+      <span class="vo-area" style="--c:${e.c}">${e.area[l]}</span>
+      <div class="vo-tabs"><span>${l ? 'Chat' : 'Conversación'}</span><span class="on">${l ? 'Profile' : 'Perfil'}</span><span>${l ? 'Tasks' : 'Tareas'}</span></div>
+      <p>${e.sum[l]}</p>
+      <h5>${l ? 'Specialties' : 'Especialidades'}</h5>
+      <div class="vo-chips">${e.sp[l].map(t => `<span>${t}</span>`).join('')}</div>
+      <h5>${l ? 'Can hand off to' : 'Puede derivar a'}</h5>
+      <p class="vo-to">${e.to[l]}</p>`;
+    panel.querySelector('.vo-x').addEventListener('click', ev => { ev.stopPropagation(); close(); });
+  }
+  function open(i) {
+    cur = i; render(); vo.classList.add('open'); hint.classList.add('off');
+    spots.querySelectorAll('.vo-spot').forEach((s, k) => s.classList.toggle('sel', k === i));
+  }
+  function close() { cur = -1; vo.classList.remove('open'); spots.querySelectorAll('.vo-spot').forEach(s => s.classList.remove('sel')); }
+  vo.addEventListener('click', e => { if (!panel.contains(e.target)) close(); });
+  addEventListener('keydown', e => { if (e.key === 'Escape' && cur > -1) close(); });
+  document.querySelectorAll('#langSeg button').forEach(b => b.addEventListener('click', () => { if (cur > -1) setTimeout(render, 0); }));
+})();

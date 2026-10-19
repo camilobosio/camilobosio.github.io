@@ -586,3 +586,51 @@
   .proto .case-top{ grid-template-columns:1fr; } .proto .case-top p{ max-width:62ch; }
   /* idioma ES | EN: mismo estilo que sol | luna, del otro lado de "Escribime" (js/idioma.js) */
   .lang-seg button{ width:34px; font-family:var(--mono); font-size:11.5px; font-weight:600; letter-spacing:.04em; }
+  /* oficina virtual interactiva (portfolio.html#oficina): imagen fija + puntos sobre cada empleado + ficha al costado */
+  .vo{ overflow:hidden; }
+  .vo img{ user-select:none; }
+  .vo-spots{ position:absolute; inset:0; }
+  .vo-spot{ position:absolute; border:0; padding:0; background:none; cursor:pointer; border-radius:8px; }
+  .vo-spot::after{ content:""; position:absolute; inset:-3px; border-radius:8px; box-shadow:0 0 0 2px var(--c); opacity:0; transition:opacity .2s; }
+  .vo-spot:hover::after, .vo-spot.sel::after, .vo-spot:focus-visible::after{ opacity:1; }
+  .vo-spot .ring{ position:absolute; left:50%; top:-14px; width:12px; height:12px; margin-left:-6px; border-radius:50%; background:#f3c26b; box-shadow:0 0 0 3px rgba(243,194,107,.35); }
+  .vo-spot .ring::after{ content:""; position:absolute; inset:-6px; border-radius:50%; border:2px solid #f3c26b; animation:voPulse 1.8s ease-out infinite; }
+  .vo-spot.sel .ring{ background:#fff; }
+  @keyframes voPulse{ from{ transform:scale(.4); opacity:.9; } to{ transform:scale(1.6); opacity:0; } }
+  .vo-spot .tip{ position:absolute; left:50%; bottom:calc(100% + 18px); transform:translateX(-50%) translateY(4px); white-space:nowrap; font-size:12px; font-weight:600; color:#f4efe6;
+    background:rgba(24,20,17,.92); border:1px solid #3a322b; border-radius:8px; padding:4px 9px; opacity:0; pointer-events:none; transition:opacity .18s, transform .18s; }
+  .vo-spot:hover .tip{ opacity:1; transform:translateX(-50%); }
+  .vo-panel{ position:absolute; top:5.5%; right:1.2%; bottom:2%; width:32%; overflow:auto; background:#1b1714; border:1px solid #3a322b; border-radius:12px;
+    color:#e9e3da; padding:16px 16px 18px; transform:translateX(110%); transition:transform .4s cubic-bezier(.2,.8,.2,1); box-shadow:-20px 0 40px -20px rgba(0,0,0,.7); }
+  .vo.open .vo-panel{ transform:none; }
+  .vo-x{ position:absolute; top:10px; right:10px; width:28px; height:28px; border-radius:8px; border:1px solid #3a322b; background:none; color:#cfc6ba; font-size:18px; line-height:1; cursor:pointer; }
+  .vo-who{ display:flex; gap:12px; align-items:center; padding-right:30px; }
+  .vo-who .av{ width:44px; height:44px; flex:none; border-radius:50%; display:grid; place-items:center; font-weight:700; font-size:15px; color:#fff; }
+  .vo-who b{ display:block; font-family:'DM Serif Display', serif; font-weight:400; font-size:20px; line-height:1.1; }
+  .vo-who span{ font-size:12.5px; color:#a99f93; }
+  .vo-area{ display:inline-block; margin-top:10px; font-size:11.5px; padding:3px 9px; border-radius:6px; color:#f4efe6; background:color-mix(in srgb, var(--c) 35%, transparent); }
+  .vo-tabs{ display:flex; gap:16px; margin-top:14px; border-bottom:1px solid #332c26; font-size:13px; color:#8f867b; }
+  .vo-tabs span{ padding-bottom:8px; }
+  .vo-tabs .on{ color:#f4efe6; box-shadow:inset 0 -2px #e0a85a; }
+  .vo-panel p{ font-size:13.5px; line-height:1.5; margin-top:12px; color:#e9e3da; }
+  .vo-panel h5{ margin-top:14px; font-family:var(--mono); font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:#8f867b; font-weight:500; }
+  .vo-chips{ display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+  .vo-chips span{ font-size:12px; border:1px solid #3a322b; border-radius:999px; padding:4px 10px; color:#ddd5ca; }
+  .vo-panel .vo-to{ margin-top:6px; color:#cfc6ba; }
+  .vo-hint{ position:absolute; left:50%; bottom:4%; transform:translateX(-50%); display:flex; align-items:center; gap:8px; font-size:13px; color:#f4efe6;
+    background:rgba(24,20,17,.88); border:1px solid #3a322b; border-radius:999px; padding:7px 14px; transition:opacity .3s; pointer-events:none; white-space:nowrap; }
+  .vo-hint .dot{ width:9px; height:9px; border-radius:50%; background:#f3c26b; box-shadow:0 0 0 3px rgba(243,194,107,.3); }
+  .vo-hint.off{ opacity:0; }
+  /* en celular la imagen queda muy chica: la ficha se abre abajo de la imagen, no encima */
+  @media (max-width:760px){
+    .proto .desk{ overflow:visible; }
+    .vo{ aspect-ratio:auto !important; display:flex; flex-direction:column; }
+    .vo img{ position:relative !important; height:auto !important; aspect-ratio:1280/800; }
+    .vo-spots{ bottom:auto; aspect-ratio:1280/800; }
+    .vo-spot .ring{ width:8px; height:8px; margin-left:-4px; top:-9px; }
+    .vo-spot .tip{ display:none; }
+    .vo-hint{ position:static; transform:none; margin:10px auto; font-size:12px; }
+    .vo-panel{ position:relative; inset:auto; width:auto; transform:none; display:none; margin:0; border-radius:0 0 12px 12px; box-shadow:none; }
+    .vo.open .vo-panel{ display:block; }
+    .vo.open .vo-hint{ display:none; }
+  }

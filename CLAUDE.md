@@ -11,7 +11,7 @@ Hablarle a Camilo en español rioplatense, simple y sin tecnicismos.
 - `portfolio.html` — PORTFOLIO, en este ORDEN (pedido de Camilo, 8/10): 1) Contenido con IA (`#ia`, mosaico con cada pieza en su
   formato, tal cual el original: bordes REDONDEADOS (probó cuadrados y esquinas rectas, no le gustaron); filtros Perfumes / En la calle / Personas),
   2) Páginas web (`#web`, M Perfumerie + experiencia interactiva), 3) Contenido interactivo (`#ropa`: `#probador` y
-  `#producto-360`), 4) Prototipos (`#prototipos`, 19/10) AL FINAL.
+  `#producto-360`)... ORDEN NUEVO (19/10): Contenido con IA → Páginas web (M Perfumerie) → Oficina virtual (`#oficina`) → Contenido interactivo (`#ropa`) → Proyecto personal (`#personal`, Last Rental) al final.
 - `css/sitio.css` y `js/sitio.js` — estilos y código COMPARTIDOS por las dos páginas (sin build). El JS chequea que
   cada elemento exista, porque no todos están en las dos páginas.
 - En celular el inicio tiene que ser corto: servicios, planes y las grabaciones de M Perfumerie se deslizan de costado.
@@ -210,3 +210,12 @@ en neón y en papelería (nano_banana_pro con el flyer de referencia importado d
   En inglés los links de WhatsApp mandan el mismo mensaje único pero en inglés.
 - TEXTO NUEVO EN LA PÁGINA = agregarlo al diccionario `EN` de idioma.js (si no, queda en español al pasar a inglés).
   Textos que el JS dibuja en canvas: envolverlos con `T('...')`.
+
+## Oficina virtual interactiva (19/10, reemplaza al video con zoom)
+- Camilo NO quiere zoom ni movimiento: la imagen de la oficina queda SIEMPRE fija (`portfolio/prototipos/oficina.webp`,
+  captura real de la app en vista general). Sobre cada empleado hay un punto dorado que late (`.vo-spot`); al tocarlo se
+  abre su ficha al costado (`.vo-panel`, copia del panel de la app: avatar, rol, área, pestañas, especialidades, a quién deriva).
+  En celular la ficha se abre abajo de la imagen. Datos (es/en) y posiciones al final de js/sitio.js.
+- Posiciones: cajas de cada puesto proyectadas desde la escena 3D de la app (en px de 1280×800). Si cambia la planta, rehacer.
+- Last Rental (`#personal`): texto = "me armé una habitación ambientada en un videoclub de los 2000, estilo juego… organizo
+  películas que vi y tengo, juegos e imágenes de mi PC".
