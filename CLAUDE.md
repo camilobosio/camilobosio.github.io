@@ -201,3 +201,12 @@ en neón y en papelería (nano_banana_pro con el flyer de referencia importado d
     Juego en `Desktop\LAST-RENTAL` (`dist/last-rental.js`).
 - Las capturas por sección con Playwright muestran la franja naranja del menú en el medio: es el menú fijo, no un error.
   Para mostrarle a Camilo, sacar captura de pantalla completa (viewport), no del elemento.
+
+## Idioma ES | EN (19/10, en prueba hasta que Camilo dé el OK)
+- Botones **ES | EN** (`#langSeg`, `.theme-seg.lang-seg`) a la DERECHA de "Escribime", mismo estilo que sol | luna.
+- `js/idioma.js` (se carga antes de sitio.js): la página sigue escrita en español; en inglés traduce en el navegador con un
+  diccionario texto exacto → inglés (`EN`) + reglas para textos con partes variables (`RX`). Un MutationObserver traduce
+  lo que agrega el JS (generador, "Ver más", visor). Arranca siempre en español; se guarda en `localStorage` (`idioma`).
+  En inglés los links de WhatsApp mandan el mismo mensaje único pero en inglés.
+- TEXTO NUEVO EN LA PÁGINA = agregarlo al diccionario `EN` de idioma.js (si no, queda en español al pasar a inglés).
+  Textos que el JS dibuja en canvas: envolverlos con `T('...')`.

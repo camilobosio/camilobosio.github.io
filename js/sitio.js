@@ -1,3 +1,4 @@
+if (!window.T) window.T = s => s;
 (function(){
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   // frases que cambian en la portada
@@ -228,7 +229,7 @@
       img = i; imgName = name;
       thumb.querySelector('img').src = src; thumb.querySelector('span').textContent = name; thumb.classList.add('on');
       if (pendingPick) { const go = pendingPick; pendingPick = null; go(); }
-      else if (!ta.value.trim()) { setMode('variar'); ta.value = 'Variaciones de mi logo'; }
+      else if (!ta.value.trim()) { setMode('variar'); ta.value = T('Variaciones de mi logo'); }
     };
     i.src = src;
   }
@@ -248,14 +249,14 @@
     let name = '', letters = '';
     const q = s.match(/["“'«]([^"”'»]{1,28})["”'»]/);
     if (q) name = q[1].trim();
-    const lm = s.match(/letras?\s+([A-Za-zÑñ]{1,3})\b/i) || s.match(/con\s+(?:una|un|la|el|las|los)\s+([A-Za-zÑñ]{1,3})\b/i) || s.match(/\b([A-ZÑ]{1,3})\b(?!.*\b[A-ZÑ]{1,3}\b)/);
+    const lm = s.match(/(?:letras?|letters?)\s+([A-Za-zÑñ]{1,3})\b/i) || s.match(/(?:con|with)\s+(?:una|un|la|el|las|los|an|a|the)\s+([A-Za-zÑñ]{1,3})\b/i) || s.match(/\b([A-ZÑ]{1,3})\b(?!.*\b[A-ZÑ]{1,3}\b)/);
     if (lm && lm[1].length <= 3) letters = lm[1].toUpperCase();
     if (!name) { const caps = s.split(/\s+/).slice(1).filter(w => /^[A-ZÁÉÍÓÚÑ][\wáéíóúñ&'-]+/.test(w)); if (caps.length) name = caps.slice(0, 3).join(' ').replace(/[.,:;!?]+$/, ''); }
     if (!letters) letters = name ? name.split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase() : 'M';
-    const flyer = /flyer|post\b|publicidad|historia|promo|oferta|banner|2x1|descuento|%/i.test(s);
-    let head = s.replace(/^(cre[aá](r|me)?|hac[eé](r|me)?|quiero|necesito|dise[nñ][aá](r|me)?|arm[aá](r|me)?)\s+/i, '').replace(/^(un|una)\s+/i, '')
-      .replace(/^(flyer|post|publicidad|historia|banner|promo)\s*[:\-–]?\s*/i, '').replace(/^(de|para|con|que diga)\s+/i, '').replace(/^(mi|el|la)\s+producto\s*/i, '').trim();
-    if (head.length < 3) head = 'Nuevo en la tienda';
+    const flyer = /flyer|post\b|publicidad|historia|promo|oferta|banner|2x1|descuento|story|offer|sale\b|discount|%/i.test(s);
+    let head = s.replace(/^(cre[aá](r|me)?|hac[eé](r|me)?|quiero|necesito|dise[nñ][aá](r|me)?|arm[aá](r|me)?|create|make|design|i want|i need)\s+/i, '').replace(/^(un|una|an|a)\s+/i, '')
+      .replace(/^(flyer|post|publicidad|historia|banner|promo)\s*[:\-–]?\s*/i, '').replace(/^(de|para|con|que diga|for|with|of|saying|that says)\s+/i, '').replace(/^(mi|el|la|my|the|your)\s+(producto|product)\s*/i, '').trim();
+    if (head.length < 3) head = T('Nuevo en la tienda');
     return { name, letters, flyer, head: head.charAt(0).toUpperCase() + head.slice(1) };
   }
 
@@ -394,7 +395,7 @@
     { const [c, x] = cv(800, 1000); x.fillStyle = '#111113'; x.fillRect(0, 0, 800, 1000);
       x.save(); rr(x, 40, 40, 720, 560, 28); x.clip(); x.fillStyle = '#1e1e22'; x.fillRect(40, 40, 720, 560); contain(x, im, 60, 60, 680, 520); x.restore();
       x.fillStyle = '#fff'; x.textAlign = 'left'; x.textBaseline = 'alphabetic'; const w = wrap(x, H, s => `800 ${s}px ${D}`, 700, 2, 96);
-      w.out.forEach((l, i) => x.fillText(l, 50, 700 + i * w.z * .98)); pill(x, 'Pedí por WhatsApp', 230, 915, lin(x, 60, 0, 400, 0, '#ff9d4d', '#ff5fa2'), '#111113');
+      w.out.forEach((l, i) => x.fillText(l, 50, 700 + i * w.z * .98)); pill(x, T('Pedí por WhatsApp'), 230, 915, lin(x, 60, 0, 400, 0, '#ff9d4d', '#ff5fa2'), '#111113');
       x.fillStyle = '#a3a2aa'; x.font = `500 22px ${M}`; x.textAlign = 'right'; x.fillText(N.toUpperCase(), 750, 922); out.push([c, 'Flyer oscuro']); }
     { const [c, x] = cv(800, 1000); x.fillStyle = lin(x, 0, 0, 800, 1000, p.a, p.b); x.fillRect(0, 0, 800, 1000);
       x.fillStyle = p.bg; x.textAlign = 'center'; x.textBaseline = 'alphabetic'; const w = wrap(x, H.toUpperCase(), s => `800 ${s}px ${D}`, 700, 2, 90);
