@@ -662,4 +662,17 @@
   @keyframes protoSpin{ to{ transform:rotate(360deg); } }
   .proto-title{ font-family:var(--display); font-weight:800; font-size:clamp(44px, 7.4vw, 100px); line-height:.92; letter-spacing:-.045em; margin-top:18px; text-wrap:balance; }
   @media (max-width:760px){ section.block.pf-proto-top{ padding-top:56px; } .proto-head{ padding-top:40px; } }
+  /* títulos grandes con ícono animado: Contenido con IA (destellos) y Páginas web (mouse que hace clic) */
+  .pf-h.big{ font-size:22px; gap:16px; }
+  .pf-ico{ width:44px; height:36px; flex:none; overflow:visible; }
+  .pf-ico .o{ fill:var(--orange); } .pf-ico .s{ fill:none; stroke:var(--orange); stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round; }
+  .pf-ico .tw{ transform-box:fill-box; transform-origin:center; animation:icoTw 2s ease-in-out infinite; }
+  .pf-ico .bt{ animation:icoBt 2.2s infinite; }
+  .pf-ico .cur{ fill:var(--ink); stroke:var(--paper); stroke-width:1.2; stroke-linejoin:round; transform-box:fill-box; transform-origin:0 0; animation:icoCl 2.2s ease-in-out infinite; }
+  html[data-theme="dark"] .pf-ico .cur{ stroke:#141416; }
+  @keyframes icoTw{ 0%,100%{ transform:scale(.45); opacity:.35; } 50%{ transform:none; opacity:1; } }
+  @keyframes icoBt{ 0%,52%{ opacity:1; } 56%{ opacity:.45; } 62%,100%{ opacity:1; } }
+  @keyframes icoCl{ 0%,30%{ transform:translate(12px,10px); } 50%{ transform:none; } 56%{ transform:scale(.85); } 62%,100%{ transform:none; } }
+  @media (max-width:760px){ .pf-h.big{ font-size:17px; gap:12px; } .pf-ico{ width:36px; height:30px; } }
+  @media (prefers-reduced-motion:reduce){ .pf-ico *{ animation:none !important; } }
   @media (prefers-reduced-motion:reduce){ .proto-badge .spin{ animation-duration:2.4s; } }

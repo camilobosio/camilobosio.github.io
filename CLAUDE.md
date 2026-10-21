@@ -17,6 +17,8 @@ Hablarle a Camilo en español rioplatense, simple y sin tecnicismos.
   Adentro: Para empresas (`#oficina`) → Contenido interactivo (`#ropa`: 360 + probador) → Experiencia visual (`#personal`, Last Rental,
   ya no se titula "Proyecto personal"; el texto arranca "Un proyecto personal: me armé una habitación…"). Todo lo de arriba = terminado.
   En `#wnav` NO va el "1 / 2": solo pestañas + flechitas.
+  Títulos "Contenido con IA" y "Páginas web" = `.pf-h.big` (22px) con ícono animado `.pf-ico` (elegidos de 3 bocetos c/u):
+  IA = 3 destellos que titilan; Web = ventanita con mouse que hace clic en un botón.
 - `css/sitio.css` y `js/sitio.js` — estilos y código COMPARTIDOS por las dos páginas (sin build). El JS chequea que
   cada elemento exista, porque no todos están en las dos páginas.
 - En celular el inicio tiene que ser corto: servicios, planes y las grabaciones de M Perfumerie se deslizan de costado.
