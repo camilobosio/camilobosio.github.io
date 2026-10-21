@@ -23,7 +23,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=DM+Serif+Display&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 <script>try{if(localStorage.getItem("tema")==="oscuro")document.documentElement.dataset.theme="dark"}catch(e){}</script>
-<link rel="stylesheet" href="css/sitio.css?v=53">
+<link rel="stylesheet" href="css/sitio.css?v=54">
 </head>
 <body>
   <div class="splash-load" id="splashLoad" aria-hidden="true">
@@ -81,7 +81,7 @@
       <h1 class="pf-title">Lo que hice</h1>
       <p class="pf-lead">Publicidades y videos con IA, páginas web, contenido interactivo y prototipos. Todo real: tocá, arrastrá y probá.</p>
       <nav class="pf-jump" aria-label="Ir a">
-        <a href="#ia">Contenido con IA</a><a href="#web">Páginas web</a><a href="#oficina">Oficina virtual</a><a href="#ropa">Contenido interactivo</a><a href="#personal">Proyecto personal</a>
+        <a href="#ia">Contenido con IA</a><a href="#web">Páginas web</a><a href="#prototipos">Prototipos en proceso</a>
       </nav>
     </div>
   </section>
@@ -141,7 +141,6 @@
       <div class="wnav" id="wnav" role="group" aria-label="Páginas del portfolio">
         <button type="button" class="wnav-arr prev" data-d="-1" aria-label="Página anterior"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <div class="wnav-tabs"><button type="button" data-i="0" aria-pressed="true">M Perfumerie</button><button type="button" data-i="1" aria-pressed="false">Overesthetic</button></div>
-        <span class="wnav-n" id="wnavN">1 / 2</span>
         <button type="button" class="wnav-arr next" data-d="1" aria-label="Página siguiente"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       </div>
       <div class="wslides" id="wslides">
@@ -282,9 +281,18 @@
     </div>
   </section>
 
-  <section class="block pf-sec" id="oficina">
+  <section class="block pf-sec pf-proto-top" id="prototipos">
     <div class="wrap">
-      <h2 class="pf-h">Prototipo para empresas</h2>
+      <div class="proto-head">
+        <span class="proto-badge"><span class="spin" aria-hidden="true"></span>En proceso</span>
+        <h2 class="proto-title">Prototipos en proceso</h2>
+      </div>
+    </div>
+  </section>
+
+  <section class="block pf-sec pf-proto" id="oficina">
+    <div class="wrap">
+      <h2 class="pf-h">Para empresas</h2>
       <div class="case proto">
         <div class="case-top">
           <div>
@@ -316,7 +324,7 @@
     </div>
   </section>
 
-  <section class="block pf-sec" id="ropa">
+  <section class="block pf-sec pf-proto" id="ropa">
     <div class="wrap">
       <h2 class="pf-h">Contenido interactivo</h2>
       <div class="p3" id="producto-360">
@@ -361,14 +369,14 @@
     </div>
   </section>
 
-  <section class="block pf-sec" id="personal">
+  <section class="block pf-sec pf-proto" id="personal">
     <div class="wrap">
-      <h2 class="pf-h">Proyecto personal</h2>
+      <h2 class="pf-h">Experiencia visual</h2>
       <div class="lr">
         <div class="lr-txt">
-          <span class="label">Proyecto personal · Juego 3D</span>
+          <span class="label">Experiencia visual · Recorrido 3D</span>
           <h3>Last Rental</h3>
-          <p>Me armé una habitación ambientada en un videoclub de los 2000, estilo juego, que recorro en primera persona desde el navegador. Ahí organizo todas las películas que vi y tengo, mis juegos y las imágenes de mi PC: saco las cajas de los estantes, las doy vuelta, pongo mi música y miro videos en las teles de tubo.</p>
+          <p>Un proyecto personal: me armé una habitación ambientada en un videoclub de los 2000, estilo juego, que recorro en primera persona desde el navegador, para ordenar todo lo que tengo en mi PC. Ahí están todas las películas que vi, todos mis juegos y mis imágenes, usadas como cuadros y pósters en las paredes: saco las cajas de los estantes, las doy vuelta, pongo mi música y miro videos en las teles de tubo.</p>
         </div>
         <div class="lr-shots">
           <img src="portfolio/prototipos/last-rental-portada.webp" width="1280" height="640" loading="lazy" alt="Pantalla de inicio de Last Rental">
@@ -402,7 +410,7 @@
   <button type="button" class="next" id="lbNext" aria-label="Siguiente">›</button>
 </dialog>
 
-<script src="js/idioma.js?v=2"></script>
-<script src="js/sitio.js?v=50"></script>
+<script src="js/idioma.js?v=3"></script>
+<script src="js/sitio.js?v=51"></script>
 </body>
 </html>

@@ -639,7 +639,7 @@
   .wnav-tabs{ display:flex; gap:8px; flex-wrap:wrap; }
   .wnav-tabs button{ font:inherit; font-size:14px; padding:9px 15px; border-radius:999px; border:1px solid var(--line); background:#fff; color:var(--ink); cursor:pointer; transition:background .2s, color .2s; }
   .wnav-tabs button[aria-pressed="true"]{ background:var(--ink); color:var(--paper); border-color:var(--ink); cursor:default; }
-  .wnav-n{ margin-left:auto; font-family:var(--mono); font-size:12px; letter-spacing:.08em; color:var(--muted); margin-right:4px; }
+  .wnav .wnav-arr.next{ margin-left:auto; }
   .wnav-arr{ width:44px; height:44px; border-radius:50%; border:1px solid var(--line); background:#fff; color:var(--ink); display:grid; place-items:center; cursor:pointer; transition:background .2s, color .2s, transform .2s; }
   .wnav-arr svg{ width:20px; height:20px; }
   .wnav-arr.prev svg{ transform:rotate(180deg); }
@@ -653,4 +653,13 @@
   .case-bottom .soon{ font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--on-dark-muted); border:1px dashed #3a3a40; border-radius:999px; padding:10px 16px; }
   html[data-theme="dark"] .wnav-tabs button, html[data-theme="dark"] .wnav-arr{ background:#222227; color:var(--ink); }
   html[data-theme="dark"] .wnav-tabs button[aria-pressed="true"], html[data-theme="dark"] .wnav-arr.next{ background:var(--ink); color:#111113; }
-  @media (max-width:760px){ .wnav-n{ display:none; } .wnav-arr{ width:40px; height:40px; } .wnav-tabs button{ font-size:13px; padding:8px 12px; } .wnav{ justify-content:space-between; } }
+  @media (max-width:760px){ .wnav-arr{ width:40px; height:40px; } .wnav-tabs button{ font-size:13px; padding:8px 12px; } .wnav{ justify-content:space-between; } }
+  /* "Prototipos en proceso" (portfolio.html#prototipos): apartado final con todo lo que sigue en desarrollo */
+  section.block.pf-proto-top{ padding-top:88px; padding-bottom:8px; }
+  .proto-head{ border-top:2px dashed var(--line); padding-top:56px; }
+  .proto-badge{ display:inline-flex; align-items:center; gap:9px; font-family:var(--mono); font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--orange); border:1px dashed var(--orange); border-radius:999px; padding:7px 14px; }
+  .proto-badge .spin{ width:12px; height:12px; border-radius:50%; border:2px solid var(--orange-soft); border-top-color:var(--orange); animation:protoSpin .9s linear infinite; }
+  @keyframes protoSpin{ to{ transform:rotate(360deg); } }
+  .proto-title{ font-family:var(--display); font-weight:800; font-size:clamp(44px, 7.4vw, 100px); line-height:.92; letter-spacing:-.045em; margin-top:18px; text-wrap:balance; }
+  @media (max-width:760px){ section.block.pf-proto-top{ padding-top:56px; } .proto-head{ padding-top:40px; } }
+  @media (prefers-reduced-motion:reduce){ .proto-badge .spin{ animation-duration:2.4s; } }

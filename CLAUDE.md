@@ -12,6 +12,11 @@ Hablarle a Camilo en español rioplatense, simple y sin tecnicismos.
   formato, tal cual el original: bordes REDONDEADOS (probó cuadrados y esquinas rectas, no le gustaron); filtros Perfumes / En la calle / Personas),
   2) Páginas web (`#web`, M Perfumerie + experiencia interactiva), 3) Contenido interactivo (`#ropa`: `#probador` y
   `#producto-360`)... ORDEN NUEVO (19/10): Contenido con IA → Páginas web (M Perfumerie) → Oficina virtual (`#oficina`) → Contenido interactivo (`#ropa`) → Proyecto personal (`#personal`, Last Rental) al final.
+  ORDEN NUEVO (21/10): Contenido con IA → Páginas web → apartado final **"Prototipos en proceso"** (`#prototipos`, línea punteada,
+  cartel "En proceso" con ruedita naranja que gira y título grande, SIN texto explicativo: Camilo quiere solo el título).
+  Adentro: Para empresas (`#oficina`) → Contenido interactivo (`#ropa`: 360 + probador) → Experiencia visual (`#personal`, Last Rental,
+  ya no se titula "Proyecto personal"; el texto arranca "Un proyecto personal: me armé una habitación…"). Todo lo de arriba = terminado.
+  En `#wnav` NO va el "1 / 2": solo pestañas + flechitas.
 - `css/sitio.css` y `js/sitio.js` — estilos y código COMPARTIDOS por las dos páginas (sin build). El JS chequea que
   cada elemento exista, porque no todos están en las dos páginas.
 - En celular el inicio tiene que ser corto: servicios, planes y las grabaciones de M Perfumerie se deslizan de costado.
