@@ -270,3 +270,5 @@ en neón y en papelería (nano_banana_pro con el flyer de referencia importado d
 - 29/10 (5ª tanda, PUBLICADO): "Studio" ARRANCA en la pincelada (`.studio.s-brush`): al entrar (1,5 s) un pincel (`.st-pb`, el svg de
   madera) la recorre y la pinta de izq. a der. (máscara `.paint`). Al tocar: chorreada → cursiva → pincelada.
   Dorso de la credencial: "Camilo Bosio" + "Studio" pincelado (`.ly-studio`, usa el filtro #stBrush de la portada) + web.
+- 29/10: ORDEN DEL INICIO nuevo: portada BOSIO → Hago… (logo + celular) → cinta → **Portfolio** (`#trabajo`) → Lo que hago → Planes →
+  ¿Qué vamos a crear? → Cómo trabajo → Quién → Contacto.
