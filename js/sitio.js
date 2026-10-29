@@ -1171,11 +1171,11 @@ document.querySelectorAll('.plan').forEach(plan => {
   }
   const refit = () => requestAnimationFrame(fitCamilo);
   // tocar el nombre con el pincel: cambia la tipografía de BOSIO (como si la repintara de izquierda a derecha)
-  const FONTS = ['', 'f-bodoni', 'f-brico']; let fi = 0;
-  if(nm) nm.addEventListener('click', () => {
-    if(FONTS[fi]) st.classList.remove(FONTS[fi]); fi = (fi + 1) % FONTS.length; if(FONTS[fi]) st.classList.add(FONTS[fi]);
-    bos.classList.remove('swap'); void bos.offsetWidth; bos.classList.add('swap'); refit();
-  });
+  // tocar "Studio": cambia de estilo (se repinta de izquierda a derecha)
+  const stw = st.querySelector('.st-studio'), STY = ['', 's-brush', 's-wet']; let si = 0;
+  const swapStudio = () => { if(STY[si]) st.classList.remove(STY[si]); si = (si + 1) % STY.length; if(STY[si]) st.classList.add(STY[si]);
+    stw.classList.remove('swap'); void stw.offsetWidth; stw.classList.add('swap'); };
+  if(stw){ stw.addEventListener('click', swapStudio); stw.addEventListener('keydown', e => { if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); swapStudio(); } }); }
   (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => { refit(); setTimeout(refit, 1400); }); addEventListener('resize', refit); addEventListener('load', refit);
   if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const N = 24, srcs = Array.from({ length:N }, (_, i) => `images/rastro/${String(i + 1).padStart(2, '0')}.webp`);
@@ -1189,11 +1189,14 @@ document.querySelectorAll('.plan').forEach(plan => {
     el.style.setProperty('--w', w + 'px');
     const h = w, r = (Math.random() - .5) * 8;
     const at = (ox, oy, s) => `translate3d(${(x - w / 2 + ox).toFixed(1)}px, ${(y - h / 2 + oy).toFixed(1)}px, 0) rotate(${r.toFixed(1)}deg) scale(${s})`;
+    // si aparece sobre BOSIO Studio, va más transparente (la marca se sigue leyendo); afuera, normal
+    const nr = nm.getBoundingClientRect(), sr = st.getBoundingClientRect(), op = (x > nr.left - sr.left - 20 && x < nr.right - sr.left + 20 && y > nr.top - sr.top - 10 && y < nr.bottom - sr.top + 10) ? .4 : 1;
+    if(op < 1) el.classList.add('over');
     box.appendChild(el); live++;
     const a = el.animate([
       { transform:at(0, 0, .82), opacity:0 },
-      { transform:at(dx * .25, dy * .25, 1), opacity:1, offset:.16 },
-      { transform:at(dx * .6, dy * .6, 1), opacity:1, offset:.7 },
+      { transform:at(dx * .25, dy * .25, 1), opacity:op, offset:.16 },
+      { transform:at(dx * .6, dy * .6, 1), opacity:op, offset:.7 },
       { transform:at(dx * .8, dy * .8 + 10, .92), opacity:0 }
     ], { duration:1100, easing:'cubic-bezier(.2,.7,.2,1)', fill:'forwards' });
     a.onfinish = () => { el.remove(); live--; };

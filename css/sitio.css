@@ -785,22 +785,20 @@
   .top .menu-panel .theme-seg button:not([aria-pressed="true"]){ color:var(--muted) !important; }
   .top .menu-panel .theme-seg button[aria-pressed="true"]{ background:var(--ink) !important; color:var(--paper) !important; }
 
-  /* portada negra: el mouse es una bolita de pintura naranja (solo ahí); los recuadros la siguen */
-  @media (hover:hover) and (pointer:fine){ .studio, .studio *{ cursor:none; } }
-  .st-cursor{ position:absolute; left:0; top:0; z-index:3; width:0; height:0; pointer-events:none; opacity:0; transition:opacity .2s; will-change:transform; }
-  .st-cursor img{ position:absolute; left:-5.5px; top:-1px; width:11px; height:44px; max-width:none; transform-origin:50% 2%; transform:rotate(-32deg);   /* punta arriba a la izquierda, como la flecha del mouse */
-    filter:drop-shadow(1px 2px 2px rgba(0,0,0,.5)); transition:transform .15s; }
-  .st-cursor.on{ opacity:1; }
-  .st-cursor.down img{ transform:rotate(-32deg) translateY(-2px) scaleY(.95); }
-  @media (hover:none){ .st-cursor{ display:none; } }
 
   /* barra de arriba sobre la portada: siempre negra (nunca blanca); arriba de todo la franja naranja baja sobre el negro */
   .top.on-studio{ background:#0a0a0b; -webkit-backdrop-filter:none; backdrop-filter:none; }
   .top.on-studio:not(.scrolled) nav a, .top.on-studio:not(.scrolled) .btn-dark, .top.on-studio:not(.scrolled) .menu-btn{ transition:color .2s .38s, background .2s .38s, border-color .2s .38s; }   /* cambian de color cuando ya llegó la franja naranja */
 
-  /* tocar BOSIO con el pincel cambia la letra entre las 3 que se probaron (Syne → Bodoni → Bricolage) */
-  .st-name{ pointer-events:auto; }
-  .studio.f-bodoni .st-bosio{ font-family:"Bodoni Moda", "DM Serif Display", serif; letter-spacing:-.02em; }
-  .studio.f-brico .st-bosio{ font-family:var(--display); letter-spacing:-.055em; font-size:clamp(58px, 11.6vw, 166px); }
-  .st-bosio.swap{ animation:stSwap .55s var(--ease) both; }
+  .st-studio.swap{ animation:stSwap .55s var(--ease) both; }
   @keyframes stSwap{ 0%{ clip-path:inset(-20% 100% -20% -20%); filter:blur(4px); } 100%{ clip-path:inset(-20% -20% -20% -20%); filter:none; } }
+
+  /* "Studio" se toca y cambia de estilo: 1) cursiva actual · 2) pincelada (como pintada con pincel) · 3) pintura que chorrea */
+  .st-studio{ pointer-events:auto; cursor:pointer; outline:none; }
+  .st-studio:focus-visible{ outline:1px dashed rgba(243,241,236,.4); outline-offset:6px; }
+  .studio.s-brush .st-studio{ font-family:"Kaushan Script", cursive; font-style:normal; font-size:clamp(34px, 5.2vw, 76px); margin-top:-.08em; letter-spacing:0;
+    background:linear-gradient(100deg, #ff9d4d 0%, #ff7a3d 40%, #ff5fa2 100%); -webkit-background-clip:text; background-clip:text; filter:url(#stBrush) drop-shadow(0 2px 0 rgba(0,0,0,.25)); }
+  .studio.s-wet .st-studio{ font-family:"Rubik Wet Paint", var(--display); font-style:normal; font-size:clamp(28px, 4.2vw, 60px); margin-top:.02em; letter-spacing:.01em;
+    background:linear-gradient(180deg, #ff9d4d 0%, #ff7a3d 45%, #ff5fa2 100%); -webkit-background-clip:text; background-clip:text; padding-bottom:.25em; }
+  /* recuadros que pasan por encima del nombre: más transparentes */
+  .st-trail img.over{ filter:saturate(.8); }
