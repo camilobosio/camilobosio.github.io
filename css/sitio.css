@@ -676,3 +676,113 @@
   @media (max-width:760px){ .pf-h.big{ font-size:17px; gap:12px; } .pf-ico{ width:36px; height:30px; } }
   @media (prefers-reduced-motion:reduce){ .pf-ico *{ animation:none !important; } }
   @media (prefers-reduced-motion:reduce){ .proto-badge .spin{ animation-duration:2.4s; } }
+
+  /* ---------- BOSIO STUDIO: portada negra con la marca + rastro de trabajos al mover el mouse (js: "studio" al final de sitio.js) ---------- */
+  .studio{ position:relative; overflow:hidden; isolation:isolate; background:#0a0a0b; color:#f3f1ec;
+    min-height:calc(100svh - 62px); display:grid; place-items:center; text-align:center; padding:72px 20px 96px; }
+  .studio::after{ content:""; position:absolute; inset:0; z-index:-1; pointer-events:none;     /* leve luz para que el negro no sea plano */
+    background:radial-gradient(60% 50% at 50% 46%, rgba(255,255,255,.055), transparent 70%); }
+  .st-trail{ position:absolute; inset:0; z-index:0; pointer-events:none; }
+  .st-trail img{ position:absolute; left:0; top:0; width:var(--w); height:auto; border-radius:6px; box-shadow:0 18px 40px -16px rgba(0,0,0,.8);
+    will-change:transform, opacity; -webkit-user-select:none; user-select:none; }
+  .st-brand{ position:relative; z-index:1; display:grid; justify-items:center; pointer-events:none; }
+  .st-name{ position:relative; display:grid; justify-items:center; line-height:1; font-weight:400; }
+  /* BOSIO: protagonista */
+  .st-bosio{ position:relative; z-index:2; font-family:"Syne", var(--display); font-weight:800; font-size:clamp(66px, 15.5vw, 214px); letter-spacing:-.04em; line-height:.86;
+    text-transform:uppercase; animation:stIn 1.2s var(--ease) .15s both; }
+  /* Studio: cursiva fina, apoyada debajo y corrida a la derecha, como una firma */
+  .st-studio{ font-family:"Instrument Serif", serif; font-style:italic; font-size:clamp(40px, 7.4vw, 104px); letter-spacing:-.01em; line-height:1;
+    justify-self:end; margin-top:-.16em; margin-right:-.12em; background:var(--paint); -webkit-background-clip:text; background-clip:text; color:transparent;
+    padding:0 .08em .06em; animation:stIn 1.2s var(--ease) .35s both; }
+  /* Camilo: detalle chico arriba, corrido a la izquierda */
+  .st-camilo{ justify-self:start; margin-bottom:.7em; font-family:var(--mono); font-size:clamp(11px, 1.1vw, 13px); letter-spacing:.42em; white-space:nowrap;
+    text-transform:uppercase; color:rgba(243,241,236,.62); display:flex; align-items:center; gap:.9em; animation:stIn 1s var(--ease) .05s both; }
+  .st-desc{ margin-top:clamp(22px, 3vw, 34px); max-width:62ch; text-wrap:balance; font-size:clamp(14px, 1.25vw, 16px); line-height:1.65; color:rgba(243,241,236,.66);
+    animation:stIn 1s var(--ease) .55s both; }
+  .st-down{ position:absolute; left:50%; bottom:28px; transform:translateX(-50%); z-index:1; display:grid; justify-items:center; gap:10px; text-decoration:none;
+    font-family:var(--mono); font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:rgba(243,241,236,.55); transition:color .25s; }
+  .st-down:hover{ color:#fff; }
+  .st-down i{ width:1px; height:34px; background:linear-gradient(rgba(243,241,236,.7), transparent); animation:stLine 2.2s var(--ease) infinite; transform-origin:top; }
+  @keyframes stIn{ from{ opacity:0; transform:translateY(14px); filter:blur(6px); } to{ opacity:1; transform:none; filter:none; } }
+  @keyframes stLine{ 0%{ transform:scaleY(0); } 50%{ transform:scaleY(1); } 100%{ transform:scaleY(1); opacity:0; } }
+  /* menú: al entrar baja la franja naranja (como siempre); si bajás y seguís sobre la portada negra, la barra se pone negra */
+  .top.on-studio.scrolled{ background:#0a0a0b; border-bottom-color:transparent; }
+  .top.on-studio.scrolled nav a{ color:rgba(243,241,236,.82); }
+  .top.on-studio.scrolled nav a:hover{ color:#fff; }
+  .top.on-studio.scrolled .btn-dark{ background:#f3f1ec; color:#0a0a0b; border-color:#f3f1ec; }
+  .top.on-studio.scrolled .btn-dark:hover{ background:var(--orange); border-color:var(--orange); color:#0a0a0b; }
+  .top.on-studio.scrolled .theme-seg{ border-color:rgba(243,241,236,.25) !important; }
+  .top.on-studio.scrolled .theme-seg button:not([aria-pressed="true"]){ color:rgba(243,241,236,.7) !important; }
+  .top.on-studio.scrolled .theme-seg button[aria-pressed="true"]{ background:#f3f1ec; color:#0a0a0b; }
+  /* la sección del celular ya no lleva el nombre grande: arranca con una etiqueta */
+  .hero-eyebrow{ display:block; margin-bottom:10px; }
+  .hero .rot{ margin-top:0; font-weight:800; font-size:clamp(34px, 4.6vw, 64px); line-height:1.05; letter-spacing:-.035em; flex-direction:column; }
+  .hero .rot .fixed{ color:var(--ink); }
+  @media (max-width:760px){
+    .studio{ min-height:calc(100svh - 96px); padding:56px 16px 92px; }
+    .st-studio{ margin-right:0; }
+  }
+  @media (prefers-reduced-motion: reduce){ .st-trail{ display:none; } }
+
+  /* ---------- servicios: solo títulos; el detalle aparece en un recuadro al pasar el mouse (o al tocar en celular) ---------- */
+  .svc{ position:relative; padding:22px 0 24px; flex-direction:row; align-items:center; gap:16px; cursor:default; outline:none; }
+  .svc .ic{ width:38px; height:38px; flex:none; }
+  .svc .ic svg{ width:19px; height:19px; }
+  .svc h3{ font-size:clamp(20px, 1.9vw, 24px); flex:1; text-wrap:balance; }
+  .svc h3 .nw{ white-space:nowrap; }
+  .svc::after{ content:"+"; font-family:var(--display); font-size:22px; line-height:1; color:var(--muted); transition:transform .3s var(--ease), color .3s; }
+  .svc:hover::after, .svc:focus-visible::after, .svc.open::after{ transform:rotate(45deg); color:var(--ink); }
+  .svc-pop{ position:absolute; z-index:20; left:0; top:calc(100% - 6px); width:min(340px, 100%); padding:16px 18px 18px; border-radius:16px;
+    background:var(--ink); color:var(--paper); box-shadow:0 22px 44px -18px rgba(17,17,19,.55);
+    opacity:0; visibility:hidden; transform:translateY(8px); transition:opacity .22s, transform .3s var(--ease), visibility 0s .3s; pointer-events:none; }
+  .svc-pop::before{ content:""; position:absolute; left:26px; top:-6px; width:12px; height:12px; background:inherit; transform:rotate(45deg); border-radius:2px; }
+  .svc-pop .kind{ display:block; margin-bottom:6px; color:#aebdff; }
+  .svc:nth-child(n+5) .svc-pop .kind{ color:#ffb38a; }
+  .svc-pop p{ font-size:14.5px; line-height:1.5; color:inherit; opacity:.9; }
+  .svc:hover .svc-pop, .svc:focus-visible .svc-pop, .svc.open .svc-pop{ opacity:1; visibility:visible; transform:none; transition:opacity .22s, transform .3s var(--ease), visibility 0s; }
+  html[data-theme="dark"] .svc-pop{ background:#f3f1ec; color:#111113; }
+  html[data-theme="dark"] .svc-pop .kind{ color:var(--violet); }
+  html[data-theme="dark"] .svc:nth-child(n+5) .svc-pop .kind{ color:var(--orange); }
+  @media (max-width:760px){
+    /* en celular: lista de títulos; al tocar uno se abre el detalle debajo (sin recuadro flotante) */
+    .services{ display:grid; grid-template-columns:1fr; overflow:visible; margin-inline:0; padding:0; }
+    .svc{ flex:none; flex-wrap:wrap; row-gap:0; border:0; border-top:1px solid var(--line); border-radius:0; background:none; padding:16px 0; cursor:pointer; }
+    .svc h3{ font-size:19px; }
+    .svc::after{ order:2; }
+    .svc-pop{ order:3; position:static; width:100%; flex-basis:100%; box-shadow:none; padding:0; background:none; color:var(--ink-2); max-height:0; overflow:hidden;
+      transform:none; transition:max-height .35s var(--ease), opacity .25s, visibility 0s .35s; }
+    .svc-pop::before{ display:none; }
+    .svc-pop .kind{ color:var(--violet); margin-top:8px; }
+    .svc:nth-child(n+5) .svc-pop .kind{ color:var(--orange); }
+    .svc:hover .svc-pop, .svc:focus-visible .svc-pop{ opacity:0; visibility:hidden; max-height:0; }
+    .svc.open .svc-pop{ opacity:1; visibility:visible; max-height:220px; transition:max-height .35s var(--ease), opacity .25s, visibility 0s; }
+    html[data-theme="dark"] .svc{ background:none; }
+    html[data-theme="dark"] .svc-pop{ background:none; color:var(--ink-2); }
+  }
+
+  /* ---------- logo con el balde arriba de "Hago…", pegado al borde de la portada negra: el balde sale de atrás del negro y vuelca hacia abajo ---------- */
+  .studio{ z-index:2; }
+  .hero{ --lw:clamp(118px, 11vw, 168px); overflow:visible; overflow-x:clip; padding-top:calc(var(--lw) * .66); }
+  .hero .wrap > div:first-child{ align-self:start; }
+  .hero-logo{ width:var(--lw); margin-top:calc(var(--lw) * -.366); margin-bottom:14px; margin-left:-6px; }   /* el dibujo tiene lugar arriba para el balde */
+  @media (max-width:860px){ .hero{ --lw:128px; } }
+  /* ---------- menú de tres rayitas: tema (claro / oscuro) e idioma (ES / EN) ---------- */
+  .menu-wrap{ position:relative; }
+  .menu-btn{ width:40px; height:40px; border-radius:999px; border:1.5px solid var(--line); background:none; cursor:pointer; display:grid; place-content:center; gap:4px; color:var(--ink); transition:background .25s, border-color .25s; }
+  .menu-btn i{ display:block; width:16px; height:1.8px; border-radius:2px; background:currentColor; transition:transform .3s var(--ease), opacity .2s; }
+  .menu-btn:hover{ background:color-mix(in srgb, var(--ink) 8%, transparent); }
+  .top:not(.scrolled):not(.pre) .menu-btn{ border-color:rgba(17,17,19,.3); color:#111113; }
+  .top.on-studio.scrolled .menu-btn{ border-color:rgba(243,241,236,.25); color:#f3f1ec; }
+  .menu-panel{ position:absolute; right:0; top:calc(100% + 8px); z-index:50; padding:7px 7px 7px 12px; border-radius:14px; display:grid; gap:4px;
+    background:var(--paper); border:1px solid var(--line); box-shadow:0 22px 44px -18px rgba(17,17,19,.45);
+    opacity:0; visibility:hidden; transform:translateY(-6px); transition:opacity .2s, transform .25s var(--ease), visibility 0s .25s; }
+  .menu-wrap.open .menu-panel{ opacity:1; visibility:visible; transform:none; transition:opacity .2s, transform .25s var(--ease), visibility 0s; }
+  .mp-row{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
+  .mp-row .label{ font-size:9.5px; letter-spacing:.1em; }
+  .menu-panel .theme-seg{ padding:2px; border-width:1px; }
+  .menu-panel .theme-seg button{ width:26px; height:23px; }
+  .menu-panel .theme-seg svg{ width:13px; height:13px; }
+  .menu-panel .lang-seg button{ width:28px; font-size:10px; }
+  .top .menu-panel .theme-seg{ border-color:var(--line) !important; }
+  .top .menu-panel .theme-seg button:not([aria-pressed="true"]){ color:var(--muted) !important; }
+  .top .menu-panel .theme-seg button[aria-pressed="true"]{ background:var(--ink) !important; color:var(--paper) !important; }

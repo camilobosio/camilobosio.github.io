@@ -623,7 +623,11 @@ if (!window.T) window.T = s => s;
     const ORDER = [1,0,2,3,5,4,6,7], POUR = [34.4, -40], IMP = 33, HIT = 14;   // cae sobre la línea larga de la B
     // centro de la "o" de Camilo (en las coordenadas del dibujo); si no hay portada, entra desde arriba a la derecha
     const oSpan = el.closest('h1') && el.closest('h1').querySelector('.ln span');
+    // logo debajo de la portada negra (data-from="#studio"): el balde sale de atrás del borde negro, baja un poco y vuelca
+    const fromEl = el.dataset.from && document.querySelector(el.dataset.from);
     function origin(){
+      if (fromEl){ const m = sv.getScreenCTM(); if (!m) return null; const pt = sv.createSVGPoint(); pt.x = 0; pt.y = fromEl.getBoundingClientRect().bottom;
+        const e = pt.matrixTransform(m.inverse()); return { x: POUR[0] + 14, y: e.y - 16, box: [-400, -900, 400, e.y] }; }
       if (!oSpan || !oSpan.firstChild) return null;
       const r = document.createRange(), s = oSpan.firstChild, n = s.textContent.length; r.setStart(s, n - 1); r.setEnd(s, n);
       const b = r.getBoundingClientRect(), m = sv.getScreenCTM(); if (!m || !b.width) return null;
@@ -739,7 +743,7 @@ if (!window.T) window.T = s => s;
     el.addEventListener('click', a.play);
     el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); a.play(); } });
     if (!reduce && 'IntersectionObserver' in window)
-      new IntersectionObserver((es, io) => { if (es[0].isIntersecting){ io.disconnect(); splashDone.then(() => setTimeout(a.play, 150)); } }, { threshold:.5 }).observe(el);
+      new IntersectionObserver((es, io) => { if (es[0].isIntersecting){ io.disconnect(); splashDone.then(() => setTimeout(a.play, +el.dataset.delay || 150)); } }, { threshold:.5 }).observe(el);
     return a;
   });
   window.__logos = (t) => anims.forEach(a => a.render(Math.min(t, a.end))); // para probar cuadros
@@ -1024,7 +1028,7 @@ document.querySelectorAll('.plan').forEach(plan => {
     }
     if(!raf) raf = requestAnimationFrame(tick);
   }
-  const skip = e => e.target.closest && e.target.closest('#lanyard');                // en la credencial con la foto, no (pedido de Camilo)
+  const skip = e => e.target.closest && e.target.closest('#lanyard, #studio, .top');   // ni en la credencial, ni en la portada negra, ni en el menú                // en la credencial con la foto, no (pedido de Camilo)
   // mouse: al apretar. Dedo: solo si fue un toque corto y quieto (al deslizar para bajar la página, no)
   let tap = null;
   addEventListener('pointerdown', e => {
@@ -1146,4 +1150,90 @@ document.querySelectorAll('.plan').forEach(plan => {
   }
   nav.querySelectorAll('.wnav-arr').forEach(b => b.addEventListener('click', () => go(cur + +b.dataset.d, +b.dataset.d)));
   tabs.forEach(t => t.addEventListener('click', () => go(+t.dataset.i, +t.dataset.i - cur)));
+})();
+
+// BOSIO STUDIO (portada negra): al mover el mouse aparecen miniaturas de trabajos reales que siguen el recorrido y se van
+// en ~1 s. Solo dentro de la portada. En pantallas táctiles aparecen solas, de a una, mientras la portada se ve.
+(function(){
+  const st = document.getElementById('studio'), box = document.getElementById('stTrail'); if(!st || !box) return;
+  const top = document.getElementById('top');
+  // menú negro mientras está arriba de la portada
+  const onStudio = () => top && top.classList.toggle('on-studio', st.getBoundingClientRect().bottom > top.offsetHeight);
+  onStudio(); addEventListener('scroll', onStudio, { passive:true }); addEventListener('resize', onStudio);
+  // "Camilo" de punta a punta de la B de BOSIO (un poco adentro), con letras no tan separadas: se ajusta el tamaño y el espaciado
+  const cam = st.querySelector('.st-camilo'), bos = st.querySelector('.st-bosio'), nm = st.querySelector('.st-name');
+  function fitCamilo(){
+    if(!cam || !bos || !bos.firstChild) return;
+    const rg = document.createRange(); rg.setStart(bos.firstChild, 0); rg.setEnd(bos.firstChild, 1);
+    const b = rg.getBoundingClientRect(), n = nm.getBoundingClientRect(), k = cam.textContent.trim().length;
+    const inset = b.width * .06, target = b.width - inset * 2, SP = .55;     // espaciado entre letras = 0,55 del ancho de una letra
+    cam.style.letterSpacing = '0px'; cam.style.fontSize = ''; cam.style.marginRight = '0px';
+    const adv = cam.getBoundingClientRect().width / k, fs = parseFloat(getComputedStyle(cam).fontSize);
+    const scale = target / (adv * k + adv * SP * (k - 1)), f = fs * scale, ls = adv * scale * SP;
+    cam.style.fontSize = f + 'px'; cam.style.letterSpacing = ls + 'px'; cam.style.marginRight = -ls + 'px';
+    cam.style.marginLeft = (b.left - n.left + inset) + 'px';
+  }
+  const refit = () => requestAnimationFrame(fitCamilo);
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => { refit(); setTimeout(refit, 1400); }); addEventListener('resize', refit); addEventListener('load', refit);
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const N = 24, srcs = Array.from({ length:N }, (_, i) => `images/rastro/${String(i + 1).padStart(2, '0')}.webp`);
+  let pre = [], k = Math.floor(Math.random() * N), lx = null, ly = null, live = 0, visible = false;
+  const load = () => { if(pre.length) return; pre = srcs.map(s => { const im = new Image(); im.decoding = 'async'; im.src = s; return im; }); };
+  function spawn(x, y, dx, dy){
+    if(live >= 12) return;
+    const im = pre[k = (k + 1) % N]; if(!im || !im.complete || !im.naturalWidth) return;
+    const el = im.cloneNode(); el.alt = ''; el.draggable = false;
+    const small = innerWidth <= 760, w = small ? 70 + Math.random() * 24 : 98 + Math.random() * 40;
+    el.style.setProperty('--w', w + 'px');
+    const h = w * im.naturalHeight / im.naturalWidth, r = (Math.random() - .5) * 10;
+    const at = (ox, oy, s) => `translate3d(${(x - w / 2 + ox).toFixed(1)}px, ${(y - h / 2 + oy).toFixed(1)}px, 0) rotate(${r.toFixed(1)}deg) scale(${s})`;
+    box.appendChild(el); live++;
+    const a = el.animate([
+      { transform:at(0, 0, .82), opacity:0 },
+      { transform:at(dx * .25, dy * .25, 1), opacity:1, offset:.16 },
+      { transform:at(dx * .6, dy * .6, 1), opacity:1, offset:.7 },
+      { transform:at(dx * .8, dy * .8 + 10, .92), opacity:0 }
+    ], { duration:1100, easing:'cubic-bezier(.2,.7,.2,1)', fill:'forwards' });
+    a.onfinish = () => { el.remove(); live--; };
+  }
+  st.addEventListener('pointerenter', load, { once:true });
+  st.addEventListener('pointermove', e => {
+    if(e.pointerType !== 'mouse') return;
+    const r = st.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+    if(lx === null){ lx = x; ly = y; return; }
+    const d = Math.hypot(x - lx, y - ly);
+    if(d > 80){ spawn(x, y, (x - lx) * .35, (y - ly) * .35); lx = x; ly = y; }
+  });
+  st.addEventListener('pointerleave', () => { lx = ly = null; });
+  // táctil: aparecen solas, lejos del centro para no tapar la marca
+  if(matchMedia('(hover: none)').matches){
+    new IntersectionObserver(es => { visible = es[0].isIntersecting; if(visible) load(); }, { threshold:.4 }).observe(st);
+    setInterval(() => {
+      if(!visible || document.hidden) return;
+      const W = st.clientWidth, H = st.clientHeight, side = Math.random() < .5;
+      const x = W * (side ? .12 + Math.random() * .22 : .66 + Math.random() * .22), y = H * (.12 + Math.random() * .76);
+      spawn(x, y, (Math.random() - .5) * 30, -20);
+    }, 650);
+  }
+})();
+
+// servicios: en celular (sin mouse) se abren tocando; en compu con el mouse o con el teclado (Tab)
+document.querySelectorAll('.svc').forEach(s => {
+  s.setAttribute('aria-expanded', 'false');
+  s.addEventListener('click', () => {
+    const open = !s.classList.contains('open');
+    document.querySelectorAll('.svc.open').forEach(o => { o.classList.remove('open'); o.setAttribute('aria-expanded', 'false'); });
+    s.classList.toggle('open', open); s.setAttribute('aria-expanded', open);
+  });
+  s.addEventListener('keydown', e => { if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); s.click(); } if(e.key === 'Escape'){ s.classList.remove('open'); s.blur(); } });
+});
+document.addEventListener('click', e => { if(!e.target.closest('.svc')) document.querySelectorAll('.svc.open').forEach(o => { o.classList.remove('open'); o.setAttribute('aria-expanded', 'false'); }); });
+
+// menú de tres rayitas (tema e idioma)
+(function(){
+  const w = document.querySelector('.menu-wrap'), btn = document.getElementById('menuBtn'); if(!w || !btn) return;
+  const set = o => { w.classList.toggle('open', o); btn.setAttribute('aria-expanded', o); };
+  btn.addEventListener('click', e => { e.stopPropagation(); set(!w.classList.contains('open')); });
+  document.addEventListener('click', e => { if(!w.contains(e.target)) set(false); });
+  document.addEventListener('keydown', e => { if(e.key === 'Escape' && w.classList.contains('open')){ set(false); btn.focus(); } });
 })();

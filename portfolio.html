@@ -23,7 +23,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=DM+Serif+Display&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 <script>try{if(localStorage.getItem("tema")==="oscuro")document.documentElement.dataset.theme="dark"}catch(e){}</script>
-<link rel="stylesheet" href="css/sitio.css?v=55">
+<link rel="stylesheet" href="css/sitio.css?v=59">
 </head>
 <body>
   <div class="splash-load" id="splashLoad" aria-hidden="true">
@@ -67,9 +67,14 @@
       <a href="index.html#como">Cómo trabajo</a>
     </nav>
     <div class="top-act">
-      <div class="theme-seg" id="themeSeg" role="group" aria-label="Modo de la página"><button type="button" data-t="claro" aria-label="Modo claro" aria-pressed="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg></button><button type="button" data-t="oscuro" aria-label="Modo oscuro" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M20 14.6A8.2 8.2 0 1 1 9.4 4a6.6 6.6 0 0 0 10.6 10.6z"/></svg></button></div>
     <a class="btn btn-dark" href="https://wa.me/5493468437518?text=Hola%20Camilo%2C%20vi%20tu%20p%C3%A1gina%20y%20quer%C3%ADa%20consultarte%20por%20tus%20servicios.%20%C2%BFMe%20podr%C3%ADas%20pasar%20m%C3%A1s%20informaci%C3%B3n%20para%20armar%20un%20presupuesto%3F" target="_blank" rel="noopener">Escribime</a>
-    <div class="theme-seg lang-seg" id="langSeg" role="group" aria-label="Idioma"><button type="button" data-l="es" aria-label="Español" aria-pressed="true">ES</button><button type="button" data-l="en" aria-label="Inglés" aria-pressed="false">EN</button></div>
+    <div class="menu-wrap">
+      <button type="button" class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menuPanel" aria-label="Opciones"><i></i><i></i><i></i></button>
+      <div class="menu-panel" id="menuPanel" role="dialog" aria-label="Opciones">
+        <div class="mp-row"><span class="label">Tema</span><div class="theme-seg" id="themeSeg" role="group" aria-label="Modo de la página"><button type="button" data-t="claro" aria-label="Modo claro" aria-pressed="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg></button><button type="button" data-t="oscuro" aria-label="Modo oscuro" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M20 14.6A8.2 8.2 0 1 1 9.4 4a6.6 6.6 0 0 0 10.6 10.6z"/></svg></button></div></div>
+        <div class="mp-row"><span class="label">Idioma</span><div class="theme-seg lang-seg" id="langSeg" role="group" aria-label="Idioma"><button type="button" data-l="es" aria-label="Español" aria-pressed="true">ES</button><button type="button" data-l="en" aria-label="Inglés" aria-pressed="false">EN</button></div></div>
+      </div>
+    </div>
     </div>
   </div>
 </header>
@@ -410,7 +415,7 @@
   <button type="button" class="next" id="lbNext" aria-label="Siguiente">›</button>
 </dialog>
 
-<script src="js/idioma.js?v=3"></script>
-<script src="js/sitio.js?v=51"></script>
+<script src="js/idioma.js?v=5"></script>
+<script src="js/sitio.js?v=55"></script>
 </body>
 </html>

@@ -21,9 +21,9 @@
 <meta name="twitter:image" content="https://camilobosio.com/images/og-logo.jpg?v=2">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=DM+Serif+Display&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=DM+Serif+Display&family=Syne:wght@700;800&family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 <script>try{if(localStorage.getItem("tema")==="oscuro")document.documentElement.dataset.theme="dark"}catch(e){}</script>
-<link rel="stylesheet" href="css/sitio.css?v=55">
+<link rel="stylesheet" href="css/sitio.css?v=59">
 </head>
 <body>
   <div class="splash-load" id="splashLoad" aria-hidden="true">
@@ -67,20 +67,34 @@
       <a href="#como">Cómo trabajo</a>
     </nav>
     <div class="top-act">
-      <div class="theme-seg" id="themeSeg" role="group" aria-label="Modo de la página"><button type="button" data-t="claro" aria-label="Modo claro" aria-pressed="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg></button><button type="button" data-t="oscuro" aria-label="Modo oscuro" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M20 14.6A8.2 8.2 0 1 1 9.4 4a6.6 6.6 0 0 0 10.6 10.6z"/></svg></button></div>
     <a class="btn btn-dark" href="https://wa.me/5493468437518?text=Hola%20Camilo%2C%20vi%20tu%20p%C3%A1gina%20y%20quer%C3%ADa%20consultarte%20por%20tus%20servicios.%20%C2%BFMe%20podr%C3%ADas%20pasar%20m%C3%A1s%20informaci%C3%B3n%20para%20armar%20un%20presupuesto%3F" target="_blank" rel="noopener">Escribime</a>
-    <div class="theme-seg lang-seg" id="langSeg" role="group" aria-label="Idioma"><button type="button" data-l="es" aria-label="Español" aria-pressed="true">ES</button><button type="button" data-l="en" aria-label="Inglés" aria-pressed="false">EN</button></div>
+    <div class="menu-wrap">
+      <button type="button" class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menuPanel" aria-label="Opciones"><i></i><i></i><i></i></button>
+      <div class="menu-panel" id="menuPanel" role="dialog" aria-label="Opciones">
+        <div class="mp-row"><span class="label">Tema</span><div class="theme-seg" id="themeSeg" role="group" aria-label="Modo de la página"><button type="button" data-t="claro" aria-label="Modo claro" aria-pressed="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg></button><button type="button" data-t="oscuro" aria-label="Modo oscuro" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M20 14.6A8.2 8.2 0 1 1 9.4 4a6.6 6.6 0 0 0 10.6 10.6z"/></svg></button></div></div>
+        <div class="mp-row"><span class="label">Idioma</span><div class="theme-seg lang-seg" id="langSeg" role="group" aria-label="Idioma"><button type="button" data-l="es" aria-label="Español" aria-pressed="true">ES</button><button type="button" data-l="en" aria-label="Inglés" aria-pressed="false">EN</button></div></div>
+      </div>
+    </div>
     </div>
   </div>
 </header>
 
 <main id="inicio">
-  <section class="hero">
+  <section class="studio" id="studio" aria-label="Bosio Studio">
+    <div class="st-trail" id="stTrail" aria-hidden="true"></div>
+    <div class="st-brand">
+      <h1 class="st-name"><span class="st-camilo">Camilo</span><span class="st-bosio">Bosio</span><span class="st-studio">Studio</span></h1>
+      <p class="st-desc">Contenido con inteligencia artificial, visuales para campañas y páginas web.<br>Diseño, desarrollo y producción digital para marcas.</p>
+    </div>
+    <a class="st-down" href="#trabajos"><span>Ver trabajos</span><i aria-hidden="true"></i></a>
+  </section>
+
+  <section class="hero" id="trabajos">
     <div class="wrap">
       <div>
-        <h1><span class="ln"><span>Camilo</span></span><span class="ln"><span>Bosio</span></span><span class="hero-balde logo-balde" role="button" tabindex="0" aria-label="Mi logo: tocalo y le cae un balde de pintura"></span></h1>
+        <span class="logo-balde hero-logo" data-delay="1000" data-from="#studio" role="button" tabindex="0" aria-label="Mi logo: tocalo y le cae un balde de pintura"></span>
+        <span class="label hero-eyebrow">Trabajos reales</span>
         <div class="rot" aria-live="polite"><span class="fixed">Hago</span><span class="words" id="words"><span class="on">páginas web</span><span>campañas con IA</span><span>tiendas online</span><span>videos con IA</span><span>webs con animaciones</span><span>flyers con IA</span></span></div>
-        <p class="lead">Hago páginas web y contenido con inteligencia artificial para empresas, marcas y negocios: desde la página de tu empresa para mostrar quiénes son y lo que hacen, hasta tiendas online para vender. Y también campañas publicitarias, flyers, fotos de producto y videos. Pensado para compu y para celular.</p>
         <div class="ctas">
           <a class="btn btn-dark" href="https://wa.me/5493468437518?text=Hola%20Camilo%2C%20vi%20tu%20p%C3%A1gina%20y%20quer%C3%ADa%20consultarte%20por%20tus%20servicios.%20%C2%BFMe%20podr%C3%ADas%20pasar%20m%C3%A1s%20informaci%C3%B3n%20para%20armar%20un%20presupuesto%3F" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" fill="none"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19l-4 1z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
@@ -136,41 +150,35 @@
         <p>Dos servicios: tu página web y el contenido para promocionarla. La página puede ser para mostrar tu empresa o emprendimiento, o una tienda online para vender. Trabajo con inteligencia artificial, así llego más rápido y a menor costo a un resultado profesional, hecho a medida de tu marca.</p>
       </div>
       <div class="services">
-        <article class="svc">
+        <article class="svc" tabindex="0" aria-describedby="svcPop1">
           <div class="ic"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M3 8h18M8 21h8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></div>
-          <span class="kind">Página web</span>
           <h3>Página para tu empresa</h3>
-          <p>La página de tu empresa o marca, desde cero: quiénes son, qué hacen, sus servicios y trabajos, y cómo contactarlos. No hace falta vender nada online.</p>
+          <div class="svc-pop" id="svcPop1" role="tooltip"><span class="kind">Página web</span><p>La página de tu empresa o marca, desde cero: quiénes son, qué hacen, sus servicios y trabajos, y cómo contactarlos. No hace falta vender nada online.</p></div>
         </article>
-        <article class="svc">
+        <article class="svc" tabindex="0" aria-describedby="svcPop2">
           <div class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19l-4 1z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9 10h6M9 13.5h4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></div>
-          <span class="kind">Página web</span>
-          <h3>Tienda online (e-commerce)</h3>
-          <p>Si vendés, la página suma catálogo, buscador y carrito. La compra se termina en la misma página (Mercado Pago, débito, crédito o transferencia) o te llega el pedido por WhatsApp con el detalle listo.</p>
+          <h3>Tienda online <span class="nw">(e-commerce)</span></h3>
+          <div class="svc-pop" id="svcPop2" role="tooltip"><span class="kind">Página web</span><p>Si vendés, la página suma catálogo, buscador y carrito. La compra se termina en la misma página (Mercado Pago, débito, crédito o transferencia) o te llega el pedido por WhatsApp con el detalle listo.</p></div>
         </article>
-        <article class="svc">
+        <article class="svc" tabindex="0" aria-describedby="svcPop3">
           <div class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M4 20h4L19 9l-4-4L4 16v4z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M13 7l4 4" stroke="currentColor" stroke-width="1.7"/></svg></div>
-          <span class="kind">Página web</span>
           <h3>Mejorar tu página</h3>
-          <p>Si ya tenés una, la actualizo: diseño más moderno, más rápida, bien armada para compu y celular y más fácil de administrar.</p>
+          <div class="svc-pop" id="svcPop3" role="tooltip"><span class="kind">Página web</span><p>Si ya tenés una, la actualizo: diseño más moderno, más rápida, bien armada para compu y celular y más fácil de administrar.</p></div>
         </article>
-        <article class="svc">
+        <article class="svc" tabindex="0" aria-describedby="svcPop4">
           <div class="ic"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="8" rx="1.5" stroke="currentColor" stroke-width="1.7"/><rect x="14" y="3" width="7" height="5" rx="1.5" stroke="currentColor" stroke-width="1.7"/><rect x="14" y="12" width="7" height="9" rx="1.5" stroke="currentColor" stroke-width="1.7"/><rect x="3" y="15" width="7" height="6" rx="1.5" stroke="currentColor" stroke-width="1.7"/></svg></div>
-          <span class="kind">Página web</span>
           <h3>Página de administrador</h3>
-          <p>Una página solo para vos, a la que entrás con tu mail y contraseña: cambiás textos, fotos y publicidades, y si vendés, también productos, precios y stock, y ves las compras que te hicieron.</p>
+          <div class="svc-pop" id="svcPop4" role="tooltip"><span class="kind">Página web</span><p>Una página solo para vos, a la que entrás con tu mail y contraseña: cambiás textos, fotos y publicidades, y si vendés, también productos, precios y stock, y ves las compras que te hicieron.</p></div>
         </article>
-        <article class="svc">
+        <article class="svc" tabindex="0" aria-describedby="svcPop5">
           <div class="ic"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M3 16l5-5 4 4 3-3 6 6" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="16" cy="8.5" r="1.6" stroke="currentColor" stroke-width="1.5"/></svg></div>
-          <span class="kind">Contenido con IA</span>
           <h3>Fotos y flyers</h3>
-          <p>Fotos de producto, flyers y portadas creadas con IA para tus publicaciones, historias y la portada de tu página.</p>
+          <div class="svc-pop" id="svcPop5" role="tooltip"><span class="kind">Contenido con IA</span><p>Fotos de producto, flyers y portadas creadas con IA para tus publicaciones, historias y la portada de tu página.</p></div>
         </article>
-        <article class="svc">
+        <article class="svc" tabindex="0" aria-describedby="svcPop6">
           <div class="ic"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="13" height="12" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M16 10.5l5-3v9l-5-3" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg></div>
-          <span class="kind">Contenido con IA</span>
           <h3>Videos para campañas</h3>
-          <p>Videos con IA para publicidades, reels y animaciones para tu página, con variantes para probar qué funciona mejor.</p>
+          <div class="svc-pop" id="svcPop6" role="tooltip"><span class="kind">Contenido con IA</span><p>Videos con IA para publicidades, reels y animaciones para tu página, con variantes para probar qué funciona mejor.</p></div>
         </article>
       </div>
     </div>
@@ -388,8 +396,8 @@
 </main>
 
 
-<script src="js/idioma.js?v=3"></script>
-<script src="js/sitio.js?v=51"></script>
+<script src="js/idioma.js?v=5"></script>
+<script src="js/sitio.js?v=55"></script>
 
 </body>
 </html>
