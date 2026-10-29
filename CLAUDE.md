@@ -237,3 +237,19 @@ en neón y en papelería (nano_banana_pro con el flyer de referencia importado d
 - portada-pc de Overesthetic (aprobada por Camilo): arranca con la página YA desenfocada y la llanta entrando (fuentes
   cargadas antes: se graba con un reload), el logo sube y en ese instante la página baja RÁPIDO hasta el final (~6,5 s),
   "un pantallazo, no para leer". ~10 s en total, fundido de entrada de 0,3 s.
+
+## Portada BOSIO STUDIO (29/10, PUBLICADO)
+- Arriba de todo `#studio` (`.studio`, fondo negro): "Camilo" chico arriba (el JS le ajusta tamaño y espaciado para que vaya
+  de punta a punta de la B, un poco adentro), **BOSIO** en Syne 800 (Camilo eligió esta entre Bodoni/Syne/Bricolage),
+  "Studio" en Instrument Serif cursiva con el degradé del logo, descripción breve y "Ver trabajos".
+- Rastro al mover el mouse: miniaturas de trabajos reales (`images/rastro/01..24.webp`) que aparecen y se van en ~1 s,
+  SOLO dentro de la portada. En celular aparecen solas a los costados.
+- Gotitas de pintura al clic: NO en la portada negra ni en la barra de arriba (pedido de Camilo).
+- Barra: al entrar baja la franja naranja como siempre; si bajás y seguís sobre la portada negra, la barra se pone negra.
+- Tema (claro/oscuro) e idioma (ES/EN) ahora están en un menú de TRES RAYITAS (`#menuBtn`, `.menu-panel`, siempre tres
+  rayitas, nunca cruz) a la derecha de "Escribime", en las dos páginas. Caja chica.
+- Sección del celular (`.hero#trabajos`) quedó abajo, sin el nombre grande ni el párrafo largo. Arriba de "Hago…", a la
+  izquierda, el LOGO CON BALDE (`.hero-logo`, data-from="#studio", data-delay="1000"): al llegar, 1 s después el balde sale
+  de atrás del borde negro, baja, vuelca sobre el logo y se esconde (misma animación de antes, cambia el origen).
+- "Lo que hago por tu marca": solo títulos; el tipo + descripción aparecen en un recuadro al pasar el mouse
+  (`.svc-pop`); en celular se tocan y se despliegan.
