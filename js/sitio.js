@@ -1056,6 +1056,7 @@ document.querySelectorAll('.plan').forEach(plan => {
     var d = b.dataset.t === 'oscuro';
     if (d) root.dataset.theme = 'dark'; else delete root.dataset.theme;
     try { localStorage.setItem('tema', b.dataset.t); } catch(e){}
+    document.cookie = 'tema=' + b.dataset.t + '; path=/; max-age=31536000; SameSite=Lax';
     sync();
   }); });
 })();
@@ -1160,18 +1161,13 @@ document.querySelectorAll('.plan').forEach(plan => {
   // menú negro mientras está arriba de la portada
   const onStudio = () => top && top.classList.toggle('on-studio', st.getBoundingClientRect().bottom > top.offsetHeight);
   onStudio(); addEventListener('scroll', onStudio, { passive:true }); addEventListener('resize', onStudio);
-  // "Camilo" de punta a punta de la B de BOSIO (un poco adentro), con letras no tan separadas: se ajusta el tamaño y el espaciado
+  // "Camilo" chiquito, apoyado sobre la B de BOSIO (alineado a su borde, un poco adentro)
   const cam = st.querySelector('.st-camilo'), bos = st.querySelector('.st-bosio'), nm = st.querySelector('.st-name');
   function fitCamilo(){
     if(!cam || !bos || !bos.firstChild) return;
     const rg = document.createRange(); rg.setStart(bos.firstChild, 0); rg.setEnd(bos.firstChild, 1);
-    const b = rg.getBoundingClientRect(), n = nm.getBoundingClientRect(), k = cam.textContent.trim().length;
-    const inset = b.width * .06, target = b.width - inset * 2, SP = .55;     // espaciado entre letras = 0,55 del ancho de una letra
-    cam.style.letterSpacing = '0px'; cam.style.fontSize = ''; cam.style.marginRight = '0px';
-    const adv = cam.getBoundingClientRect().width / k, fs = parseFloat(getComputedStyle(cam).fontSize);
-    const scale = target / (adv * k + adv * SP * (k - 1)), f = fs * scale, ls = adv * scale * SP;
-    cam.style.fontSize = f + 'px'; cam.style.letterSpacing = ls + 'px'; cam.style.marginRight = -ls + 'px';
-    cam.style.marginLeft = (b.left - n.left + inset) + 'px';
+    const b = rg.getBoundingClientRect(), n = nm.getBoundingClientRect();
+    cam.style.marginLeft = (b.left - n.left + b.width * .06) + 'px';
   }
   const refit = () => requestAnimationFrame(fitCamilo);
   (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => { refit(); setTimeout(refit, 1400); }); addEventListener('resize', refit); addEventListener('load', refit);
@@ -1183,9 +1179,9 @@ document.querySelectorAll('.plan').forEach(plan => {
     if(live >= 12) return;
     const im = pre[k = (k + 1) % N]; if(!im || !im.complete || !im.naturalWidth) return;
     const el = im.cloneNode(); el.alt = ''; el.draggable = false;
-    const small = innerWidth <= 760, w = small ? 70 + Math.random() * 24 : 98 + Math.random() * 40;
+    const small = innerWidth <= 760, w = small ? 58 + Math.random() * 14 : 74 + Math.random() * 18;
     el.style.setProperty('--w', w + 'px');
-    const h = w * im.naturalHeight / im.naturalWidth, r = (Math.random() - .5) * 10;
+    const h = w, r = (Math.random() - .5) * 8;
     const at = (ox, oy, s) => `translate3d(${(x - w / 2 + ox).toFixed(1)}px, ${(y - h / 2 + oy).toFixed(1)}px, 0) rotate(${r.toFixed(1)}deg) scale(${s})`;
     box.appendChild(el); live++;
     const a = el.animate([
@@ -1197,6 +1193,16 @@ document.querySelectorAll('.plan').forEach(plan => {
     a.onfinish = () => { el.remove(); live--; };
   }
   st.addEventListener('pointerenter', load, { once:true });
+  const cur = document.getElementById('stCursor');
+  if(cur && matchMedia('(hover: hover) and (pointer: fine)').matches){
+    let cx = 0, cy = 0, tx = 0, ty = 0, raf = 0;
+    const loop = () => { cx += (tx - cx) * .35; cy += (ty - cy) * .35; cur.style.transform = `translate3d(${cx.toFixed(1)}px, ${cy.toFixed(1)}px, 0)`;
+      raf = Math.abs(tx - cx) + Math.abs(ty - cy) > .3 ? requestAnimationFrame(loop) : 0; };
+    st.addEventListener('pointermove', e => { const r = st.getBoundingClientRect(); tx = e.clientX - r.left; ty = e.clientY - r.top;
+      if(!cur.classList.contains('on')){ cx = tx; cy = ty; cur.classList.add('on'); } if(!raf) raf = requestAnimationFrame(loop); });
+    st.addEventListener('pointerleave', () => cur.classList.remove('on'));
+    st.addEventListener('pointerdown', () => cur.classList.add('down')); addEventListener('pointerup', () => cur.classList.remove('down'));
+  }
   st.addEventListener('pointermove', e => {
     if(e.pointerType !== 'mouse') return;
     const r = st.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;

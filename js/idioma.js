@@ -225,6 +225,7 @@ const ATTRS = ['aria-label', 'alt', 'placeholder', 'title', 'data-t'];
 
 let lang = 'es';
 try { if (localStorage.getItem('idioma') === 'en') lang = 'en'; } catch (e) {}
+if (lang === 'es' && /(?:^|; )idioma=en/.test(document.cookie)) lang = 'en';
 const norm = s => s.replace(/\s+/g, ' ').trim();
 function tr(s) { const k = norm(s); if (!k) return null; if (EN[k] !== undefined) return EN[k]; for (const [r, f] of RX) { const m = k.match(r); if (m) return f(m); } return null; }
 window.T = s => (lang === 'en' && tr(s)) || s;   // para textos que el JS dibuja en canvas
@@ -289,6 +290,7 @@ new MutationObserver(ms => {
 document.querySelectorAll('#langSeg button').forEach(b => b.addEventListener('click', () => {
   if (b.dataset.l === lang) return;
   lang = b.dataset.l; try { localStorage.setItem('idioma', lang); } catch (e) {}
+  document.cookie = 'idioma=' + lang + '; path=/; max-age=31536000; SameSite=Lax';
   apply();
   // el mosaico y algunos textos cambian de largo: que se reacomoden
   dispatchEvent(new Event('resize'));
