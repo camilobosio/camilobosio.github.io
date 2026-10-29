@@ -259,3 +259,8 @@ en neón y en papelería (nano_banana_pro con el flyer de referencia importado d
   recuadros del rastro CUADRADOS (object-fit), ~75–90px, bordes difuminados. Logo y celular más abajo (más recorrido del balde).
   Servicios: el recuadro aparece SOLO al pasar por el ícono (`.ic:hover ~ .svc-pop`), no por el título.
   Tema e idioma: además de localStorage se guardan en cookie (Camilo decía que se reiniciaban).
+- 29/10 (3ª tanda, PUBLICADO): en la portada el mouse es un PINCEL dibujado (`images/balde/pincel-cursor.svg`: mango de madera,
+  virola de metal corta, punta naranja-rosa; punta arriba a la izquierda como la flecha del mouse). Tocar BOSIO cambia la letra
+  Syne → Bodoni → Bricolage (se repinta de izq. a der.). Recuadros del rastro cuadrados, SIN difuminar, ~90–115px.
+  Barra sobre la portada SIEMPRE negra (nunca blanca); arriba de todo la franja naranja baja sobre el negro.
+  Textos: servicios "juntos o por separado"; sin descripción al lado de "Elegí tu plan"; sin "+640 productos".
