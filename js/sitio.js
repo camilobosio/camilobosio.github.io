@@ -1174,7 +1174,7 @@ document.querySelectorAll('.plan').forEach(plan => {
   // tocar "Studio": cambia de estilo (se repinta de izquierda a derecha)
   const stw = st.querySelector('.st-studio'), STY = ['s-brush', 's-wet', '']; let si = 0;   // arranca pincelada; al tocar: chorreada → cursiva
   const swapStudio = () => { stw.classList.remove('paint'); if(STY[si]) st.classList.remove(STY[si]); si = (si + 1) % STY.length; if(STY[si]) st.classList.add(STY[si]);
-    stw.classList.remove('swap'); void stw.offsetWidth; if(STY[si] === 's-brush') paintStudio(); else stw.classList.add('swap'); };
+    stw.classList.remove('swap'); void stw.offsetWidth; stw.classList.add('swap'); };   // se escribe trazo por trazo SOLO al cargar la página; al tocar, cambia directo
   function paintStudio(){
     if(!stw || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     stw.classList.remove('paint'); void stw.offsetWidth; stw.classList.add('paint');

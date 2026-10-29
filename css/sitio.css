@@ -811,7 +811,7 @@
 
 
   /* al pasar por "Studio" el mouse se vuelve el pincel (punta arriba a la izquierda); afuera, mouse normal */
-  .st-studio{ cursor:url("../images/balde/pincel-mouse.svg") 3 2, pointer; }
+  .st-studio{ cursor:url("../images/balde/pincel-mouse.png") 5 4, pointer; cursor:-webkit-image-set(url("../images/balde/pincel-mouse.png") 1x, url("../images/balde/pincel-mouse@2x.png") 2x) 5 4, pointer; cursor:image-set(url("../images/balde/pincel-mouse.png") 1x, url("../images/balde/pincel-mouse@2x.png") 2x) 5 4, pointer; }   /* el pincel del logo de abajo, dado vuelta y en diagonal */
 
   /* "Studio" pincelado: se ESCRIBE trazo por trazo, como a mano (la S de arriba hacia abajo, la t con el palito y después la raya…).
      Cada trazo es una línea gruesa que se va dibujando y destapa la letra real (máscara). */
