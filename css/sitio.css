@@ -797,20 +797,27 @@
   .st-studio{ pointer-events:auto; cursor:pointer; outline:none; }
   .st-studio:focus-visible{ outline:1px dashed rgba(243,241,236,.4); outline-offset:6px; }
   .studio.s-brush .st-studio{ font-family:"Kaushan Script", cursive; font-style:normal; font-size:clamp(34px, 5.2vw, 76px); margin-top:-.08em; letter-spacing:0;
-    background:linear-gradient(100deg, #ff9d4d 0%, #ff7a3d 40%, #ff5fa2 100%); -webkit-background-clip:text; background-clip:text; filter:url(#stBrush) drop-shadow(0 2px 0 rgba(0,0,0,.25)); }
+    background:none; filter:drop-shadow(0 2px 0 rgba(0,0,0,.25)); }
   .studio.s-wet .st-studio{ font-family:"Rubik Wet Paint", var(--display); font-style:normal; font-size:clamp(28px, 4.2vw, 60px); margin-top:.02em; letter-spacing:.01em;
     background:linear-gradient(180deg, #ff9d4d 0%, #ff7a3d 45%, #ff5fa2 100%); -webkit-background-clip:text; background-clip:text; padding-bottom:.25em; }
   /* recuadros que pasan por encima del nombre: más transparentes */
   .st-trail img.over{ filter:saturate(.8); }
 
-  /* al entrar, "Studio" (pincelada) se pinta de izquierda a derecha y un pincel lo recorre */
-  .st-studio.paint{ -webkit-mask-image:linear-gradient(90deg, #000 42%, transparent 58%); mask-image:linear-gradient(90deg, #000 42%, transparent 58%);
-    -webkit-mask-size:260% 100%; mask-size:260% 100%; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; animation:stPaint 1.25s cubic-bezier(.45,.1,.35,1) both; }
-  @keyframes stPaint{ from{ -webkit-mask-position:100% 0; mask-position:100% 0; } to{ -webkit-mask-position:0 0; mask-position:0 0; } }
-  .st-pb{ position:absolute; left:0; top:0; width:clamp(12px, 1.2vw, 17px); height:auto; pointer-events:none; opacity:0; z-index:3;
-    transform-origin:50% 2%; filter:drop-shadow(2px 3px 3px rgba(0,0,0,.5)); }
 
   /* dorso de la credencial: "Studio" con la misma letra pincelada de la portada */
   .ly-back .ly-studio{ font-family:"Kaushan Script", cursive; font-size:27px; line-height:1; margin:-4px 0 6px; padding:0 .1em .08em;
-    background:linear-gradient(100deg, #ff9d4d 0%, #ff7a3d 40%, #ff5fa2 100%); -webkit-background-clip:text; background-clip:text; color:transparent; filter:url(#stBrush) drop-shadow(0 1px 0 rgba(0,0,0,.25)); }
+    background:linear-gradient(100deg, #ff9d4d 0%, #ff7a3d 40%, #ff5fa2 100%); -webkit-background-clip:text; background-clip:text; color:transparent; filter:drop-shadow(0 1px 0 rgba(0,0,0,.25)); }
   @media (max-width:760px){ .ly-back .ly-studio{ font-size:23px; } }
+
+
+  /* al pasar por "Studio" el mouse se vuelve el pincel (punta arriba a la izquierda); afuera, mouse normal */
+  .st-studio{ cursor:url("../images/balde/pincel-mouse.svg") 3 2, pointer; }
+
+  /* "Studio" pincelado: se ESCRIBE trazo por trazo, como a mano (la S de arriba hacia abajo, la t con el palito y después la raya…).
+     Cada trazo es una línea gruesa que se va dibujando y destapa la letra real (máscara). */
+  .st-draw{ display:none; height:1.12em; width:auto; overflow:visible; vertical-align:bottom; }
+  .studio.s-brush .st-draw{ display:inline-block; }
+  .studio.s-brush .st-txt{ display:none; }
+  .st-draw .k{ fill:none; stroke:#fff; stroke-width:21; stroke-linecap:round; stroke-linejoin:round; stroke-dasharray:1; stroke-dashoffset:0; }
+  .st-studio.paint .st-draw .k{ animation:kDraw var(--d) cubic-bezier(.45,.05,.55,.95) var(--t) both; }
+  @keyframes kDraw{ from{ stroke-dashoffset:1; opacity:0; } 2%{ opacity:1; } to{ stroke-dashoffset:0; opacity:1; } }   /* invisible hasta que le toca (si no, la punta redonda asoma antes) */

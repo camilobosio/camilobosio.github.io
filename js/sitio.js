@@ -1174,17 +1174,10 @@ document.querySelectorAll('.plan').forEach(plan => {
   // tocar "Studio": cambia de estilo (se repinta de izquierda a derecha)
   const stw = st.querySelector('.st-studio'), STY = ['s-brush', 's-wet', '']; let si = 0;   // arranca pincelada; al tocar: chorreada → cursiva
   const swapStudio = () => { stw.classList.remove('paint'); if(STY[si]) st.classList.remove(STY[si]); si = (si + 1) % STY.length; if(STY[si]) st.classList.add(STY[si]);
-    stw.classList.remove('swap'); void stw.offsetWidth; stw.classList.add('swap'); };
-  // al entrar a la página: un pincel pinta "Studio" de izquierda a derecha
-  const pb = st.querySelector('.st-pb');
+    stw.classList.remove('swap'); void stw.offsetWidth; if(STY[si] === 's-brush') paintStudio(); else stw.classList.add('swap'); };
   function paintStudio(){
-    if(!stw || !pb || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const n = nm.getBoundingClientRect(), r = stw.getBoundingClientRect(), x0 = r.left - n.left + r.width * .04, x1 = r.right - n.left - r.width * .02, ym = r.top - n.top + r.height * .55;
+    if(!stw || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     stw.classList.remove('paint'); void stw.offsetWidth; stw.classList.add('paint');
-    const at = (x, y) => `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px) rotate(210deg)`, K = [];
-    for(let i = 0; i <= 10; i++){ const u = i / 10; K.push({ transform:at(x0 + (x1 - x0) * u, ym + Math.sin(u * Math.PI * 3) * r.height * .14), opacity: i === 0 || i === 10 ? 0 : 1, offset:.08 + u * .84 }); }
-    K.unshift({ transform:at(x0 - 18, ym - 26), opacity:0, offset:0 }); K.push({ transform:at(x1 + 26, ym - 34), opacity:0, offset:1 });
-    pb.animate(K, { duration:1500, easing:'linear', fill:'forwards' });
   }
   if(stw && st.classList.contains('s-brush')){ stw.style.visibility = 'hidden';
     (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => setTimeout(() => { stw.style.visibility = ''; paintStudio(); }, 1500)); }
