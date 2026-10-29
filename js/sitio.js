@@ -1170,6 +1170,12 @@ document.querySelectorAll('.plan').forEach(plan => {
     cam.style.marginLeft = (b.left - n.left + b.width * .06) + 'px';
   }
   const refit = () => requestAnimationFrame(fitCamilo);
+  // tocar el nombre con el pincel: cambia la tipografía de BOSIO (como si la repintara de izquierda a derecha)
+  const FONTS = ['', 'f-bodoni', 'f-brico']; let fi = 0;
+  if(nm) nm.addEventListener('click', () => {
+    if(FONTS[fi]) st.classList.remove(FONTS[fi]); fi = (fi + 1) % FONTS.length; if(FONTS[fi]) st.classList.add(FONTS[fi]);
+    bos.classList.remove('swap'); void bos.offsetWidth; bos.classList.add('swap'); refit();
+  });
   (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => { refit(); setTimeout(refit, 1400); }); addEventListener('resize', refit); addEventListener('load', refit);
   if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const N = 24, srcs = Array.from({ length:N }, (_, i) => `images/rastro/${String(i + 1).padStart(2, '0')}.webp`);
@@ -1179,7 +1185,7 @@ document.querySelectorAll('.plan').forEach(plan => {
     if(live >= 12) return;
     const im = pre[k = (k + 1) % N]; if(!im || !im.complete || !im.naturalWidth) return;
     const el = im.cloneNode(); el.alt = ''; el.draggable = false;
-    const small = innerWidth <= 760, w = small ? 58 + Math.random() * 14 : 74 + Math.random() * 18;
+    const small = innerWidth <= 760, w = small ? 68 + Math.random() * 16 : 92 + Math.random() * 22;
     el.style.setProperty('--w', w + 'px');
     const h = w, r = (Math.random() - .5) * 8;
     const at = (ox, oy, s) => `translate3d(${(x - w / 2 + ox).toFixed(1)}px, ${(y - h / 2 + oy).toFixed(1)}px, 0) rotate(${r.toFixed(1)}deg) scale(${s})`;

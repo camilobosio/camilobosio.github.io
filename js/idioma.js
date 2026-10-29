@@ -32,6 +32,8 @@ const EN = {
   'Productos destacados de M Perfumerie':'M Perfumerie featured products', 'Ficha de un perfume en M Perfumerie':'A perfume’s page on M Perfumerie',
   'Mi logo animado':'My animated logo', 'Mi logo pintado con pincel. Tocalo para repetir':'My logo painted with a brush. Tap it to repeat',
   // servicios
+  "Páginas web y contenido con inteligencia artificial, juntos o por separado: la página para mostrar tu empresa o vender online, el contenido para tus campañas y redes, o las dos cosas para lanzar y promocionar tu marca. Trabajo con IA, así llego más rápido y a menor costo a un resultado profesional, hecho a medida.":"Websites and artificial intelligence content, together or separately: a website to show your company or sell online, content for your campaigns and social media, or both to launch and promote your brand. I work with AI, so I get to a professional, tailor-made result faster and at a lower cost.",
+  'Tocalo con el pincel: cambia la letra':'Touch it with the brush: it changes the font',
   'Lo que hago por tu marca':'What I do for your brand',
   'Dos servicios: tu página web y el contenido para promocionarla. La página puede ser para mostrar tu empresa o emprendimiento, o una tienda online para vender. Trabajo con inteligencia artificial, así llego más rápido y a menor costo a un resultado profesional, hecho a medida de tu marca.':'Two services: your website and the content to promote it. The website can showcase your company or venture, or be an online store to sell. I work with artificial intelligence, so I reach a professional result faster and at a lower cost, tailored to your brand.',
   'Página web':'Website', 'Página para tu empresa':'A website for your company',
