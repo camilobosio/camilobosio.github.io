@@ -276,3 +276,6 @@ en neón y en papelería (nano_banana_pro con el flyer de referencia importado d
   (`.k`, pathLength=1, stroke-dashoffset 1→0, orden de escritura a mano: S, t palito, t raya, u, d panza, d palo, i, punto, o;
   ~2,4 s). Trazos dibujados sobre la letra medida (viewBox 0 0 400 160, texto x=20 y=112 size=100). Sin el filtro #stBrush
   (se veía con puntitos). Al pasar por "Studio" el mouse es el pincel (`images/balde/pincel-mouse.svg`). Más espacio arriba de "Cómo trabajo".
+- 29/10 (7ª tanda, PUBLICADO): mouse sobre "Studio" = el PINCEL DEL LOGO de abajo (`images/balde/pincel-mouse.png` 64px + `@2x`,
+  sacado de pincel.webp rotado 150°, punta arriba a la izq.). "Studio" se escribe trazo por trazo SOLO al cargar la página;
+  al tocar cambia directo (no se vuelve a escribir).
