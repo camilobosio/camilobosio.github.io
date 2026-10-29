@@ -267,3 +267,6 @@ en neón y en papelería (nano_banana_pro con el flyer de referencia importado d
 - 29/10 (4ª tanda, PUBLICADO): mouse NORMAL en la portada (el pincel no lo convenció; el svg quedó en images/balde). BOSIO fijo en Syne.
   Tocar "Studio" cambia su estilo: cursiva (Instrument Serif) → pincelada (Kaushan Script + filtro #stBrush) → pintura que
   chorrea (Rubik Wet Paint). Recuadros del rastro que aparecen sobre el nombre van traslúcidos (.4); afuera, normales.
+- 29/10 (5ª tanda, PUBLICADO): "Studio" ARRANCA en la pincelada (`.studio.s-brush`): al entrar (1,5 s) un pincel (`.st-pb`, el svg de
+  madera) la recorre y la pinta de izq. a der. (máscara `.paint`). Al tocar: chorreada → cursiva → pincelada.
+  Dorso de la credencial: "Camilo Bosio" + "Studio" pincelado (`.ly-studio`, usa el filtro #stBrush de la portada) + web.
