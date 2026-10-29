@@ -272,3 +272,7 @@ en neón y en papelería (nano_banana_pro con el flyer de referencia importado d
   Dorso de la credencial: "Camilo Bosio" + "Studio" pincelado (`.ly-studio`, usa el filtro #stBrush de la portada) + web.
 - 29/10: ORDEN DEL INICIO nuevo: portada BOSIO → Hago… (logo + celular) → cinta → **Portfolio** (`#trabajo`) → Lo que hago → Planes →
   ¿Qué vamos a crear? → Cómo trabajo → Quién → Contacto.
+- 29/10 (6ª tanda, PUBLICADO): "Studio" pincelado = SVG (`.st-draw`) con el texto en Kaushan Script destapado por una MÁSCARA de 9 trazos
+  (`.k`, pathLength=1, stroke-dashoffset 1→0, orden de escritura a mano: S, t palito, t raya, u, d panza, d palo, i, punto, o;
+  ~2,4 s). Trazos dibujados sobre la letra medida (viewBox 0 0 400 160, texto x=20 y=112 size=100). Sin el filtro #stBrush
+  (se veía con puntitos). Al pasar por "Studio" el mouse es el pincel (`images/balde/pincel-mouse.svg`). Más espacio arriba de "Cómo trabajo".
