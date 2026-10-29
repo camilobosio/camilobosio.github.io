@@ -253,3 +253,9 @@ en neón y en papelería (nano_banana_pro con el flyer de referencia importado d
   de atrás del borde negro, baja, vuelca sobre el logo y se esconde (misma animación de antes, cambia el origen).
 - "Lo que hago por tu marca": solo títulos; el tipo + descripción aparecen en un recuadro al pasar el mouse
   (`.svc-pop`); en celular se tocan y se despliegan.
+
+- 29/10 (2ª tanda, PUBLICADO): BOSIO más chico (clamp 54–150px), "Camilo" chiquito apoyado sobre la B (ya NO de punta a punta),
+  sin "Ver trabajos" ni "Trabajos reales". En la portada el mouse es una BOLITA DE PINTURA naranja (`#stCursor`, solo ahí);
+  recuadros del rastro CUADRADOS (object-fit), ~75–90px, bordes difuminados. Logo y celular más abajo (más recorrido del balde).
+  Servicios: el recuadro aparece SOLO al pasar por el ícono (`.ic:hover ~ .svc-pop`), no por el título.
+  Tema e idioma: además de localStorage se guardan en cookie (Camilo decía que se reiniciaban).
