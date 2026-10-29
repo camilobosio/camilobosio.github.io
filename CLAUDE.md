@@ -264,3 +264,6 @@ en neón y en papelería (nano_banana_pro con el flyer de referencia importado d
   Syne → Bodoni → Bricolage (se repinta de izq. a der.). Recuadros del rastro cuadrados, SIN difuminar, ~90–115px.
   Barra sobre la portada SIEMPRE negra (nunca blanca); arriba de todo la franja naranja baja sobre el negro.
   Textos: servicios "juntos o por separado"; sin descripción al lado de "Elegí tu plan"; sin "+640 productos".
+- 29/10 (4ª tanda, PUBLICADO): mouse NORMAL en la portada (el pincel no lo convenció; el svg quedó en images/balde). BOSIO fijo en Syne.
+  Tocar "Studio" cambia su estilo: cursiva (Instrument Serif) → pincelada (Kaushan Script + filtro #stBrush) → pintura que
+  chorrea (Rubik Wet Paint). Recuadros del rastro que aparecen sobre el nombre van traslúcidos (.4); afuera, normales.
