@@ -286,3 +286,9 @@ en neón y en papelería (nano_banana_pro con el flyer de referencia importado d
   calc(100svh - 96px - 314px)); descripción del ancho de BOSIO, justificada, margin-top 64px (opción A). Sin botones WhatsApp/
   Portfolio en "Hago…" (solo celular). Rastro: toque = tanda de 3 escalonada (adelante, atrás der., más atrás izq.); solas de a 3.
   ORDEN AL ENTRAR (también compu): se escribe Studio → 1 s → balde (window.__studioDone) → ~2,5 s después recién las imágenes solas.
+- 31/10 (PUBLICADO): página nueva `servicios.html` (base de portfolio.html): "Servicios y planes" + Lo que hago + Elegí tu plan
+  completo. El menú "Servicios" lleva ahí en las 3 páginas. En el INICIO ya no están los planes: después de "Lo que hago" va
+  `#planes-ir` (`.plan-cta`): "Elegí tu plan" pintado con marcador AZUL + botón NARANJA "Ver planes →" a la derecha.
+  Celular: portada SIN descripción, BOSIO centrado; la 1ª tanda sola sale detrás de BOSIO difuminada (`.soft`).
+  "Hago…" rota: páginas web, flyers con IA, diseños con IA, desarrollos, producciones digitales, campañas con IA,
+  tiendas online, videos con IA, webs con animaciones.

@@ -1192,7 +1192,7 @@ document.querySelectorAll('.plan').forEach(plan => {
   const N = 24, srcs = Array.from({ length:N }, (_, i) => `images/rastro/${String(i + 1).padStart(2, '0')}.webp`);
   let pre = [], k = Math.floor(Math.random() * N), lx = null, ly = null, live = 0, visible = false;
   const load = () => { if(pre.length) return; pre = srcs.map(s => { const im = new Image(); im.decoding = 'async'; im.src = s; return im; }); };
-  function spawn(x, y, dx, dy, sc = 1, zi = 0){
+  function spawn(x, y, dx, dy, sc = 1, zi = 0, cls = ''){
     if(live >= 12) return;
     const im = pre[k = (k + 1) % N]; if(!im || !im.complete || !im.naturalWidth) return;
     const el = im.cloneNode(); el.alt = ''; el.draggable = false;
@@ -1202,7 +1202,7 @@ document.querySelectorAll('.plan').forEach(plan => {
     const at = (ox, oy, s) => `translate3d(${(x - w / 2 + ox).toFixed(1)}px, ${(y - h / 2 + oy).toFixed(1)}px, 0) rotate(${r.toFixed(1)}deg) scale(${s})`;
     // si aparece sobre BOSIO Studio, va más transparente (la marca se sigue leyendo); afuera, normal
     const nr = nm.getBoundingClientRect(), sr = st.getBoundingClientRect(), op = (x > nr.left - sr.left - 20 && x < nr.right - sr.left + 20 && y > nr.top - sr.top - 10 && y < nr.bottom - sr.top + 10) ? .4 : 1;
-    if(op < 1) el.classList.add('over'); if(zi) el.style.zIndex = zi;
+    if(op < 1) el.classList.add('over'); if(zi) el.style.zIndex = zi; if(cls) el.classList.add(cls);
     box.appendChild(el); live++;
     const a = el.animate([
       { transform:at(0, 0, .82), opacity:0 },
@@ -1235,10 +1235,13 @@ document.querySelectorAll('.plan').forEach(plan => {
   if(matchMedia('(hover: none)').matches){
     new IntersectionObserver(es => { visible = es[0].isIntersecting; if(visible) load(); }, { threshold:.4 }).observe(st);
     // tanda de 3 en el lugar: una adelante, otra atrás a la derecha y otra más atrás a la izquierda (como un abanico)
-    const trio = (x, y) => [[0, 0, 1, 3], [30, -24, .9, 2], [-28, -46, .8, 1]].forEach(([ox, oy, s, z], i) =>
-      setTimeout(() => spawn(x + ox, y + oy, ox * .6, oy * .6 - 8, s, z), i * 110));
+    const trio = (x, y, cls = '') => [[0, 0, 1, 3], [30, -24, .9, 2], [-28, -46, .8, 1]].forEach(([ox, oy, s, z], i) =>
+      setTimeout(() => spawn(x + ox, y + oy, ox * .6, oy * .6 - 8, s, z, cls), i * 110));
+    let firstAuto = true;
     // solas: una tanda al entrar y después otra cada tanto
     const auto = () => { if(!visible || document.hidden) return; const W = st.clientWidth, H = st.clientHeight, side = Math.random() < .5;
+      // la primera tanda: detrás de BOSIO y difuminada; las siguientes, alrededor
+      if(firstAuto){ firstAuto = false; const b = bos.getBoundingClientRect(), r = st.getBoundingClientRect(); trio(b.left - r.left + b.width * .5, b.top - r.top + b.height * .55, 'soft'); return; }
       trio(W * (side ? .2 + Math.random() * .12 : .68 + Math.random() * .12), H * (.18 + Math.random() * .6)); };
     window.__studioDone.then(() => setTimeout(() => { auto(); setInterval(auto, 4200); }, 1000 + 3600 + 2500));   // después del balde
     // con el dedo: un toque = tanda de 3 donde tocaste; arrastrar = van apareciendo por donde pasa el dedo
