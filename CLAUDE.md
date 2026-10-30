@@ -282,3 +282,7 @@ en neón y en papelería (nano_banana_pro con el flyer de referencia importado d
 - 31/10 (celular, PUBLICADO): portada negra a pantalla completa, BOSIO 16,5vw, Studio 10vw, descripción abajo cerca del borde (eligió B).
   Rastro con el dedo: toque = ráfaga de 4, arrastrar = van saliendo; solas: 2 al entrar y una cada 2,6 s. "Hago…" centrado,
   botones en una línea. Servicios en grilla de 2 columnas (ícono + título); al tocar, recuadro negro flotante.
+- 31/10 (celular 2, PUBLICADO): negro más corto pero lo justo para que abajo entre SOLO el logo + "Hago…" (min-height
+  calc(100svh - 96px - 314px)); descripción del ancho de BOSIO, justificada, margin-top 64px (opción A). Sin botones WhatsApp/
+  Portfolio en "Hago…" (solo celular). Rastro: toque = tanda de 3 escalonada (adelante, atrás der., más atrás izq.); solas de a 3.
+  ORDEN AL ENTRAR (también compu): se escribe Studio → 1 s → balde (window.__studioDone) → ~2,5 s después recién las imágenes solas.

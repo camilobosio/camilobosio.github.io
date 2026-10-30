@@ -743,7 +743,10 @@ if (!window.T) window.T = s => s;
     el.addEventListener('click', a.play);
     el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); a.play(); } });
     if (!reduce && 'IntersectionObserver' in window)
-      new IntersectionObserver((es, io) => { if (es[0].isIntersecting){ io.disconnect(); splashDone.then(() => setTimeout(a.play, +el.dataset.delay || 150)); } }, { threshold:.5 }).observe(el);
+      new IntersectionObserver((es, io) => { if (es[0].isIntersecting){ io.disconnect();
+        // el logo de abajo de la portada espera a que se termine de escribir "Studio"
+        if (el.dataset.from && window.__studioDone) window.__studioDone.then(() => setTimeout(() => { a.play(); window.__baldeT = performance.now(); }, 1000));
+        else splashDone.then(() => setTimeout(a.play, +el.dataset.delay || 150)); } }, { threshold:.5 }).observe(el);
     return a;
   });
   window.__logos = (t) => anims.forEach(a => a.render(Math.min(t, a.end))); // para probar cuadros
@@ -1168,6 +1171,7 @@ document.querySelectorAll('.plan').forEach(plan => {
     const rg = document.createRange(); rg.setStart(bos.firstChild, 0); rg.setEnd(bos.firstChild, 1);
     const b = rg.getBoundingClientRect(), n = nm.getBoundingClientRect();
     cam.style.marginLeft = (b.left - n.left + b.width * .06) + 'px';
+    st.style.setProperty('--bw', bos.getBoundingClientRect().width + 'px');
   }
   const refit = () => requestAnimationFrame(fitCamilo);
   // tocar el nombre con el pincel: cambia la tipografía de BOSIO (como si la repintara de izquierda a derecha)
@@ -1180,24 +1184,25 @@ document.querySelectorAll('.plan').forEach(plan => {
     stw.classList.remove('paint'); void stw.offsetWidth; stw.classList.add('paint');
   }
   if(stw && st.classList.contains('s-brush')){ stw.style.visibility = 'hidden';
-    (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => setTimeout(() => { stw.style.visibility = ''; paintStudio(); }, 1500)); }
+    window.__studioDone = new Promise(ok => (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => setTimeout(() => { stw.style.visibility = ''; paintStudio(); setTimeout(ok, 2400); }, 1500))); }
+  if(!window.__studioDone) window.__studioDone = Promise.resolve();
   if(stw){ stw.addEventListener('click', swapStudio); stw.addEventListener('keydown', e => { if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); swapStudio(); } }); }
   (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => { refit(); setTimeout(refit, 1400); }); addEventListener('resize', refit); addEventListener('load', refit);
   if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const N = 24, srcs = Array.from({ length:N }, (_, i) => `images/rastro/${String(i + 1).padStart(2, '0')}.webp`);
   let pre = [], k = Math.floor(Math.random() * N), lx = null, ly = null, live = 0, visible = false;
   const load = () => { if(pre.length) return; pre = srcs.map(s => { const im = new Image(); im.decoding = 'async'; im.src = s; return im; }); };
-  function spawn(x, y, dx, dy){
+  function spawn(x, y, dx, dy, sc = 1, zi = 0){
     if(live >= 12) return;
     const im = pre[k = (k + 1) % N]; if(!im || !im.complete || !im.naturalWidth) return;
     const el = im.cloneNode(); el.alt = ''; el.draggable = false;
-    const small = innerWidth <= 760, w = small ? 68 + Math.random() * 16 : 92 + Math.random() * 22;
+    const small = innerWidth <= 760, w = (small ? 68 + Math.random() * 16 : 92 + Math.random() * 22) * sc;
     el.style.setProperty('--w', w + 'px');
     const h = w, r = (Math.random() - .5) * 8;
     const at = (ox, oy, s) => `translate3d(${(x - w / 2 + ox).toFixed(1)}px, ${(y - h / 2 + oy).toFixed(1)}px, 0) rotate(${r.toFixed(1)}deg) scale(${s})`;
     // si aparece sobre BOSIO Studio, va más transparente (la marca se sigue leyendo); afuera, normal
     const nr = nm.getBoundingClientRect(), sr = st.getBoundingClientRect(), op = (x > nr.left - sr.left - 20 && x < nr.right - sr.left + 20 && y > nr.top - sr.top - 10 && y < nr.bottom - sr.top + 10) ? .4 : 1;
-    if(op < 1) el.classList.add('over');
+    if(op < 1) el.classList.add('over'); if(zi) el.style.zIndex = zi;
     box.appendChild(el); live++;
     const a = el.animate([
       { transform:at(0, 0, .82), opacity:0 },
@@ -1229,15 +1234,17 @@ document.querySelectorAll('.plan').forEach(plan => {
   // táctil: aparecen solas, lejos del centro para no tapar la marca
   if(matchMedia('(hover: none)').matches){
     new IntersectionObserver(es => { visible = es[0].isIntersecting; if(visible) load(); }, { threshold:.4 }).observe(st);
-    // solas: un par al entrar y después de vez en cuando
+    // tanda de 3 en el lugar: una adelante, otra atrás a la derecha y otra más atrás a la izquierda (como un abanico)
+    const trio = (x, y) => [[0, 0, 1, 3], [30, -24, .9, 2], [-28, -46, .8, 1]].forEach(([ox, oy, s, z], i) =>
+      setTimeout(() => spawn(x + ox, y + oy, ox * .6, oy * .6 - 8, s, z), i * 110));
+    // solas: una tanda al entrar y después otra cada tanto
     const auto = () => { if(!visible || document.hidden) return; const W = st.clientWidth, H = st.clientHeight, side = Math.random() < .5;
-      spawn(W * (side ? .1 + Math.random() * .22 : .68 + Math.random() * .22), H * (.12 + Math.random() * .76), (Math.random() - .5) * 30, -20); };
-    setTimeout(auto, 600); setTimeout(auto, 1300); setInterval(auto, 2600);
-    // con el dedo: un toque = ráfaga de varias alrededor; arrastrar = van apareciendo por donde pasa el dedo
+      trio(W * (side ? .2 + Math.random() * .12 : .68 + Math.random() * .12), H * (.18 + Math.random() * .6)); };
+    window.__studioDone.then(() => setTimeout(() => { auto(); setInterval(auto, 4200); }, 1000 + 3600 + 2500));   // después del balde
+    // con el dedo: un toque = tanda de 3 donde tocaste; arrastrar = van apareciendo por donde pasa el dedo
     const at = t => { const r = st.getBoundingClientRect(); return [t.clientX - r.left, t.clientY - r.top]; };
     let tx = null, ty = null;
-    st.addEventListener('touchstart', e => { load(); const [x, y] = at(e.touches[0]); tx = x; ty = y;
-      for(let i = 0; i < 4; i++) setTimeout(() => { const a = Math.random() * Math.PI * 2; spawn(x + Math.cos(a) * 26, y + Math.sin(a) * 26, Math.cos(a) * 60, Math.sin(a) * 60); }, i * 70); }, { passive:true });
+    st.addEventListener('touchstart', e => { load(); const [x, y] = at(e.touches[0]); tx = x; ty = y; trio(x, y); }, { passive:true });
     st.addEventListener('touchmove', e => { const [x, y] = at(e.touches[0]); if(tx === null){ tx = x; ty = y; return; }
       if(Math.hypot(x - tx, y - ty) > 55){ spawn(x, y, (x - tx) * .4, (y - ty) * .4); tx = x; ty = y; } }, { passive:true });
     st.addEventListener('touchend', () => { tx = ty = null; }, { passive:true });
