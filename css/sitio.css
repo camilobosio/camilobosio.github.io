@@ -881,3 +881,9 @@
   .st-trail img.soft{ filter:blur(2.5px) saturate(.8); }
   .plan-cta .btn{ background:var(--orange); border-color:var(--orange); color:#fff; }
   .plan-cta .btn:hover{ background:var(--ink); border-color:var(--ink); color:var(--paper); }
+  /* celular: al entrar, el menú (logo, secciones, Escribime y las tres rayitas) baja JUNTO con la franja naranja */
+  @media (max-width:760px){
+    .top .wrap{ transition:transform .55s cubic-bezier(.5,0,.3,1); }
+    .top.pre .wrap{ transform:translateY(calc(-100% - 24px)); transition:none; }
+    .top.drop .wrap{ transition:transform 1.5s cubic-bezier(.4,0,.2,1); }
+  }

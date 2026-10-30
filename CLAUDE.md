@@ -292,3 +292,4 @@ en neón y en papelería (nano_banana_pro con el flyer de referencia importado d
   Celular: portada SIN descripción, BOSIO centrado; la 1ª tanda sola sale detrás de BOSIO difuminada (`.soft`).
   "Hago…" rota: páginas web, flyers con IA, diseños con IA, desarrollos, producciones digitales, campañas con IA,
   tiendas online, videos con IA, webs con animaciones.
+- 31/10 (PUBLICADO): en CELULAR el contenido del menú (`.top .wrap`) baja junto con la franja naranja al entrar (.pre/.drop). En compu sin cambios.
