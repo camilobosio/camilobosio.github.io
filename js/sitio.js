@@ -1229,12 +1229,18 @@ document.querySelectorAll('.plan').forEach(plan => {
   // táctil: aparecen solas, lejos del centro para no tapar la marca
   if(matchMedia('(hover: none)').matches){
     new IntersectionObserver(es => { visible = es[0].isIntersecting; if(visible) load(); }, { threshold:.4 }).observe(st);
-    setInterval(() => {
-      if(!visible || document.hidden) return;
-      const W = st.clientWidth, H = st.clientHeight, side = Math.random() < .5;
-      const x = W * (side ? .12 + Math.random() * .22 : .66 + Math.random() * .22), y = H * (.12 + Math.random() * .76);
-      spawn(x, y, (Math.random() - .5) * 30, -20);
-    }, 650);
+    // solas: un par al entrar y después de vez en cuando
+    const auto = () => { if(!visible || document.hidden) return; const W = st.clientWidth, H = st.clientHeight, side = Math.random() < .5;
+      spawn(W * (side ? .1 + Math.random() * .22 : .68 + Math.random() * .22), H * (.12 + Math.random() * .76), (Math.random() - .5) * 30, -20); };
+    setTimeout(auto, 600); setTimeout(auto, 1300); setInterval(auto, 2600);
+    // con el dedo: un toque = ráfaga de varias alrededor; arrastrar = van apareciendo por donde pasa el dedo
+    const at = t => { const r = st.getBoundingClientRect(); return [t.clientX - r.left, t.clientY - r.top]; };
+    let tx = null, ty = null;
+    st.addEventListener('touchstart', e => { load(); const [x, y] = at(e.touches[0]); tx = x; ty = y;
+      for(let i = 0; i < 4; i++) setTimeout(() => { const a = Math.random() * Math.PI * 2; spawn(x + Math.cos(a) * 26, y + Math.sin(a) * 26, Math.cos(a) * 60, Math.sin(a) * 60); }, i * 70); }, { passive:true });
+    st.addEventListener('touchmove', e => { const [x, y] = at(e.touches[0]); if(tx === null){ tx = x; ty = y; return; }
+      if(Math.hypot(x - tx, y - ty) > 55){ spawn(x, y, (x - tx) * .4, (y - ty) * .4); tx = x; ty = y; } }, { passive:true });
+    st.addEventListener('touchend', () => { tx = ty = null; }, { passive:true });
   }
 })();
 

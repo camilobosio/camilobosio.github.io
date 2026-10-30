@@ -279,3 +279,6 @@ en neón y en papelería (nano_banana_pro con el flyer de referencia importado d
 - 29/10 (7ª tanda, PUBLICADO): mouse sobre "Studio" = el PINCEL DEL LOGO de abajo (`images/balde/pincel-mouse.png` 64px + `@2x`,
   sacado de pincel.webp rotado 150°, punta arriba a la izq.). "Studio" se escribe trazo por trazo SOLO al cargar la página;
   al tocar cambia directo (no se vuelve a escribir).
+- 31/10 (celular, PUBLICADO): portada negra a pantalla completa, BOSIO 16,5vw, Studio 10vw, descripción abajo cerca del borde (eligió B).
+  Rastro con el dedo: toque = ráfaga de 4, arrastrar = van saliendo; solas: 2 al entrar y una cada 2,6 s. "Hago…" centrado,
+  botones en una línea. Servicios en grilla de 2 columnas (ícono + título); al tocar, recuadro negro flotante.

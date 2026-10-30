@@ -821,3 +821,40 @@
   .st-draw .k{ fill:none; stroke:#fff; stroke-width:21; stroke-linecap:round; stroke-linejoin:round; stroke-dasharray:1; stroke-dashoffset:0; }
   .st-studio.paint .st-draw .k{ animation:kDraw var(--d) cubic-bezier(.45,.05,.55,.95) var(--t) both; }
   @keyframes kDraw{ from{ stroke-dashoffset:1; opacity:0; } 2%{ opacity:1; } to{ stroke-dashoffset:0; opacity:1; } }   /* invisible hasta que le toca (si no, la punta redonda asoma antes) */
+
+  /* ---------- celular (31/10): portada más baja, "Hago…" centrado, botones en una línea, servicios en grilla como en la compu ---------- */
+  @media (max-width:760px){
+    .hero .wrap > div:first-child{ display:flex; flex-direction:column; align-items:center; text-align:center; }
+    .hero-logo{ margin-left:0; }
+    .hero .rot{ align-items:center; }
+    .hero .rot .words{ justify-items:center; }
+    .hero .ctas{ justify-content:center; flex-wrap:nowrap; gap:8px; margin-top:22px; }
+    .hero .ctas .btn{ padding:10px 14px; font-size:13px; gap:7px; white-space:nowrap; }
+    .hero .ctas .btn svg{ width:15px; height:15px; }
+    .services{ display:grid; grid-template-columns:1fr 1fr; gap:0 14px; }
+    .svc{ flex-direction:column; align-items:flex-start; flex-wrap:nowrap; gap:10px; padding:16px 0 18px; border-top:1px solid var(--ink); }
+    .svc h3{ font-size:15.5px; line-height:1.15; }
+    .svc .ic{ width:34px; height:34px; }
+    .svc::after{ position:absolute; right:0; top:18px; font-size:19px; order:0; }
+    .svc-pop{ order:0; position:absolute; top:calc(100% - 4px); left:0; width:calc(100vw - 40px); max-height:none; overflow:visible; padding:14px 16px 16px;
+      background:var(--ink); color:var(--paper); box-shadow:0 22px 44px -18px rgba(17,17,19,.55); border-radius:14px; transform:translateY(6px); }
+    .svc-pop::before{ display:block; left:16px; }
+    .svc:nth-child(even) .svc-pop{ left:auto; right:0; }
+    .svc:nth-child(even) .svc-pop::before{ left:auto; right:16px; }
+    .svc-pop .kind{ color:#aebdff; margin-top:0; }
+    .svc:nth-child(n+5) .svc-pop .kind{ color:#ffb38a; }
+    .svc .svc-pop, .svc .ic:hover ~ .svc-pop, .svc:focus-visible .svc-pop{ opacity:0; visibility:hidden; max-height:none; }
+    .services .svc.open .svc-pop{ opacity:1; visibility:visible; max-height:none; transform:none; transition:opacity .22s, transform .3s var(--ease), visibility 0s; }
+    .services .svc.open{ z-index:21; }
+    html[data-theme="dark"] .svc-pop{ background:#f3f1ec; color:#111113; }
+  }
+
+  /* celular: portada negra alta (pantalla completa), nombre más grande y la descripción abajo, cerca del borde (Camilo eligió esta) */
+  @media (max-width:760px){
+    .studio{ min-height:calc(100svh - 96px); padding:40px 16px 120px; }
+    .st-bosio{ font-size:16.5vw; }
+    .st-brand{ position:static; }
+    .studio.s-brush .st-studio{ font-size:10vw; }
+    .st-camilo{ font-size:11px; }
+    .st-desc{ position:absolute; left:16px; right:16px; bottom:34px; margin:0 auto; max-width:34ch; }
+  }
