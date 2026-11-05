@@ -297,7 +297,9 @@ en neón y en papelería (nano_banana_pro con el flyer de referencia importado d
 ## INICIO v2 — Etapa 1 (5/11, PUBLICADO)
 Inspirado en meglioalan.com con estética de pintura. Todo en archivos aparte: `css/inicio-v2.css` + `js/inicio-v2.js`
 (se cargan solo en index.html; `<body class="v2">`; la portada va dentro de `#stPin`, `.st-pin`).
-- Bolas de pintura tipo lámpara de lava (metaballs en canvas `.st-lava`, dentro de `#studio`): 7 en PC, 4 en celular; cada bola = 3 gotas
+- Bolas de pintura (5/11 tarde, REHECHAS en WebGL a pedido de Camilo): fragment shader de metaballs con smooth-min, bordes nítidos (dpr tope 2),
+  volumen + brillo arriba + sombra abajo + grano; 7 en PC, 5 en celular; resorte + inercia, se estiran según velocidad/empuje; sin WebGL = `.lava-static`.
+  (Versión vieja: canvas 2D; cada bola = 3 gotas
   con resortes, el mouse/dedo las empuja y se estiran. Colores naranja, rosa, azul, amarillo, violeta, con grano. A Camilo le gustaron.
 - Portada fija mientras scrolleás (100svh + 90vh en PC, +45vh en celular): Camilo/Studio se desvanecen, BOSIO se achica y baja.
   Mover solo `.st-bosio` (si se mueve todo `.st-brand`, Studio no se dibuja).

@@ -3,7 +3,7 @@
 /* --- portada fija mientras dura la animación del nombre --- */
 .v2 .st-pin{ position:relative; z-index:2; height:calc(100svh + 90vh); }
 .v2 .studio{ position:sticky; top:0; min-height:0; height:100svh; --p:0; }
-.v2 .st-lava{ position:absolute; inset:0; width:100%; height:100%; z-index:-1; pointer-events:none; opacity:.9; }
+.v2 .st-lava{ position:absolute; inset:0; width:100%; height:100%; z-index:-1; pointer-events:none; }
 .v2 .studio::after{ z-index:-1; background:radial-gradient(46% 38% at 50% 48%, rgba(10,10,11,.55), transparent 75%); }   /* sombra suave detrás del nombre para que se lea */
 
 /* al terminar la entrada se sueltan las animaciones para poder mover las letras con el scroll */
@@ -55,3 +55,6 @@
 
 /* 5/11: sin descripción en la portada (en PC y celular): solo el nombre y las bolas; lo que hago se explica abajo en "Hago…" */
 .v2 .st-desc{ display:none; }
+
+/* sin WebGL: fondo quieto con manchas de pintura */
+.v2 .studio.lava-static{ background:radial-gradient(circle at 18% 30%, rgba(255,138,58,.85) 0 11vmax, transparent 11.3vmax), radial-gradient(circle at 78% 26%, rgba(255,95,162,.8) 0 9vmax, transparent 9.3vmax), radial-gradient(circle at 66% 74%, rgba(43,80,216,.85) 0 10vmax, transparent 10.3vmax), radial-gradient(circle at 30% 78%, rgba(255,201,60,.8) 0 7vmax, transparent 7.3vmax), #0a0a0b; }
