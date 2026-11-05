@@ -110,3 +110,11 @@
 .pj-pin::before{ content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
   background:radial-gradient(38% 30% at 74% 30%, rgba(255,120,40,.16), transparent 70%); }
 .pj-left, .pj-right, .pj-bars{ position:relative; z-index:1; }
+
+/* "Elegí tu plan": el botón pegado al título (no en la otra punta) y más aire arriba */
+#planes-ir{ padding-top:70px !important; }
+#planes-ir .plan-cta{ justify-content:flex-start; gap:22px; flex-wrap:wrap; }
+
+/* campañas: 3 historias una al lado de la otra dentro de la tarjeta */
+.pj-collage{ display:grid; grid-template-columns:repeat(3, 1fr); gap:6px; width:100%; height:100%; background:#0a0a0b; }
+.pj-collage img{ width:100%; height:100%; object-fit:cover; object-position:50% 30%; display:block; }

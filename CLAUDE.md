@@ -358,3 +358,15 @@ Archivos: `css/etapa3.css` + `js/etapa3.js`. Sin duplicar: se integró en lo que
   viejo de 4 tarjetas se sacó. Datos en `PROYECTOS` / `PORTFOLIO` de js/proyectos.js.
 - Tamaños: SOLO "Qué puedo construir para vos." más grande (8,8vw). "Soy Camilo.", "Hablemos." y Portfolio quedan como estaban (no agrandar todo).
 - Hablemos.: SIN chorreado (solo el recuadro azul).
+
+## 5/11 tarde (PUBLICADO): campaña de Halloween + ajustes del inicio
+- Inicio: Portfolio volvió a las 4 tarjetas con movimiento (`#trabajo`, el bloque viejo). "Qué puedo construir" del mismo tamaño que
+  "Lo que tengo en producción" (5,8vw). "Elegí tu plan": botón pegado al título y más aire arriba.
+- Proyectos, orden: M Perfumerie (naranja) → Overesthetic (azul) → Videos con IA (blanco) → Campañas publicitarias (NEGRO, último, así
+  termina en negro): collage L'Interdit + calabaza + Spicebomb.
+- Campaña de Halloween de M Perfumerie: Camilo había BORRADO los archivos (compu y celular). Se recuperaron de los temporales de la sesión
+  de Code (hojas de prueba) + 2 que pasó él (L'Interdit Elixir/Ghostface, Spicebomb Infrared/Pennywise, hechas sin Higgsfield).
+  12 piezas en `portfolio/campanas/halloween/`; copia en `Desktop\IA LABURO\M Perfumerie\Publi\Halloween 2026 - recuperado`.
+  Las de Phantom, Wanted, Toy Boy, Gentleman, 9 PM, Black Opium, Poison y Pure Poison solo quedaron en miniatura (no se usan).
+- Portfolio (portfolio.html): campañas con muchas piezas AGRUPADAS: en la galería solo 2 tarjetas (`data-grp="halloween"`, etiqueta
+  "Campaña · 12 historias"); al tocar se abre la campaña entera en fila (`js/grupo.js`, lista en GRUPOS). Sin filtro "Halloween".

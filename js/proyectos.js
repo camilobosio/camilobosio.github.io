@@ -19,10 +19,11 @@
       datos:[['Tipo','Video con IA'], ['Base','2 fotos'], ['Estado','Terminado']],
       media:'portfolio/videos-ia/tesla-volador.mp4', poster:'portfolio/videos-ia/tesla-volador.jpg',
       links:[['Ver el caso →','portfolio.html#ia']] },
-    { estado:'Campaña con IA', nombre:'Campaña de perfumes', bg:'#f08a4b', claro:false,
-      desc:'Flyers, carteles en la calle y videos animados para una marca de perfumes, todo hecho con IA.',
-      datos:[['Piezas','Flyers y carteles'], ['Video','Día de la Madre'], ['Estado','Publicada']],
-      media:'', poster:'portfolio/calle/parada-1million.webp',
+    { estado:'Campaña con IA', nombre:'Campañas publicitarias', bg:'#0a0a0b', claro:false,
+      desc:'Campaña de Halloween para M Perfumerie: un personaje y una escena para cada perfume, con su frase. Todo hecho con IA.',
+      datos:[['Marca','M Perfumerie'], ['Piezas','19 historias'], ['Estado','Publicada']],
+      media:'', poster:'portfolio/campanas/halloween/portada-calabaza.webp',
+      collage:['linterdit-elixir', 'portada-calabaza', 'spicebomb-infrared'].map(n => `portfolio/campanas/halloween/${n}.webp`),
       links:[['Ver la campaña →','portfolio.html#ia']] },
   ];
   const PORTFOLIO = [
@@ -34,12 +35,14 @@
     { nombre:'Oficina virtual', rubro:'Para empresas · Prototipo', img:'portfolio/prototipos/oficina.webp', url:'portfolio.html#oficina', link:'Ver el prototipo →' },
   ];
 
-  const pj = document.getElementById('proyectos'), wb = document.getElementById('trabajo');
+  const pj = document.getElementById('proyectos'), wb = document.getElementById('webs');   // el Portfolio del inicio volvió a las 4 tarjetas fijas del HTML (#trabajo)
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const n2 = i => String(i + 1).padStart(2, '0');
-  const media = p => p.media
+  const media = p => p.collage
+    ? `<div class="pj-collage">${p.collage.map(src => `<img src="${src}" alt="">`).join('')}</div>`
+    : p.media
     ? `<video src="${p.media}" poster="${p.poster}" muted loop playsinline preload="metadata" aria-hidden="true"></video>`
-    : `<img src="${p.poster}" alt="" loading="lazy">`;
+    : `<img src="${p.poster}" alt="">`;
 
   // ---------- lo que tengo en producción ----------
   if(pj){
