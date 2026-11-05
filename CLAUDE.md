@@ -294,7 +294,7 @@ en neón y en papelería (nano_banana_pro con el flyer de referencia importado d
   tiendas online, videos con IA, webs con animaciones.
 - 31/10 (PUBLICADO): en CELULAR el contenido del menú (`.top .wrap`) baja junto con la franja naranja al entrar (.pre/.drop). En compu sin cambios.
 
-## INICIO v2 — Etapa 1 (5/11, armado en local, falta publicar)
+## INICIO v2 — Etapa 1 (5/11, PUBLICADO)
 Inspirado en meglioalan.com con estética de pintura. Todo en archivos aparte: `css/inicio-v2.css` + `js/inicio-v2.js`
 (se cargan solo en index.html; `<body class="v2">`; la portada va dentro de `#stPin`, `.st-pin`).
 - Bolas de pintura tipo lámpara de lava (metaballs en canvas `.st-lava`, dentro de `#studio`): 7 en PC, 4 en celular; cada bola = 3 gotas
