@@ -9,11 +9,10 @@
 /* al terminar la entrada se sueltan las animaciones para poder mover las letras con el scroll */
 .v2 .studio.intro-done .st-camilo, .v2 .studio.intro-done .st-desc, .v2 .studio.intro-done .st-bosio,
 .v2 .studio.intro-done .st-studio:not(.swap){ animation:none; }
-.v2 .studio.intro-done .st-camilo,
-.v2 .studio.intro-done .st-studio{ opacity:calc(1 - var(--p) * 2.4); }
+.v2 .studio.intro-done .st-camilo{ opacity:calc(1 - max(0, var(--p) - .55) * 2.3); }   /* Camilo se va al final; BOSIO Studio quedan */
 .v2 .studio.intro-done .st-desc{ opacity:calc(1 - var(--p) * 3); translate:0 calc(var(--p) * 40px); }
 /* BOSIO: queda, se achica y va bajando */
-.v2 .st-bosio{ translate:0 calc(var(--p) * 26svh); scale:calc(1 - var(--p) * .42); }   /* solo BOSIO: si se mueve todo el bloque, "Studio" no se dibuja */
+.v2 .st-name{ translate:0 calc(var(--p) * 26svh); scale:calc(1 - var(--p) * .5); }   /* BOSIO Studio juntos se achican y bajan */
 
 /* --- barra: arriba de todo no se ve; al bajar aparece achicada y blanca --- */
 .v2 #top{ position:fixed; left:0; right:0; top:0; background:#fff; border-bottom:1px solid rgba(17,17,19,.08);
@@ -34,7 +33,7 @@
 @media (max-width:760px){
   .v2 .st-pin{ height:calc(100svh + 45vh); }
   .v2 .studio{ height:100svh; }
-  .v2 .st-bosio{ translate:0 calc(var(--p) * 24svh); scale:calc(1 - var(--p) * .35); }
+  .v2 .st-name{ translate:0 calc(var(--p) * 24svh); scale:calc(1 - var(--p) * .4); }
   /* en celular la barra es solo logo + Escribime + menú; las secciones van dentro del menú */
   .v2 #top .wrap{ flex-wrap:nowrap; padding-top:0; padding-bottom:0; height:52px; }
   .v2 #top nav:not(.mp-nav){ display:none; }
@@ -45,7 +44,7 @@
 @media (prefers-reduced-motion:reduce){
   .v2 .st-pin{ height:auto; }
   .v2 .studio{ position:relative; }
-  .v2 .st-bosio{ translate:none; scale:none; }
+  .v2 .st-name{ translate:none; scale:none; }
 }
 
 
@@ -80,3 +79,19 @@
 @media (max-width:760px){
   .v2 #top.v2-pill{ left:12px; right:12px; top:10px; }
 }
+.v2 .studio.s-brush .st-studio{ filter:none; }   /* la sombrita hacía que "Studio" se cortara al achicarse */
+
+/* 5/11 (4ª): la barra ES la pincelada que pasó Camilo (images/barra/pincelada.png): tono, textura y forma a lo largo; en cápsula queda la pincelada sola en el medio */
+.v2 #top{ background:transparent; }
+.v2 #top::after{ top:-14px; bottom:-30px; left:-3%; right:-3%; height:auto; z-index:-1;
+  background:url("../images/barra/pincelada.png") center/100% 100% no-repeat; opacity:1; }
+.v2 #top.v2-pill{ border-radius:0; box-shadow:none; }
+.v2 #top.v2-pill::after{ opacity:1; top:-16px; bottom:-22px; left:-9%; right:-7%; filter:drop-shadow(0 10px 14px rgba(0,0,0,.25)); }
+
+/* 5/11 (4ª): al bajar, "Studio" se mueve al centro abajo de BOSIO, un poco encimado, encima (el filtro "goo" deformaba las letras: descartado) */
+.v2 .studio.intro-done .st-studio{ translate:calc(var(--p) * var(--sdx, 0px)) calc(var(--p) * var(--sdy, 0px)); }
+.v2 .st-studio{ position:relative; z-index:3; }   /* Studio encima de BOSIO */
+
+/* 5/11 (5ª): pincelada un poco más apagada y que llegue hasta atrás de Escribime y el menú */
+.v2 #top::after{ left:-4%; right:-30%; filter:saturate(.78) brightness(.93); }
+.v2 #top.v2-pill::after{ left:-10%; right:-34%; filter:saturate(.78) brightness(.93) drop-shadow(0 10px 14px rgba(0,0,0,.25)); }

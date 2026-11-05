@@ -315,3 +315,10 @@ Inspirado en meglioalan.com con estética de pintura. Todo en archivos aparte: `
   "Studio" fijo en la pincelada: no se toca, sin pincel de mouse. Bolas REDONDAS (no se estiran en óvalo): el mouse HUNDE la pintura
   (resta suave en el shader, `uM`) y las corre despacio; se pegan entre sí. Un poco más grandes; domo según el radio promedio (`uHs`).
   Barra: NARANJA (#ff8a3a) con borde de abajo de pincelada (svg dentado); pasada la portada se achica a CÁPSULA centrada (`.v2-pill`, 620px; celular 12px a los lados).
+- 5/11 (4ª-5ª, PUBLICADO): bolas SOLO naranja y azul (colores del logo), esferas reales (sin "pezón"); el mouse hunde poco y nunca
+  llega al medio (si se acerca, la bola se corre entera). Probé una bola naranja gigante + chicas: a Camilo le pareció "mutante" y de
+  menos calidad → volvimos al tamaño/estilo anterior (7 PC / 5 cel, la naranja apenas más grande). NO hacer bolas gigantes.
+- Barra = imagen de pincelada que pasó Camilo (`images/barra/pincelada.png`), un poco apagada (saturate .78), que llega atrás de
+  Escribime y el menú; en cápsula queda la pincelada sola en el medio.
+- Al bajar: BOSIO + Studio se achican juntos; Camilo se va al final; Studio termina CENTRADO abajo de BOSIO, un poco encimado (encima).
+  El filtro "goo" para que las letras se peguen deformaba BOSIO: descartado. Sin sombra en Studio (se cortaba al achicarse).

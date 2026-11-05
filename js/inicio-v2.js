@@ -21,6 +21,17 @@
   }
   prog(); addEventListener('scroll', prog, { passive:true }); addEventListener('resize', prog);
 
+  // al final del scroll "Studio" va al centro, abajo de BOSIO, un poco encimado; y se pegan como las bolas (filtro "goo")
+  const bos = st.querySelector('.st-bosio'), stu = st.querySelector('.st-studio');
+  function place(){
+    if(!bos || !stu) return;
+    const dx = (bos.offsetLeft + bos.offsetWidth / 2) - (stu.offsetLeft + stu.offsetWidth / 2);
+    const dy = (bos.offsetTop + bos.offsetHeight * .9 - stu.offsetHeight * .3) - stu.offsetTop;
+    st.style.setProperty('--sdx', dx.toFixed(1) + 'px'); st.style.setProperty('--sdy', dy.toFixed(1) + 'px');
+  }
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => { place(); setTimeout(place, 1500); }); addEventListener('resize', place);
+  document.body.insertAdjacentHTML('beforeend', '<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="stGoo" x="-10%" y="-30%" width="120%" height="160%"><feGaussianBlur in="SourceGraphic" stdDeviation="5" result="b"/><feColorMatrix in="b" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -8" result="g"/><feComposite in="SourceGraphic" in2="g" operator="atop"/></filter></svg>');
+
   // con la lava moviéndose el navegador deja de redibujar "Studio" (texto con máscara SVG):
   // cuando termina de escribirse se le saca la máscara (queda igual, pero ya no depende de ella)
   const stx = st.querySelector('.st-draw text');
@@ -35,7 +46,7 @@
 
   const small = innerWidth <= 760, NB = small ? 5 : 7, MAXB = 8;
   // paleta de pintura de la página: naranja del logo, rosa, azul, amarillo, violeta, coral
-  const COLS = [[1,.54,.23],[1,.37,.64],[.17,.31,.85],[1,.79,.24],[.55,.35,1],[1,.48,.24],[.95,.3,.42]];
+  const ORANGE = [1,.5,.13], BLUE = [.2,.36,.95];   // solo los colores del logo
   const VS = 'attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}';
   const FS = [
 '#extension GL_OES_standard_derivatives : enable',
@@ -52,15 +63,15 @@
 'float dist(vec2 p){',
 '  float d = 1e5;',
 '  for(int i = 0; i < ' + MAXB + '; i++){ if(i >= uN) break; d = smin(d, length(p - uB[i].xy) - uB[i].z, 64.); }',
-'  if(uM.z > .5) d = smax(d, -(length(p - uM.xy) - uM.z), 36.);',
+'  if(uM.z > .5) d = smax(d, -(length(p - uM.xy) - uM.z), 22.);',
 '  return d; }',
-'vec3 tint(vec2 p){',
-'  vec3 acc = vec3(0.); float ws = 0.;',
+'vec4 tint(vec2 p){',
+'  vec3 acc = vec3(0.); float ws = 0.; float rs = 0.;',
 '  for(int i = 0; i < ' + MAXB + '; i++){ if(i >= uN) break; float di = length(p - uB[i].xy) - uB[i].z;',
-'    float w = exp(-max(di, -60.) / 30.); acc += uC[i] * w; ws += w; }',
-'  return acc / max(ws, 1e-4); }',
+'    float w = exp(-max(di, -60.) / 30.); acc += uC[i] * w; rs += uB[i].z * w; ws += w; }',
+'  return vec4(acc / max(ws, 1e-4), rs / max(ws, 1e-4)); }',
 // altura de la pintura: un domo que sube rápido desde el borde
-'float hgt(float d){ float x = clamp(-d / uHs, 0., 1.); return sqrt(1. - (1. - x) * (1. - x)); }',
+'float hgt(float d, float R){ float u = clamp(-d, 0., R); return sqrt(max(0., u * (2. * R - u))); }',
 'void main(){',
 '  vec2 p = vec2(gl_FragCoord.x, uRes.y - gl_FragCoord.y) / uDpr;',
 '  float d = dist(p);',
@@ -68,12 +79,12 @@
 '  float sd = dist(p - vec2(-8., 22.));',
 '  float sh = (1. - smoothstep(-30., 40., sd)) * .5;',                      // sombra blanda abajo
 '  if(d > 2.){ gl_FragColor = vec4(0., 0., 0., sh); return; }',
-'  vec3 col = tint(p);',
+'  vec4 tr = tint(p); vec3 col = tr.rgb; float R = tr.a;',
 // normal real de la superficie (diferencias finitas, sin escalones)
 '  float e = 1.5;',
-'  float hx = hgt(dist(p + vec2(e, 0.))) - hgt(dist(p - vec2(e, 0.)));',
-'  float hy = hgt(dist(p + vec2(0., e))) - hgt(dist(p - vec2(0., e)));',
-'  vec3 n = normalize(vec3(-hx * uHs * .6 / e, -hy * uHs * .6 / e, 1.));',
+'  float hx = hgt(dist(p + vec2(e, 0.)), R) - hgt(dist(p - vec2(e, 0.)), R);',
+'  float hy = hgt(dist(p + vec2(0., e)), R) - hgt(dist(p - vec2(0., e)), R);',
+'  vec3 n = normalize(vec3(-hx / (2. * e), -hy / (2. * e), 1.));',
 '  vec3 V = vec3(0., 0., 1.);',
 '  vec3 L = normalize(vec3(-.45, -.75, .55));',                              // luz arriba a la izquierda (y hacia abajo en pantalla)
 '  float dif = clamp(dot(n, L), 0., 1.);',
@@ -81,7 +92,7 @@
 '  float nh = clamp(dot(n, H), 0., 1.);',
 '  float spec = pow(nh, 90.) * 1.1 + pow(nh, 14.) * .22;',                  // brillo nítido + brillo suave
 '  float fres = pow(1. - clamp(n.z, 0., 1.), 3.);',
-'  float dep = clamp(-d / uHs, 0., 1.);',
+'  float dep = clamp(-d / R, 0., 1.);',
 '  vec3 base = col * (.5 + .62 * dif);',
 '  base += col * col * .35 * (1. - dep);',                                    // color más saturado en los bordes (pintura espesa)
 '  base = mix(base, base * .55, fres * .6);',                                 // borde oscurecido = volumen
@@ -115,12 +126,15 @@
 
   // cada bola: va a su lugar con resorte e inercia, sube y baja lento, y se estira según cómo se mueve
   const blobs = [];
-  for(let i = 0; i < NB; i++){
-    const R = (small ? .23 : .115) * Math.min(W, H * 1.5) * (.8 + Math.random() * .45);
-    const hx = ((i + .5) / NB) * W, hy = H * (.25 + Math.random() * .5);
-    blobs.push({ x:hx, y:hy, vx:0, vy:0, hx, R, ph:Math.random() * 6.28, sp:.05 + Math.random() * .05 });
+  // una bola NARANJA bien grande (la protagonista) y varias chicas, azules y naranjas, que se juntan y se pegan
+  const m = Math.min(W, H * 1.4);
+  blobs.push({ x:W * (small ? .5 : .66), y:H * .55, vx:0, vy:0, hx:W * (small ? .5 : .66), R:m * (small ? .2 : .15), ph:1, sp:.045, amp:.3, big:true, c:ORANGE });
+  for(let i = 1; i < NB; i++){
+    const R = m * (small ? .15 : .1) * (.8 + Math.random() * .35);
+    const hx = ((i - .5) / (NB - 1)) * W;
+    blobs.push({ x:hx, y:H * (.2 + Math.random() * .6), vx:0, vy:0, hx, R, ph:Math.random() * 6.28, sp:.05 + Math.random() * .05, amp:.36, c:i % 3 === 0 ? ORANGE : BLUE });
   }
-  const colArr = new Float32Array(MAXB * 3); for(let i = 0; i < NB; i++) colArr.set(COLS[i % COLS.length], i * 3);
+  const colArr = new Float32Array(MAXB * 3); blobs.forEach((b, i) => colArr.set(b.c, i * 3));
   gl.uniform3fv(uC, colArr);
   const hs = blobs.reduce((a, b) => a + b.R, 0) / NB;   // altura del domo = radio promedio (sin aro adentro)
   const bArr = new Float32Array(MAXB * 4); let mr = 0;   // radio del hundido del mouse (aparece y se va suave)
@@ -139,19 +153,21 @@
     for(const b of blobs){
       // lugar al que va: sube y baja como en la lámpara, con un vaivén leve de costado
       const tx = b.hx + Math.sin(t * .00021 + b.ph * 1.7) * W * .06;
-      const ty = H * (.5 + .34 * Math.sin(t * .001 * b.sp + b.ph));
+      const ty = H * (.5 + b.amp * Math.sin(t * .001 * b.sp + b.ph));
       let ax = (tx - b.x) * .0009, ay = (ty - b.y) * .0012;   // resorte blando
       let px = 0, py = 0;
       if(mouse.on){   // el mouse hunde la pintura y la corre despacio (empuje que baja con la distancia, sin rebotes)
         const dx = b.x - mouse.x, dy = b.y - mouse.y, d = Math.hypot(dx, dy) || 1;
-        const f = Math.max(0, 1 - (d - b.R) / 140) * .32;
+        const f = Math.max(0, 1 - (d - b.R) / 140) * (b.big ? .26 : .32);   // la grande pesa más
         ax += dx / d * f; ay += dy / d * f;
+        const lim = Math.min(b.R * .65 + 34, b.R + 20);   // el hundido nunca pasa de un tercio de la bola: antes se corre entera
+        if(d < lim){ const k = (lim - d) * .35; b.x += dx / d * k; b.y += dy / d * k; b.vx += dx / d * k * .08; b.vy += dy / d * k * .08; }
       }
       const damp = Math.pow(.95, dt);
       b.vx = (b.vx + ax * dt) * damp; b.vy = (b.vy + ay * dt) * damp;
       b.x += b.vx * dt; b.y += b.vy * dt;
     }
-    mr += ((mouse.on ? (small ? 46 : 58) : 0) - mr) * .12 * dt;   // el hundido aparece y se va suave
+    mr += ((mouse.on ? (small ? 26 : 32) : 0) - mr) * .12 * dt;   // el hundido aparece y se va suave
   }
   function draw(t){
     blobs.forEach((b, i) => bArr.set([b.x, b.y, b.R, 0], i * 4));
