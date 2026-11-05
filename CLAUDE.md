@@ -336,3 +336,14 @@ Va después de "Hago…" + la cinta y ANTES de Portfolio (pegada a la portada ro
 - Proyectos aprobados por Camilo: 01 M Perfumerie (En producción), 02 Overesthetic (En desarrollo, sin link), 03 Videos con IA (Tesla volador).
 - "Webs que hice" (`#webs`, "hice" en azul): lista numerada; en PC la captura sigue al mouse y el resto se atenúa; celular = miniatura fija.
 - PARA SUMAR: agregar un objeto a `PROYECTOS` o `WEBS` al principio de js/proyectos.js. Textos nuevos → diccionario EN de idioma.js (ya están).
+
+## INICIO v2 — Etapa 3 (5/11, PUBLICADO)
+Archivos: `css/etapa3.css` + `js/etapa3.js`. Sin duplicar: se integró en lo que ya había.
+- "Qué puedo construir para vos" (`#servicios`, "construir" con marcador naranja) REEMPLAZA a "Lo que hago por tu marca" en el inicio
+  (servicios.html no se tocó; "Elegí tu plan" sigue abajo). 01 Páginas web · 02 Publicidad y campañas · 03 Fotos y videos con IA, con
+  botones "Quiero… ↓" que bajan a #contacto. "Y todo lo que haga falta": 04 Experiencias interactivas, 05 Oficina virtual, 06 Logos y marca,
+  07 Mantenimiento y cambios (flechita ↗ que se mueve). Tarjetas aparecen una detrás de otra.
+- "Quién está detrás": título "Soy Camilo." + una frase + 3 datos (Base Rosario, Argentina · Modalidad Remoto · Qué hago). Credencial, chips y apps igual.
+- Contacto: "Hablemos." + "Contame qué necesitás y te respondo con una propuesta." Probé botones por tipo de pedido (web/campaña/IA):
+  Camilo NO los quiso → queda SOLO "Escribime por WhatsApp" (mensaje único), mail con "Copiar mail" y LinkedIn. Sin Instagram (es personal).
+  "Volver arriba ↑" es botón. Textos nuevos ya están en el diccionario EN.

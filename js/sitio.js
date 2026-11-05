@@ -181,7 +181,7 @@ if (!window.T) window.T = s => s;
   const copy = document.getElementById('copyMail');
   if(copy) copy.addEventListener('click', e => {
     const t = document.getElementById('mail').textContent, b = e.currentTarget;
-    const ok = () => { b.textContent = 'Copiado'; setTimeout(() => b.textContent = 'Copiar', 1600); };
+    const lbl = b.textContent, ok = () => { b.textContent = 'Copiado'; setTimeout(() => b.textContent = lbl, 1600); };
     try{ navigator.clipboard.writeText(t).then(ok).catch(sel); }catch(err){ sel(); }
     function sel(){ const r = document.createRange(); r.selectNodeContents(document.getElementById('mail')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }
   });

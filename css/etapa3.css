@@ -1,0 +1,68 @@
+/* ===== ETAPA 3: "Qué puedo construir para vos", "Soy Camilo." y contacto "Hablemos." (js/etapa3.js) ===== */
+
+/* palabra destacada con marcador naranja (igual que la etapa 2) */
+.cv3 .mk{ position:relative; z-index:0; padding:0 .14em; color:#fff; white-space:nowrap; }
+.cv3 .mk::before{ content:""; position:absolute; z-index:-1; left:-.06em; right:-.1em; top:.12em; bottom:.02em; background:var(--orange);
+  clip-path:polygon(1% 8%,22% 2%,48% 6%,73% 0%,99% 5%,100% 92%,76% 100%,50% 94%,24% 99%,0% 95%); transform:rotate(-1.2deg); }
+.cv3-h{ font-family:var(--display); font-weight:800; font-size:clamp(34px, 5.6vw, 78px); letter-spacing:-.045em; line-height:1; max-width:14ch; margin-bottom:34px; }
+.cv3-n{ font-family:var(--mono); font-size:12px; letter-spacing:.06em; color:var(--orange); }
+
+/* 3 servicios principales */
+.cv3-cards{ display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; }
+.cv3-card{ display:flex; flex-direction:column; padding:26px 24px 24px; border-radius:22px; background:var(--paper-2); border:1px solid var(--line);
+  opacity:0; transform:translateY(30px); transition:opacity .6s, transform .7s var(--ease); }
+.cv3-card h3{ font-family:var(--display); font-weight:800; font-size:clamp(24px, 2.4vw, 32px); letter-spacing:-.035em; line-height:1.02; margin:12px 0 8px; }
+.cv3-card p{ color:var(--ink-2); font-size:15px; line-height:1.5; }
+.cv3-card ul{ list-style:none; margin:18px 0 22px; padding:14px 0 0; border-top:1px solid var(--line); display:grid; gap:8px; font-size:14.5px; font-weight:500; }
+.cv3-card li::before{ content:""; display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--orange); margin-right:10px; vertical-align:1px; }
+.cv3-go{ margin-top:auto; align-self:flex-start; }
+
+/* "Y todo lo que haga falta" */
+.cv3-extra{ margin-top:52px; }
+.cv3-eh{ font-family:var(--display); font-weight:800; font-size:clamp(22px, 2.4vw, 30px); letter-spacing:-.03em; margin-bottom:12px; }
+.cv3-extra ol{ list-style:none; margin:0; padding:0; border-top:1px solid var(--line); }
+.cv3-extra li{ opacity:0; transform:translateY(16px); transition:opacity .5s, transform .6s var(--ease); }
+.cv3-extra a{ display:grid; grid-template-columns:44px minmax(0, 260px) 1fr 24px; gap:16px; align-items:center; padding:16px 2px; border-bottom:1px solid var(--line);
+  text-decoration:none; color:var(--ink); }
+.cv3-extra b{ font-weight:700; font-size:17px; }
+.cv3-extra .cv3-d{ color:var(--muted); font-size:14.5px; }
+.cv3-extra i{ font-style:normal; font-size:18px; justify-self:end; transition:transform .3s var(--ease), color .3s; }
+.cv3-extra a:hover i, .cv3-extra a:focus-visible i{ transform:translate(4px, -4px); color:var(--orange); }
+.cv3-card.in, .cv3-extra li.in{ opacity:1; transform:none; }
+
+/* Soy Camilo: 3 datos */
+.me-data{ display:flex; flex-wrap:wrap; gap:14px 34px; margin:18px 0 6px; padding:14px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+.me-data dt{ font-family:var(--mono); font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
+.me-data dd{ margin:3px 0 0; font-weight:600; font-size:15.5px; }
+
+/* Hablemos. */
+.hb h2{ margin-bottom:12px; }
+.hb-p{ font-size:17px; color:rgba(255,255,255,.85); max-width:34ch; }
+.hb-pick{ display:flex; flex-wrap:wrap; gap:8px; margin:22px 0 12px; }
+.hb-pick button, .hb-send button{ font:inherit; font-weight:600; font-size:14.5px; cursor:pointer; border-radius:999px; padding:11px 18px; transition:background .25s, color .25s, border-color .25s, transform .2s; }
+.hb-pick button{ background:transparent; color:#fff; border:1.5px solid rgba(255,255,255,.5); }
+.hb-pick button:hover{ border-color:#fff; }
+.hb-pick button[aria-pressed="true"]{ background:#fff; color:var(--violet); border-color:#fff; }
+.hb-send{ display:flex; flex-wrap:wrap; gap:8px; }
+.hb-send button{ border:1.5px solid #fff; }
+.hb-wa{ background:var(--orange); border-color:var(--orange) !important; color:#111113; }
+.hb-wa:hover{ background:#fff; }
+.hb-mail{ background:transparent; color:#fff; }
+.hb-mail:hover{ background:#fff; color:var(--violet); }
+.hb-send button:active, .hb-pick button:active{ transform:scale(.97); }
+.contact footer, #contacto footer{ align-items:center; }
+#contacto .up{ padding:10px 18px; font-size:14px; }
+
+@media (prefers-reduced-motion:reduce){ .cv3-card, .cv3-extra li{ opacity:1; transform:none; transition:none; } }
+
+/* celular: todo en una columna, botones grandes */
+@media (max-width:760px){
+  .cv3-cards{ grid-template-columns:1fr; }
+  .cv3-go{ align-self:stretch; justify-content:center; padding:15px 18px; font-size:15.5px; }
+  .cv3-extra a{ grid-template-columns:34px 1fr 20px; grid-template-areas:"n b i" "n d i"; gap:2px 12px; padding:15px 0; }
+  .cv3-extra .cv3-n{ grid-area:n; } .cv3-extra b{ grid-area:b; } .cv3-extra .cv3-d{ grid-area:d; font-size:13.5px; } .cv3-extra i{ grid-area:i; }
+  .hb-pick{ display:grid; grid-template-columns:1fr; }
+  .hb-send{ display:grid; grid-template-columns:1fr; }
+  .hb-pick button, .hb-send button{ padding:15px 18px; font-size:15.5px; }
+  .me-data{ flex-direction:column; gap:10px; }
+}
