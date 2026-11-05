@@ -5,6 +5,17 @@
    Para sumar un texto nuevo: agregarlo a EN con su traducción (la clave es el texto tal cual, con espacios simplificados). */
 (() => {
 const EN = {
+  // etapa 2 del inicio (js/proyectos.js)
+  'Lo que tengo en':'What I have in', 'producción':'production', 'Bajá para recorrerlos':'Scroll to explore',
+  '01 — En producción':'01 — In production', '02 — En desarrollo':'02 — In development', '03 — Contenido con IA':'03 — AI content',
+  'Tienda online de perfumes árabes: catálogo, carrito que manda el pedido por WhatsApp y panel propio para cargar productos.':'Online store for Arabic perfumes: catalog, a cart that sends the order via WhatsApp, and its own panel to upload products.',
+  'Página interactiva con intro animada, títulos con brillo y reflejos que reaccionan al bajar.':'Interactive website with an animated intro, shiny titles and reflections that react as you scroll.',
+  'Escenas con personas reales hechas con IA a partir de un par de fotos, con la voz real de la persona.':'Scenes with real people made with AI from a couple of photos, with the person\x27s real voice.',
+  'Rubro':'Industry', 'Perfumería':'Perfumery', 'Tipo':'Type', 'Tienda online':'Online store', 'Estado':'Status', 'En uso':'Live',
+  'Página interactiva':'Interactive website', 'Animaciones':'Animations', 'Intro + scroll':'Intro + scroll', 'Próximamente online':'Coming soon',
+  'Videos con IA':'AI videos', 'Video con IA':'AI video', 'Base':'Source', '2 fotos':'2 photos', 'Terminado':'Finished',
+  'Ver web ↗':'View site ↗', 'Ver el caso →':'View case →',
+  'Webs que':'Websites I', 'hice':'made', 'Perfumería · Tienda online':'Perfumery · Online store', 'Ver la web ↗':'View site ↗', 'Próximamente':'Coming soon',
   // menú y generales
   'Servicios':'Services', 'Portfolio':'Portfolio', 'Cómo trabajo':'How I work', 'Escribime':'Message me',
   'Secciones':'Sections', 'Modo de la página':'Page mode', 'Modo claro':'Light mode', 'Modo oscuro':'Dark mode', 'Idioma':'Language',

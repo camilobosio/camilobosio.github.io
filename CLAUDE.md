@@ -326,3 +326,13 @@ Inspirado en meglioalan.com con estética de pintura. Todo en archivos aparte: `
   Bolas: radio local = max(radio, profundidad) (sacó el "pezón"); hundido tipo PELOTA DE GIMNASIO (ancho, ~10% de la bola, y se corre);
   movimiento más lento y flotado (resortes .00045/.0006, amortiguación .965); se empujan suave entre sí (se pegan por el borde, no se
   meten adentro = nada "mutante"); unión smin 34; 8 en PC / 6 en celular (la última más chiquita); se acomodan antes del primer cuadro.
+
+## INICIO v2 — Etapa 2 (5/11, PUBLICADO)
+Inspirada en meglioalan.com. Archivos aparte: `css/proyectos.css` + `js/proyectos.js` (GSAP 3.12.5 + ScrollTrigger por cdnjs).
+Va después de "Hago…" + la cinta y ANTES de Portfolio (pegada a la portada rompía el balde del logo).
+- "Lo que tengo en producción" (`#proyectos`, "producción" con marcador naranja): PC = sección fija; el marco se agranda en 2 pasos
+  (3 rayitas naranjas a la derecha que se llenan), después pasan los proyectos (texto izq., video der. con fundido).
+  Celular / movimiento reducido = apilados (imagen arriba, texto abajo), aparecen al bajar, 3 puntitos.
+- Proyectos aprobados por Camilo: 01 M Perfumerie (En producción), 02 Overesthetic (En desarrollo, sin link), 03 Videos con IA (Tesla volador).
+- "Webs que hice" (`#webs`, "hice" en azul): lista numerada; en PC la captura sigue al mouse y el resto se atenúa; celular = miniatura fija.
+- PARA SUMAR: agregar un objeto a `PROYECTOS` o `WEBS` al principio de js/proyectos.js. Textos nuevos → diccionario EN de idioma.js (ya están).
