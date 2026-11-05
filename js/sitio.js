@@ -1188,7 +1188,7 @@ document.querySelectorAll('.plan').forEach(plan => {
   if(!window.__studioDone) window.__studioDone = Promise.resolve();
   if(stw){ stw.addEventListener('click', swapStudio); stw.addEventListener('keydown', e => { if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); swapStudio(); } }); }
   (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => { refit(); setTimeout(refit, 1400); }); addEventListener('resize', refit); addEventListener('load', refit);
-  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches || document.body.classList.contains('v2')) return;   // inicio v2: sin recuadros, el mouse mueve las bolas
   const N = 24, srcs = Array.from({ length:N }, (_, i) => `images/rastro/${String(i + 1).padStart(2, '0')}.webp`);
   let pre = [], k = Math.floor(Math.random() * N), lx = null, ly = null, live = 0, visible = false;
   const load = () => { if(pre.length) return; pre = srcs.map(s => { const im = new Image(); im.decoding = 'async'; im.src = s; return im; }); };

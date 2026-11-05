@@ -311,3 +311,7 @@ Inspirado en meglioalan.com con estética de pintura. Todo en archivos aparte: `
 - Celular: portada a pantalla completa (ya no se ve el logo + "Hago…" al entrar).
 - ETAPA 2 (después): proyectos tipo meglioalan (pantalla fija, agranda 2 veces con 3 rayitas a la derecha, proyectos uno por uno),
   grilla "Webs que hice" con efecto hover, sección "Qué puedo construir para vos".
+- 5/11 (3ª tanda, PUBLICADO): SIN recuadros del rastro en el inicio (el mouse solo mueve las bolas; `.v2` corta el rastro en sitio.js).
+  "Studio" fijo en la pincelada: no se toca, sin pincel de mouse. Bolas REDONDAS (no se estiran en óvalo): el mouse HUNDE la pintura
+  (resta suave en el shader, `uM`) y las corre despacio; se pegan entre sí. Un poco más grandes; domo según el radio promedio (`uHs`).
+  Barra: NARANJA (#ff8a3a) con borde de abajo de pincelada (svg dentado); pasada la portada se achica a CÁPSULA centrada (`.v2-pill`, 620px; celular 12px a los lados).
