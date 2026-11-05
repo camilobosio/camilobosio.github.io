@@ -373,3 +373,6 @@ Archivos: `css/etapa3.css` + `js/etapa3.js`. Sin duplicar: se integró en lo que
 - 5/11 noche (PUBLICADO): bolas 4 naranjas / 4 azules (celular 3/3). "Hablemos.": RECUADRO (eligió A, no la mancha) azul más oscuro
   como las bolas (#3157e6 → #13288f) con brillo arriba a la izq., sombra interna y grano. "Soy Camilo." más chico (5,2vw) y color
   var(--ink) = negro en modo claro / blanco en oscuro (no naranja). La variante `.mancha` quedó en el CSS sin usar.
+- 5/11 noche (PUBLICADO): sin la fila Base/Modalidad/Qué hago en "Soy Camilo"; "Elegí tu plan" + "Ver planes" centrados.
+  Salpicón de carga: probé relieve/brillo/textura y otras formas de caer (capturas/bocetos-splash*.html): NO le gustó ninguno →
+  queda el actual. No sumar más relieve/3D/brillo (ya hay en bolas y encabezados).
