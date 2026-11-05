@@ -95,3 +95,8 @@
 /* 5/11 (5ª): pincelada un poco más apagada y que llegue hasta atrás de Escribime y el menú */
 .v2 #top::after{ left:-4%; right:-30%; filter:saturate(.78) brightness(.93); }
 .v2 #top.v2-pill::after{ left:-10%; right:-34%; filter:saturate(.78) brightness(.93) drop-shadow(0 10px 14px rgba(0,0,0,.25)); }
+
+/* 5/11 (6ª): sin pincelada: barra RECTA naranja de punta a punta; al pasar la portada, cápsula naranja redonda (como al principio) */
+.v2 #top{ background:#ff8a3a; }
+.v2 #top::after, .v2 #top.v2-pill::after{ display:none; }
+.v2 #top.v2-pill{ border-radius:999px; box-shadow:0 14px 30px -16px rgba(17,17,19,.55); }

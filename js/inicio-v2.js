@@ -44,7 +44,7 @@
   const gl = cv.getContext('webgl', { premultipliedAlpha:true, antialias:false, alpha:true });
   if(!gl || !gl.getExtension('OES_standard_derivatives')) return fallback();
 
-  const small = innerWidth <= 760, NB = small ? 5 : 7, MAXB = 8;
+  const small = innerWidth <= 760, NB = small ? 6 : 8, MAXB = 8;
   // paleta de pintura de la página: naranja del logo, rosa, azul, amarillo, violeta, coral
   const ORANGE = [1,.5,.13], BLUE = [.2,.36,.95];   // solo los colores del logo
   const VS = 'attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}';
@@ -62,13 +62,13 @@
 // distancia a la pintura: bolas redondas que se funden (smooth-min) y el mouse que la hunde (resta suave)
 'float dist(vec2 p){',
 '  float d = 1e5;',
-'  for(int i = 0; i < ' + MAXB + '; i++){ if(i >= uN) break; d = smin(d, length(p - uB[i].xy) - uB[i].z, 64.); }',
-'  if(uM.z > .5) d = smax(d, -(length(p - uM.xy) - uM.z), 22.);',
+'  for(int i = 0; i < ' + MAXB + '; i++){ if(i >= uN) break; d = smin(d, length(p - uB[i].xy) - uB[i].z, 34.); }',
+'  if(uM.z > .5) d = smax(d, -(length(p - uM.xy) - uM.z), 40.);',
 '  return d; }',
 'vec4 tint(vec2 p){',
 '  vec3 acc = vec3(0.); float ws = 0.; float rs = 0.;',
 '  for(int i = 0; i < ' + MAXB + '; i++){ if(i >= uN) break; float di = length(p - uB[i].xy) - uB[i].z;',
-'    float w = exp(-max(di, -60.) / 30.); acc += uC[i] * w; rs += uB[i].z * w; ws += w; }',
+'    float w = exp(-max(di, -60.) / 14.); acc += uC[i] * w; rs += uB[i].z * w; ws += w; }',
 '  return vec4(acc / max(ws, 1e-4), rs / max(ws, 1e-4)); }',
 // altura de la pintura: un domo que sube rápido desde el borde
 'float hgt(float d, float R){ float u = clamp(-d, 0., R); return sqrt(max(0., u * (2. * R - u))); }',
@@ -79,7 +79,7 @@
 '  float sd = dist(p - vec2(-8., 22.));',
 '  float sh = (1. - smoothstep(-30., 40., sd)) * .5;',                      // sombra blanda abajo
 '  if(d > 2.){ gl_FragColor = vec4(0., 0., 0., sh); return; }',
-'  vec4 tr = tint(p); vec3 col = tr.rgb; float R = tr.a;',
+'  vec4 tr = tint(p); vec3 col = tr.rgb; float R = max(tr.a, -d + 1.);',
 // normal real de la superficie (diferencias finitas, sin escalones)
 '  float e = 1.5;',
 '  float hx = hgt(dist(p + vec2(e, 0.)), R) - hgt(dist(p - vec2(e, 0.)), R);',
@@ -128,11 +128,11 @@
   const blobs = [];
   // una bola NARANJA bien grande (la protagonista) y varias chicas, azules y naranjas, que se juntan y se pegan
   const m = Math.min(W, H * 1.4);
-  blobs.push({ x:W * (small ? .5 : .66), y:H * .55, vx:0, vy:0, hx:W * (small ? .5 : .66), R:m * (small ? .2 : .15), ph:1, sp:.045, amp:.3, big:true, c:ORANGE });
+  blobs.push({ x:W * (small ? .5 : .66), y:H * .55, vx:0, vy:0, hx:W * (small ? .5 : .66), R:m * (small ? .2 : .15), ph:1, sp:.03, amp:.3, big:true, c:ORANGE });
   for(let i = 1; i < NB; i++){
-    const R = m * (small ? .15 : .1) * (.8 + Math.random() * .35);
+    const R = m * (small ? .15 : .1) * (i === NB - 1 ? .55 : .8 + Math.random() * .35);   // la última, más chiquita
     const hx = ((i - .5) / (NB - 1)) * W;
-    blobs.push({ x:hx, y:H * (.2 + Math.random() * .6), vx:0, vy:0, hx, R, ph:Math.random() * 6.28, sp:.05 + Math.random() * .05, amp:.36, c:i % 3 === 0 ? ORANGE : BLUE });
+    blobs.push({ x:hx, y:H * (.2 + Math.random() * .6), vx:0, vy:0, hx, R, ph:Math.random() * 6.28, sp:.03 + Math.random() * .035, amp:.34, c:i % 3 === 0 ? ORANGE : BLUE });
   }
   const colArr = new Float32Array(MAXB * 3); blobs.forEach((b, i) => colArr.set(b.c, i * 3));
   gl.uniform3fv(uC, colArr);
@@ -154,20 +154,26 @@
       // lugar al que va: sube y baja como en la lámpara, con un vaivén leve de costado
       const tx = b.hx + Math.sin(t * .00021 + b.ph * 1.7) * W * .06;
       const ty = H * (.5 + b.amp * Math.sin(t * .001 * b.sp + b.ph));
-      let ax = (tx - b.x) * .0009, ay = (ty - b.y) * .0012;   // resorte blando
+      let ax = (tx - b.x) * .00045, ay = (ty - b.y) * .0006;   // resorte muy blando: flotan
       let px = 0, py = 0;
       if(mouse.on){   // el mouse hunde la pintura y la corre despacio (empuje que baja con la distancia, sin rebotes)
         const dx = b.x - mouse.x, dy = b.y - mouse.y, d = Math.hypot(dx, dy) || 1;
-        const f = Math.max(0, 1 - (d - b.R) / 140) * (b.big ? .26 : .32);   // la grande pesa más
+        const f = Math.max(0, 1 - (d - b.R) / 160) * (b.big ? .08 : .1);   // la grande pesa más
         ax += dx / d * f; ay += dy / d * f;
-        const lim = Math.min(b.R * .65 + 34, b.R + 20);   // el hundido nunca pasa de un tercio de la bola: antes se corre entera
-        if(d < lim){ const k = (lim - d) * .35; b.x += dx / d * k; b.y += dy / d * k; b.vx += dx / d * k * .08; b.vy += dy / d * k * .08; }
+        const lim = b.R * .9 + mr;   // se aplana apenas (un 10%) y después se corre entera, como una pelota de gimnasio
+        if(d < lim){ const k = (lim - d) * .045 * dt; b.vx += dx / d * k; b.vy += dy / d * k; }
       }
-      const damp = Math.pow(.95, dt);
+      const damp = Math.pow(.965, dt);
       b.vx = (b.vx + ax * dt) * damp; b.vy = (b.vy + ay * dt) * damp;
       b.x += b.vx * dt; b.y += b.vy * dt;
     }
-    mr += ((mouse.on ? (small ? 26 : 32) : 0) - mr) * .12 * dt;   // el hundido aparece y se va suave
+    // se pegan por el borde pero no se meten una adentro de otra (empujón suave entre bolas)
+    for(let i = 0; i < blobs.length; i++) for(let j = i + 1; j < blobs.length; j++){
+      const A = blobs[i], B = blobs[j], dx = B.x - A.x, dy = B.y - A.y, d = Math.hypot(dx, dy) || 1, lim = (A.R + B.R) * .86;
+      if(d < lim){ const k = (lim - d) * .004 * dt, ma = B.R / (A.R + B.R), mb = A.R / (A.R + B.R);
+        A.vx -= dx / d * k * ma; A.vy -= dy / d * k * ma; B.vx += dx / d * k * mb; B.vy += dy / d * k * mb; }
+    }
+    mr += ((mouse.on ? (small ? 52 : 64) : 0) - mr) * .06 * dt;   // el hundido aparece y se va suave
   }
   function draw(t){
     blobs.forEach((b, i) => bArr.set([b.x, b.y, b.R, 0], i * 4));
@@ -176,6 +182,8 @@
     gl.uniform4fv(uB, bArr); gl.uniform1i(uN, NB); gl.uniform1f(uHs, hs);
     gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT); gl.drawArrays(gl.TRIANGLES, 0, 3);
   }
+  // antes de mostrar, se acomodan solas un rato (así ninguna arranca metida adentro de otra)
+  for(let i = 1; i <= 400; i++) step(performance.now() - (400 - i) * 16.67); last = 0;
   let vis = true, raf = 0;
   const loop = t => { step(t); draw(t); raf = vis ? requestAnimationFrame(loop) : 0; };
   if(reduce){ draw(0); return; }

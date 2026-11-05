@@ -322,3 +322,7 @@ Inspirado en meglioalan.com con estética de pintura. Todo en archivos aparte: `
   Escribime y el menú; en cápsula queda la pincelada sola en el medio.
 - Al bajar: BOSIO + Studio se achican juntos; Camilo se va al final; Studio termina CENTRADO abajo de BOSIO, un poco encimado (encima).
   El filtro "goo" para que las letras se peguen deformaba BOSIO: descartado. Sin sombra en Studio (se cortaba al achicarse).
+- 5/11 (6ª, PUBLICADO): barra SIN pincelada (no le gustó): barra RECTA naranja de punta a punta; cápsula redonda naranja al pasar la portada.
+  Bolas: radio local = max(radio, profundidad) (sacó el "pezón"); hundido tipo PELOTA DE GIMNASIO (ancho, ~10% de la bola, y se corre);
+  movimiento más lento y flotado (resortes .00045/.0006, amortiguación .965); se empujan suave entre sí (se pegan por el borde, no se
+  meten adentro = nada "mutante"); unión smin 34; 8 en PC / 6 en celular (la última más chiquita); se acomodan antes del primer cuadro.
