@@ -370,3 +370,6 @@ Archivos: `css/etapa3.css` + `js/etapa3.js`. Sin duplicar: se integró en lo que
   Las de Phantom, Wanted, Toy Boy, Gentleman, 9 PM, Black Opium, Poison y Pure Poison solo quedaron en miniatura (no se usan).
 - Portfolio (portfolio.html): campañas con muchas piezas AGRUPADAS: en la galería solo 2 tarjetas (`data-grp="halloween"`, etiqueta
   "Campaña · 12 historias"); al tocar se abre la campaña entera en fila (`js/grupo.js`, lista en GRUPOS). Sin filtro "Halloween".
+- 5/11 noche (PUBLICADO): bolas 4 naranjas / 4 azules (celular 3/3). "Hablemos.": RECUADRO (eligió A, no la mancha) azul más oscuro
+  como las bolas (#3157e6 → #13288f) con brillo arriba a la izq., sombra interna y grano. "Soy Camilo." más chico (5,2vw) y color
+  var(--ink) = negro en modo claro / blanco en oscuro (no naranja). La variante `.mancha` quedó en el CSS sin usar.

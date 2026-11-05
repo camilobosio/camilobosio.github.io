@@ -132,7 +132,7 @@
   for(let i = 1; i < NB; i++){
     const R = m * (small ? .15 : .1) * (i === NB - 1 ? .55 : .8 + Math.random() * .35);   // la última, más chiquita
     const hx = ((i - .5) / (NB - 1)) * W;
-    blobs.push({ x:hx, y:H * (.2 + Math.random() * .6), vx:0, vy:0, hx, R, ph:Math.random() * 6.28, sp:.03 + Math.random() * .035, amp:.34, c:i % 3 === 0 ? ORANGE : BLUE });
+    blobs.push({ x:hx, y:H * (.2 + Math.random() * .6), vx:0, vy:0, hx, R, ph:Math.random() * 6.28, sp:.03 + Math.random() * .035, amp:.34, c:i % 2 === 0 ? ORANGE : BLUE });
   }
   const colArr = new Float32Array(MAXB * 3); blobs.forEach((b, i) => colArr.set(b.c, i * 3));
   gl.uniform3fv(uC, colArr);
