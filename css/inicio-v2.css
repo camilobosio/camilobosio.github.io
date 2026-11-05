@@ -1,0 +1,57 @@
+/* ===== INICIO v2 (nov 2026): lámpara de lava de pintura + nombre que baja al scrollear + barra blanca que aparece al bajar ===== */
+
+/* --- portada fija mientras dura la animación del nombre --- */
+.v2 .st-pin{ position:relative; z-index:2; height:calc(100svh + 90vh); }
+.v2 .studio{ position:sticky; top:0; min-height:0; height:100svh; --p:0; }
+.v2 .st-lava{ position:absolute; inset:0; width:100%; height:100%; z-index:-1; pointer-events:none; opacity:.9; }
+.v2 .studio::after{ z-index:-1; background:radial-gradient(46% 38% at 50% 48%, rgba(10,10,11,.55), transparent 75%); }   /* sombra suave detrás del nombre para que se lea */
+
+/* al terminar la entrada se sueltan las animaciones para poder mover las letras con el scroll */
+.v2 .studio.intro-done .st-camilo, .v2 .studio.intro-done .st-desc, .v2 .studio.intro-done .st-bosio,
+.v2 .studio.intro-done .st-studio:not(.swap){ animation:none; }
+.v2 .studio.intro-done .st-camilo,
+.v2 .studio.intro-done .st-studio{ opacity:calc(1 - var(--p) * 2.4); }
+.v2 .studio.intro-done .st-desc{ opacity:calc(1 - var(--p) * 3); translate:0 calc(var(--p) * 40px); }
+/* BOSIO: queda, se achica y va bajando */
+.v2 .st-bosio{ translate:0 calc(var(--p) * 26svh); scale:calc(1 - var(--p) * .42); }   /* solo BOSIO: si se mueve todo el bloque, "Studio" no se dibuja */
+
+/* --- barra: arriba de todo no se ve; al bajar aparece achicada y blanca --- */
+.v2 #top{ position:fixed; left:0; right:0; top:0; background:#fff; border-bottom:1px solid rgba(17,17,19,.08);
+  -webkit-backdrop-filter:none; backdrop-filter:none; box-shadow:0 10px 30px -22px rgba(17,17,19,.5);
+  transform:translateY(calc(-100% - 12px)); visibility:hidden;
+  transition:transform .45s cubic-bezier(.3,.7,.2,1), visibility 0s .45s; }
+.v2 #top.v2-show, .v2 #top:focus-within{ transform:none; visibility:visible; transition:transform .45s cubic-bezier(.3,.7,.2,1), visibility 0s; }
+.v2 #top::before{ display:none; }
+.v2 #top .wrap{ height:52px; transform:none; }
+.v2 #top .mark img{ width:28px; height:28px; }
+.v2 #top nav a{ color:#3a3a40; font-weight:500; }
+.v2 #top nav a:hover{ color:var(--orange); }
+.v2 #top .btn-dark{ background:#111113; color:#fff; border-color:#111113; padding:7px 14px; font-size:13px; }
+.v2 #top .btn-dark:hover{ background:var(--orange); border-color:var(--orange); }
+.v2 #top .menu-btn{ width:36px; height:36px; border-color:rgba(17,17,19,.18); color:#111113; }
+.v2 .mp-nav{ display:none; }
+
+@media (max-width:760px){
+  .v2 .st-pin{ height:calc(100svh + 45vh); }
+  .v2 .studio{ height:100svh; }
+  .v2 .st-bosio{ translate:0 calc(var(--p) * 24svh); scale:calc(1 - var(--p) * .35); }
+  /* en celular la barra es solo logo + Escribime + menú; las secciones van dentro del menú */
+  .v2 #top .wrap{ flex-wrap:nowrap; padding-top:0; padding-bottom:0; height:52px; }
+  .v2 #top nav:not(.mp-nav){ display:none; }
+  .v2 .mp-nav{ order:-1; display:grid; gap:2px; padding:2px 4px 8px 0; margin-bottom:4px; border-bottom:1px solid var(--line); }
+  .v2 .mp-nav a{ text-decoration:none; color:var(--ink); font-weight:600; font-size:15px; padding:7px 0; }
+}
+
+@media (prefers-reduced-motion:reduce){
+  .v2 .st-pin{ height:auto; }
+  .v2 .studio{ position:relative; }
+  .v2 .st-bosio{ translate:none; scale:none; }
+}
+
+
+
+/* el balde del logo espera escondido mientras la portada está fija (antes quedaba tapado por el negro) */
+.v2 .hero-logo.wait image[href*="balde"]{ visibility:hidden; }
+
+/* 5/11: sin descripción en la portada (en PC y celular): solo el nombre y las bolas; lo que hago se explica abajo en "Hago…" */
+.v2 .st-desc{ display:none; }

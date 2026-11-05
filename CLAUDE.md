@@ -293,3 +293,19 @@ en neón y en papelería (nano_banana_pro con el flyer de referencia importado d
   "Hago…" rota: páginas web, flyers con IA, diseños con IA, desarrollos, producciones digitales, campañas con IA,
   tiendas online, videos con IA, webs con animaciones.
 - 31/10 (PUBLICADO): en CELULAR el contenido del menú (`.top .wrap`) baja junto con la franja naranja al entrar (.pre/.drop). En compu sin cambios.
+
+## INICIO v2 — Etapa 1 (5/11, armado en local, falta publicar)
+Inspirado en meglioalan.com con estética de pintura. Todo en archivos aparte: `css/inicio-v2.css` + `js/inicio-v2.js`
+(se cargan solo en index.html; `<body class="v2">`; la portada va dentro de `#stPin`, `.st-pin`).
+- Bolas de pintura tipo lámpara de lava (metaballs en canvas `.st-lava`, dentro de `#studio`): 7 en PC, 4 en celular; cada bola = 3 gotas
+  con resortes, el mouse/dedo las empuja y se estiran. Colores naranja, rosa, azul, amarillo, violeta, con grano. A Camilo le gustaron.
+- Portada fija mientras scrolleás (100svh + 90vh en PC, +45vh en celular): Camilo/Studio se desvanecen, BOSIO se achica y baja.
+  Mover solo `.st-bosio` (si se mueve todo `.st-brand`, Studio no se dibuja).
+- "Studio": con la lava moviéndose Chrome no redibuja el texto con máscara SVG. Solución: al terminar `__studioDone` se le saca la máscara.
+  Se perdió ver la escritura trazo a trazo (aparece entera); Camilo dijo "así está bien".
+- Balde del logo de "Hago…": escondido (`.hero-logo.wait`) mientras la portada está fija; antes se veía suelto sobre el negro.
+- SIN descripción en la portada (PC y celular): Camilo la sacó, lo que hace se explica en "Hago…".
+- Barra: arriba no se ve; al bajar (>60px) aparece blanca y fina (52px). En celular las secciones van dentro del menú de tres rayitas.
+- Celular: portada a pantalla completa (ya no se ve el logo + "Hago…" al entrar).
+- ETAPA 2 (después): proyectos tipo meglioalan (pantalla fija, agranda 2 veces con 3 rayitas a la derecha, proyectos uno por uno),
+  grilla "Webs que hice" con efecto hover, sección "Qué puedo construir para vos".
