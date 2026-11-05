@@ -347,3 +347,14 @@ Archivos: `css/etapa3.css` + `js/etapa3.js`. Sin duplicar: se integró en lo que
 - Contacto: "Hablemos." + "Contame qué necesitás y te respondo con una propuesta." Probé botones por tipo de pedido (web/campaña/IA):
   Camilo NO los quiso → queda SOLO "Escribime por WhatsApp" (mensaje único), mail con "Copiar mail" y LinkedIn. Sin Instagram (es personal).
   "Volver arriba ↑" es botón. Textos nuevos ya están en el diccionario EN.
+
+## Proyectos + Portfolio, 2ª versión (5/11, PUBLICADO) — COPIA de meglioalan.com (Camilo pidió copiarla tal cual)
+- "Lo que tengo / en producción." (2 renglones, pegado a la izquierda, 5,8vw; "PROYECTOS" con rayita corta aparte). Sección fija:
+  fondo con TEXTURA de grano que pasa negro → naranja mate (#d4561f) → azul tirando a celeste (#4a74f0) → blanco (#f1efe9) → naranja claro.
+  Derecha: columna de capturas inclinadas en 3D (alternadas) que sube y se agranda; izquierda: número/estado, nombre grande (se
+  ajusta solo al ancho), descripción, 3 datos, links en mayúsculas subrayados. 4 proyectos: M Perfumerie, Overesthetic, Videos con IA,
+  Campaña de perfumes (foto parada 1 Million). Celular: bloques apilados, cada uno con su color.
+- "Webs que hice" → PORTFOLIO (`#trabajo`, fondo negro, "Algunos trabajos."): grilla de 6 + "Ver todo el portfolio →". El Portfolio
+  viejo de 4 tarjetas se sacó. Datos en `PROYECTOS` / `PORTFOLIO` de js/proyectos.js.
+- Tamaños: SOLO "Qué puedo construir para vos." más grande (8,8vw). "Soy Camilo.", "Hablemos." y Portfolio quedan como estaban (no agrandar todo).
+- Hablemos.: SIN chorreado (solo el recuadro azul).

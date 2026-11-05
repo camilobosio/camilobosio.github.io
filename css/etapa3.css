@@ -66,3 +66,27 @@
   .hb-pick button, .hb-send button{ padding:15px 18px; font-size:15.5px; }
   .me-data{ flex-direction:column; gap:10px; }
 }
+
+/* 5/11 (2ª): tamaños como meglioalan.com (títulos ~84px, números grandes) y contacto sin chorreado (solo el recuadro) */
+.cv3-h{ font-size:clamp(44px, 6.6vw, 86px); line-height:.92; max-width:none; margin-bottom:54px; }
+.cv3-card .cv3-n{ display:block; font-family:var(--display); font-weight:800; font-size:clamp(44px, 4.6vw, 64px); letter-spacing:-.04em; line-height:1;
+  padding-bottom:14px; border-bottom:2px solid currentColor; }
+.cv3-card h3{ font-size:clamp(26px, 2.6vw, 34px); margin-top:18px; }
+#quien .about h2{ font-size:clamp(48px, 7.4vw, 100px); line-height:.9; letter-spacing:-.05em; }
+#contacto .drip-svg{ display:none !important; }
+#contacto .contact{ margin-bottom:60px; }
+
+/* 5/11 (3ª): SOLO "Qué puedo construir" más grande (Soy Camilo, Hablemos y Portfolio quedan como estaban; pedido de Camilo), como meglioalan.com (comparados a 1280px) + grano sutil de textura en las secciones nuevas */
+.cv3-h{ font-size:clamp(52px, 8.8vw, 120px); line-height:.9; letter-spacing:-.05em; }
+.cv3-card .cv3-n{ font-size:clamp(52px, 5.6vw, 76px); }
+.cv3-card h3{ font-size:clamp(28px, 3vw, 40px); }
+.cv3-eh{ font-size:clamp(30px, 3.8vw, 52px); letter-spacing:-.04em; }
+/* grano: la misma textura fina en las secciones grandes */
+.cv3, .pj-pin, .wb, #contacto .contact{ position:relative; isolation:isolate; }
+.cv3::after, .pj-pin::after, .wb::after, #contacto .contact::after{ content:""; position:absolute; inset:0; z-index:-1; pointer-events:none; opacity:.09; mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+.pj-pin::after{ z-index:0; opacity:.14; }
+#contacto .contact::after{ border-radius:inherit; }
+@media (max-width:760px){
+  .cv3-h{ font-size:clamp(46px, 13.5vw, 64px); }
+}
