@@ -1,0 +1,35 @@
+/* Página "Sobre mí" (como meglioalan.com): sección negra con grano, credencial colgando a la izquierda, texto en el medio
+   y la figura de Camilo recortada (sin recuadro), grande, cortada a la altura de las rodillas por el borde de la sección;
+   abajo una franja naranja marca el corte. */
+.ct-hero{ position:relative; isolation:isolate; overflow:hidden; background:#0a0a0b; color:#f3f1ec; padding:110px 0 0 !important; }
+.ct-hero::after{ content:""; position:absolute; inset:0; z-index:-1; pointer-events:none; opacity:.14; mix-blend-mode:soft-light;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+.ct-hero::before{ content:""; position:absolute; z-index:-1; right:6%; bottom:0; width:46vw; height:80%; pointer-events:none;
+  background:radial-gradient(50% 55% at 50% 60%, rgba(255,138,58,.18), transparent 70%); }
+.ct-grid{ display:grid; grid-template-columns:300px minmax(0, .9fr) minmax(0, 1.1fr); gap:56px; align-items:end; min-height:calc(100vh - 110px); max-width:1320px; }
+.ct-text{ align-self:center; padding-bottom:60px; }
+.ct-text .label{ color:rgba(243,241,236,.6); }
+.ct-title{ font-family:var(--display); font-weight:800; font-size:clamp(44px, 5.4vw, 80px); letter-spacing:-.05em; line-height:.9; margin:14px 0 22px; }
+.ct-text p{ font-size:17px; line-height:1.6; color:rgba(243,241,236,.82); max-width:46ch; margin-bottom:14px; }
+.ct-text .roles{ color:#f3f1ec; }
+.ct-grid .lanyard{ align-self:start; }
+.ct-grid .lanyard .ly-hint{ color:rgba(243,241,236,.55); }
+/* la figura: recortada, grande, apoyada en el borde de abajo (corta en las rodillas) */
+.ct-fig{ margin:0 -40px 0 0; align-self:end; justify-self:center; width:100%; max-width:600px; }
+.ct-fig img{ display:block; width:100%; height:auto; max-height:calc(100vh - 70px); object-fit:contain; object-position:50% 100%;
+  filter:drop-shadow(0 0 40px rgba(0,0,0,.6)); }
+/* franja que marca el corte */
+.ct-band{ height:14px; background:var(--orange); }
+
+@media (max-width:1020px){
+  .ct-grid{ grid-template-columns:220px minmax(0, 1fr); min-height:0; }
+  .ct-fig{ grid-column:1 / -1; justify-self:center; max-width:440px; }
+  .ct-text{ padding-bottom:0; }
+}
+@media (max-width:760px){
+  .ct-hero{ padding-top:80px; }
+  .ct-grid{ grid-template-columns:1fr; gap:24px; }
+  .ct-grid .lanyard{ --cw:190px; --ch:238px; height:330px; }
+  .ct-fig{ max-width:none; }
+  .ct-fig img{ max-height:none; }
+}

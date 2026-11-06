@@ -376,3 +376,15 @@ Archivos: `css/etapa3.css` + `js/etapa3.js`. Sin duplicar: se integró en lo que
 - 5/11 noche (PUBLICADO): sin la fila Base/Modalidad/Qué hago en "Soy Camilo"; "Elegí tu plan" + "Ver planes" centrados.
   Salpicón de carga: probé relieve/brillo/textura y otras formas de caer (capturas/bocetos-splash*.html): NO le gustó ninguno →
   queda el actual. No sumar más relieve/3D/brillo (ya hay en bolas y encabezados).
+
+## Figura de Camilo / página "Sobre mí" (5/11 noche, PUBLICADO)
+- Quiere su figura tipo meglioalan (recortada, cortada en las rodillas, sin recuadro) en una página nueva "Sobre mí" (hoy `como-trabajo.html`,
+  armada en local SIN publicar: credencial izq., texto sobre la IA, figura der.). En la portada NO va (no le gustó al lado de BOSIO).
+- Le gustaron: camisa NEGRA arremangada y manga larga, metida, cinto negro, pantalón de vestir holgado, reloj de metal gris con esfera negra.
+- La IA le cambiaba cara/pelo; el pegado de su cara real (images/figura/comp-*.png) "no queda real". → Se ENTRENÓ un Soul en Higgsfield
+  con 6 recortes de su foto de frente (fotos-originales/camilo-2026-10.png): soul_id 9a2a48d0-8c7d-487d-b565-69c4435261de,
+  nombre "Camilo frente", tipo soul_2 (usar model soul_2 + soul_id). COSTÓ 25 créditos; quedaron 7,64. Solo para fotos DE FRENTE.
+- Siempre confirmar créditos antes de generar.
+- PUBLICADO: `sobre-mi.html` + `css/sobre-mi.css` (el menú "Cómo trabajo" pasó a "Sobre mí" en las 4 páginas). Figura final =
+  Soul "Camilo frente", camisa negra ABROCHADA hasta arriba, cabeza un poco más chica, reloj de metal esfera negra; sin fondo
+  (`images/figura/camilo-figura.webp`). Las pruebas (png) quedaron en images/figura sin subir.
