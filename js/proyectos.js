@@ -23,7 +23,7 @@
       desc:'Campaña de Halloween para M Perfumerie: un personaje y una escena para cada perfume, con su frase. Todo hecho con IA.',
       datos:[['Marca','M Perfumerie'], ['Piezas','19 historias'], ['Estado','Publicada']],
       media:'', poster:'portfolio/campanas/halloween/portada-calabaza.webp?v=2',
-      collage:['linterdit-elixir', 'portada-calabaza', 'spicebomb-infrared'].map(n => `portfolio/campanas/halloween/${n}.webp?v=2`),
+      collage:['most-wanted', 'portada-calabaza', 'spicebomb-infrared'].map(n => `portfolio/campanas/halloween/${n}.webp?v=2`),
       links:[['Ver la campaña →','portfolio.html#ia']] },
   ];
   const PORTFOLIO = [
