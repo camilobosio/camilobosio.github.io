@@ -51,7 +51,7 @@
 .ct-apps h2{ margin-bottom:18px; }
 .ct-apps .apps{ margin-top:22px; }
 @media (min-width:1021px){
-  .ct-grid{ grid-template-columns:300px minmax(0, 1.25fr) minmax(0, .85fr); gap:64px; }
-  .ct-title{ white-space:nowrap; font-size:clamp(52px, 5.4vw, 96px); }
+  .ct-grid{ grid-template-columns:300px minmax(0, .9fr) minmax(0, 1.1fr); gap:56px; }
+  .ct-title{ white-space:nowrap; font-size:clamp(48px, 4.4vw, 84px); }
   .ct-text p.ct-lead{ max-width:24ch; }
 }
