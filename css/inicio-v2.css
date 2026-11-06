@@ -117,3 +117,6 @@
 .v2 #top{ transition:background-color .5s, transform .45s cubic-bezier(.3,.7,.2,1), left .5s cubic-bezier(.3,.7,.2,1), right .5s cubic-bezier(.3,.7,.2,1), top .5s cubic-bezier(.3,.7,.2,1), border-radius .5s, box-shadow .5s; }
 .v2 #top.v2-glass{ background:rgba(255,138,58,.42); -webkit-backdrop-filter:blur(5px) saturate(1.2); backdrop-filter:blur(5px) saturate(1.2); }
 
+
+/* 6/11: el bloque "Hago…" (con el logo y el celular) en gris bien oscuro, apenas más claro que el negro de arriba y de abajo */
+.v2 #trabajos{ background:#1c1c1f; color:#f3f1ec; --ink:#f3f1ec; --ink-2:#d6d5d0; --paper:#1c1c1f; --paper-2:#262629; --line:#3a3a3f; --muted:#a3a2a8; }

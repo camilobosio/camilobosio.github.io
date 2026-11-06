@@ -8,23 +8,23 @@
       desc:'Tienda online de perfumes árabes: catálogo, carrito que manda el pedido por WhatsApp y panel propio para cargar productos.',
       datos:[['Rubro','Perfumería'], ['Tipo','Tienda online'], ['Estado','En uso']],
       media:'portfolio/interacciones/portada-pc.mp4', poster:'portfolio/interacciones/portada-pc.jpg',
-      links:[['Ver mperfumerie.com.ar ↗','https://mperfumerie.com.ar', true], ['Ver el caso →','portfolio.html#web']] },
+      fondo:['perfumes/lattafa-khamrah.webp','perfumes/valentino-born-in-roma.webp','interacciones/tendencias.jpg','perfumes/1million-vertical.webp','interacciones/nuevos.jpg','perfumes/asad-zanzibar-aros.webp','perfumes/fame-winter-crush.webp','interacciones/celular-producto.jpg'], links:[['Ver mperfumerie.com.ar ↗','https://mperfumerie.com.ar', true], ['Ver el caso →','portfolio.html#web']] },
     { estado:'En desarrollo', nombre:'Overesthetic', bg:'#4a74f0', claro:false,
       desc:'Página interactiva con intro animada, títulos con brillo y reflejos que reaccionan al bajar.',
       datos:[['Tipo','Página interactiva'], ['Animaciones','Intro + scroll'], ['Estado','Próximamente online']],
       media:'portfolio/overesthetic/portada-pc.mp4', poster:'portfolio/overesthetic/portada-pc.jpg',
-      links:[['Ver el caso →','portfolio.html#web']] },
+      fondo:['overesthetic/intro-llanta.jpg','overesthetic/reflejo.jpg','overesthetic/titulo-brillo.jpg','overesthetic/modulos.jpg','overesthetic/celular.jpg','overesthetic/portada-pc.jpg'], links:[['Ver el caso →','portfolio.html#web']] },
     { estado:'Contenido con IA', nombre:'Videos con IA', bg:'#f1efe9', claro:true,
       desc:'Escenas con personas reales hechas con IA a partir de un par de fotos, con la voz real de la persona.',
       datos:[['Tipo','Video con IA'], ['Base','2 fotos'], ['Estado','Terminado']],
       media:'portfolio/videos-ia/tesla-volador.mp4', poster:'portfolio/videos-ia/tesla-volador.jpg',
-      links:[['Ver el caso →','portfolio.html#ia']] },
+      fondo:['videos-ia/lentes-inicio.jpg','videos-ia/escena-angulo-2.jpg','videos-ia/tesla-volador.jpg','videos-ia/escena-angulo-3.jpg','perfumes/dia-de-la-madre-animada.jpg','perfumes/lanzamiento-pagina.jpg'], links:[['Ver más →','portfolio.html#ia']] },
     { estado:'Campaña con IA', nombre:'Campañas publicitarias', bg:'#0a0a0b', claro:false,
       desc:'Campaña de Halloween para M Perfumerie: un personaje y una escena para cada perfume, con su frase. Todo hecho con IA.',
       datos:[['Marca','M Perfumerie'], ['Piezas','19 historias'], ['Estado','Publicada']],
       media:'', poster:'portfolio/campanas/halloween/portada-calabaza.webp?v=2',
       collage:['most-wanted', 'portada-calabaza', 'spicebomb-infrared'].map(n => `portfolio/campanas/halloween/${n}.webp?v=2`),
-      links:[['Ver la campaña →','portfolio.html#ia']] },
+      fondo:['campanas/halloween/black-opium.webp?v=2','campanas/halloween/alien-mugler.webp?v=2','campanas/halloween/toy-boy.webp?v=2','perfumes/polo-big-pony-1-precio.webp','campanas/halloween/eros-flame.webp?v=2','campanas/halloween/hypnotic-poison.webp?v=2','perfumes/khamrah-waha-precio.webp','campanas/halloween/invictus-elixir.webp?v=2','campanas/halloween/phantom.webp?v=2','perfumes/tommy-now-precio.webp'], links:[['Ver la campaña →','portfolio.html#ia']] },
   ];
   const PORTFOLIO = [
     { nombre:'M Perfumerie', rubro:'Página web · Tienda online', img:'portfolio/interacciones/portada-pc.jpg', url:'https://mperfumerie.com.ar', link:'mperfumerie.com.ar ↗', ext:true },
@@ -65,6 +65,7 @@
           </article>`).join('')}
         </div>
         <div class="pj-right" aria-hidden="true"><div class="pj-col">${PROYECTOS.map(p => `<div class="pj-card">${media(p)}</div>`).join('')}</div></div>
+        <div class="pj-bands" aria-hidden="true">${PROYECTOS.map((p, i) => { const im = (p.fondo || []).map(src => `<img src="portfolio/${src}" alt="" loading="lazy">`).join(""); return `<div class="pj-band${i === 2 ? " deform" : ""}"><div class="pj-track">${im}${im}</div></div>`; }).join("")}</div>
         <div class="pj-bars" aria-hidden="true">${PROYECTOS.map(() => '<i></i>').join('')}</div>
       </div>`;
 
@@ -77,7 +78,8 @@
       gsap.registerPlugin(ScrollTrigger);
       const pin = pj.querySelector('.pj-pin'), col = pj.querySelector('.pj-col'), cards = [...pj.querySelectorAll('.pj-card')];
       const intro = pj.querySelector('.pj-intro'), bars = [...pj.querySelectorAll('.pj-bars i')];
-      const cvid = cards.map(c => c.querySelector('video'));
+      const cvid = cards.map(c => c.querySelector('video')), bands = [...pj.querySelectorAll('.pj-band')];
+      const bandH = () => pin.style.setProperty('--bh', (cards[0].getBoundingClientRect().height + 90) + 'px'); bandH(); addEventListener('resize', bandH); setTimeout(bandH, 800);
       let cur = -2;
       const show = i => { if(i === cur) return; cur = i;
         items.forEach((el, k) => el.classList.toggle('on', k === i));
@@ -85,6 +87,7 @@
         bars.forEach((b, k) => b.classList.toggle('on', k === Math.max(0, i)));
         pin.classList.toggle('claro', i >= 0 && PROYECTOS[i].claro);
         cards.forEach((c, k) => c.classList.toggle('on', k === i));
+        bands.forEach((b, k) => b.classList.toggle('on', k === i));
         cvid.forEach((v, k) => { if(!v) return; if(k === Math.max(0, i)) v.play().catch(() => {}); else v.pause(); }); };
       // dónde tiene que quedar la columna para centrar la tarjeta i
       const yFor = i => { const c = cards[i], h = pin.clientHeight; return -(c.offsetTop + c.offsetHeight / 2 - h / 2); };

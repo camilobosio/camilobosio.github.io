@@ -118,3 +118,20 @@
 /* campañas: 3 historias una al lado de la otra dentro de la tarjeta */
 .pj-collage{ display:grid; grid-template-columns:repeat(3, 1fr); gap:6px; width:100%; height:100%; background:#0a0a0b; }
 .pj-collage img{ width:100%; height:100%; object-fit:cover; object-position:50% 30%; display:block; }
+
+/* 6/11: franja de fondo detrás de cada proyecto (de punta a punta, un poco más alta que la captura):
+   imágenes de ese proyecto pasando despacio, teñidas con el color de fondo */
+.pj-bands{ display:none; }
+.pj-desk .pj-bands{ display:block; position:absolute; left:0; right:0; top:50%; height:var(--bh, 60vh); transform:translateY(-50%); z-index:0; pointer-events:none; }
+.pj-band{ position:absolute; inset:0; overflow:hidden; opacity:0; transition:opacity .7s; }
+.pj-band.on{ opacity:1; }
+.pj-band::after{ content:""; position:absolute; inset:0; background:linear-gradient(90deg, var(--pjbg, transparent) 0%, transparent 18%, transparent 82%, var(--pjbg, transparent) 100%); }
+.pj-track{ display:flex; gap:14px; height:100%; width:max-content; animation:pjMarq 70s linear infinite; }
+.pj-track img{ height:100%; width:auto; flex:none; object-fit:cover; opacity:.2; filter:grayscale(1) contrast(1.15); mix-blend-mode:luminosity; }
+.pj-pin.claro .pj-band .pj-track img{ opacity:.3; mix-blend-mode:multiply; }
+.pj-band.deform .pj-track{ animation-duration:90s; }
+.pj-band.deform .pj-track img{ height:135%; margin-top:-10%; transform:skewX(-14deg) scaleX(1.5); filter:grayscale(1) blur(3px) contrast(1.2); opacity:.22; }
+.pj-band:last-child .pj-track img{ opacity:.28; filter:grayscale(.3) brightness(.8); mix-blend-mode:normal; }
+@keyframes pjMarq{ to{ transform:translateX(-50%); } }
+.pj-left, .pj-right, .pj-bars{ position:relative; z-index:1; }
+@media (prefers-reduced-motion:reduce){ .pj-track{ animation:none; } }
