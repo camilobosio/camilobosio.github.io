@@ -35,10 +35,8 @@
 }
 
 
-/* 6/11: fondo NEGRO rugoso (como lo primero oscuro de meglioalan): grano grueso claro + manchas suaves */
-.ct-hero{ background-color:#0c0c0d; background-image:radial-gradient(60% 50% at 30% 35%, rgba(255,255,255,.045), transparent 70%), radial-gradient(50% 45% at 80% 75%, rgba(255,255,255,.035), transparent 70%); }
+/* 6/11: fondo negro tipo papel (como meglioalan): grano fino propio (images/grano.webp) en mosaico de 128px */
+.ct-hero{ background-color:#141414; }
 .ct-hero::before{ display:none; }
-.ct-hero::after{ opacity:1; mix-blend-mode:screen;
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1.1 -.78'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+.ct-hero::after{ opacity:1; mix-blend-mode:normal; background:url("../images/grano.webp") 0 0/128px auto repeat; }
 .ct-band{ height:14px; background:var(--orange); }

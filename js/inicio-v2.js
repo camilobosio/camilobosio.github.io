@@ -6,7 +6,7 @@
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // ---------- barra ----------
-  const bar = () => { if(!top) return; top.classList.toggle('v2-show', scrollY > 60);
+  const bar = () => { if(!top) return; top.classList.toggle('v2-show', scrollY > 15);
     const pb = pin.getBoundingClientRect().bottom; top.classList.toggle('v2-pill', pb < 70); top.classList.toggle('v2-glass', pb < -260); };   // pasada la portada: cápsula en el medio
   bar(); addEventListener('scroll', bar, { passive:true });
 
@@ -162,12 +162,12 @@
       let px = 0, py = 0;
       if(mouse.on){   // el mouse hunde la pintura y la corre despacio (empuje que baja con la distancia, sin rebotes)
         const dx = b.x - mouse.x, dy = b.y - mouse.y, d = Math.hypot(dx, dy) || 1;
-        const f = Math.max(0, 1 - (d - b.R) / 140) * (b.big ? .022 : .03) * slow;   // pesadas: empuje chico
+        const f = Math.max(0, 1 - (d - b.R) / 140) * (b.big ? .06 : .075);   // como antes, un poco más lento
         ax += dx / d * f; ay += dy / d * f;
         const lim = b.R * .92 + mr;
-        if(d < lim){ const k = (lim - d) * .008 * slow * dt; b.vx += dx / d * k; b.vy += dy / d * k; }
+        if(d < lim){ const k = (lim - d) * .032 * dt; b.vx += dx / d * k; b.vy += dy / d * k; }
       }
-      const damp = Math.pow(.95, dt);   // inercia pesada: frena rápido
+      const damp = Math.pow(.96, dt);
       b.vx = (b.vx + ax * dt) * damp; b.vy = (b.vy + ay * dt) * damp;
       b.x += b.vx * dt; b.y += b.vy * dt;
     }
@@ -177,7 +177,7 @@
       if(d < lim){ const k = (lim - d) * .004 * dt, ma = B.R / (A.R + B.R), mb = A.R / (A.R + B.R);
         A.vx -= dx / d * k * ma; A.vy -= dy / d * k * ma; B.vx += dx / d * k * mb; B.vy += dy / d * k * mb; }
     }
-    mr += ((mouse.on ? (small ? 40 : 48) * (.3 + .7 * slow) : 0) - mr) * .08 * dt;   // hundido chico; rápido = casi nada
+    mr += ((mouse.on ? (small ? 52 : 64) : 0) - mr) * .08 * dt;   // hundido chico; rápido = casi nada
     // el hundido nunca entra más que un poquito en la bola (así nunca hace agujero)
     dent.x = mouse.x; dent.y = mouse.y;
     for(const b of blobs){ const dx = dent.x - b.x, dy = dent.y - b.y, d = Math.hypot(dx, dy) || 1, m = b.R * .9 + mr;
