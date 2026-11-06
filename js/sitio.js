@@ -858,7 +858,7 @@ document.querySelectorAll('.plan').forEach(plan => {
     P[N].w = .25; loc.forEach(([x, y]) => P.push(pt(hx + x * c - y * s, hy + x * s + y * c, .25)));
     for(let i = 0; i < N; i++) sticks.push([i, i + 1, seg, 1]);                           // la cinta: solo no se estira (puede aflojarse)
     [[N, N + 1], [N, N + 2], [N + 1, N + 2]].forEach(([i, j]) => sticks.push([i, j, Math.hypot(P[i].x - P[j].x, P[i].y - P[j].y), 0]));
-    side = 0; spin = intro ? 35 : 0; vspin = 0;
+    side = 1; spin = 180 + (intro ? 35 : 0); vspin = 0;                                  // arranca mostrando el dorso azul
   }
   // tres puntos de la tarjeta: gancho (arriba al centro), abajo-izq, abajo-der → posición y ángulo
   function frame(){

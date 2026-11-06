@@ -7,7 +7,7 @@
 
   // ---------- barra ----------
   const bar = () => { if(!top) return; top.classList.toggle('v2-show', scrollY > 60);
-    top.classList.toggle('v2-pill', pin.getBoundingClientRect().bottom < 70); };   // pasada la portada: cápsula en el medio
+    const pb = pin.getBoundingClientRect().bottom; top.classList.toggle('v2-pill', pb < 70); top.classList.toggle('v2-glass', pb < -260); };   // pasada la portada: cápsula en el medio
   bar(); addEventListener('scroll', bar, { passive:true });
 
   // ---------- nombre que baja ----------
@@ -117,9 +117,9 @@
   const U = n => gl.getUniformLocation(pr, n);
   const uRes = U('uRes'), uDpr = U('uDpr'), uT = U('uT'), uB = U('uB'), uM = U('uM'), uC = U('uC'), uN = U('uN'), uHs = U('uHs');
 
-  let W = 0, H = 0, dpr = 1;
+  let W = 0, H = 0, dpr = 1, q = 1; const MAXPX = 1.1e6;
   function size(){
-    const r = st.getBoundingClientRect(); W = r.width; H = r.height; dpr = Math.min(2, devicePixelRatio || 1);   // densidad real, tope 2
+    const r = st.getBoundingClientRect(); W = r.width; H = r.height; dpr = Math.min(2, devicePixelRatio || 1, Math.sqrt(MAXPX / Math.max(1, W * H))) * q;   // densidad real, con tope de pixeles (placas de video justas) y calidad que baja sola si se traba
     cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); gl.viewport(0, 0, cv.width, cv.height);
   }
   size();
@@ -139,7 +139,7 @@
   const hs = blobs.reduce((a, b) => a + b.R, 0) / NB;   // altura del domo = radio promedio (sin aro adentro)
   const bArr = new Float32Array(MAXB * 4); let mr = 0;   // radio del hundido del mouse (aparece y se va suave)
 
-  const mouse = { x:-9999, y:-9999, on:false };
+  const mouse = { x:-9999, y:-9999, on:false, px:0, py:0, spd:0 }, dent = { x:-9999, y:-9999 };
   const setM = (cx, cy) => { const r = st.getBoundingClientRect(); mouse.x = cx - r.left; mouse.y = cy - r.top; mouse.on = true; };
   st.addEventListener('pointermove', e => setM(e.clientX, e.clientY));
   st.addEventListener('pointerleave', () => { mouse.on = false; });
@@ -150,6 +150,10 @@
   let last = 0;
   function step(t){
     const dt = Math.min(2.5, last ? (t - last) / 16.67 : 1); last = t;
+    // velocidad del mouse (suavizada): rápido = apenas la roza, lento = la empuja
+    const mv = Math.hypot(mouse.x - mouse.px, mouse.y - mouse.py) / dt; mouse.px = mouse.x; mouse.py = mouse.y;
+    mouse.spd += ((mouse.on ? Math.min(mv, 80) : 0) - mouse.spd) * .25;
+    const slow = 1 / (1 + mouse.spd / 5);
     for(const b of blobs){
       // lugar al que va: sube y baja como en la lámpara, con un vaivén leve de costado
       const tx = b.hx + Math.sin(t * .00021 + b.ph * 1.7) * W * .06;
@@ -158,12 +162,12 @@
       let px = 0, py = 0;
       if(mouse.on){   // el mouse hunde la pintura y la corre despacio (empuje que baja con la distancia, sin rebotes)
         const dx = b.x - mouse.x, dy = b.y - mouse.y, d = Math.hypot(dx, dy) || 1;
-        const f = Math.max(0, 1 - (d - b.R) / 160) * (b.big ? .08 : .1);   // la grande pesa más
+        const f = Math.max(0, 1 - (d - b.R) / 140) * (b.big ? .022 : .03) * slow;   // pesadas: empuje chico
         ax += dx / d * f; ay += dy / d * f;
-        const lim = b.R * .9 + mr;   // se aplana apenas (un 10%) y después se corre entera, como una pelota de gimnasio
-        if(d < lim){ const k = (lim - d) * .045 * dt; b.vx += dx / d * k; b.vy += dy / d * k; }
+        const lim = b.R * .92 + mr;
+        if(d < lim){ const k = (lim - d) * .008 * slow * dt; b.vx += dx / d * k; b.vy += dy / d * k; }
       }
-      const damp = Math.pow(.965, dt);
+      const damp = Math.pow(.95, dt);   // inercia pesada: frena rápido
       b.vx = (b.vx + ax * dt) * damp; b.vy = (b.vy + ay * dt) * damp;
       b.x += b.vx * dt; b.y += b.vy * dt;
     }
@@ -173,19 +177,27 @@
       if(d < lim){ const k = (lim - d) * .004 * dt, ma = B.R / (A.R + B.R), mb = A.R / (A.R + B.R);
         A.vx -= dx / d * k * ma; A.vy -= dy / d * k * ma; B.vx += dx / d * k * mb; B.vy += dy / d * k * mb; }
     }
-    mr += ((mouse.on ? (small ? 52 : 64) : 0) - mr) * .06 * dt;   // el hundido aparece y se va suave
+    mr += ((mouse.on ? (small ? 40 : 48) * (.3 + .7 * slow) : 0) - mr) * .08 * dt;   // hundido chico; rápido = casi nada
+    // el hundido nunca entra más que un poquito en la bola (así nunca hace agujero)
+    dent.x = mouse.x; dent.y = mouse.y;
+    for(const b of blobs){ const dx = dent.x - b.x, dy = dent.y - b.y, d = Math.hypot(dx, dy) || 1, m = b.R * .9 + mr;
+      if(d < m){ dent.x = b.x + dx / d * m; dent.y = b.y + dy / d * m; } }
   }
   function draw(t){
     blobs.forEach((b, i) => bArr.set([b.x, b.y, b.R, 0], i * 4));
     gl.uniform2f(uRes, cv.width, cv.height); gl.uniform1f(uDpr, dpr); gl.uniform1f(uT, t * .001);
-    gl.uniform3f(uM, mouse.x, mouse.y, mr);
+    gl.uniform3f(uM, dent.x, dent.y, mr);
     gl.uniform4fv(uB, bArr); gl.uniform1i(uN, NB); gl.uniform1f(uHs, hs);
     gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT); gl.drawArrays(gl.TRIANGLES, 0, 3);
   }
   // antes de mostrar, se acomodan solas un rato (así ninguna arranca metida adentro de otra)
   for(let i = 1; i <= 400; i++) step(performance.now() - (400 - i) * 16.67); last = 0;
   let vis = true, raf = 0;
-  const loop = t => { step(t); draw(t); raf = vis ? requestAnimationFrame(loop) : 0; };
+  // si la compu no llega a dibujar fluido, bajamos la resolución del dibujo (hasta 3 veces)
+  let slow = 0, lastF = 0;
+  const perf = t => { if(lastF){ const ms = t - lastF; slow = ms > 34 ? slow + 1 : Math.max(0, slow - 1);
+      if(slow > 20 && q > .4){ q *= .7; slow = 0; size(); } } lastF = t; };
+  const loop = t => { perf(t); step(t); draw(t); raf = vis ? requestAnimationFrame(loop) : 0; };
   if(reduce){ draw(0); return; }
   new IntersectionObserver(es => { vis = es[0].isIntersecting; if(vis && !raf){ last = 0; raf = requestAnimationFrame(loop); } }).observe(st);
   let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { size(); if(!raf) draw(performance.now()); }, 150); });

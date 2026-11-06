@@ -100,3 +100,22 @@
 .v2 #top{ background:#ff8a3a; }
 .v2 #top::after, .v2 #top.v2-pill::after{ display:none; }
 .v2 #top.v2-pill{ border-radius:999px; box-shadow:0 14px 30px -16px rgba(17,17,19,.55); }
+
+/* 6/11: la barra ya está desde el principio, transparente sobre el negro con todo en blanco y sin logo;
+   al pasar la portada se achica a la cápsula naranja con el logo CB azul; y al seguir bajando se vuelve traslúcida */
+.v2 #top{ transform:none; visibility:visible; }
+.v2 #top:not(.v2-pill){ background:transparent; box-shadow:none; }
+.v2 #top:not(.v2-pill) .mark{ visibility:hidden; opacity:0; }
+.v2 #top:not(.v2-pill) nav a{ color:#fff; }
+.v2 #top:not(.v2-pill) nav a:hover{ color:#ff8a3a; }
+.v2 #top:not(.v2-pill) .btn-dark{ background:#fff; color:#111113; border-color:#fff; }
+.v2 #top:not(.v2-pill) .btn-dark:hover{ background:#ff8a3a; border-color:#ff8a3a; color:#111113; }
+.v2 #top:not(.v2-pill) .menu-btn{ border-color:rgba(255,255,255,.55); color:#fff; }
+.v2 #top .mark{ transition:opacity .4s; }
+.v2 #top .mark img{ width:30px; height:auto; }
+.v2 #top{ transition:background-color .5s, transform .45s cubic-bezier(.3,.7,.2,1), left .5s cubic-bezier(.3,.7,.2,1), right .5s cubic-bezier(.3,.7,.2,1), top .5s cubic-bezier(.3,.7,.2,1), border-radius .5s, box-shadow .5s; }
+.v2 #top.v2-glass{ background:rgba(255,138,58,.62); -webkit-backdrop-filter:blur(12px) saturate(1.3); backdrop-filter:blur(12px) saturate(1.3); }
+
+/* el logo CB baja al centro con el nombre (va dentro del nombre, así se achica junto) */
+.v2 .st-cb{ display:block; width:clamp(64px, 8vw, 120px); height:auto; margin:0 auto 10px;
+  opacity:clamp(0, calc(var(--p) * 4), 1); translate:0 calc((1 - min(1, var(--p) * 3)) * -60px); }
