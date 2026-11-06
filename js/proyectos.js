@@ -44,6 +44,17 @@
     ? `<video src="${p.media}" poster="${p.poster}" muted loop playsinline preload="metadata" aria-hidden="true"></video>`
     : `<img src="${p.poster}" alt="">`;
 
+
+  // franja de fondo de cada proyecto: 0 = la página de M Perfumerie bajando sola, 1 = grabación de Overesthetic,
+  // 2 = los videos con IA quietos de fondo, 3 = piezas de campañas pasando de costado
+  const banda = (p, i) => {
+    if(i === 0) return '<div class="pj-band scroll" ></div>';
+    if(i === 1) return '<div class="pj-band vid"><video src="portfolio/overesthetic/portada-pc.mp4" muted loop playsinline preload="none"></video></div>';
+    if(i === 2) return '<div class="pj-band vids">' + ['lentes-inicio','escena-angulo-1','tesla-volador','escena-angulo-3','escena-angulo-2'].map(n => '<video src="portfolio/videos-ia/' + n + '.mp4" muted loop playsinline preload="none"></video>').join('') + '</div>';
+    const im = (p.fondo || []).map(src => '<img src="portfolio/' + src + '" alt="" loading="lazy">').join('');
+    return '<div class="pj-band"><div class="pj-track">' + im + im + '</div></div>';
+  };
+
   // ---------- lo que tengo en producción ----------
   if(pj){
     pj.innerHTML = `
@@ -65,7 +76,7 @@
           </article>`).join('')}
         </div>
         <div class="pj-right" aria-hidden="true"><div class="pj-col">${PROYECTOS.map(p => `<div class="pj-card">${media(p)}</div>`).join('')}</div></div>
-        <div class="pj-bands" aria-hidden="true">${PROYECTOS.map((p, i) => { const im = (p.fondo || []).map(src => `<img src="portfolio/${src}" alt="" loading="lazy">`).join(""); return `<div class="pj-band${i === 2 ? " deform" : ""}"><div class="pj-track">${im}${im}</div></div>`; }).join("")}</div>
+        <div class="pj-bands" aria-hidden="true">${PROYECTOS.map(banda).join("")}</div>
         <div class="pj-bars" aria-hidden="true">${PROYECTOS.map(() => '<i></i>').join('')}</div>
       </div>`;
 
@@ -87,7 +98,7 @@
         bars.forEach((b, k) => b.classList.toggle('on', k === Math.max(0, i)));
         pin.classList.toggle('claro', i >= 0 && PROYECTOS[i].claro);
         cards.forEach((c, k) => c.classList.toggle('on', k === i));
-        bands.forEach((b, k) => b.classList.toggle('on', k === i));
+        bands.forEach((b, k) => { b.classList.toggle('on', k === i); b.querySelectorAll('video').forEach(v => { if(k === i){ v.playbackRate = .7; v.play().catch(() => {}); } else v.pause(); }); });
         cvid.forEach((v, k) => { if(!v) return; if(k === Math.max(0, i)) v.play().catch(() => {}); else v.pause(); }); };
       // dónde tiene que quedar la columna para centrar la tarjeta i
       const yFor = i => { const c = cards[i], h = pin.clientHeight; return -(c.offsetTop + c.offsetHeight / 2 - h / 2); };
