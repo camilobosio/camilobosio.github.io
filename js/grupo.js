@@ -5,8 +5,9 @@
   const H = 'portfolio/campanas/halloween/';
   const GRUPOS = {
     halloween:{ titulo:'Campaña de Halloween · M Perfumerie', sub:'Un personaje y una escena para cada perfume, con su frase. Todo hecho con IA.',
-      piezas:['portada-calabaza','linterdit-elixir','spicebomb-infrared','hypnotic-poison-edt','hypnotic-poison-edp','angel-nova','maahir-black',
-              'invictus-elixir','eros-flame','pareja-jpg','good-girl-gala','good-girl-aventurera'].map(n => H + n + '.webp') },
+      piezas:['portada-calabaza','linterdit-elixir','spicebomb-infrared','gentleman-givenchy','9pm-night-out','maahir-black','jpg-la-belle-1','scandal-elixir',
+              'alien-mugler','hypnotic-poison','phantom','jpg-la-belle-2','good-girl-jasmine','invictus-elixir','eros-flame','black-opium','toy-boy','most-wanted',
+              'hypnotic-poison-edp','jpg-la-belle-3'].map(n => H + n + '.webp?v=2') },
   };
   const css = document.createElement('style');
   css.textContent = `
