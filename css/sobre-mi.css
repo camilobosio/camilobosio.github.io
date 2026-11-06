@@ -41,3 +41,17 @@
 .ct-hero::after{ opacity:1; mix-blend-mode:normal; background:url("../images/tela-negra.webp") 0 0/128px auto repeat; }
 .ct-band{ height:14px; background:var(--orange); }
 .ct-title{ font-size:clamp(40px, 4.4vw, 68px); }
+
+/* 6/11: título y frase como meglioalan: "Soy Camilo." grande y pesado, Camilo en naranja; frase con parte en naranja */
+.ct-title{ font-size:clamp(52px, 6vw, 96px); letter-spacing:-.055em; line-height:.9; }
+.ct-or{ color:var(--orange); }
+.ct-text p.ct-lead{ font-family:var(--display); font-weight:800; font-size:clamp(24px, 2.3vw, 34px); line-height:1.12; letter-spacing:-.035em; color:#f3f1ec; max-width:22ch; margin-bottom:20px; }
+.ct-lead em{ font-style:normal; color:var(--orange); }
+/* programas con los que trabajo (igual que en el inicio) */
+.ct-apps h2{ margin-bottom:18px; }
+.ct-apps .apps{ margin-top:22px; }
+@media (min-width:1021px){
+  .ct-grid{ grid-template-columns:300px minmax(0, 1.25fr) minmax(0, .85fr); gap:64px; }
+  .ct-title{ white-space:nowrap; font-size:clamp(52px, 5.4vw, 96px); }
+  .ct-text p.ct-lead{ max-width:24ch; }
+}
