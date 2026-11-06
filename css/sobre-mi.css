@@ -36,7 +36,8 @@
 
 
 /* 6/11: fondo negro tipo papel (como meglioalan): grano fino propio (images/grano.webp) en mosaico de 128px */
-.ct-hero{ background-color:#141414; }
+.ct-hero{ background-color:#0f0f10; }
 .ct-hero::before{ display:none; }
-.ct-hero::after{ opacity:1; mix-blend-mode:normal; background:url("../images/grano.webp") 0 0/128px auto repeat; }
+.ct-hero::after{ opacity:1; mix-blend-mode:normal; background:url("../images/tela-negra.webp") 0 0/128px auto repeat; }
 .ct-band{ height:14px; background:var(--orange); }
+.ct-title{ font-size:clamp(40px, 4.4vw, 68px); }
