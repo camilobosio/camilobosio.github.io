@@ -887,3 +887,6 @@
     .top.pre .wrap{ transform:translateY(calc(-100% - 24px)); transition:none; }
     .top.drop .wrap{ transition:transform 1.5s cubic-bezier(.4,0,.2,1); }
   }
+
+/* 6/11: en las otras páginas la barra va de punta a punta: logo bien a la izquierda, Escribime y menú bien a la derecha */
+body:not(.v2) .top .wrap{ max-width:none; padding-inline:24px; }

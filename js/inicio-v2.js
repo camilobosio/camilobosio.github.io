@@ -147,14 +147,20 @@
   st.addEventListener('touchmove', e => setM(e.touches[0].clientX, e.touches[0].clientY), { passive:true });
   st.addEventListener('touchend', () => { mouse.on = false; }, { passive:true });
 
-  let last = 0;
+  let last = 0; const nameEl = st.querySelector('.st-name');
   function step(t){
     const dt = Math.min(2.5, last ? (t - last) / 16.67 : 1); last = t;
     // velocidad del mouse (suavizada): rápido = apenas la roza, lento = la empuja
     const mv = Math.hypot(mouse.x - mouse.px, mouse.y - mouse.py) / dt; mouse.px = mouse.x; mouse.py = mouse.y;
     mouse.spd += ((mouse.on ? Math.min(mv, 80) : 0) - mouse.spd) * .25;
     const slow = 1 / (1 + mouse.spd / 5);
+    // al bajar, el nombre (que baja y se achica) corre las bolas: siempre queda limpio, sin bolas atrás
+    const pv = Math.min(1, scrollY / 120);
+    let nr = null; if(pv > 0 && nameEl){ const a = nameEl.getBoundingClientRect(), o = st.getBoundingClientRect(); nr = { l:a.left - o.left, r:a.right - o.left, t:a.top - o.top, b:a.bottom - o.top }; }
     for(const b of blobs){
+      if(nr){ const cx = Math.max(nr.l, Math.min(b.x, nr.r)), cy = Math.max(nr.t, Math.min(b.y, nr.b)); let dx = b.x - cx, dy = b.y - cy, d = Math.hypot(dx, dy);
+        if(d < 1){ dx = b.x - (nr.l + nr.r) / 2; dy = b.y - (nr.t + nr.b) / 2; d = Math.hypot(dx, dy) || 1; const k = 1.6 * pv * dt; b.vx += dx / d * k; b.vy += dy / d * k; }
+        else if(d < b.R + 60){ const k = (b.R + 60 - d) * .05 * pv * dt; b.vx += dx / d * k; b.vy += dy / d * k; } }
       // lugar al que va: sube y baja como en la lámpara, con un vaivén leve de costado
       const tx = b.hx + Math.sin(t * .00021 + b.ph * 1.7) * W * .06;
       const ty = H * (.5 + b.amp * Math.sin(t * .001 * b.sp + b.ph));
